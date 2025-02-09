@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocationService implements IService<Location> {
-    private Connection connection;
+    private final Connection connection;
 
     public LocationService() {
         connection = DataBase.getInstance().getConnection();

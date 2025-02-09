@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BicycleService implements IService<Bicycle> {
-    private Connection connection;
+    private final Connection connection;
 
     public BicycleService() {
         this.connection = DataBase.getInstance().getConnection();
