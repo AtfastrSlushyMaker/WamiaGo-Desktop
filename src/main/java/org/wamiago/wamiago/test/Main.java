@@ -5,5 +5,6 @@ import org.wamiago.wamiago.utils.DataBase;
 public class Main {
     public static void main(String[] args) {
         DataBase.getInstance();
+        System.out.println("Abrougui");
     }
 }
