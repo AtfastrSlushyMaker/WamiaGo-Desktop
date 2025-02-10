@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class BicycleRental {
     private int id;
-    //private User user;
+    private int user;
     private Bicycle bicycle;
     private Station start_station;
     private Station end_station;
