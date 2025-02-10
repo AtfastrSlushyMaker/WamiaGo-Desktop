@@ -14,8 +14,11 @@ public interface IRequest<T> {
     void delete(int id) throws SQLException;
 
 
-    List<T> getAll() throws SQLException;
+    List<T> displayAllRequests() throws SQLException;
 
 
-    T getById(int id) throws SQLException;
+
+    String getClientNameById(int idClient) throws SQLException;
+
+    String getLocationNameById(int idLocation) throws SQLException;
 }

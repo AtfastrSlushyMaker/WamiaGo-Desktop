@@ -15,6 +15,11 @@ public class Request {
     private RequestStatus status;
     private Date requestDate;
 
+
+    public Request() {
+
+    }
+
     public Request(int idClient, int idTaxi, int idDepartureLocation,
                    int idArrivalLocation, RequestStatus status, Date requestDate) {
         this.idClient = idClient;
