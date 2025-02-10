@@ -9,11 +9,9 @@ public class User {
     private Role role;
     private Location location;
 
-
     public enum Role {
         CLIENT, ADMIN
     }
-
 
     public User(int id, String name, String email, String phone, String password, Role role, Location location) {
         this.id = id;
@@ -24,7 +22,6 @@ public class User {
         this.role = role;
         this.location = location;
     }
-
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
