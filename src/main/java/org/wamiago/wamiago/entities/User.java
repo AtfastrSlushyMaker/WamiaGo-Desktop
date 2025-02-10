@@ -10,7 +10,7 @@ public class User {
     private int idLocation;
     private String address;
 
-    public User(int id, String name, String email, String phone, String password, Role role, int idLocation, String address) {
+    public User(int id, String name, String email, String phone, String password, Role role, int idLocation) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -18,7 +18,6 @@ public class User {
         this.password = password;
         this.role = role;
         this.idLocation = idLocation;
-        this.address = address;
     }
 
     public int getId() { return id; }
@@ -41,9 +40,6 @@ public class User {
 
     public int getIdLocation() { return idLocation; }
     public void setIdLocation(int idLocation) { this.idLocation = idLocation; }
-
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
 
     @Override
     public String toString() {
