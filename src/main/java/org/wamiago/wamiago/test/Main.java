@@ -14,36 +14,52 @@ public class Main {
         DataBase.getInstance();
         RequestService requestService = new RequestService();
 
-
-        Request newRequest = new Request(
-                15,
-                11,
-                1,
-                2,
-                Request.RequestStatus.PENDING,
-                new Date()
-        );
-
         try {
 
-            //requestService.create(newRequest);
-            //System.out.println("Request added successfully.");
+            Request request1 = new Request(30, 27, 1, 2, Request.RequestStatus.PENDING, new Date());
+            Request request2 = new Request(31, 28, 3, 4, Request.RequestStatus.PENDING, new Date());
 
 
-            System.out.println("Displaying all requests:");
+            requestService.create(request1);
+            requestService.create(request2);
+            System.out.println("Requests added successfully.\n");
+
+
+            System.out.println("Requests before update:");
+            requestService.displayAllRequests();
+
+
             List<Request> requests = requestService.displayAllRequests();
+            if (!requests.isEmpty()) {
+                Request firstRequest = requests.get(0);
+                Request secondRequest = requests.size() > 1 ? requests.get(1) : null;
+                Request thirdRequest = requests.size() > 2 ? requests.get(2) : null;
+
+                firstRequest.setStatus(Request.RequestStatus.ACCEPTED);
+                firstRequest.setRequestDate(new Date());
+                requestService.update(firstRequest);
+
+                if (secondRequest != null) {
+                    secondRequest.setStatus(Request.RequestStatus.CANCELED);
+                    secondRequest.setRequestDate(new Date());
+                    requestService.update(secondRequest);
+                }
+
+                if (thirdRequest != null) {
+                    thirdRequest.setStatus(Request.RequestStatus.CANCELED);
+                    thirdRequest.setRequestDate(new Date());
+                    requestService.update(thirdRequest);
+                }
+
+                System.out.println("\nRequests updated successfully.\n");
 
 
-            for (Request request : requests) {
-                System.out.println("Request ID: " + request.getIdRequest());
-                System.out.println("Client ID: " + request.getIdClient());
-                System.out.println("Taxi ID: " + request.getIdTaxi());
-                System.out.println("Departure Location ID: " + request.getIdDepartureLocation());
-                System.out.println("Arrival Location ID: " + request.getIdArrivalLocation());
-                System.out.println("Status: " + request.getStatus());
-                System.out.println("Request Date: " + request.getRequestDate());
-                System.out.println("====================================");
+                System.out.println("Requests after update:");
+                requestService.displayAllRequests();
+            } else {
+                System.out.println("No requests found.");
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

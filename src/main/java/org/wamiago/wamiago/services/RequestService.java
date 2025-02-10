@@ -118,13 +118,29 @@ public class RequestService implements IRequest<Request> {
 
     @Override
     public void delete(int id) throws SQLException {
-
+        String sql = "DELETE FROM request WHERE id_request = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
     }
+
+
 
     @Override
-    public void update(Request entity) throws SQLException {
+    public void update(Request request) throws SQLException {
 
+        String sql = "UPDATE request SET id_client = ?, id_taxi = ?, id_departure_location = ?, id_arrival_location = ?, status = ?, request_date = ? WHERE id_request = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, request.getIdClient());
+        preparedStatement.setInt(2, request.getIdTaxi());
+        preparedStatement.setInt(3, request.getIdDepartureLocation());
+        preparedStatement.setInt(4, request.getIdArrivalLocation());
+        preparedStatement.setString(5, request.getStatus().toString());
+        preparedStatement.setTimestamp(6, new Timestamp(request.getRequestDate().getTime()));
+        preparedStatement.setInt(7, request.getIdRequest());
+        preparedStatement.executeUpdate();
     }
+
 
 
 }
