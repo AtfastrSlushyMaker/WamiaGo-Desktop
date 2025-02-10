@@ -7,17 +7,24 @@ public class User {
     private String phone;
     private String password;
     private Role role;
-    private int idLocation;
+    private Location location;
 
-    public User(int id, String name, String email, String phone, String password, Role role, int idLocation) {
+
+    public enum Role {
+        CLIENT, ADMIN
+    }
+
+
+    public User(int id, String name, String email, String phone, String password, Role role, Location location) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.password = password;
         this.role = role;
-        this.idLocation = idLocation;
+        this.location = location;
     }
+
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -37,8 +44,9 @@ public class User {
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
 
-    public int getIdLocation() { return idLocation; }
-    public void setIdLocation(int idLocation) { this.idLocation = idLocation; }
+    public Location getLocation() { return location; }
+    public void setLocation(Location location) { this.location = location; }
+
 
     @Override
     public String toString() {
@@ -47,9 +55,8 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", role='" + role + '\'' +
-                ", idLocation=" + idLocation +
-                ", address='" + address + '\'' +
+                ", role=" + role +
+                ", location=" + location +
                 '}';
     }
 }
