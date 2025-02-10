@@ -1,7 +1,7 @@
 package org.wamiago.wamiago.test;
 
-import org.wamiago.wamiago.entities.User;
 import org.wamiago.wamiago.entities.Location;
+import org.wamiago.wamiago.entities.User;
 import org.wamiago.wamiago.services.UserService;
 
 import java.sql.SQLException;
@@ -12,15 +12,34 @@ public class Main {
 
         try {
 
-            Location location = new Location(1, "123 Main Street", 36.8065f, 10.1815f);
+            Location location = new Location(1, "123 Main St", 36.8065f, 10.1815f);
 
-            User newUser = new User(1, "John Doe", "john@example.com", "12345678", "securepassword", User.Role.ADMIN, location);
 
+            User newUser = new User(0, "John Doe", "john@example.com", "12345678", "securepassword", User.Role.CLIENT, location);
+            User otherUser=new User(1,"Ahmed","Ali","12121212","passs",User.Role.CLIENT,location);
             userService.addUser(newUser);
-            System.out.println("✅ User added successfully!");
+            userService.addUser(otherUser);
+            System.out.println("User added successfully!");
+
+
+            System.out.println("All users:");
+            userService.getAllUsers().forEach(System.out::println);
+
+
+            newUser.setName("John Updated");
+            userService.updateUser(newUser);
+            System.out.println("User updated!");
+
+
+            User retrievedUser = userService.getUserById(12);
+            System.out.println("Retrieved User: " + retrievedUser);
+
+
+            userService.deleteUser(newUser.getId());
+            System.out.println("User deleted!");
 
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
