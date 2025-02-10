@@ -71,9 +71,28 @@ public class StationService implements IService<Station> {
             station.setAvailable_docks(rs.getInt("available_docks"));
             station.setAvailable_bikes(rs.getInt("available_bikes"));
             station.setCharging_bikes(rs.getInt("charging_bikes"));
-            station.setStatus(Station.status_enum.valueOf(rs.getString("status")));
+            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
             stations.add(station);
         }
         return stations;
+    }
+    public Station getStationById(int id) throws SQLException {
+        String sql = "SELECT * FROM bicycle_station WHERE id_station = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            Station station = new Station();
+            station.setId(rs.getInt("id_station"));
+            station.setName(rs.getString("name"));
+            station.getLocation().setId(rs.getInt("id_location"));
+            station.setTotal_docks(rs.getInt("total_docks"));
+            station.setAvailable_docks(rs.getInt("available_docks"));
+            station.setAvailable_bikes(rs.getInt("available_bikes"));
+            station.setCharging_bikes(rs.getInt("charging_bikes"));
+            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
+            return station;
+        }
+        return null;
     }
 }

@@ -6,16 +6,16 @@ import java.util.Objects;
 public class Bicycle {
     private int id;
     private Station station;
-    public enum status_enum {
+    public enum STATUS {
         available,in_use,charging,maintenance,reserved
     }
-    private status_enum status;
+    private STATUS status;
     private float battery_level;
     private float range_km;
     private LocalDateTime last_updated;
 
 
-    public Bicycle(int id, Station station, status_enum status, float battery_level, float range_km, LocalDateTime last_updated) {
+    public Bicycle(int id, Station station, STATUS status, float battery_level, float range_km, LocalDateTime last_updated) {
         this.id = id;
         this.station = station;
         this.status = status;
@@ -27,7 +27,7 @@ public class Bicycle {
     public Bicycle() {
         this.id = 0;
         this.station = new Station();
-        this.status = status_enum.available;
+        this.status = STATUS.available;
         this.battery_level = 0;
         this.range_km = 0;
         this.last_updated = LocalDateTime.now();
@@ -73,11 +73,11 @@ public class Bicycle {
         this.last_updated = last_updated;
     }
 
-    public status_enum getStatus() {
+    public STATUS getStatus() {
         return status;
     }
 
-    public void setStatus(status_enum status) {
+    public void setStatus(STATUS status) {
         this.status = status;
     }
 

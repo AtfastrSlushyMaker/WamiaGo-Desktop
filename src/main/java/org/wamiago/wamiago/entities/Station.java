@@ -10,12 +10,12 @@ public class Station {
     private int available_docks;
     private int available_bikes;
     private int charging_bikes;
-    public enum status_enum {active, inactive, maintenance, disabled}
-    private  status_enum status;
+    public enum STATUS {active, inactive, maintenance, disabled}
+    private  STATUS status;
 
 
     public Station(int id, String name, Location location, int total_docks, int available_docks,
-                   int available_bikes, int charging_bikes, status_enum status) {
+                   int available_bikes, int charging_bikes, STATUS status) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -34,7 +34,7 @@ public class Station {
         this.available_docks = 0;
         this.available_bikes = 0;
         this.charging_bikes = 0;
-        this.status = status_enum.disabled;
+        this.status = STATUS.disabled;
     }
 
     public int getId() {
@@ -93,11 +93,11 @@ public class Station {
         this.total_docks = total_docks;
     }
 
-    public status_enum getStatus() {
+    public STATUS getStatus() {
         return status;
     }
 
-    public void setStatus(status_enum status) {
+    public void setStatus(STATUS status) {
         this.status = status;
     }
 
