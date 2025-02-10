@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataBase {
-    private final String URL="jdbc:mysql://localhost:3306/wamia_go";
+    private final String URL="jdbc:mysql://127.0.0.1:3306/wamia_go";
     private final String LOGIN="root";
     private final String PWD="";
 
@@ -17,7 +17,7 @@ public class DataBase {
             connection = DriverManager.getConnection(URL,LOGIN,PWD);
             System.out.println("Connected");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 

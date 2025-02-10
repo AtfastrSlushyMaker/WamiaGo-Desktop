@@ -2,41 +2,31 @@ package entities;
 
 import java.util.Date;
 
-
-
-
-
 public class Request {
     public enum RequestStatus {
         PENDING, ACCEPTED, REJECTED, CANCELED
     }
 
     private int idRequest;
-    private String idClient;
-    private String idTaxi;
-    private String idDepartureLocation;
-    private String idArrivalLocation;
+    private int idClient;
+    private int idTaxi;
+    private int idDepartureLocation;
+    private int idArrivalLocation;
     private RequestStatus status;
     private Date requestDate;
-    private String clientName;
-    private String driverName;
 
-    public Request(String idClient, String idTaxi, String idDepartureLocation,
-                   String idArrivalLocation, RequestStatus status, Date requestDate,
-                   String clientName, String driverName) {
+    public Request(int idClient, int idTaxi, int idDepartureLocation,
+                   int idArrivalLocation, RequestStatus status, Date requestDate) {
         this.idClient = idClient;
         this.idTaxi = idTaxi;
         this.idDepartureLocation = idDepartureLocation;
         this.idArrivalLocation = idArrivalLocation;
         this.status = status;
         this.requestDate = requestDate;
-        this.clientName = clientName;
-        this.driverName = driverName;
     }
 
-    public Request(int idRequest, String idClient, String idTaxi, String idDepartureLocation,
-                   String idArrivalLocation, RequestStatus status, Date requestDate,
-                   String clientName, String driverName) {
+    public Request(int idRequest, int idClient, int idTaxi, int idDepartureLocation,
+                   int idArrivalLocation, RequestStatus status, Date requestDate) {
         this.idRequest = idRequest;
         this.idClient = idClient;
         this.idTaxi = idTaxi;
@@ -44,8 +34,6 @@ public class Request {
         this.idArrivalLocation = idArrivalLocation;
         this.status = status;
         this.requestDate = requestDate;
-        this.clientName = clientName;
-        this.driverName = driverName;
     }
 
     public int getIdRequest() {
@@ -56,35 +44,35 @@ public class Request {
         this.idRequest = idRequest;
     }
 
-    public String getIdClient() {
+    public int getIdClient() {
         return idClient;
     }
 
-    public void setIdClient(String idClient) {
+    public void setIdClient(int idClient) {
         this.idClient = idClient;
     }
 
-    public String getIdTaxi() {
+    public int getIdTaxi() {
         return idTaxi;
     }
 
-    public void setIdTaxi(String idTaxi) {
+    public void setIdTaxi(int idTaxi) {
         this.idTaxi = idTaxi;
     }
 
-    public String getIdDepartureLocation() {
+    public int getIdDepartureLocation() {
         return idDepartureLocation;
     }
 
-    public void setIdDepartureLocation(String idDepartureLocation) {
+    public void setIdDepartureLocation(int idDepartureLocation) {
         this.idDepartureLocation = idDepartureLocation;
     }
 
-    public String getIdArrivalLocation() {
+    public int getIdArrivalLocation() {
         return idArrivalLocation;
     }
 
-    public void setIdArrivalLocation(String idArrivalLocation) {
+    public void setIdArrivalLocation(int idArrivalLocation) {
         this.idArrivalLocation = idArrivalLocation;
     }
 
@@ -102,21 +90,5 @@ public class Request {
 
     public void setRequestDate(Date requestDate) {
         this.requestDate = requestDate;
-    }
-
-    public String getClientName() {
-        return clientName;
-    }
-
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
-
-    public String getDriverName() {
-        return driverName;
-    }
-
-    public void setDriverName(String driverName) {
-        this.driverName = driverName;
     }
 }
