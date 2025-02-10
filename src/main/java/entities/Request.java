@@ -2,20 +2,41 @@ package entities;
 
 import java.util.Date;
 
+
+
+
+
 public class Request {
-    private Request request;
+    public enum RequestStatus {
+        PENDING, ACCEPTED, REJECTED, CANCELED
+    }
+
     private int idRequest;
     private String idClient;
     private String idTaxi;
     private String idDepartureLocation;
     private String idArrivalLocation;
-    private String status;
+    private RequestStatus status;
     private Date requestDate;
     private String clientName;
     private String driverName;
 
+    public Request(String idClient, String idTaxi, String idDepartureLocation,
+                   String idArrivalLocation, RequestStatus status, Date requestDate,
+                   String clientName, String driverName) {
+        this.idClient = idClient;
+        this.idTaxi = idTaxi;
+        this.idDepartureLocation = idDepartureLocation;
+        this.idArrivalLocation = idArrivalLocation;
+        this.status = status;
+        this.requestDate = requestDate;
+        this.clientName = clientName;
+        this.driverName = driverName;
+    }
+
     public Request(int idRequest, String idClient, String idTaxi, String idDepartureLocation,
-                   String idArrivalLocation, String status, Date requestDate, String clientName, String driverName) {
+                   String idArrivalLocation, RequestStatus status, Date requestDate,
+                   String clientName, String driverName) {
         this.idRequest = idRequest;
         this.idClient = idClient;
         this.idTaxi = idTaxi;
@@ -67,11 +88,11 @@ public class Request {
         this.idArrivalLocation = idArrivalLocation;
     }
 
-    public String getStatus() {
+    public RequestStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(RequestStatus status) {
         this.status = status;
     }
 
