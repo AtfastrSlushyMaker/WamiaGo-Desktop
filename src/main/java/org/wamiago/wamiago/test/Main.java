@@ -19,34 +19,34 @@ public class Main {
             announcementService.create(newAnnouncement);
             System.out.println("✅ Announcement added successfully!");
 
-//            // 2️⃣ FETCH all announcements
-//            List<Announcement> announcements = announcementService.read();
-//            System.out.println("📜 All Announcements:");
-//            for (Announcement announcement : announcements) {
-//                System.out.println(announcement);
-//            }
-//
-//            // 3️⃣ UPDATE the first announcement (if exists)
-//            if (!announcements.isEmpty()) {
-//                Announcement firstAnnouncement = announcements.get(0);
-//                firstAnnouncement.setTitle("Updated Route");
-//                firstAnnouncement.setContent("This route has been updated.");
-//                firstAnnouncement.setDate(LocalDateTime.now());
-//                firstAnnouncement.setStatus(0);
-//                announcementService.update(firstAnnouncement);
-//                System.out.println("🔄 Announcement updated successfully!");
-//
-//                // Fetch and print updated announcement
-//                Announcement updatedAnnouncement = announcements.get(0);
-//                System.out.println("📝 Updated Announcement: " + updatedAnnouncement);
-//            }
-//
-//            // 4️⃣ DELETE an announcement by ID
-//            if (!announcements.isEmpty()) {
-//                int announcementIdToDelete = announcements.get(announcements.size() - 1).getIdAnnouncement();
-//                announcementService.delete(announcementIdToDelete);
-//                System.out.println("🗑️ Announcement with ID " + announcementIdToDelete + " deleted successfully!");
-//            }
+            // 2️⃣ FETCH all announcements
+            List<Announcement> announcements = announcementService.read();
+            System.out.println("📜 All Announcements:");
+            for (Announcement announcement : announcements) {
+                System.out.println(announcement);
+            }
+
+            // 3️⃣ UPDATE the first announcement (if exists)
+            if (!announcements.isEmpty()) {
+                Announcement firstAnnouncement = announcements.get(0);
+                firstAnnouncement.setTitle("Updated Route");
+                firstAnnouncement.setContent("This route has been updated.");
+                firstAnnouncement.setDate(LocalDateTime.now());
+                firstAnnouncement.setStatus(0);
+                announcementService.update(firstAnnouncement);
+                System.out.println("🔄 Announcement updated successfully!");
+
+                // Fetch and print updated announcement
+                Announcement updatedAnnouncement = announcements.get(0);
+                System.out.println("📝 Updated Announcement: " + updatedAnnouncement);
+            }
+
+            // 4️⃣ DELETE an announcement by ID
+            if (!announcements.isEmpty()) {
+                int announcementIdToDelete = announcements.get(announcements.size() - 1).getIdAnnouncement();
+                announcementService.delete(announcementIdToDelete);
+                System.out.println("🗑️ Announcement with ID " + announcementIdToDelete + " deleted successfully!");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
