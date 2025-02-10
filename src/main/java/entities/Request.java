@@ -3,6 +3,7 @@ package entities;
 import java.util.Date;
 
 public class Request {
+    private Request request;
     private int idRequest;
     private String idClient;
     private String idTaxi;
