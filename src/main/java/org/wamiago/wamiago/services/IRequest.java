@@ -14,7 +14,7 @@ public interface IRequest<T> {
     void delete(int id) throws SQLException;
 
 
-    List<T> displayAllRequests() throws SQLException;
+    List<T> read() throws SQLException;
 
 
 

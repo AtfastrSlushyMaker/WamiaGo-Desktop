@@ -49,7 +49,7 @@ public class RequestService implements IRequest<Request> {
 
 
     @Override
-    public List<Request> displayAllRequests() throws SQLException {
+    public List<Request> read() throws SQLException {
         List<Request> requests = new ArrayList<>();
         String getAllQuery = "SELECT * FROM request";
 

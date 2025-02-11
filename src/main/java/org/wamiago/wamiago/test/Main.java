@@ -26,10 +26,10 @@ public class Main {
 
 
             System.out.println("Requests before update:");
-            requestService.displayAllRequests();
+            requestService.read();
 
 
-            List<Request> requests = requestService.displayAllRequests();
+            List<Request> requests = requestService.read();
             if (!requests.isEmpty()) {
                 Request firstRequest = requests.get(0);
                 Request secondRequest = requests.size() > 1 ? requests.get(1) : null;
@@ -55,7 +55,7 @@ public class Main {
 
 
                 System.out.println("Requests after update:");
-                requestService.displayAllRequests();
+                requestService.read();
             } else {
                 System.out.println("No requests found.");
             }
