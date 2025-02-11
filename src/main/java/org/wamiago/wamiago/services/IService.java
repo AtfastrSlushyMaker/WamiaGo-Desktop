@@ -11,4 +11,3 @@ public interface IService<T> {
     void deleteReclamation(int id)throws SQLException;
     List<T> read() throws SQLException;
 }
-
