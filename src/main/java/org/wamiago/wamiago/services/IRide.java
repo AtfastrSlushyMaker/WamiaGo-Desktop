@@ -13,7 +13,7 @@ public interface IRide<T> {
 
     List<T> read() throws SQLException;
 
-    String getClientNameById(int idClient) throws SQLException;
 
-    String getLocationNameById(int idLocation) throws SQLException;
+
+
 }
