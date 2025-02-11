@@ -15,7 +15,7 @@ public class Ride {
     private Timestamp rideDate;
 
     public enum Status {
-        Ongoing, Completed, Canceled
+            ONGOING,COMPLETED,CANCELED
     }
 
     public Ride() {

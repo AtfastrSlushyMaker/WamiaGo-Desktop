@@ -1,6 +1,5 @@
 package org.wamiago.wamiago.services;
 
-import entities.Request;
 import entities.Ride;
 import org.wamiago.wamiago.utils.DataBase;
 
@@ -81,7 +80,6 @@ public class RideService implements IRide <Ride> {
         }
         return rides;
     }
-
 
 
 
