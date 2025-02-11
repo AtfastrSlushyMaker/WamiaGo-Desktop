@@ -1,6 +1,6 @@
 package org.wamiago.wamiago.services;
 
-import entities.Ride;
+import org.wamiago.wamiago.entities.Ride;
 import org.wamiago.wamiago.utils.DataBase;
 
 import java.sql.*;

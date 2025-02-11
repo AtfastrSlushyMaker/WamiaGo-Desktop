@@ -1,6 +1,6 @@
 package org.wamiago.wamiago.services;
 
-import entities.Request;
+import org.wamiago.wamiago.entities.Request;
 import org.wamiago.wamiago.utils.DataBase;
 
 import java.sql.*;

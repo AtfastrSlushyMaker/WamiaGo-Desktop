@@ -1,4 +1,4 @@
-package entities;
+package org.wamiago.wamiago.entities;
 
 import java.sql.Timestamp;
 
