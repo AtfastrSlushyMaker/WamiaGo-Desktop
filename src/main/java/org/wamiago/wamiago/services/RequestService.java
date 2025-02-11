@@ -90,6 +90,29 @@ public class RequestService implements IRequest<Request> {
         return requests;
     }
 
+    @Override
+    public Request search(int id) throws SQLException {
+        String query = "SELECT * FROM request WHERE id_request = ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setInt(1, id);
+        ResultSet resultSet = stmt.executeQuery();
+
+        if (resultSet.next()) {
+            Request request = new Request();
+            request.setIdRequest(resultSet.getInt("id_request"));
+            request.setIdClient(resultSet.getInt("id_client"));
+            request.setIdTaxi(resultSet.getInt("id_taxi"));
+            request.setIdDepartureLocation(resultSet.getInt("id_departure_location"));
+            request.setIdArrivalLocation(resultSet.getInt("id_arrival_location"));
+            request.setStatus(Request.RequestStatus.valueOf(resultSet.getString("status").toUpperCase()));
+            request.setRequestDate(resultSet.getTimestamp("request_date"));
+            return request;
+        }
+
+        return null;
+    }
+
+
 
     @Override
     public String getClientNameById(int idClient) throws SQLException {

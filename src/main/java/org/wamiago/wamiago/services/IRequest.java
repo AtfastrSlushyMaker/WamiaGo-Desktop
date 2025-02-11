@@ -16,7 +16,7 @@ public interface IRequest<T> {
 
     List<T> read() throws SQLException;
 
-
+    T search(int id) throws SQLException;
 
     String getClientNameById(int idClient) throws SQLException;
 

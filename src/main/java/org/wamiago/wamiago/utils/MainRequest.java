@@ -4,7 +4,6 @@ import org.wamiago.wamiago.entities.Request;
 import org.wamiago.wamiago.services.RequestService;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 
 public class MainRequest {
     public static void main(String[] args) {
@@ -24,17 +23,16 @@ public class MainRequest {
             System.out.println("Request created successfully!");
 
 
-            Request anotherRequest = new Request();
-            anotherRequest.setIdClient(5);
-            anotherRequest.setIdTaxi(5);
-            anotherRequest.setIdDepartureLocation(4);
-            anotherRequest.setIdArrivalLocation(6);
-            anotherRequest.setStatus(Request.RequestStatus.PENDING);
-            anotherRequest.setRequestDate(new Date());
+            int searchId = 4;
+            Request foundRequest = requestService.search(searchId);
+            if (foundRequest != null) {
+                System.out.println("Requête trouvée : " + foundRequest);
+            } else {
+                System.out.println("Aucune requête trouvée avec l'identifiant " + searchId);
+            }
 
-            requestService.create(anotherRequest);
-            System.out.println("Another request created successfully!");
 
+            /*
 
             List<Request> requests = requestService.read();
             System.out.println("List of all requests:");
@@ -56,6 +54,7 @@ public class MainRequest {
                 requestService.delete(requestIdToDelete);
                 System.out.println("Request deleted successfully!");
             }
+            */
 
         } catch (SQLException e) {
             e.printStackTrace();

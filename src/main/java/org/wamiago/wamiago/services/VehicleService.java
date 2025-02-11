@@ -65,5 +65,5 @@ public class VehicleService implements IService<Vehicle> {
         }
         return vehicles;
     }
-}  
+}
 
