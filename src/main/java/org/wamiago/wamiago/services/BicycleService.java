@@ -70,7 +70,7 @@ public class BicycleService implements IService<Bicycle> {
         return bicycles;
 
     }
-    public Bicycle getBicycleById(int id) throws SQLException {
+    public Bicycle getById(int id) throws SQLException {
         String sql = "SELECT * FROM bicycle WHERE id_bike = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

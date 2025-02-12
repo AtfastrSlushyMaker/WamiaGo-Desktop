@@ -66,9 +66,9 @@ public class BicycleRentalService implements IService<BicycleRental> {
             BicycleRental bicycleRental = new BicycleRental(
                     rs.getInt("id_user_rental"),
                     new UserService().getById(rs.getInt("id_user")),
-                    new BicycleService().getBicycleById(rs.getInt("id_bike")),
-                    new StationService().getStationById(rs.getInt("id_start_station")),
-                    new StationService().getStationById(rs.getInt("id_end_station")),
+                    new BicycleService().getById(rs.getInt("id_bike")),
+                    new StationService().getById(rs.getInt("id_start_station")),
+                    new StationService().getById(rs.getInt("id_end_station")),
                     rs.getTimestamp("start_time").toLocalDateTime(),
                     rs.getTimestamp("end_time").toLocalDateTime(),
                     rs.getFloat("distance_km"),
@@ -79,4 +79,28 @@ public class BicycleRentalService implements IService<BicycleRental> {
         }
         return bicycleRentals;
     }
+    public BicycleRental getById(int id) throws SQLException
+    {
+        String sql="SELECT * FROM bicycle_rental WHERE id_user_rental=?";
+        PreparedStatement preparedStatement=connection.prepareStatement(sql);
+        preparedStatement.setInt(1,id);
+        ResultSet rs=preparedStatement.executeQuery();
+        while (rs.next())
+        {
+            return new BicycleRental(
+                    rs.getInt("id_user_rental"),
+                    new UserService().getById(rs.getInt("id_user")),
+                    new BicycleService().getById(rs.getInt("id_bike")),
+                    new StationService().getById(rs.getInt("id_start_station")),
+                    new StationService().getById(rs.getInt("id_end_station")),
+                    rs.getTimestamp("start_time").toLocalDateTime(),
+                    rs.getTimestamp("end_time").toLocalDateTime(),
+                    rs.getFloat("distance_km"),
+                    rs.getFloat("battery_used"),
+                    rs.getFloat("cost")
+            );
+        }
+        return null;
+    }
+
 }

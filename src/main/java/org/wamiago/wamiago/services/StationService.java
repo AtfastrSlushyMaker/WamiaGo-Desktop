@@ -76,7 +76,7 @@ public class StationService implements IService<Station> {
         return stations;
     }
 
-    public Station getStationById(int id) throws SQLException {
+    public Station getById(int id) throws SQLException {
         String sql = "SELECT * FROM bicycle_station WHERE id_station = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, id);
