@@ -28,6 +28,7 @@ public class StationService implements IService<Station> {
         preparedStatement.setInt(6, station.getCharging_bikes());
         preparedStatement.setString(7, station.getStatus().toString());
         preparedStatement.executeUpdate();
+        System.out.println("✅ Station created successfully.");
     }
 
     @Override
@@ -44,6 +45,7 @@ public class StationService implements IService<Station> {
         preparedStatement.setString(7, station.getStatus().toString());
         preparedStatement.setInt(8, station.getId());
         preparedStatement.executeUpdate();
+        System.out.println("✅ Station updated successfully.");
 
     }
 
@@ -53,6 +55,7 @@ public class StationService implements IService<Station> {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
+        System.out.println("✅ Station deleted successfully.");
 
     }
 
@@ -62,11 +65,12 @@ public class StationService implements IService<Station> {
         String sql = "SELECT * FROM bicycle_station";
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sql);
+        LocationService locationService = new LocationService();
         while (rs.next()) {
             Station station = new Station();
             station.setId(rs.getInt("id_station"));
             station.setName(rs.getString("name"));
-            station.getLocation().setId(rs.getInt("id_location"));
+            station.setLocation(locationService.getById(rs.getInt("id_location")));
             station.setTotal_docks(rs.getInt("total_docks"));
             station.setAvailable_docks(rs.getInt("available_docks"));
             station.setAvailable_bikes(rs.getInt("available_bikes"));
@@ -86,7 +90,7 @@ public class StationService implements IService<Station> {
             Station station = new Station();
             station.setId(rs.getInt("id_station"));
             station.setName(rs.getString("name"));
-            station.getLocation().setId(rs.getInt("id_location"));
+            station.setLocation(new LocationService().getById(rs.getInt("id_location")));
             station.setTotal_docks(rs.getInt("total_docks"));
             station.setAvailable_docks(rs.getInt("available_docks"));
             station.setAvailable_bikes(rs.getInt("available_bikes"));

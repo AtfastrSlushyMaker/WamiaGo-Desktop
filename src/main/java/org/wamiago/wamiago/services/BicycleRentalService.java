@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BicycleRentalService implements IService<BicycleRental> {
-
     private final Connection connection;
 
-    BicycleRentalService() {
+    public BicycleRentalService() {
         this.connection = DataBase.getInstance().getConnection();
     }
     @Override
@@ -31,6 +30,7 @@ public class BicycleRentalService implements IService<BicycleRental> {
         preparedStatement.setFloat(8, bicycleRental.getBattery_used());
         preparedStatement.setFloat(9, bicycleRental.getCost());
         preparedStatement.executeUpdate();
+        System.out.println("✅ BicycleRental created successfully.");
     }
 
     @Override
@@ -48,6 +48,7 @@ public class BicycleRentalService implements IService<BicycleRental> {
         preparedStatement.setFloat(9, bicycleRental.getCost());
         preparedStatement.setInt(10, bicycleRental.getId());
         preparedStatement.executeUpdate();
+        System.out.println("✅ BicycleRental updated successfully.");
 
     }
 
@@ -65,20 +66,23 @@ public class BicycleRentalService implements IService<BicycleRental> {
         String sql = "SELECT * FROM bicycle_rental";
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sql);
+        BicycleRental bicycleRental=new BicycleRental();
+        BicycleService bicycleService = new BicycleService();
+        StationService stationService = new StationService();
+        UserService userService = new UserService();
+
         while (rs.next()) {
-            BicycleRental bicycleRental = new BicycleRental(
-                    rs.getInt("id_user_rental"),
-                    new UserService().getById(rs.getInt("id_user")),
-                    new BicycleService().getById(rs.getInt("id_bike")),
-                    new StationService().getById(rs.getInt("id_start_station")),
-                    new StationService().getById(rs.getInt("id_end_station")),
-                    rs.getTimestamp("start_time"),
-                    rs.getTimestamp("end_time"),
-                    rs.getFloat("distance_km"),
-                    rs.getFloat("battery_used"),
-                    rs.getFloat("cost")
-            );
+            bicycleRental.setBicycle(bicycleService.getById(rs.getInt("id_bike")));
+            bicycleRental.setStart_station(stationService.getById(rs.getInt("id_start_station")));
+            bicycleRental.setEnd_station(stationService.getById(rs.getInt("id_end_station")));
+            bicycleRental.setUser(userService.getById(rs.getInt("id_user")));
+            bicycleRental.setStart_time(rs.getTimestamp("start_time"));
+            bicycleRental.setEnd_time(rs.getTimestamp("end_time"));
+            bicycleRental.setDistance_km(rs.getFloat("distance_km"));
+            bicycleRental.setBattery_used(rs.getFloat("battery_used"));
+            bicycleRental.setCost(rs.getFloat("cost"));
             bicycleRentals.add(bicycleRental);
+
         }
         return bicycleRentals;
     }

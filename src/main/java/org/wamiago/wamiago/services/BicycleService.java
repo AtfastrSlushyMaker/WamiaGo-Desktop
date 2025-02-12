@@ -73,13 +73,14 @@ public class BicycleService implements IService<Bicycle> {
     }
     public Bicycle getById(int id) throws SQLException {
         String sql = "SELECT * FROM bicycle WHERE id_bike = ?";
+        StationService stationService = new StationService();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Bicycle bicycle = new Bicycle();
                 bicycle.setId(rs.getInt("id_bike"));
-                bicycle.getStation().setId(rs.getInt("id_station"));
+                bicycle.setStation(stationService.getById(rs.getInt("id_station")));
                 bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
                 bicycle.setBattery_level(rs.getFloat("battery_level"));
                 bicycle.setRange_km(rs.getFloat("range_km"));
