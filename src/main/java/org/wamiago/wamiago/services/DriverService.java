@@ -17,17 +17,17 @@ public class DriverService {
     }
 
     public void addDriver(Driver driver) throws SQLException {
-        // Check if the user exists
+
         String sqlCheckUser = "SELECT COUNT(*) FROM `user` WHERE `id_user` = ?";
         try (PreparedStatement psCheckUser = connection.prepareStatement(sqlCheckUser)) {
             psCheckUser.setInt(1, driver.getId());
             ResultSet rs = psCheckUser.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) {
-                // User exists, insert driver data
+
                 String sqlDriver = "INSERT INTO `driver`(`id_user`, `permit_number`, `role`, `status`) VALUES (?, ?, ?, ?)";
                 try (PreparedStatement psDriver = connection.prepareStatement(sqlDriver)) {
-                    psDriver.setInt(1, driver.getId());  // Use the existing user's ID
-                    psDriver.setInt(2, driver.getPermit_number());
+                    psDriver.setInt(1, driver.getId());
+                    psDriver.setString(2, driver.getPermit_number());
                     psDriver.setString(3, driver.getDriverRole().name());
                     psDriver.setInt(4, driver.getStatus());
                     psDriver.executeUpdate();
@@ -46,7 +46,7 @@ public class DriverService {
             psUser.setString(2, driver.getEmail());
             psUser.setString(3, driver.getPassword());
             psUser.setString(4, driver.getPhone());
-            psUser.setString(5, "CLIENT"); // Role remains client for now
+            psUser.setString(5, "CLIENT");
             psUser.setInt(6, driver.getLocation().getId());
             psUser.setInt(7, driver.getId());
             psUser.executeUpdate();
@@ -55,7 +55,7 @@ public class DriverService {
 
         String sqlDriver = "UPDATE `driver` SET `permit_number`=?, `role`=?, `status`=? WHERE id_user = ?";
         try (PreparedStatement psDriver = connection.prepareStatement(sqlDriver)) {
-            psDriver.setInt(1, driver.getPermit_number());
+            psDriver.setString(1, driver.getPermit_number());
             psDriver.setString(2, driver.getDriverRole().name());
             psDriver.setInt(3, driver.getStatus());
             psDriver.setInt(4, driver.getId());
@@ -90,7 +90,8 @@ public class DriverService {
                         rs.getFloat("longitude")
                 );
 
-                Driver driver = new Driver(
+                return new Driver(
+                        rs.getInt("id_driver"),
                         rs.getInt("id_user"),
                         rs.getString("name"),
                         rs.getString("email"),
@@ -98,17 +99,13 @@ public class DriverService {
                         rs.getString("password"),
                         Driver.DriverRole.valueOf(rs.getString("role").toUpperCase()),
                         location,
-                        rs.getInt("id_driver"),
-                        rs.getInt("permit_number"),
+                        rs.getString("permit_number"),
                         rs.getInt("status")
                 );
-
-                return driver;
             }
         }
         return null;
     }
-
     public List<Driver> getAllDrivers() throws SQLException {
         List<Driver> drivers = new ArrayList<>();
         String sql = "SELECT * FROM `driver` d JOIN `user` u ON d.id_user = u.id_user JOIN `location` l ON u.id_location = l.id_location";
@@ -123,6 +120,7 @@ public class DriverService {
                 );
 
                 Driver driver = new Driver(
+                        rs.getInt("id_driver"),
                         rs.getInt("id_user"),
                         rs.getString("name"),
                         rs.getString("email"),
@@ -130,8 +128,7 @@ public class DriverService {
                         rs.getString("password"),
                         Driver.DriverRole.valueOf(rs.getString("role").toUpperCase()),
                         location,
-                        rs.getInt("id_driver"),
-                        rs.getInt("permit_number"),
+                        rs.getString("permit_number"),
                         rs.getInt("status")
                 );
 

@@ -16,15 +16,34 @@ public class Main {
         try {
 
             Location location = new Location(1, "123 Main St", 36.8065f, 10.1815f);
-
-            User newUser = new User("John Doe", "john@example.com", "15678", "securepassword", User.Role.CLIENT, location);
-            User otherUser = new User("Ahmed", "Ali", "1", "passs", User.Role.CLIENT, location);
-
+            User newUser = new User(1,
+                    "John Doe",
+                    "john@example.com",
+                    "15678",
+                    "securepassword",
+                    User.Role.CLIENT,
+                    location);
             userService.addUser(newUser);
+
+            User otherUser = new User(2,
+                    "Ahmed Ali",
+                    "ahmed@example.com",
+                    "123456", "passs",
+                    User.Role.CLIENT, location);
             userService.addUser(otherUser);
 
-            Driver driver = new Driver(otherUser.getId(), otherUser.getName(), otherUser.getEmail(), otherUser.getPhone(), otherUser.getPassword(), Driver.DriverRole.TAXI_DRIVER,otherUser.getLocation(),111,1);
-
+            Driver driver = new Driver(
+                    1,
+                    otherUser.getId(),
+                    otherUser.getName(),
+                    otherUser.getEmail(),
+                    otherUser.getPhone(),
+                    otherUser.getPassword(),
+                    Driver.DriverRole.TAXI_DRIVER,
+                    otherUser.getLocation(),
+                    "111",
+                    1
+            );
             driverService.addDriver(driver);
 
             System.out.println("User and Driver added successfully!");
