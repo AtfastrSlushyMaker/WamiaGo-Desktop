@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserService {
+public class UserService implements IService<User> {
 
     private final Connection connection;
 
@@ -16,8 +16,8 @@ public class UserService {
         connection = DataBase.getInstance().getConnection();
     }
 
-    // Method to add a new user
-    public void addUser(User user) throws SQLException {
+    @Override
+    public void create(User user) throws SQLException {
         String sql = "INSERT INTO `user`(`name`, `email`, `password`, `phone_number`, `role`, `id_location`) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, user.getName());
@@ -36,8 +36,8 @@ public class UserService {
         }
     }
 
-    // Method to update an existing user
-    public void updateUser(User user) throws SQLException {
+    @Override
+    public void update(User user) throws SQLException {
         String sql = "UPDATE `user` SET `name`=?, `email`=?, `password`=?, `phone_number`=?, `role`=?, `id_location`=? WHERE id_user = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, user.getName());
@@ -51,8 +51,8 @@ public class UserService {
         }
     }
 
-    // Method to delete a user by ID
-    public void deleteUser(int id) throws SQLException {
+    @Override
+    public void delete(int id) throws SQLException {
         String sql = "DELETE FROM `user` WHERE id_user = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -60,36 +60,8 @@ public class UserService {
         }
     }
 
-    // Method to get a user by ID
-    public User getUserById(int id) throws SQLException {
-        String sql = "SELECT * FROM `user` u JOIN `location` l ON u.id_location = l.id_location WHERE u.id_user = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Location location = new Location(
-                        rs.getInt("id_location"),
-                        rs.getString("address"),
-                        rs.getFloat("latitude"),
-                        rs.getFloat("longitude")
-                );
-
-                return new User(
-                        rs.getInt("id_user"),
-                        rs.getString("name"),
-                        rs.getString("email"),
-                        rs.getString("phone_number"),
-                        rs.getString("password"),
-                        User.Role.valueOf(rs.getString("role").toUpperCase()),
-                        location
-                );
-            }
-        }
-        return null;
-    }
-
-    // Method to get all users
-    public List<User> getAllUsers() throws SQLException {
+    @Override
+    public List<User> read() throws SQLException {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM `user` u JOIN `location` l ON u.id_location = l.id_location";
         try (PreparedStatement ps = connection.prepareStatement(sql);
@@ -116,5 +88,32 @@ public class UserService {
             }
         }
         return users;
+    }
+
+    public User getById(int id) throws SQLException {
+        String sql = "SELECT * FROM `user` u JOIN `location` l ON u.id_location = l.id_location WHERE u.id_user = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Location location = new Location(
+                        rs.getInt("id_location"),
+                        rs.getString("address"),
+                        rs.getFloat("latitude"),
+                        rs.getFloat("longitude")
+                );
+
+                return new User(
+                        rs.getInt("id_user"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("phone_number"),
+                        rs.getString("password"),
+                        User.Role.valueOf(rs.getString("role").toUpperCase()),
+                        location
+                );
+            }
+        }
+        return null;
     }
 }

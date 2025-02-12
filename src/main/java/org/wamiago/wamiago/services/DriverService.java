@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DriverService {
+public class DriverService implements IService<Driver> {
 
     private final Connection connection;
 
@@ -16,8 +16,8 @@ public class DriverService {
         connection = DataBase.getInstance().getConnection();
     }
 
-    public void addDriver(Driver driver) throws SQLException {
-
+    @Override
+    public void create(Driver driver) throws SQLException {
         String sqlCheckUser = "SELECT COUNT(*) FROM `user` WHERE `id_user` = ?";
         try (PreparedStatement psCheckUser = connection.prepareStatement(sqlCheckUser)) {
             psCheckUser.setInt(1, driver.getId());
@@ -38,21 +38,8 @@ public class DriverService {
         }
     }
 
-    public void updateDriver(Driver driver) throws SQLException {
-
-        String sqlUser = "UPDATE `user` SET `name`=?, `email`=?, `password`=?, `phone_number`=?, `role`=?, `id_location`=? WHERE id_user = ?";
-        try (PreparedStatement psUser = connection.prepareStatement(sqlUser)) {
-            psUser.setString(1, driver.getName());
-            psUser.setString(2, driver.getEmail());
-            psUser.setString(3, driver.getPassword());
-            psUser.setString(4, driver.getPhone());
-            psUser.setString(5, "CLIENT");
-            psUser.setInt(6, driver.getLocation().getId());
-            psUser.setInt(7, driver.getId());
-            psUser.executeUpdate();
-        }
-
-
+    @Override
+    public void update(Driver driver) throws SQLException {
         String sqlDriver = "UPDATE `driver` SET `permit_number`=?, `role`=?, `status`=? WHERE id_user = ?";
         try (PreparedStatement psDriver = connection.prepareStatement(sqlDriver)) {
             psDriver.setString(1, driver.getPermit_number());
@@ -63,50 +50,17 @@ public class DriverService {
         }
     }
 
-    public void deleteDriver(int id) throws SQLException {
+    @Override
+    public void delete(int id) throws SQLException {
         String sqlDriver = "DELETE FROM `driver` WHERE id_user = ?";
         try (PreparedStatement psDriver = connection.prepareStatement(sqlDriver)) {
             psDriver.setInt(1, id);
             psDriver.executeUpdate();
         }
-
-        String sqlUser = "DELETE FROM `user` WHERE id_user = ?";
-        try (PreparedStatement psUser = connection.prepareStatement(sqlUser)) {
-            psUser.setInt(1, id);
-            psUser.executeUpdate();
-        }
     }
 
-    public Driver getDriverById(int id) throws SQLException {
-        String sql = "SELECT * FROM `driver` d JOIN `user` u ON d.id_user = u.id_user JOIN `location` l ON u.id_location = l.id_location WHERE d.id_user = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Location location = new Location(
-                        rs.getInt("id_location"),
-                        rs.getString("address"),
-                        rs.getFloat("latitude"),
-                        rs.getFloat("longitude")
-                );
-
-                return new Driver(
-                        rs.getInt("id_driver"),
-                        rs.getInt("id_user"),
-                        rs.getString("name"),
-                        rs.getString("email"),
-                        rs.getString("phone_number"),
-                        rs.getString("password"),
-                        Driver.DriverRole.valueOf(rs.getString("role").toUpperCase()),
-                        location,
-                        rs.getString("permit_number"),
-                        rs.getInt("status")
-                );
-            }
-        }
-        return null;
-    }
-    public List<Driver> getAllDrivers() throws SQLException {
+    @Override
+    public List<Driver> read() throws SQLException {
         List<Driver> drivers = new ArrayList<>();
         String sql = "SELECT * FROM `driver` d JOIN `user` u ON d.id_user = u.id_user JOIN `location` l ON u.id_location = l.id_location";
         try (PreparedStatement ps = connection.prepareStatement(sql);
@@ -136,5 +90,35 @@ public class DriverService {
             }
         }
         return drivers;
+    }
+
+    public Driver getById(int id) throws SQLException {
+        String sql = "SELECT * FROM `driver` d JOIN `user` u ON d.id_user = u.id_user JOIN `location` l ON u.id_location = l.id_location WHERE d.id_user = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Location location = new Location(
+                        rs.getInt("id_location"),
+                        rs.getString("address"),
+                        rs.getFloat("latitude"),
+                        rs.getFloat("longitude")
+                );
+
+                return new Driver(
+                        rs.getInt("id_driver"),
+                        rs.getInt("id_user"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("phone_number"),
+                        rs.getString("password"),
+                        Driver.DriverRole.valueOf(rs.getString("role").toUpperCase()),
+                        location,
+                        rs.getString("permit_number"),
+                        rs.getInt("status")
+                );
+            }
+        }
+        return null;
     }
 }
