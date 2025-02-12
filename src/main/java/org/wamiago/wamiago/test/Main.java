@@ -37,14 +37,14 @@ public class Main {
             announcementService.create(newAnnouncement);
             System.out.println(" Announcement added successfully!");
 
-            // 2️⃣ Récupération et affichage de toutes les annonces
+            //  Récupération et affichage de toutes les annonces
             List<Announcement> announcements = announcementService.read();
             System.out.println(" All Announcements:");
             for (Announcement announcement : announcements) {
                 System.out.println(announcement);
             }
 
-            // 3️⃣ Mise à jour de la première annonce (si disponible)
+            //  Mise à jour de la première annonce (si disponible)
             if (!announcements.isEmpty()) {
                 Announcement firstAnnouncement = announcements.get(0);
                 firstAnnouncement.setTransporter(new Driver());
@@ -60,7 +60,7 @@ public class Main {
                 System.out.println(" No announcements available to update.");
             }
 
-            // 4️⃣ Suppression de la dernière annonce (si disponible)
+            //  Suppression de la dernière annonce (si disponible)
             if (!announcements.isEmpty()) {
                 int announcementIdToDelete = announcements.get(announcements.size() - 1).getIdAnnouncement();
                 announcementService.delete(announcementIdToDelete);
@@ -73,7 +73,7 @@ public class Main {
             //  Gestion des Réservations (Reservations)
             // ===========================
 
-            // 5️⃣ Ajout d'une nouvelle réservation (en utilisant des locations et une annonce existantes)
+            //  Ajout d'une nouvelle réservation (en utilisant des locations et une annonce existantes)
             Reservation newReservation = new Reservation();
             newReservation.setDate(LocalDateTime.now());
             newReservation.setStatus(Reservation.Status.CONFIRMED);
