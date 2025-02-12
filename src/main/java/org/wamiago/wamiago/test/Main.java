@@ -71,6 +71,7 @@ public class Main {
 
             userService.delete(newUser.getId());
             driverService.delete(driver.getId());
+            userService.delete(otherUser.getId());
             System.out.println("User and Driver deleted!");
 
 

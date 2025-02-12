@@ -14,7 +14,6 @@ public class StationService implements IService<Station> {
         this.connection = DataBase.getInstance().getConnection();
     }
 
-
     @Override
     public void create(Station station) throws SQLException {
         String sql ="INSERT INTO bicycle_station (name,id_location,total_docks," +
@@ -76,6 +75,7 @@ public class StationService implements IService<Station> {
         }
         return stations;
     }
+
     public Station getStationById(int id) throws SQLException {
         String sql = "SELECT * FROM bicycle_station WHERE id_station = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);

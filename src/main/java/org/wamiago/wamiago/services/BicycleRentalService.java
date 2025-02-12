@@ -65,7 +65,7 @@ public class BicycleRentalService implements IService<BicycleRental> {
         while (rs.next()) {
             BicycleRental bicycleRental = new BicycleRental(
                     rs.getInt("id_user_rental"),
-                    new UserService().getUserById(rs.getInt("id_user")),
+                    new UserService().getById(rs.getInt("id_user")),
                     new BicycleService().getBicycleById(rs.getInt("id_bike")),
                     new StationService().getStationById(rs.getInt("id_start_station")),
                     new StationService().getStationById(rs.getInt("id_end_station")),

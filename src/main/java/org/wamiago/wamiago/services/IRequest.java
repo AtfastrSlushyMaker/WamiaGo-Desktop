@@ -7,16 +7,11 @@ public interface IRequest<T> {
 
     void create(T entity) throws SQLException;
 
-
     void update(T entity) throws SQLException;
-
 
     void delete(int id) throws SQLException;
 
-
     List<T> read() throws SQLException;
-
-
 
     String getClientNameById(int idClient) throws SQLException;
 

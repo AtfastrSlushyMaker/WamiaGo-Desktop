@@ -30,7 +30,6 @@ public class RideService implements IRide <Ride> {
         }
     }
 
-
     @Override
     public void update(Ride entity) throws SQLException {
         String sql = "UPDATE ride SET id_taxi = ?, id_client = ?, id_request = ?, distance = ?, duration = ?, price = ?, status = ?, ride_date = ? WHERE id_ride = ?";

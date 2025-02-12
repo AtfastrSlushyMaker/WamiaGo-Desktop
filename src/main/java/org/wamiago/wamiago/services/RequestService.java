@@ -47,7 +47,6 @@ public class RequestService implements IRequest<Request> {
         preparedStatement.executeUpdate();
     }
 
-
     @Override
     public List<Request> read() throws SQLException {
         List<Request> requests = new ArrayList<>();
@@ -90,7 +89,6 @@ public class RequestService implements IRequest<Request> {
         return requests;
     }
 
-
     @Override
     public String getClientNameById(int idClient) throws SQLException {
         String query = "SELECT name FROM user WHERE id_user = ?";
@@ -115,7 +113,6 @@ public class RequestService implements IRequest<Request> {
         return "Unknown";
     }
 
-
     @Override
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM request WHERE id_request = ?";
@@ -123,8 +120,6 @@ public class RequestService implements IRequest<Request> {
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
     }
-
-
 
     @Override
     public void update(Request request) throws SQLException {
