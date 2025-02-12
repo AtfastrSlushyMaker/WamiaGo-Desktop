@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : mer. 12 fév. 2025 à 22:57
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Feb 12, 2025 at 10:57 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `wamia_go`
+-- Database: `wamia_go`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `announcement`
+-- Table structure for table `announcement`
 --
 
 CREATE TABLE `announcement` (
@@ -38,17 +38,17 @@ CREATE TABLE `announcement` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `announcement`
+-- Dumping data for table `announcement`
 --
 
 INSERT INTO `announcement` (`id_announcement`, `id_transporter`, `title`, `content`, `date`, `zone`, `status`) VALUES
-(1, 2, 'New Transport Service', 'We are launching a new transport service in Tunis.', '0000-00-00 00:00:00', 'Tunis', 1),
-(2, 2, 'Maintenance Notice', 'Maintenance work will be carried out on the Sousse station.', '0000-00-00 00:00:00', 'Sousse', 0);
+(1, 2, 'New Transport Service', 'We are launching a new transport service in Tunis.', '2025-02-01 22:55:20', 'Tunis', 1),
+(2, 2, 'Maintenance Notice', 'Maintenance work will be carried out on the Sousse station.', '2025-02-01 22:55:27', 'Sousse', 0);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `bicycle`
+-- Table structure for table `bicycle`
 --
 
 CREATE TABLE `bicycle` (
@@ -61,7 +61,7 @@ CREATE TABLE `bicycle` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `bicycle`
+-- Dumping data for table `bicycle`
 --
 
 INSERT INTO `bicycle` (`id_bike`, `id_station`, `status`, `battery_level`, `range_km`, `last_updated`) VALUES
@@ -79,7 +79,7 @@ INSERT INTO `bicycle` (`id_bike`, `id_station`, `status`, `battery_level`, `rang
 -- --------------------------------------------------------
 
 --
--- Structure de la table `bicycle_rental`
+-- Table structure for table `bicycle_rental`
 --
 
 CREATE TABLE `bicycle_rental` (
@@ -96,7 +96,7 @@ CREATE TABLE `bicycle_rental` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `bicycle_rental`
+-- Dumping data for table `bicycle_rental`
 --
 
 INSERT INTO `bicycle_rental` (`id_user_rental`, `id_user`, `id_bike`, `id_start_station`, `id_end_station`, `start_time`, `end_time`, `distance_km`, `battery_used`, `cost`) VALUES
@@ -106,7 +106,7 @@ INSERT INTO `bicycle_rental` (`id_user_rental`, `id_user`, `id_bike`, `id_start_
 -- --------------------------------------------------------
 
 --
--- Structure de la table `bicycle_station`
+-- Table structure for table `bicycle_station`
 --
 
 CREATE TABLE `bicycle_station` (
@@ -121,7 +121,7 @@ CREATE TABLE `bicycle_station` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `bicycle_station`
+-- Dumping data for table `bicycle_station`
 --
 
 INSERT INTO `bicycle_station` (`id_station`, `name`, `id_location`, `total_docks`, `available_docks`, `available_bikes`, `charging_bikes`, `status`) VALUES
@@ -138,7 +138,7 @@ INSERT INTO `bicycle_station` (`id_station`, `name`, `id_location`, `total_docks
 -- --------------------------------------------------------
 
 --
--- Structure de la table `booking`
+-- Table structure for table `booking`
 --
 
 CREATE TABLE `booking` (
@@ -150,7 +150,7 @@ CREATE TABLE `booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `booking`
+-- Dumping data for table `booking`
 --
 
 INSERT INTO `booking` (`id_booking`, `id_trip`, `id_passenger`, `reserved_seats`, `status`) VALUES
@@ -160,7 +160,7 @@ INSERT INTO `booking` (`id_booking`, `id_trip`, `id_passenger`, `reserved_seats`
 -- --------------------------------------------------------
 
 --
--- Structure de la table `driver`
+-- Table structure for table `driver`
 --
 
 CREATE TABLE `driver` (
@@ -172,7 +172,7 @@ CREATE TABLE `driver` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `driver`
+-- Dumping data for table `driver`
 --
 
 INSERT INTO `driver` (`id_driver`, `id_user`, `permit_number`, `role`, `status`) VALUES
@@ -187,7 +187,7 @@ INSERT INTO `driver` (`id_driver`, `id_user`, `permit_number`, `role`, `status`)
 -- --------------------------------------------------------
 
 --
--- Structure de la table `location`
+-- Table structure for table `location`
 --
 
 CREATE TABLE `location` (
@@ -198,7 +198,7 @@ CREATE TABLE `location` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `location`
+-- Dumping data for table `location`
 --
 
 INSERT INTO `location` (`id_location`, `address`, `latitude`, `longitude`) VALUES
@@ -216,7 +216,7 @@ INSERT INTO `location` (`id_location`, `address`, `latitude`, `longitude`) VALUE
 -- --------------------------------------------------------
 
 --
--- Structure de la table `rating`
+-- Table structure for table `rating`
 --
 
 CREATE TABLE `rating` (
@@ -228,7 +228,7 @@ CREATE TABLE `rating` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `rating`
+-- Dumping data for table `rating`
 --
 
 INSERT INTO `rating` (`id_rating`, `id_user`, `id_driver`, `comment`, `rating`) VALUES
@@ -238,7 +238,7 @@ INSERT INTO `rating` (`id_rating`, `id_user`, `id_driver`, `comment`, `rating`) 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `reclamation`
+-- Table structure for table `reclamation`
 --
 
 CREATE TABLE `reclamation` (
@@ -250,7 +250,7 @@ CREATE TABLE `reclamation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `reclamation`
+-- Dumping data for table `reclamation`
 --
 
 INSERT INTO `reclamation` (`id_reclamation`, `id_user`, `content`, `date`, `status`) VALUES
@@ -260,7 +260,7 @@ INSERT INTO `reclamation` (`id_reclamation`, `id_user`, `content`, `date`, `stat
 -- --------------------------------------------------------
 
 --
--- Structure de la table `relocation`
+-- Table structure for table `relocation`
 --
 
 CREATE TABLE `relocation` (
@@ -272,7 +272,7 @@ CREATE TABLE `relocation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `relocation`
+-- Dumping data for table `relocation`
 --
 
 INSERT INTO `relocation` (`id_relocation`, `id_reservation`, `date`, `status`, `cost`) VALUES
@@ -282,7 +282,7 @@ INSERT INTO `relocation` (`id_relocation`, `id_reservation`, `date`, `status`, `
 -- --------------------------------------------------------
 
 --
--- Structure de la table `request`
+-- Table structure for table `request`
 --
 
 CREATE TABLE `request` (
@@ -296,7 +296,7 @@ CREATE TABLE `request` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `request`
+-- Dumping data for table `request`
 --
 
 INSERT INTO `request` (`id_request`, `id_client`, `id_taxi`, `id_departure_location`, `id_arrival_location`, `status`, `request_date`) VALUES
@@ -306,7 +306,7 @@ INSERT INTO `request` (`id_request`, `id_client`, `id_taxi`, `id_departure_locat
 -- --------------------------------------------------------
 
 --
--- Structure de la table `reservation`
+-- Table structure for table `reservation`
 --
 
 CREATE TABLE `reservation` (
@@ -320,7 +320,7 @@ CREATE TABLE `reservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `reservation`
+-- Dumping data for table `reservation`
 --
 
 INSERT INTO `reservation` (`id_reservation`, `date`, `status`, `description`, `id_start_location`, `id_end_location`, `id_announcement`) VALUES
@@ -330,7 +330,7 @@ INSERT INTO `reservation` (`id_reservation`, `date`, `status`, `description`, `i
 -- --------------------------------------------------------
 
 --
--- Structure de la table `response`
+-- Table structure for table `response`
 --
 
 CREATE TABLE `response` (
@@ -341,7 +341,7 @@ CREATE TABLE `response` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `response`
+-- Dumping data for table `response`
 --
 
 INSERT INTO `response` (`id_response`, `id_reclamation`, `content`, `date`) VALUES
@@ -351,7 +351,7 @@ INSERT INTO `response` (`id_response`, `id_reclamation`, `content`, `date`) VALU
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ride`
+-- Table structure for table `ride`
 --
 
 CREATE TABLE `ride` (
@@ -367,7 +367,7 @@ CREATE TABLE `ride` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `ride`
+-- Dumping data for table `ride`
 --
 
 INSERT INTO `ride` (`id_ride`, `id_taxi`, `id_client`, `id_request`, `distance`, `duration`, `price`, `status`, `ride_date`) VALUES
@@ -377,7 +377,7 @@ INSERT INTO `ride` (`id_ride`, `id_taxi`, `id_client`, `id_request`, `distance`,
 -- --------------------------------------------------------
 
 --
--- Structure de la table `trip`
+-- Table structure for table `trip`
 --
 
 CREATE TABLE `trip` (
@@ -392,7 +392,7 @@ CREATE TABLE `trip` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `trip`
+-- Dumping data for table `trip`
 --
 
 INSERT INTO `trip` (`id_trip`, `departure_city`, `arrival_city`, `departure_date`, `available_seats`, `price_per_passenger`, `id_driver`, `id_vehicle`) VALUES
@@ -402,7 +402,7 @@ INSERT INTO `trip` (`id_trip`, `departure_city`, `arrival_city`, `departure_date
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -422,7 +422,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `name`, `email`, `password`, `phone_number`, `role`, `id_location`, `gender`, `profile_picture`, `is_verified`, `account_status`, `date_of_birth`, `status`) VALUES
@@ -440,7 +440,7 @@ INSERT INTO `user` (`id_user`, `name`, `email`, `password`, `phone_number`, `rol
 -- --------------------------------------------------------
 
 --
--- Structure de la table `vehicle`
+-- Table structure for table `vehicle`
 --
 
 CREATE TABLE `vehicle` (
@@ -453,7 +453,7 @@ CREATE TABLE `vehicle` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `vehicle`
+-- Dumping data for table `vehicle`
 --
 
 INSERT INTO `vehicle` (`id_vehicle`, `id_driver`, `registration`, `color`, `model`, `brand`) VALUES
@@ -461,25 +461,25 @@ INSERT INTO `vehicle` (`id_vehicle`, `id_driver`, `registration`, `color`, `mode
 (2, 5, 'TN5678CD', 'Blue', 'Model S', 'Tesla');
 
 --
--- Index pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `announcement`
+-- Indexes for table `announcement`
 --
 ALTER TABLE `announcement`
   ADD PRIMARY KEY (`id_announcement`),
   ADD KEY `announcement_ibfk_1` (`id_transporter`);
 
 --
--- Index pour la table `bicycle`
+-- Indexes for table `bicycle`
 --
 ALTER TABLE `bicycle`
   ADD PRIMARY KEY (`id_bike`),
   ADD KEY `bicycle_ibfk_1` (`id_station`);
 
 --
--- Index pour la table `bicycle_rental`
+-- Indexes for table `bicycle_rental`
 --
 ALTER TABLE `bicycle_rental`
   ADD PRIMARY KEY (`id_user_rental`),
@@ -489,14 +489,14 @@ ALTER TABLE `bicycle_rental`
   ADD KEY `bicycle_rental_ibfk_4` (`id_end_station`);
 
 --
--- Index pour la table `bicycle_station`
+-- Indexes for table `bicycle_station`
 --
 ALTER TABLE `bicycle_station`
   ADD PRIMARY KEY (`id_station`),
   ADD KEY `bicycle_station_ibfk_1` (`id_location`);
 
 --
--- Index pour la table `booking`
+-- Indexes for table `booking`
 --
 ALTER TABLE `booking`
   ADD PRIMARY KEY (`id_booking`),
@@ -504,7 +504,7 @@ ALTER TABLE `booking`
   ADD KEY `booking_ibfk_2` (`id_trip`);
 
 --
--- Index pour la table `driver`
+-- Indexes for table `driver`
 --
 ALTER TABLE `driver`
   ADD PRIMARY KEY (`id_driver`),
@@ -512,13 +512,13 @@ ALTER TABLE `driver`
   ADD KEY `driver_ibfk_1` (`id_user`);
 
 --
--- Index pour la table `location`
+-- Indexes for table `location`
 --
 ALTER TABLE `location`
   ADD PRIMARY KEY (`id_location`);
 
 --
--- Index pour la table `rating`
+-- Indexes for table `rating`
 --
 ALTER TABLE `rating`
   ADD PRIMARY KEY (`id_rating`),
@@ -526,21 +526,21 @@ ALTER TABLE `rating`
   ADD KEY `rating_ibfk_2` (`id_user`);
 
 --
--- Index pour la table `reclamation`
+-- Indexes for table `reclamation`
 --
 ALTER TABLE `reclamation`
   ADD PRIMARY KEY (`id_reclamation`),
   ADD KEY `reclamation_ibfk_1` (`id_user`);
 
 --
--- Index pour la table `relocation`
+-- Indexes for table `relocation`
 --
 ALTER TABLE `relocation`
   ADD PRIMARY KEY (`id_relocation`),
   ADD KEY `relocation_ibfk_1` (`id_reservation`);
 
 --
--- Index pour la table `request`
+-- Indexes for table `request`
 --
 ALTER TABLE `request`
   ADD PRIMARY KEY (`id_request`),
@@ -550,7 +550,7 @@ ALTER TABLE `request`
   ADD KEY `fk_request_taxi` (`id_taxi`);
 
 --
--- Index pour la table `reservation`
+-- Indexes for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`id_reservation`),
@@ -559,14 +559,14 @@ ALTER TABLE `reservation`
   ADD KEY `reservation_ibfk_3` (`id_announcement`);
 
 --
--- Index pour la table `response`
+-- Indexes for table `response`
 --
 ALTER TABLE `response`
   ADD PRIMARY KEY (`id_response`),
   ADD KEY `response_ibfk_1` (`id_reclamation`);
 
 --
--- Index pour la table `ride`
+-- Indexes for table `ride`
 --
 ALTER TABLE `ride`
   ADD PRIMARY KEY (`id_ride`),
@@ -575,7 +575,7 @@ ALTER TABLE `ride`
   ADD KEY `ride_ibfk_3` (`id_request`);
 
 --
--- Index pour la table `trip`
+-- Indexes for table `trip`
 --
 ALTER TABLE `trip`
   ADD PRIMARY KEY (`id_trip`),
@@ -583,7 +583,7 @@ ALTER TABLE `trip`
   ADD KEY `trip_ibfk_2` (`id_driver`);
 
 --
--- Index pour la table `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`),
@@ -592,7 +592,7 @@ ALTER TABLE `user`
   ADD KEY `user_ibfk_1` (`id_location`);
 
 --
--- Index pour la table `vehicle`
+-- Indexes for table `vehicle`
 --
 ALTER TABLE `vehicle`
   ADD PRIMARY KEY (`id_vehicle`),
@@ -600,129 +600,129 @@ ALTER TABLE `vehicle`
   ADD KEY `vehicle_ibfk_1` (`id_driver`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `announcement`
+-- AUTO_INCREMENT for table `announcement`
 --
 ALTER TABLE `announcement`
   MODIFY `id_announcement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pour la table `bicycle`
+-- AUTO_INCREMENT for table `bicycle`
 --
 ALTER TABLE `bicycle`
   MODIFY `id_bike` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT pour la table `bicycle_rental`
+-- AUTO_INCREMENT for table `bicycle_rental`
 --
 ALTER TABLE `bicycle_rental`
   MODIFY `id_user_rental` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pour la table `bicycle_station`
+-- AUTO_INCREMENT for table `bicycle_station`
 --
 ALTER TABLE `bicycle_station`
   MODIFY `id_station` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT pour la table `booking`
+-- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
   MODIFY `id_booking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT pour la table `driver`
+-- AUTO_INCREMENT for table `driver`
 --
 ALTER TABLE `driver`
-  MODIFY `id_driver` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id_driver` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- AUTO_INCREMENT pour la table `location`
+-- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
   MODIFY `id_location` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT pour la table `rating`
+-- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id_rating` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_rating` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT pour la table `reclamation`
+-- AUTO_INCREMENT for table `reclamation`
 --
 ALTER TABLE `reclamation`
   MODIFY `id_reclamation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pour la table `relocation`
+-- AUTO_INCREMENT for table `relocation`
 --
 ALTER TABLE `relocation`
   MODIFY `id_relocation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pour la table `request`
+-- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
   MODIFY `id_request` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT pour la table `reservation`
+-- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
   MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pour la table `response`
+-- AUTO_INCREMENT for table `response`
 --
 ALTER TABLE `response`
   MODIFY `id_response` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pour la table `ride`
+-- AUTO_INCREMENT for table `ride`
 --
 ALTER TABLE `ride`
   MODIFY `id_ride` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT pour la table `trip`
+-- AUTO_INCREMENT for table `trip`
 --
 ALTER TABLE `trip`
   MODIFY `id_trip` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
--- AUTO_INCREMENT pour la table `vehicle`
+-- AUTO_INCREMENT for table `vehicle`
 --
 ALTER TABLE `vehicle`
   MODIFY `id_vehicle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- Contraintes pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `announcement`
+-- Constraints for table `announcement`
 --
 ALTER TABLE `announcement`
   ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`id_transporter`) REFERENCES `driver` (`id_driver`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `bicycle`
+-- Constraints for table `bicycle`
 --
 ALTER TABLE `bicycle`
   ADD CONSTRAINT `bicycle_ibfk_1` FOREIGN KEY (`id_station`) REFERENCES `bicycle_station` (`id_station`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `bicycle_rental`
+-- Constraints for table `bicycle_rental`
 --
 ALTER TABLE `bicycle_rental`
   ADD CONSTRAINT `bicycle_rental_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -731,45 +731,45 @@ ALTER TABLE `bicycle_rental`
   ADD CONSTRAINT `bicycle_rental_ibfk_4` FOREIGN KEY (`id_end_station`) REFERENCES `bicycle_station` (`id_station`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `bicycle_station`
+-- Constraints for table `bicycle_station`
 --
 ALTER TABLE `bicycle_station`
   ADD CONSTRAINT `bicycle_station_ibfk_1` FOREIGN KEY (`id_location`) REFERENCES `location` (`id_location`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `booking`
+-- Constraints for table `booking`
 --
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`id_passenger`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`id_trip`) REFERENCES `trip` (`id_trip`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `driver`
+-- Constraints for table `driver`
 --
 ALTER TABLE `driver`
   ADD CONSTRAINT `driver_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `rating`
+-- Constraints for table `rating`
 --
 ALTER TABLE `rating`
   ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`id_driver`) REFERENCES `driver` (`id_driver`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `reclamation`
+-- Constraints for table `reclamation`
 --
 ALTER TABLE `reclamation`
   ADD CONSTRAINT `reclamation_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `relocation`
+-- Constraints for table `relocation`
 --
 ALTER TABLE `relocation`
   ADD CONSTRAINT `relocation_ibfk_1` FOREIGN KEY (`id_reservation`) REFERENCES `reservation` (`id_reservation`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `request`
+-- Constraints for table `request`
 --
 ALTER TABLE `request`
   ADD CONSTRAINT `fk_request_arrival_location` FOREIGN KEY (`id_arrival_location`) REFERENCES `location` (`id_location`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -778,7 +778,7 @@ ALTER TABLE `request`
   ADD CONSTRAINT `fk_request_taxi` FOREIGN KEY (`id_taxi`) REFERENCES `driver` (`id_driver`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `reservation`
+-- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`id_start_location`) REFERENCES `location` (`id_location`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -786,13 +786,13 @@ ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_3` FOREIGN KEY (`id_announcement`) REFERENCES `announcement` (`id_announcement`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `response`
+-- Constraints for table `response`
 --
 ALTER TABLE `response`
   ADD CONSTRAINT `response_ibfk_1` FOREIGN KEY (`id_reclamation`) REFERENCES `reclamation` (`id_reclamation`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `ride`
+-- Constraints for table `ride`
 --
 ALTER TABLE `ride`
   ADD CONSTRAINT `ride_ibfk_1` FOREIGN KEY (`id_taxi`) REFERENCES `driver` (`id_driver`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -800,20 +800,20 @@ ALTER TABLE `ride`
   ADD CONSTRAINT `ride_ibfk_3` FOREIGN KEY (`id_request`) REFERENCES `request` (`id_request`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `trip`
+-- Constraints for table `trip`
 --
 ALTER TABLE `trip`
   ADD CONSTRAINT `trip_ibfk_1` FOREIGN KEY (`id_vehicle`) REFERENCES `vehicle` (`id_vehicle`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `trip_ibfk_2` FOREIGN KEY (`id_driver`) REFERENCES `driver` (`id_driver`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `user`
+-- Constraints for table `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_location`) REFERENCES `location` (`id_location`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `vehicle`
+-- Constraints for table `vehicle`
 --
 ALTER TABLE `vehicle`
   ADD CONSTRAINT `vehicle_ibfk_1` FOREIGN KEY (`id_driver`) REFERENCES `driver` (`id_driver`) ON DELETE CASCADE ON UPDATE CASCADE;
