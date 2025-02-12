@@ -10,4 +10,18 @@ public interface IService<T> {
     void update(T t)throws SQLException;
     void delete(int id)throws SQLException;
     List<T> read() throws SQLException;
+    default String getClientNameById(int idClient) throws SQLException
+    {
+        throw new UnsupportedOperationException("getById is not implemented.");
+    }
+
+    default String getLocationNameById(int idLocation) throws SQLException
+    {
+        throw new UnsupportedOperationException("getById is not implemented.");
+    }
+    default T search(int id) throws SQLException
+    {
+        throw new UnsupportedOperationException("getById is not implemented.");
+    }
+
 }

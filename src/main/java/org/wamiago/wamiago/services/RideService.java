@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RideService implements IRide <Ride> {
+public class RideService implements IService <Ride> {
 
     private final Connection connection;
 
