@@ -1,12 +1,13 @@
 package org.wamiago.wamiago.test;
+
 import org.wamiago.wamiago.entities.*;
 import org.wamiago.wamiago.services.*;
-import java.sql.SQLException;
-import java.util.List;
 
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 public class Main {
     public static void main(String[] args) {
-
         IService<User> userService = new UserService();
         IService<Driver> driverService = new DriverService();
         RatingService ratingService = new RatingService();
@@ -17,28 +18,49 @@ public class Main {
             System.out.println("### =========================== ###");
             Location location = new Location(1, "123 Main St", 36.8065f, 10.1815f);
 
+            User newUser = new User(1, "John Doe", "john@example.com", "15678", "securepassword", User.Role.CLIENT,
+                    location, User.Gender.MALE, "john_profile.jpg", true, User.AccountStatus.ACTIVE,
+                    LocalDate.of(1990, 5, 15), User.Status.OFFLINE);
+            User otherUser = new User(2, "Ahmed Ali", "ahmed@example.com", "123456", "passs", User.Role.CLIENT,
+                    location, User.Gender.MALE, "ahmed_profile.jpg", false, User.AccountStatus.DEACTIVATED,
+                    LocalDate.of(1985, 7, 20), User.Status.OFFLINE);
 
-            User newUser = new User(1, "John Doe", "john@example.com", "15678", "securepassword", User.Role.CLIENT, location);
-            User otherUser = new User(2, "Ahmed Ali", "ahmed@example.com", "123456", "passs", User.Role.CLIENT, location);
             userService.create(newUser);
             userService.create(otherUser);
+
             System.out.println("Created User: " + newUser);
             System.out.println("Created User: " + otherUser);
 
             System.out.println("### =========================== ###");
             System.out.println("###        Creating Driver      ###");
             System.out.println("### =========================== ###");
+
             Driver driver = new Driver(
-                    1, otherUser.getId(), otherUser.getName(), otherUser.getEmail(), otherUser.getPhone(),
-                    otherUser.getPassword(), Driver.DriverRole.TAXI_DRIVER, otherUser.getLocation(), "111", 1
+                    1,
+                    newUser.getId(),
+                    "John Doe",
+                    "john@example.com",
+                    "15678",
+                    "securepassword",
+                    Driver.DriverRole.TAXI_DRIVER,
+                    location,
+                    "A1B2C3D4",
+                    Driver.DRIVER_ACTIVE,
+                    User.Gender.MALE,
+                    "john_profile.jpg",
+                    true,
+                    User.AccountStatus.ACTIVE,
+                    LocalDate.of(1990, 5, 15),
+                    User.Status.OFFLINE
             );
+
             driverService.create(driver);
             System.out.println("Created Driver: " + driver);
 
             System.out.println("### =========================== ###");
             System.out.println("###         Creating Rating     ###");
             System.out.println("### =========================== ###");
-            Rating newRating = new Rating(1, newUser.getId(), driver.getId_driver(), "Great driver!", 5);
+            Rating newRating = new Rating(1, newUser.getId(), driver.getIdDriver(), "Great driver!", 5);
             ratingService.create(newRating);
             System.out.println("Rating added: " + newRating);
 
@@ -52,14 +74,14 @@ public class Main {
             System.out.println("### =========================== ###");
             System.out.println("###   Reading Ratings by Driver ###");
             System.out.println("### =========================== ###");
-            List<Rating> driverRatings = ratingService.getRatingsByDriver(driver.getId_driver());
-            System.out.println("Driver " + driver.getId_driver() + " Ratings: " + driverRatings);
+            List<Rating> driverRatings = ratingService.getRatingsByDriver(driver.getIdDriver());
+            System.out.println("Driver " + driver.getIdDriver() + " Ratings: " + driverRatings);
 
             System.out.println("### =========================== ###");
             System.out.println("###    Calculating Avg Rating   ###");
             System.out.println("### =========================== ###");
-            double avgRating = ratingService.getAverageRatingByDriver(driver.getId_driver());
-            System.out.println("Driver " + driver.getId_driver() + " Average Rating: " + avgRating);
+            double avgRating = ratingService.getAverageRatingByDriver(driver.getIdDriver());
+            System.out.println("Driver " + driver.getIdDriver() + " Average Rating: " + avgRating);
 
             System.out.println("### =========================== ###");
             System.out.println("###       Reading All Users     ###");
@@ -94,11 +116,16 @@ public class Main {
             System.out.println("### =========================== ###");
             System.out.println("###     Deleting User and Driver ###");
             System.out.println("### =========================== ###");
-            userService.delete(newUser.getId());
-            driverService.delete(driver.getId());
-            userService.delete(otherUser.getId());
-            System.out.println("User and Driver deleted!");
 
+            System.out.println("Deleting Driver with ID: " + driver.getId());
+            System.out.println("Deleting User with ID: " + newUser.getId());
+
+            driverService.delete(driver.getId());
+
+            userService.delete(newUser.getId());
+            userService.delete(otherUser.getId());
+
+            System.out.println("User and Driver deleted!");
         } catch (SQLException e) {
             System.err.println("An error occurred: " + e.getMessage());
             e.printStackTrace();
