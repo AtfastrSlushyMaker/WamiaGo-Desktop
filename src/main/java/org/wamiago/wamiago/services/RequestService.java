@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestService implements IRequest<Request> {
+public class RequestService implements IService<Request> {
 
     private final Connection connection;
 
@@ -89,7 +89,7 @@ public class RequestService implements IRequest<Request> {
         return requests;
     }
 
-    @Override
+
     public String getClientNameById(int idClient) throws SQLException {
         String query = "SELECT name FROM user WHERE id_user = ?";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -101,7 +101,7 @@ public class RequestService implements IRequest<Request> {
         return "Unknown";
     }
 
-    @Override
+
     public String getLocationNameById(int idLocation) throws SQLException {
         String query = "SELECT address FROM location WHERE id_location = ?";
         PreparedStatement statement = connection.prepareStatement(query);
