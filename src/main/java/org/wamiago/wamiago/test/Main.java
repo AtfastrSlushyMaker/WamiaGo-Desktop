@@ -115,14 +115,11 @@ public class Main {
             System.out.println("###     Deleting User and Driver ###");
             System.out.println("### =========================== ###");
 
-            // Debugging: Print the IDs being used for deletion
             System.out.println("Deleting Driver with ID: " + driver.getId());
             System.out.println("Deleting User with ID: " + newUser.getId());
 
-            // Delete the driver first
             driverService.delete(driver.getId());
 
-            // Then delete the user
             userService.delete(newUser.getId());
             userService.delete(otherUser.getId());
 
