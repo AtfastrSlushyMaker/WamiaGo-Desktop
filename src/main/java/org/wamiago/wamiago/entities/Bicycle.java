@@ -1,5 +1,6 @@
 package org.wamiago.wamiago.entities;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -12,10 +13,10 @@ public class Bicycle {
     private STATUS status;
     private float battery_level;
     private float range_km;
-    private LocalDateTime last_updated;
+    private Timestamp last_updated;
 
 
-    public Bicycle(int id, Station station, STATUS status, float battery_level, float range_km, LocalDateTime last_updated) {
+    public Bicycle(int id, Station station, STATUS status, float battery_level, float range_km, Timestamp last_updated) {
         this.id = id;
         this.station = station;
         this.status = status;
@@ -30,7 +31,7 @@ public class Bicycle {
         this.status = STATUS.available;
         this.battery_level = 0;
         this.range_km = 0;
-        this.last_updated = LocalDateTime.now();
+        this.last_updated = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public int getId() {
@@ -65,11 +66,11 @@ public class Bicycle {
         this.range_km = range_km;
     }
 
-    public LocalDateTime getLast_updated() {
+    public Timestamp getLast_updated() {
         return last_updated;
     }
 
-    public void setLast_updated(LocalDateTime last_updated) {
+    public void setLast_updated(Timestamp last_updated) {
         this.last_updated = last_updated;
     }
 

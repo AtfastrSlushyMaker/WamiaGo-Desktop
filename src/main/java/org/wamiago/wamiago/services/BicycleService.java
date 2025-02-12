@@ -1,6 +1,7 @@
 package org.wamiago.wamiago.services;
 
 import org.wamiago.wamiago.entities.Bicycle;
+import org.wamiago.wamiago.entities.Station;
 import org.wamiago.wamiago.utils.DataBase;
 
 import java.sql.*;
@@ -63,7 +64,7 @@ public class BicycleService implements IService<Bicycle> {
             bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
             bicycle.setBattery_level(rs.getFloat("battery_level"));
             bicycle.setRange_km(rs.getFloat("range_km"));
-            bicycle.setLast_updated(rs.getObject("last_updated", Timestamp.class).toLocalDateTime());
+            bicycle.setLast_updated(rs.getTimestamp("last_updated"));
             bicycles.add(bicycle);
         }
 
@@ -82,10 +83,106 @@ public class BicycleService implements IService<Bicycle> {
                 bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
                 bicycle.setBattery_level(rs.getFloat("battery_level"));
                 bicycle.setRange_km(rs.getFloat("range_km"));
-                bicycle.setLast_updated(rs.getObject("last_updated", Timestamp.class).toLocalDateTime());
+                bicycle.setLast_updated(rs.getTimestamp("last_updated"));
                 return bicycle;
             }
         }
         return null;
     }
+    public List<Bicycle> getByStation(Station station) throws SQLException {
+        List<Bicycle> bicycles = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle WHERE id_station = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, station.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Bicycle bicycle = new Bicycle();
+                bicycle.setId(rs.getInt("id_bike"));
+                bicycle.getStation().setId(rs.getInt("id_station"));
+                bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
+                bicycle.setBattery_level(rs.getFloat("battery_level"));
+                bicycle.setRange_km(rs.getFloat("range_km"));
+                bicycle.setLast_updated(rs.getTimestamp("last_updated"));
+                bicycles.add(bicycle);
+            }
+        }
+        return bicycles;
+    }
+    public List<Bicycle> getByStatus(Bicycle.STATUS status) throws SQLException {
+        List<Bicycle> bicycles = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle WHERE status = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, status.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Bicycle bicycle = new Bicycle();
+                bicycle.setId(rs.getInt("id_bike"));
+                bicycle.getStation().setId(rs.getInt("id_station"));
+                bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
+                bicycle.setBattery_level(rs.getFloat("battery_level"));
+                bicycle.setRange_km(rs.getFloat("range_km"));
+                bicycle.setLast_updated(rs.getTimestamp("last_updated"));
+                bicycles.add(bicycle);
+            }
+        }
+        return bicycles;
+    }
+    public List<Bicycle> getByBatteryLevel(float battery_level) throws SQLException {
+        List<Bicycle> bicycles = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle WHERE battery_level = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setFloat(1, battery_level);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Bicycle bicycle = new Bicycle();
+                bicycle.setId(rs.getInt("id_bike"));
+                bicycle.getStation().setId(rs.getInt("id_station"));
+                bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
+                bicycle.setBattery_level(rs.getFloat("battery_level"));
+                bicycle.setRange_km(rs.getFloat("range_km"));
+                bicycle.setLast_updated(rs.getTimestamp("last_updated"));
+                bicycles.add(bicycle);
+            }
+        }
+        return bicycles;
+    }
+    public List<Bicycle> getByRangeKm(float range_km) throws SQLException {
+        List<Bicycle> bicycles = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle WHERE range_km = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setFloat(1, range_km);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Bicycle bicycle = new Bicycle();
+                bicycle.setId(rs.getInt("id_bike"));
+                bicycle.getStation().setId(rs.getInt("id_station"));
+                bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
+                bicycle.setBattery_level(rs.getFloat("battery_level"));
+                bicycle.setRange_km(rs.getFloat("range_km"));
+                bicycle.setLast_updated(rs.getTimestamp("last_updated"));
+                bicycles.add(bicycle);
+            }
+        }
+        return bicycles;
+    }
+    public List<Bicycle> getByLastUpdated(Timestamp last_updated) throws SQLException {
+        List<Bicycle> bicycles = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle WHERE last_updated = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setTimestamp(1, last_updated);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Bicycle bicycle = new Bicycle();
+                bicycle.setId(rs.getInt("id_bike"));
+                bicycle.getStation().setId(rs.getInt("id_station"));
+                bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
+                bicycle.setBattery_level(rs.getFloat("battery_level"));
+                bicycle.setRange_km(rs.getFloat("range_km"));
+                bicycle.setLast_updated(rs.getTimestamp("last_updated"));
+                bicycles.add(bicycle);
+            }
+        }
+        return bicycles;
+    }
+
 }
