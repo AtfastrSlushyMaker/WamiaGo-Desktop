@@ -20,7 +20,7 @@ public class Reclamation {
 
     public Reclamation() {
         this.idReclamation = 0;
-        this.user = new User(0,"walaa","walaa@eee.cpom","88888","23", User.Role.ADMIN,new Location());
+        this.user = new User();
         this.content = "";
         this.date = new Timestamp(System.currentTimeMillis());
         this.status = 0;

@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestService implements IRequest<Request> {
+public class RequestService implements IService<Request> {
 
     private final Connection connection;
 
@@ -25,7 +25,7 @@ public class RequestService implements IRequest<Request> {
             return;
         }
 
-        String checkTaxiQuery = "SELECT COUNT(*) FROM driver WHERE id_driver = ? AND role = 'taxi_driver'";
+        String checkTaxiQuery = "SELECT COUNT(*) FROM driver WHERE id_driver = ? AND role = 'TAXI_DRIVER'";
         PreparedStatement checkTaxiStmt = connection.prepareStatement(checkTaxiQuery);
         checkTaxiStmt.setInt(1, entity.getIdTaxi());
         ResultSet taxiResult = checkTaxiStmt.executeQuery();
@@ -70,7 +70,7 @@ public class RequestService implements IRequest<Request> {
                 request.setIdTaxi(idTaxi);
                 request.setIdDepartureLocation(idDepartureLocation);
                 request.setIdArrivalLocation(idArrivalLocation);
-                request.setStatus(Request.RequestStatus.valueOf(resultSet.getString("status").toUpperCase()));
+                request.setStatus(Request.RequestStatus.valueOf(resultSet.getString("status")));
                 request.setRequestDate(resultSet.getTimestamp("request_date"));
 
                 System.out.println("Request ID: " + request.getIdRequest());
@@ -89,7 +89,7 @@ public class RequestService implements IRequest<Request> {
         return requests;
     }
 
-    @Override
+
     public String getClientNameById(int idClient) throws SQLException {
         String query = "SELECT name FROM user WHERE id_user = ?";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -101,7 +101,7 @@ public class RequestService implements IRequest<Request> {
         return "Unknown";
     }
 
-    @Override
+
     public String getLocationNameById(int idLocation) throws SQLException {
         String query = "SELECT address FROM location WHERE id_location = ?";
         PreparedStatement statement = connection.prepareStatement(query);

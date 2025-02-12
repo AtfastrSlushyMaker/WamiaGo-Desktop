@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2025 at 12:18 AM
+-- Generation Time: Feb 12, 2025 at 10:57 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.3.11
 
@@ -32,10 +32,18 @@ CREATE TABLE `announcement` (
   `id_transporter` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `date` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `zone` enum('Ariana','Béja','Ben Arous','Bizerte','Gabès','Gafsa','Jendouba','Kairouan','Kasserine','Kebili','Kef','Mahdia','Manouba','Medenine','Monastir','Nabeul','Sfax','Sidi Bouzid','Siliana','Sousse','Tataouine','Tozeur','Tunis','Zaghouan') NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `announcement`
+--
+
+INSERT INTO `announcement` (`id_announcement`, `id_transporter`, `title`, `content`, `date`, `zone`, `status`) VALUES
+(1, 2, 'New Transport Service', 'We are launching a new transport service in Tunis.', '2025-02-01 22:55:20', 'Tunis', 1),
+(2, 2, 'Maintenance Notice', 'Maintenance work will be carried out on the Sousse station.', '2025-02-01 22:55:27', 'Sousse', 0);
 
 -- --------------------------------------------------------
 
@@ -46,7 +54,7 @@ CREATE TABLE `announcement` (
 CREATE TABLE `bicycle` (
   `id_bike` int(11) NOT NULL,
   `id_station` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL,
+  `status` enum('available','in_use','charging','maintenance','reserved') NOT NULL,
   `battery_level` float DEFAULT NULL,
   `range_km` float DEFAULT NULL,
   `last_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -57,16 +65,16 @@ CREATE TABLE `bicycle` (
 --
 
 INSERT INTO `bicycle` (`id_bike`, `id_station`, `status`, `battery_level`, `range_km`, `last_updated`) VALUES
-(1, 1, 1, 100, 50, '2025-02-12 00:10:24'),
-(2, 1, 1, 80, 40, '2025-02-12 00:10:24'),
-(3, 2, 1, 90, 45, '2025-02-12 00:10:24'),
-(4, 2, 1, 70, 35, '2025-02-12 00:10:24'),
-(5, 3, 1, 60, 30, '2025-02-12 00:10:24'),
-(6, 4, 1, 100, 50, '2025-02-12 00:10:24'),
-(7, 5, 1, 50, 25, '2025-02-12 00:10:24'),
-(8, 6, 1, 40, 20, '2025-02-12 00:10:24'),
-(9, 7, 1, 30, 15, '2025-02-12 00:10:24'),
-(10, 8, 1, 20, 10, '2025-02-12 00:10:24');
+(1, 1, 'available', 100, 50, '2025-02-12 16:48:37'),
+(2, 1, 'available', 80, 40, '2025-02-12 16:48:37'),
+(3, 2, 'available', 90, 45, '2025-02-12 16:48:37'),
+(4, 2, 'available', 70, 35, '2025-02-12 16:48:37'),
+(5, 3, 'available', 60, 30, '2025-02-12 16:48:37'),
+(6, 4, 'available', 100, 50, '2025-02-12 16:48:37'),
+(7, 5, 'available', 50, 25, '2025-02-12 16:48:37'),
+(8, 6, 'available', 40, 20, '2025-02-12 16:48:37'),
+(9, 7, 'available', 30, 15, '2025-02-12 16:48:37'),
+(10, 8, 'available', 20, 10, '2025-02-12 16:48:37');
 
 -- --------------------------------------------------------
 
@@ -80,12 +88,20 @@ CREATE TABLE `bicycle_rental` (
   `id_bike` int(11) NOT NULL,
   `id_start_station` int(11) NOT NULL,
   `id_end_station` int(11) NOT NULL,
-  `start_time` datetime NOT NULL,
-  `end_time` datetime NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `end_time` timestamp NULL DEFAULT NULL,
   `distance_km` float NOT NULL,
   `battery_used` float NOT NULL,
   `cost` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bicycle_rental`
+--
+
+INSERT INTO `bicycle_rental` (`id_user_rental`, `id_user`, `id_bike`, `id_start_station`, `id_end_station`, `start_time`, `end_time`, `distance_km`, `battery_used`, `cost`) VALUES
+(1, 1, 1, 1, 2, '2025-02-12 09:00:00', '2025-02-12 09:30:00', 5, 10, 2.5),
+(2, 4, 3, 2, 3, '2025-02-12 10:00:00', '2025-02-12 10:45:00', 7.5, 15, 3.75);
 
 -- --------------------------------------------------------
 
@@ -101,7 +117,7 @@ CREATE TABLE `bicycle_station` (
   `available_docks` int(11) NOT NULL,
   `available_bikes` int(11) NOT NULL,
   `charging_bikes` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1
+  `status` enum('active','inactive','maintenance','disabled') NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -109,15 +125,15 @@ CREATE TABLE `bicycle_station` (
 --
 
 INSERT INTO `bicycle_station` (`id_station`, `name`, `id_location`, `total_docks`, `available_docks`, `available_bikes`, `charging_bikes`, `status`) VALUES
-(1, 'Station Tunis Centre', 1, 20, 15, 5, 0, 1),
-(2, 'Station Sousse Medina', 2, 15, 10, 5, 0, 1),
-(3, 'Station Port El Kantaoui', 3, 10, 8, 2, 0, 1),
-(4, 'Station Sfax City', 5, 25, 20, 5, 0, 1),
-(5, 'Station Bizerte Port', 6, 12, 10, 2, 0, 1),
-(6, 'Station Gabès Oasis', 7, 8, 6, 2, 0, 1),
-(7, 'Station Monastir Marina', 8, 10, 7, 3, 0, 1),
-(8, 'Station Nabeul Beach', 9, 15, 12, 3, 0, 1),
-(9, 'Station Mahdia Old Town', 10, 10, 8, 2, 0, 1);
+(1, 'Station Tunis Centre', 1, 20, 15, 5, 0, 'active'),
+(2, 'Station Sousse Medina', 2, 15, 10, 5, 0, 'active'),
+(3, 'Station Port El Kantaoui', 3, 10, 8, 2, 0, 'active'),
+(4, 'Station Sfax City', 5, 25, 20, 5, 0, 'active'),
+(5, 'Station Bizerte Port', 6, 12, 10, 2, 0, 'active'),
+(6, 'Station Gabès Oasis', 7, 8, 6, 2, 0, 'active'),
+(7, 'Station Monastir Marina', 8, 10, 7, 3, 0, 'active'),
+(8, 'Station Nabeul Beach', 9, 15, 12, 3, 0, 'active'),
+(9, 'Station Mahdia Old Town', 10, 10, 8, 2, 0, 'active');
 
 -- --------------------------------------------------------
 
@@ -130,7 +146,7 @@ CREATE TABLE `booking` (
   `id_trip` int(11) NOT NULL,
   `id_passenger` int(11) NOT NULL,
   `reserved_seats` int(11) NOT NULL CHECK (`reserved_seats` > 0),
-  `status` tinyint(1) NOT NULL DEFAULT 0
+  `status` enum('Pending','Confirmed','Canceled') NOT NULL DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -138,11 +154,8 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`id_booking`, `id_trip`, `id_passenger`, `reserved_seats`, `status`) VALUES
-(1, 1, 2, 2, 1),
-(2, 2, 3, 1, 1),
-(3, 3, 4, 2, 1),
-(4, 4, 5, 3, 1),
-(5, 5, 6, 2, 1);
+(1, 1, 1, 1, 'Confirmed'),
+(2, 1, 4, 2, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -154,8 +167,8 @@ CREATE TABLE `driver` (
   `id_driver` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `permit_number` varchar(20) NOT NULL,
-  `role` enum('taxi_driver','transporter','carpool_driver') NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1
+  `role` enum('TAXI_DRIVER','TRANSPORTER','CARPOOL_DRIVER') NOT NULL,
+  `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -163,16 +176,13 @@ CREATE TABLE `driver` (
 --
 
 INSERT INTO `driver` (`id_driver`, `id_user`, `permit_number`, `role`, `status`) VALUES
-(1, 1, 'TN123456789', 'taxi_driver', 1),
-(2, 2, 'TN987654321', 'transporter', 1),
-(3, 3, 'TN456789123', 'carpool_driver', 1),
-(4, 4, 'TN321654987', 'taxi_driver', 1),
-(5, 5, 'TN654321987', 'transporter', 1),
-(6, 6, 'TN789123456', 'carpool_driver', 1),
-(7, 7, 'TN321987654', 'taxi_driver', 1),
-(8, 8, 'TN654987321', 'transporter', 1),
-(9, 9, 'TN987321654', 'carpool_driver', 1),
-(10, 10, 'TN123987456', 'taxi_driver', 1);
+(1, 1, 'ABC123456', 'TAXI_DRIVER', 1),
+(2, 2, 'XYZ789101', 'TRANSPORTER', 0),
+(3, 3, 'DEF345678', 'CARPOOL_DRIVER', 1),
+(4, 4, 'GHI567890', 'TAXI_DRIVER', 0),
+(5, 5, 'JKL123890', 'CARPOOL_DRIVER', 1),
+(6, 1, 'A1B2C3456', 'TAXI_DRIVER', 1),
+(7, 2, 'XY779101', 'TRANSPORTER', 0);
 
 -- --------------------------------------------------------
 
@@ -217,6 +227,14 @@ CREATE TABLE `rating` (
   `rating` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `rating`
+--
+
+INSERT INTO `rating` (`id_rating`, `id_user`, `id_driver`, `comment`, `rating`) VALUES
+(1, 1, 1, 'Great service!', 5),
+(2, 4, 3, 'Comfortable ride.', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -227,9 +245,17 @@ CREATE TABLE `reclamation` (
   `id_reclamation` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `date` datetime NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reclamation`
+--
+
+INSERT INTO `reclamation` (`id_reclamation`, `id_user`, `content`, `date`, `status`) VALUES
+(1, 1, 'Bicycle was not working properly.', '2025-02-12 11:00:00', 1),
+(2, 4, 'Late arrival of the taxi.', '2025-02-12 11:30:00', 0);
 
 -- --------------------------------------------------------
 
@@ -240,10 +266,18 @@ CREATE TABLE `reclamation` (
 CREATE TABLE `relocation` (
   `id_relocation` int(11) NOT NULL,
   `id_reservation` int(11) NOT NULL,
-  `date` datetime NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` tinyint(1) NOT NULL,
   `cost` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `relocation`
+--
+
+INSERT INTO `relocation` (`id_relocation`, `id_reservation`, `date`, `status`, `cost`) VALUES
+(1, 1, '2025-02-12 12:00:00', 1, 10),
+(2, 2, '2025-02-12 12:30:00', 0, 15);
 
 -- --------------------------------------------------------
 
@@ -257,7 +291,7 @@ CREATE TABLE `request` (
   `id_taxi` int(11) DEFAULT NULL,
   `id_departure_location` int(11) DEFAULT NULL,
   `id_arrival_location` int(11) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `status` enum('PENDING','ACCEPTED','REJECTED','CANCELED') NOT NULL DEFAULT 'PENDING',
   `request_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -266,11 +300,8 @@ CREATE TABLE `request` (
 --
 
 INSERT INTO `request` (`id_request`, `id_client`, `id_taxi`, `id_departure_location`, `id_arrival_location`, `status`, `request_date`) VALUES
-(1, 1, 1, 1, 2, 1, '2025-02-12 00:10:24'),
-(2, 2, 2, 2, 3, 1, '2025-02-12 00:10:24'),
-(3, 3, 3, 3, 4, 1, '2025-02-12 00:10:24'),
-(4, 4, 4, 4, 5, 1, '2025-02-12 00:10:24'),
-(5, 5, 5, 5, 6, 1, '2025-02-12 00:10:24');
+(1, 1, 1, 1, 2, 'ACCEPTED', '2025-02-12 13:00:00'),
+(2, 4, 3, 2, 3, 'PENDING', '2025-02-12 13:30:00');
 
 -- --------------------------------------------------------
 
@@ -280,13 +311,21 @@ INSERT INTO `request` (`id_request`, `id_client`, `id_taxi`, `id_departure_locat
 
 CREATE TABLE `reservation` (
   `id_reservation` int(11) NOT NULL,
-  `date` datetime NOT NULL,
-  `status` tinyint(1) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` enum('CONFIRMED','CANCELLED','COMPLETED','ON_GOING') NOT NULL DEFAULT 'CONFIRMED',
   `description` varchar(255) NOT NULL,
   `id_start_location` int(11) NOT NULL,
   `id_end_location` int(11) NOT NULL,
   `id_announcement` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`id_reservation`, `date`, `status`, `description`, `id_start_location`, `id_end_location`, `id_announcement`) VALUES
+(1, '2025-02-12 14:00:00', 'CONFIRMED', 'Reservation for transport service.', 1, 2, 1),
+(2, '2025-02-12 14:30:00', 'ON_GOING', 'Reservation for maintenance notice.', 2, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -298,8 +337,16 @@ CREATE TABLE `response` (
   `id_response` int(11) NOT NULL,
   `id_reclamation` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `date` datetime NOT NULL
+  `date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `response`
+--
+
+INSERT INTO `response` (`id_response`, `id_reclamation`, `content`, `date`) VALUES
+(1, 1, 'We apologize for the inconvenience. The issue has been resolved.', '2025-02-12 15:00:00'),
+(2, 2, 'We are investigating the delay. Thank you for your patience.', '2025-02-12 15:30:00');
 
 -- --------------------------------------------------------
 
@@ -315,7 +362,7 @@ CREATE TABLE `ride` (
   `distance` decimal(5,2) DEFAULT NULL,
   `duration` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `status` enum('ONGOING','COMPLETED','CANCELED') NOT NULL DEFAULT 'ONGOING',
   `ride_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -324,11 +371,8 @@ CREATE TABLE `ride` (
 --
 
 INSERT INTO `ride` (`id_ride`, `id_taxi`, `id_client`, `id_request`, `distance`, `duration`, `price`, `status`, `ride_date`) VALUES
-(1, 1, 1, 1, 15.50, 30, 25.00, 1, '2025-02-12 00:10:24'),
-(2, 2, 2, 2, 10.00, 20, 15.00, 1, '2025-02-12 00:10:24'),
-(3, 3, 3, 3, 8.50, 15, 12.50, 1, '2025-02-12 00:10:24'),
-(4, 4, 4, 4, 12.00, 25, 20.00, 1, '2025-02-12 00:10:24'),
-(5, 5, 5, 5, 5.00, 10, 8.00, 1, '2025-02-12 00:10:24');
+(1, 1, 1, 1, 5.00, 30, 10.00, 'COMPLETED', '2025-02-12 16:00:00'),
+(2, 3, 4, 2, 7.50, 45, 15.00, 'ONGOING', '2025-02-12 16:30:00');
 
 -- --------------------------------------------------------
 
@@ -340,7 +384,7 @@ CREATE TABLE `trip` (
   `id_trip` int(11) NOT NULL,
   `departure_city` enum('Ariana','Béja','Ben Arous','Bizerte','Gabès','Gafsa','Jendouba','Kairouan','Kasserine','Kebili','Kef','Mahdia','Manouba','Medenine','Monastir','Nabeul','Sfax','Sidi Bouzid','Siliana','Sousse','Tataouine','Tozeur','Tunis','Zaghouan') NOT NULL,
   `arrival_city` enum('Ariana','Béja','Ben Arous','Bizerte','Gabès','Gafsa','Jendouba','Kairouan','Kasserine','Kebili','Kef','Mahdia','Manouba','Medenine','Monastir','Nabeul','Sfax','Sidi Bouzid','Siliana','Sousse','Tataouine','Tozeur','Tunis','Zaghouan') NOT NULL,
-  `departure_date` datetime NOT NULL,
+  `departure_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `available_seats` int(11) NOT NULL CHECK (`available_seats` >= 0),
   `price_per_passenger` decimal(5,2) DEFAULT NULL,
   `id_driver` int(11) NOT NULL,
@@ -352,11 +396,8 @@ CREATE TABLE `trip` (
 --
 
 INSERT INTO `trip` (`id_trip`, `departure_city`, `arrival_city`, `departure_date`, `available_seats`, `price_per_passenger`, `id_driver`, `id_vehicle`) VALUES
-(1, 'Tunis', 'Sousse', '2023-10-15 08:00:00', 4, 20.00, 1, 1),
-(2, 'Sousse', 'Tunis', '2023-10-15 18:00:00', 3, 20.00, 2, 2),
-(3, 'Sfax', 'Gabès', '2023-10-16 09:00:00', 2, 15.00, 3, 3),
-(4, 'Bizerte', 'Tunis', '2023-10-17 07:00:00', 5, 25.00, 4, 4),
-(5, 'Monastir', 'Mahdia', '2023-10-18 10:00:00', 4, 10.00, 5, 5);
+(1, 'Tunis', 'Sousse', '2025-02-12 17:00:00', 4, 20.00, 3, 1),
+(2, 'Sousse', 'Sfax', '2025-02-12 17:30:00', 2, 25.00, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -370,25 +411,31 @@ CREATE TABLE `user` (
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `phone_number` varchar(15) NOT NULL,
-  `role` enum('client','admin') NOT NULL,
-  `id_location` int(11) NOT NULL
+  `role` enum('CLIENT','ADMIN') NOT NULL,
+  `id_location` int(11) DEFAULT NULL,
+  `gender` enum('MALE','FEMALE') NOT NULL,
+  `profile_picture` varchar(255) DEFAULT NULL,
+  `is_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `account_status` enum('ACTIVE','BANNED','DEACTIVATED') NOT NULL DEFAULT 'ACTIVE',
+  `date_of_birth` date DEFAULT NULL,
+  `status` enum('ONLINE','OFFLINE') NOT NULL DEFAULT 'OFFLINE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `name`, `email`, `password`, `phone_number`, `role`, `id_location`) VALUES
-(1, 'Mohamed Ali', 'mohamed.ali@example.com', 'password123', '20123456', 'client', 1),
-(2, 'Fatma Ben Ammar', 'fatma.benammar@example.com', 'password123', '22123456', 'client', 2),
-(3, 'Ahmed Trabelsi', 'ahmed.trabelsi@example.com', 'password123', '23123456', 'client', 3),
-(4, 'Samira Bouazizi', 'samira.bouazizi@example.com', 'password123', '24123456', 'client', 4),
-(5, 'Youssef Gharbi', 'youssef.gharbi@example.com', 'password123', '25123456', 'admin', 5),
-(6, 'Leila Mansouri', 'leila.mansouri@example.com', 'password123', '26123456', 'client', 6),
-(7, 'Hichem Ben Salah', 'hichem.bensalah@example.com', 'password123', '27123456', 'client', 7),
-(8, 'Amira Chaabane', 'amira.chaabane@example.com', 'password123', '28123456', 'client', 8),
-(9, 'Karim Boukadida', 'karim.boukadida@example.com', 'password123', '29123456', 'client', 9),
-(10, 'Sana Jlassi', 'sana.jlassi@example.com', 'password123', '30123456', 'client', 10);
+INSERT INTO `user` (`id_user`, `name`, `email`, `password`, `phone_number`, `role`, `id_location`, `gender`, `profile_picture`, `is_verified`, `account_status`, `date_of_birth`, `status`) VALUES
+(1, 'Mohamed Ali', 'mohamed.ali@example.com', 'password123', '20123456', 'CLIENT', 1, 'MALE', 'https://example.com/profile_pics/male_user1.jpg', 1, 'ACTIVE', '1995-04-15', 'ONLINE'),
+(2, 'Fatma Ben Ammar', 'fatma.benammar@example.com', 'password123', '22123456', 'CLIENT', 1, 'FEMALE', 'https://example.com/profile_pics/female_user1.jpg', 0, 'DEACTIVATED', '1990-12-22', 'OFFLINE'),
+(3, 'Ahmed Trabelsi', 'ahmed.trabelsi@example.com', 'password123', '23123456', 'CLIENT', 1, 'MALE', NULL, 0, 'BANNED', '2000-02-03', 'OFFLINE'),
+(4, 'Samira Bouazizi', 'samira.bouazizi@example.com', 'password123', '24123456', 'CLIENT', 2, 'FEMALE', 'https://example.com/profile_pics/female_user2.jpg', 1, 'ACTIVE', '1998-07-30', 'ONLINE'),
+(5, 'Youssef Gharbi', 'youssef.gharbi@example.com', 'password123', '25123456', 'ADMIN', 2, 'MALE', 'https://example.com/profile_pics/male_user2.jpg', 1, 'ACTIVE', '1992-11-05', 'OFFLINE'),
+(6, 'Leila Mansouri', 'leila.mansouri@example.com', 'password123', '26123456', 'CLIENT', 3, 'FEMALE', 'https://example.com/profile_pics/female_user3.jpg', 1, 'ACTIVE', '1991-05-15', 'OFFLINE'),
+(7, 'Hichem Ben Salah', 'hichem.bensalah@example.com', 'password123', '27123456', 'CLIENT', 3, 'MALE', 'https://example.com/profile_pics/male_user3.jpg', 0, 'ACTIVE', '1989-08-22', 'ONLINE'),
+(8, 'Amira Chaabane', 'amira.chaabane@example.com', 'password123', '28123456', 'CLIENT', 4, 'FEMALE', 'https://example.com/profile_pics/female_user4.jpg', 1, 'DEACTIVATED', '1996-11-11', 'OFFLINE'),
+(9, 'Karim Boukadida', 'karim.boukadida@example.com', 'password123', '29123456', 'CLIENT', 4, 'MALE', 'https://example.com/profile_pics/male_user4.jpg', 0, 'ACTIVE', '1992-03-10', 'ONLINE'),
+(10, 'Sana Jlassi', 'sana.jlassi@example.com', 'password123', '30123456', 'CLIENT', 5, 'FEMALE', 'https://example.com/profile_pics/female_user5.jpg', 1, 'ACTIVE', '1995-06-20', 'OFFLINE');
 
 -- --------------------------------------------------------
 
@@ -410,16 +457,8 @@ CREATE TABLE `vehicle` (
 --
 
 INSERT INTO `vehicle` (`id_vehicle`, `id_driver`, `registration`, `color`, `model`, `brand`) VALUES
-(1, 1, 'TN-1234-A', 'Red', 'Corolla', 'Toyota'),
-(2, 2, 'TN-5678-B', 'Blue', 'Clio', 'Renault'),
-(3, 3, 'TN-9101-C', 'White', 'Golf', 'Volkswagen'),
-(4, 4, 'TN-1121-D', 'Black', 'Focus', 'Ford'),
-(5, 5, 'TN-3141-E', 'Silver', '208', 'Peugeot'),
-(6, 6, 'TN-5161-F', 'Green', 'Polo', 'Volkswagen'),
-(7, 7, 'TN-7181-G', 'Yellow', 'Yaris', 'Toyota'),
-(8, 8, 'TN-9202-H', 'Gray', 'Megane', 'Renault'),
-(9, 9, 'TN-1222-I', 'Orange', 'C3', 'Citroen'),
-(10, 10, 'TN-3242-J', 'Purple', 'i10', 'Hyundai');
+(1, 3, 'TN1234AB', 'Red', 'Model X', 'Tesla'),
+(2, 5, 'TN5678CD', 'Blue', 'Model S', 'Tesla');
 
 --
 -- Indexes for dumped tables
@@ -568,7 +607,7 @@ ALTER TABLE `vehicle`
 -- AUTO_INCREMENT for table `announcement`
 --
 ALTER TABLE `announcement`
-  MODIFY `id_announcement` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_announcement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `bicycle`
@@ -580,7 +619,7 @@ ALTER TABLE `bicycle`
 -- AUTO_INCREMENT for table `bicycle_rental`
 --
 ALTER TABLE `bicycle_rental`
-  MODIFY `id_user_rental` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user_rental` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `bicycle_station`
@@ -598,7 +637,7 @@ ALTER TABLE `booking`
 -- AUTO_INCREMENT for table `driver`
 --
 ALTER TABLE `driver`
-  MODIFY `id_driver` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_driver` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `location`
@@ -610,19 +649,19 @@ ALTER TABLE `location`
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id_rating` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_rating` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `reclamation`
 --
 ALTER TABLE `reclamation`
-  MODIFY `id_reclamation` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reclamation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `relocation`
 --
 ALTER TABLE `relocation`
-  MODIFY `id_relocation` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_relocation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `request`
@@ -634,13 +673,13 @@ ALTER TABLE `request`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `response`
 --
 ALTER TABLE `response`
-  MODIFY `id_response` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_response` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ride`
@@ -658,7 +697,7 @@ ALTER TABLE `trip`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `vehicle`
