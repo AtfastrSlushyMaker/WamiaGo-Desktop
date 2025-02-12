@@ -1,6 +1,6 @@
 package org.wamiago.wamiago.entities;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Announcement {
@@ -8,7 +8,7 @@ public class Announcement {
     private Driver transporter;
     private String title;
     private String content;
-    private LocalDateTime date;
+    private Timestamp date;
     private Zone zone;
     private boolean status;
 
@@ -19,12 +19,12 @@ public class Announcement {
 
     // Constructeur par défaut
     public Announcement() {
-        this(0, new Driver(), "", "", LocalDateTime.now(), Zone.Tunis, false);
+        this(0, new Driver(), "", "", new Timestamp(System.currentTimeMillis()), Zone.Tunis, false);
     }
 
     // Constructeur avec tous les paramètres
     public Announcement(int idAnnouncement, Driver transporter, String title, String content,
-                        LocalDateTime date, Zone zone, boolean status) {
+                        Timestamp date, Zone zone, boolean status) {
         this.idAnnouncement = idAnnouncement;
         this.transporter = transporter;
         this.title = title;
@@ -67,11 +67,11 @@ public class Announcement {
         this.content = content;
     }
 
-    public LocalDateTime getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

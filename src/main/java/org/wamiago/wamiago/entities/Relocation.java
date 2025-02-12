@@ -1,20 +1,20 @@
 package org.wamiago.wamiago.entities;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Relocation {
     private int idRelocation;
     private Reservation reservation;
-    private LocalDateTime date;
+    private Timestamp date;
     private boolean status;
     private float cost;
 
     public Relocation() {
-        this(0, new Reservation(), LocalDateTime.now(), false, 0.0f);
+        this(0, new Reservation(), new Timestamp(System.currentTimeMillis()), false, 0.0f);
     }
 
-    public Relocation(int idRelocation, Reservation reservation, LocalDateTime date, boolean status, float cost) {
+    public Relocation(int idRelocation, Reservation reservation, Timestamp date, boolean status, float cost) {
         this.idRelocation = idRelocation;
         this.reservation = reservation;
         this.date = date;
@@ -39,11 +39,11 @@ public class Relocation {
         this.reservation = reservation;
     }
 
-    public LocalDateTime getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

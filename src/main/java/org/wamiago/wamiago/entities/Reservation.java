@@ -1,11 +1,11 @@
 package org.wamiago.wamiago.entities;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Reservation {
     private int idReservation;
-    private LocalDateTime date;
+    private Timestamp date;
     private Status status;
     private String description;
     private Location startLocation;
@@ -16,11 +16,13 @@ public class Reservation {
         CONFIRMED, CANCELLED, COMPLETED, ON_GOING
     }
 
+    // Constructeur par défaut
     public Reservation() {
-        this(0, LocalDateTime.now(), Status.CONFIRMED, "", new Location(), new Location(), new Announcement());
+        this(0, new Timestamp(System.currentTimeMillis()), Status.CONFIRMED, "", new Location(), new Location(), new Announcement());
     }
 
-    public Reservation(int idReservation, LocalDateTime date, Status status, String description,
+    // Constructeur avec tous les paramètres
+    public Reservation(int idReservation, Timestamp date, Status status, String description,
                        Location startLocation, Location endLocation, Announcement announcement) {
         this.idReservation = idReservation;
         this.date = date;
@@ -40,11 +42,11 @@ public class Reservation {
         this.idReservation = idReservation;
     }
 
-    public LocalDateTime getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

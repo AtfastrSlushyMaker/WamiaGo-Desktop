@@ -40,7 +40,7 @@ public class ReservationService implements IService<Reservation> {
         // Si toutes les vérifications sont passées, procéder à l'insertion
         String sql = "INSERT INTO reservation (date, status, description, id_start_location, id_end_location, id_announcement) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setTimestamp(1, Timestamp.valueOf(reservation.getDate()));
+        preparedStatement.setObject(1, reservation.getDate());
         preparedStatement.setString(2, reservation.getStatus().toString());
         preparedStatement.setString(3, reservation.getDescription());
         preparedStatement.setInt(4, reservation.getStartLocation().getId());
@@ -55,7 +55,7 @@ public class ReservationService implements IService<Reservation> {
     public void update(Reservation reservation) throws SQLException {
         String sql = "UPDATE reservation SET date = ?, status = ?, description = ?, id_start_location = ?, id_end_location = ?, id_announcement = ? WHERE id_reservation = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setTimestamp(1, Timestamp.valueOf(reservation.getDate()));
+        preparedStatement.setObject(1, reservation.getDate());
         preparedStatement.setString(2, reservation.getStatus().toString());
         preparedStatement.setString(3, reservation.getDescription());
         preparedStatement.setInt(4, reservation.getStartLocation().getId());
@@ -88,7 +88,7 @@ public class ReservationService implements IService<Reservation> {
         while (rs.next()) {
             Reservation reservation = new Reservation();
             reservation.setIdReservation(rs.getInt("id_reservation"));
-            reservation.setDate(rs.getTimestamp("date").toLocalDateTime());
+            reservation.setDate(rs.getTimestamp("date"));
             reservation.setStatus(Reservation.Status.valueOf(rs.getString("status").toUpperCase()));
             reservation.setDescription(rs.getString("description"));
 
@@ -118,7 +118,7 @@ public class ReservationService implements IService<Reservation> {
         if (rs.next()) {
             Reservation reservation = new Reservation();
             reservation.setIdReservation(rs.getInt("id_reservation"));
-            reservation.setDate(rs.getTimestamp("date").toLocalDateTime());
+            reservation.setDate(rs.getTimestamp("date"));
             reservation.setStatus(Reservation.Status.valueOf(rs.getString("status").toUpperCase()));
             reservation.setDescription(rs.getString("description"));
 

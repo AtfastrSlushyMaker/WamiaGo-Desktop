@@ -75,7 +75,7 @@ public class RelocationService implements IService<Relocation> {
             Reservation reservation = reservationService.getById(rs.getInt("id_reservation"));
             relocation.setReservation(reservation);
 
-            relocation.setDate(rs.getObject("date", Timestamp.class).toLocalDateTime());
+            relocation.setDate(rs.getTimestamp("date"));
             relocation.setStatus(rs.getBoolean("status"));
             relocation.setCost(rs.getFloat("cost"));
             relocations.add(relocation);
