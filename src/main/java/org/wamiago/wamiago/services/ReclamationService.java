@@ -69,23 +69,34 @@ public class ReclamationService implements IService<Reclamation> {
         }
     }
 
-    @Override
     public List<Reclamation> read() throws SQLException {
         List<Reclamation> reclamations = new ArrayList<>();
-        String sql = "SELECT * FROM reclamation";
+        String sql = "SELECT r.id_reclamation, r.content, r.date, r.status, " +
+                "u.id_user, u.name, u.email, u.phone_number, u.role, u.gender, " +
+                "u.profile_picture, u.is_verified, u.account_status, u.date_of_birth, u.status as user_status " +
+                "FROM reclamation r " +
+                "JOIN user u ON r.id_user = u.id_user";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
+                // Create a fully populated User object
                 User user = new User(
                         rs.getInt("id_user"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("phone_number"),
                         "",
-                        "",
-                        "",
-                        "",
-                        User.Role.CLIENT,
-                        null
+                        User.Role.valueOf(rs.getString("role")),
+                        null,
+                        User.Gender.valueOf(rs.getString("gender")),
+                        rs.getString("profile_picture"),
+                        rs.getBoolean("is_verified"),
+                        User.AccountStatus.valueOf(rs.getString("account_status")),
+                        rs.getDate("date_of_birth") != null ? rs.getDate("date_of_birth").toLocalDate() : null,
+                        User.Status.valueOf(rs.getString("user_status"))
                 );
+
 
                 Reclamation reclamation = new Reclamation(
                         rs.getInt("id_reclamation"),
@@ -97,7 +108,11 @@ public class ReclamationService implements IService<Reclamation> {
 
                 reclamations.add(reclamation);
             }
+        } catch (SQLException e) {
+            System.err.println("Error fetching reclamations: " + e.getMessage());
+            throw e; // Re-throw the exception after logging
         }
+
         return reclamations;
     }
 }
