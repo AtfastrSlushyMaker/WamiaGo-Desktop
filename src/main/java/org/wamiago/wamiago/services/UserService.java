@@ -16,10 +16,10 @@ public class UserService {
         connection = DataBase.getInstance().getConnection();
     }
 
-
+    // Method to add a new user
     public void addUser(User user) throws SQLException {
         String sql = "INSERT INTO `user`(`name`, `email`, `password`, `phone_number`, `role`, `id_location`) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPassword());
@@ -27,17 +27,23 @@ public class UserService {
             ps.setString(5, user.getRole().name());
             ps.setInt(6, user.getLocation().getId());
             ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    user.setId(rs.getInt(1));
+                }
+            }
         }
     }
 
-
+    // Method to update an existing user
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE `user` SET `name`=?, `email`=?, `phone_number`=?, `password`=?, `role`=?, `id_location`=? WHERE id_user = ?";
+        String sql = "UPDATE `user` SET `name`=?, `email`=?, `password`=?, `phone_number`=?, `role`=?, `id_location`=? WHERE id_user = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPhone());
-            ps.setString(4, user.getPassword());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getPhone());
             ps.setString(5, user.getRole().name());
             ps.setInt(6, user.getLocation().getId());
             ps.setInt(7, user.getId());
@@ -45,6 +51,7 @@ public class UserService {
         }
     }
 
+    // Method to delete a user by ID
     public void deleteUser(int id) throws SQLException {
         String sql = "DELETE FROM `user` WHERE id_user = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -53,6 +60,7 @@ public class UserService {
         }
     }
 
+    // Method to get a user by ID
     public User getUserById(int id) throws SQLException {
         String sql = "SELECT * FROM `user` u JOIN `location` l ON u.id_location = l.id_location WHERE u.id_user = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -72,7 +80,7 @@ public class UserService {
                         rs.getString("email"),
                         rs.getString("phone_number"),
                         rs.getString("password"),
-                        User.Role.valueOf(rs.getString("role").toUpperCase()), // Handle ENUM mapping
+                        User.Role.valueOf(rs.getString("role").toUpperCase()),
                         location
                 );
             }
@@ -80,6 +88,7 @@ public class UserService {
         return null;
     }
 
+    // Method to get all users
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM `user` u JOIN `location` l ON u.id_location = l.id_location";

@@ -9,20 +9,28 @@ public class User {
     private Role role;
     private Location location;
 
-
     public enum Role {
         CLIENT, ADMIN
     }
 
-
-    public User(int id, String name, String email, String phone, String password, Role role, Location location) {
-        this.id = id;
+    public User(int id,String name, String email, String phone, String password, Role role, Location location) {
+        this.id=id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.password = password;
         this.role = role;
         this.location = location;
+    }
+
+    public User() {
+        this.id=0;
+        this.name ="" ;
+        this.email = "";
+        this.phone = "";
+        this.password = "";
+        this.role = null;
+        this.location = new Location();
     }
 
 
@@ -46,7 +54,6 @@ public class User {
 
     public Location getLocation() { return location; }
     public void setLocation(Location location) { this.location = location; }
-
 
     @Override
     public String toString() {
