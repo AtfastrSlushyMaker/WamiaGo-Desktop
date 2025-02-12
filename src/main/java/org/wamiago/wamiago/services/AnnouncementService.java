@@ -20,17 +20,17 @@ public class AnnouncementService implements IService<Announcement> {
     public void create(Announcement announcement) throws SQLException {
         String checkDriverQuery = "SELECT COUNT(*) FROM driver WHERE id_driver = ?";
         PreparedStatement checkDriverStmt = connection.prepareStatement(checkDriverQuery);
-        checkDriverStmt.setInt(1, announcement.getTransporter().getId_driver());
+        checkDriverStmt.setInt(1, announcement.getTransporter().getIdDriver());
         ResultSet driverResult = checkDriverStmt.executeQuery();
 
         if (driverResult.next() && driverResult.getInt(1) == 0) {
-            System.out.println("Annulé : Le chauffeur avec l'ID " + announcement.getTransporter().getId_driver() + " n'existe pas.");
+            System.out.println("Annulé : Le chauffeur avec l'ID " + announcement.getTransporter().getIdDriver() + " n'existe pas.");
             return;
         }
 
         String sql = "INSERT INTO announcement (id_transporter, title, content, date, zone, status) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, announcement.getTransporter().getId_driver());
+        preparedStatement.setInt(1, announcement.getTransporter().getIdDriver());
         preparedStatement.setString(2, announcement.getTitle());
         preparedStatement.setString(3, announcement.getContent());
         preparedStatement.setObject(4, announcement.getDate());
@@ -38,24 +38,24 @@ public class AnnouncementService implements IService<Announcement> {
         preparedStatement.setBoolean(6, announcement.getStatus());
         preparedStatement.executeUpdate();
 
-        System.out.println("Annonce ajoutée avec succès pour le chauffeur avec l'ID " + announcement.getTransporter().getId_driver());
+        System.out.println("Annonce ajoutée avec succès pour le chauffeur avec l'ID " + announcement.getTransporter().getIdDriver());
     }
 
     @Override
     public void update(Announcement announcement) throws SQLException {
         String checkDriverQuery = "SELECT COUNT(*) FROM driver WHERE id_driver = ?";
         PreparedStatement checkDriverStmt = connection.prepareStatement(checkDriverQuery);
-        checkDriverStmt.setInt(1, announcement.getTransporter().getId_driver());
+        checkDriverStmt.setInt(1, announcement.getTransporter().getIdDriver());
         ResultSet driverResult = checkDriverStmt.executeQuery();
 
         if (driverResult.next() && driverResult.getInt(1) == 0) {
-            System.out.println("Annulé : Le chauffeur avec l'ID " + announcement.getTransporter().getId_driver() + " n'existe pas.");
+            System.out.println("Annulé : Le chauffeur avec l'ID " + announcement.getTransporter().getIdDriver() + " n'existe pas.");
             return;
         }
 
         String sql = "UPDATE announcement SET id_transporter = ?, title = ?, content = ?, date = ?, zone = ?, status = ? WHERE id_announcement = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, announcement.getTransporter().getId_driver());
+        preparedStatement.setInt(1, announcement.getTransporter().getIdDriver());
         preparedStatement.setString(2, announcement.getTitle());
         preparedStatement.setString(3, announcement.getContent());
         preparedStatement.setObject(4, announcement.getDate());
@@ -64,7 +64,7 @@ public class AnnouncementService implements IService<Announcement> {
         preparedStatement.setInt(7, announcement.getIdAnnouncement());
         preparedStatement.executeUpdate();
 
-        System.out.println("Annonce mise à jour avec succès pour le chauffeur avec l'ID " + announcement.getTransporter().getId_driver());
+        System.out.println("Annonce mise à jour avec succès pour le chauffeur avec l'ID " + announcement.getTransporter().getIdDriver());
     }
 
     @Override
