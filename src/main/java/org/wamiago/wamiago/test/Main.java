@@ -4,14 +4,15 @@ import org.wamiago.wamiago.entities.Driver;
 import org.wamiago.wamiago.entities.Location;
 import org.wamiago.wamiago.entities.User;
 import org.wamiago.wamiago.services.DriverService;
+import org.wamiago.wamiago.services.IService;
 import org.wamiago.wamiago.services.UserService;
 
 import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-        UserService userService = new UserService();
-        DriverService driverService = new DriverService();
+        IService<User> userService = new UserService();
+        IService<Driver> driverService = new DriverService();
 
         try {
 
@@ -23,14 +24,14 @@ public class Main {
                     "securepassword",
                     User.Role.CLIENT,
                     location);
-            userService.addUser(newUser);
+            userService.create(newUser);
 
             User otherUser = new User(2,
                     "Ahmed Ali",
                     "ahmed@example.com",
                     "123456", "passs",
                     User.Role.CLIENT, location);
-            userService.addUser(otherUser);
+            userService.create(otherUser);
 
             Driver driver = new Driver(
                     1,
@@ -44,32 +45,32 @@ public class Main {
                     "111",
                     1
             );
-            driverService.addDriver(driver);
+            driverService.create(driver);
 
             System.out.println("User and Driver added successfully!");
 
             System.out.println("All users:");
-            userService.getAllUsers().forEach(System.out::println);
+            userService.read().forEach(System.out::println);
 
             System.out.println("All drivers:");
-            driverService.getAllDrivers().forEach(System.out::println);
+            driverService.read().forEach(System.out::println);
 
             newUser.setName("John Updated");
-            userService.updateUser(newUser);
+            userService.update(newUser);
             System.out.println("User updated!");
 
-            User retrievedUser = userService.getUserById(newUser.getId());
+            User retrievedUser = userService.getById(newUser.getId());
             System.out.println("Retrieved User: " + retrievedUser);
 
             driver.setName("Ahmed Updated");
-            driverService.updateDriver(driver);
+            driverService.update(driver);
             System.out.println("Driver updated!");
 
-            Driver retrievedDriver = driverService.getDriverById(driver.getId());
+            Driver retrievedDriver = driverService.getById(driver.getId());
             System.out.println("Retrieved Driver: " + retrievedDriver);
 
-            userService.deleteUser(newUser.getId());
-            driverService.deleteDriver(driver.getId());
+            userService.delete(newUser.getId());
+            driverService.delete(driver.getId());
             System.out.println("User and Driver deleted!");
 
 
