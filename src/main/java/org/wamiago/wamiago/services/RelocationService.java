@@ -1,6 +1,7 @@
 package org.wamiago.wamiago.services;
 
 import org.wamiago.wamiago.entities.Relocation;
+import org.wamiago.wamiago.entities.Reservation;
 import org.wamiago.wamiago.utils.DataBase;
 
 import java.sql.*;
@@ -17,41 +18,36 @@ public class RelocationService implements IService<Relocation> {
 
     @Override
     public void create(Relocation relocation) throws SQLException {
-        // 1️⃣ Vérifier si l'id_reservation existe dans la table reservation
-        String checkReservationQuery = "SELECT COUNT(*) FROM reservation WHERE id_reservation = ?";
-        PreparedStatement checkReservationStmt = connection.prepareStatement(checkReservationQuery);
-        checkReservationStmt.setInt(1, relocation.getIdReservation());
-        ResultSet reservationResult = checkReservationStmt.executeQuery();
-
-        // Si l'id_reservation n'existe pas, on ne fait rien
-        if (reservationResult.next() && reservationResult.getInt(1) == 0) {
-            System.out.println("❌ Annulé : La réservation avec l'ID " + relocation.getIdReservation() + " n'existe pas.");
+        // Vérifier si la réservation existe
+        if (relocation.getReservation() == null || relocation.getReservation().getIdReservation() == 0) {
+            System.out.println(" Annulé : La réservation n'est pas valide.");
             return;
         }
 
-        // 2️⃣ Si l'id_reservation existe, procéder à l'insertion de la relocation
+        // Si la vérification est passée, procéder à l'insertion
         String sql = "INSERT INTO relocation (id_reservation, date, status, cost) VALUES (?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, relocation.getIdReservation());
+        preparedStatement.setInt(1, relocation.getReservation().getIdReservation());
         preparedStatement.setObject(2, relocation.getDate());
         preparedStatement.setBoolean(3, relocation.isStatus());
         preparedStatement.setFloat(4, relocation.getCost());
 
-        // Exécution de la requête d'insertion
         preparedStatement.executeUpdate();
-        System.out.println("✅ Relocation ajoutée avec succès pour la réservation avec l'ID " + relocation.getIdReservation());
+        System.out.println(" Relocation ajoutée avec succès pour la réservation avec l'ID " + relocation.getReservation().getIdReservation());
     }
 
     @Override
     public void update(Relocation relocation) throws SQLException {
         String sql = "UPDATE relocation SET id_reservation = ?, date = ?, status = ?, cost = ? WHERE id_relocation = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, relocation.getIdReservation());
+        preparedStatement.setInt(1, relocation.getReservation().getIdReservation());
         preparedStatement.setObject(2, relocation.getDate());
         preparedStatement.setBoolean(3, relocation.isStatus());
         preparedStatement.setFloat(4, relocation.getCost());
         preparedStatement.setInt(5, relocation.getIdRelocation());
+
         preparedStatement.executeUpdate();
+        System.out.println(" Relocation mise à jour avec succès.");
     }
 
     @Override
@@ -68,10 +64,17 @@ public class RelocationService implements IService<Relocation> {
         String sql = "SELECT * FROM relocation";
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sql);
+
+        ReservationService reservationService = new ReservationService();
+
         while (rs.next()) {
             Relocation relocation = new Relocation();
             relocation.setIdRelocation(rs.getInt("id_relocation"));
-            relocation.setIdReservation(rs.getInt("id_reservation"));
+
+            // Récupérer la réservation correspondante à partir de la base de données
+            Reservation reservation = reservationService.getById(rs.getInt("id_reservation"));
+            relocation.setReservation(reservation);
+
             relocation.setDate(rs.getObject("date", Timestamp.class).toLocalDateTime());
             relocation.setStatus(rs.getBoolean("status"));
             relocation.setCost(rs.getFloat("cost"));

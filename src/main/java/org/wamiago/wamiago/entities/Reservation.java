@@ -8,27 +8,27 @@ public class Reservation {
     private LocalDateTime date;
     private Status status;
     private String description;
-    private int idStartLocation;
-    private int idEndLocation;
-    private int idAnnouncement;
+    private Location startLocation;
+    private Location endLocation;
+    private Announcement announcement;
 
     public enum Status {
         CONFIRMED, CANCELLED, COMPLETED, ON_GOING
     }
 
     public Reservation() {
-        this(0, LocalDateTime.now(), Status.CONFIRMED, "", 0, 0, 0);
+        this(0, LocalDateTime.now(), Status.CONFIRMED, "", new Location(), new Location(), new Announcement());
     }
 
     public Reservation(int idReservation, LocalDateTime date, Status status, String description,
-                       int idStartLocation, int idEndLocation, int idAnnouncement) {
+                       Location startLocation, Location endLocation, Announcement announcement) {
         this.idReservation = idReservation;
         this.date = date;
         this.status = status;
         this.description = description;
-        this.idStartLocation = idStartLocation;
-        this.idEndLocation = idEndLocation;
-        this.idAnnouncement = idAnnouncement;
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
+        this.announcement = announcement;
     }
 
     // Getters and Setters
@@ -64,28 +64,28 @@ public class Reservation {
         this.description = description;
     }
 
-    public int getIdStartLocation() {
-        return idStartLocation;
+    public Location getStartLocation() {
+        return startLocation;
     }
 
-    public void setIdStartLocation(int idStartLocation) {
-        this.idStartLocation = idStartLocation;
+    public void setStartLocation(Location startLocation) {
+        this.startLocation = startLocation;
     }
 
-    public int getIdEndLocation() {
-        return idEndLocation;
+    public Location getEndLocation() {
+        return endLocation;
     }
 
-    public void setIdEndLocation(int idEndLocation) {
-        this.idEndLocation = idEndLocation;
+    public void setEndLocation(Location endLocation) {
+        this.endLocation = endLocation;
     }
 
-    public int getIdAnnouncement() {
-        return idAnnouncement;
+    public Announcement getAnnouncement() {
+        return announcement;
     }
 
-    public void setIdAnnouncement(int idAnnouncement) {
-        this.idAnnouncement = idAnnouncement;
+    public void setAnnouncement(Announcement announcement) {
+        this.announcement = announcement;
     }
 
     @Override
@@ -93,15 +93,17 @@ public class Reservation {
         if (this == o) return true;
         if (!(o instanceof Reservation)) return false;
         Reservation that = (Reservation) o;
-        return idReservation == that.idReservation && idStartLocation == that.idStartLocation &&
-                idEndLocation == that.idEndLocation && idAnnouncement == that.idAnnouncement &&
+        return idReservation == that.idReservation &&
                 Objects.equals(date, that.date) && status == that.status &&
-                Objects.equals(description, that.description);
+                Objects.equals(description, that.description) &&
+                Objects.equals(startLocation, that.startLocation) &&
+                Objects.equals(endLocation, that.endLocation) &&
+                Objects.equals(announcement, that.announcement);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idReservation, date, status, description, idStartLocation, idEndLocation, idAnnouncement);
+        return Objects.hash(idReservation, date, status, description, startLocation, endLocation, announcement);
     }
 
     @Override
@@ -111,9 +113,9 @@ public class Reservation {
                 ", date=" + date +
                 ", status=" + status +
                 ", description='" + description + '\'' +
-                ", idStartLocation=" + idStartLocation +
-                ", idEndLocation=" + idEndLocation +
-                ", idAnnouncement=" + idAnnouncement +
+                ", startLocation=" + startLocation +
+                ", endLocation=" + endLocation +
+                ", announcement=" + announcement +
                 '}';
     }
 }

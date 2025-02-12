@@ -1,6 +1,7 @@
 package org.wamiago.wamiago.services;
 
 import org.wamiago.wamiago.entities.Announcement;
+import org.wamiago.wamiago.entities.Driver;
 import org.wamiago.wamiago.utils.DataBase;
 
 import java.sql.*;
@@ -17,22 +18,22 @@ public class AnnouncementService implements IService<Announcement> {
 
     @Override
     public void create(Announcement announcement) throws SQLException {
-        // 1️⃣ Vérifier si l'id_transporter existe dans la table driver
+        // Vérifier si le transporteur existe dans la table driver
         String checkDriverQuery = "SELECT COUNT(*) FROM driver WHERE id_driver = ?";
         PreparedStatement checkDriverStmt = connection.prepareStatement(checkDriverQuery);
-        checkDriverStmt.setInt(1, announcement.getIdTransporter());
+        checkDriverStmt.setInt(1, announcement.getTransporter().getId_driver());
         ResultSet driverResult = checkDriverStmt.executeQuery();
 
-        // Si l'id_transporter n'existe pas, on ne fait rien
+        // Si le transporteur n'existe pas, on ne fait rien
         if (driverResult.next() && driverResult.getInt(1) == 0) {
-            System.out.println("❌ Annulé : Le chauffeur avec l'ID " + announcement.getIdTransporter() + " n'existe pas.");
+            System.out.println("Annulé : Le chauffeur avec l'ID " + announcement.getTransporter().getId_driver() + " n'existe pas.");
             return;
         }
 
-        // 2️⃣ Si l'id_transporter existe, procéder à l'insertion de l'annonce
+        // Si le transporteur existe, procéder à l'insertion de l'annonce
         String sql = "INSERT INTO announcement (id_transporter, title, content, date, zone, status) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, announcement.getIdTransporter());
+        preparedStatement.setInt(1, announcement.getTransporter().getId_driver());
         preparedStatement.setString(2, announcement.getTitle());
         preparedStatement.setString(3, announcement.getContent());
         preparedStatement.setObject(4, announcement.getDate());
@@ -41,14 +42,27 @@ public class AnnouncementService implements IService<Announcement> {
 
         // Exécution de la requête d'insertion
         preparedStatement.executeUpdate();
-        //System.out.println("✅ Annonce ajoutée avec succès pour le chauffeur avec l'ID " + announcement.getIdTransporter());
+        System.out.println(" Annonce ajoutée avec succès pour le chauffeur avec l'ID " + announcement.getTransporter().getId_driver());
     }
 
     @Override
     public void update(Announcement announcement) throws SQLException {
+        // Vérifier si le transporteur existe dans la table driver
+        String checkDriverQuery = "SELECT COUNT(*) FROM driver WHERE id_driver = ?";
+        PreparedStatement checkDriverStmt = connection.prepareStatement(checkDriverQuery);
+        checkDriverStmt.setInt(1, announcement.getTransporter().getId_driver());
+        ResultSet driverResult = checkDriverStmt.executeQuery();
+
+        // Si le transporteur n'existe pas, on ne fait rien
+        if (driverResult.next() && driverResult.getInt(1) == 0) {
+            System.out.println(" Annulé : Le chauffeur avec l'ID " + announcement.getTransporter().getId_driver() + " n'existe pas.");
+            return;
+        }
+
+        // Si le transporteur existe, procéder à la mise à jour de l'annonce
         String sql = "UPDATE announcement SET id_transporter = ?, title = ?, content = ?, date = ?, zone = ?, status = ? WHERE id_announcement = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, announcement.getIdTransporter());
+        preparedStatement.setInt(1, announcement.getTransporter().getId_driver());
         preparedStatement.setString(2, announcement.getTitle());
         preparedStatement.setString(3, announcement.getContent());
         preparedStatement.setObject(4, announcement.getDate());
@@ -56,6 +70,7 @@ public class AnnouncementService implements IService<Announcement> {
         preparedStatement.setBoolean(6, announcement.getStatus());
         preparedStatement.setInt(7, announcement.getIdAnnouncement());
         preparedStatement.executeUpdate();
+        System.out.println("Annonce mise à jour avec succès pour le chauffeur avec l'ID " + announcement.getTransporter().getId_driver());
     }
 
     @Override
@@ -64,6 +79,7 @@ public class AnnouncementService implements IService<Announcement> {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
+        System.out.println(" Annonce supprimée avec succès.");
     }
 
     @Override
@@ -75,7 +91,12 @@ public class AnnouncementService implements IService<Announcement> {
         while (rs.next()) {
             Announcement announcement = new Announcement();
             announcement.setIdAnnouncement(rs.getInt("id_announcement"));
-            announcement.setIdTransporter(rs.getInt("id_transporter"));
+
+            // Récupérer le transporteur correspondant à partir de la base de données
+            DriverService driverService = new DriverService();
+            Driver transporter = driverService.getById(rs.getInt("id_transporter"));
+            announcement.setTransporter(transporter);
+
             announcement.setTitle(rs.getString("title"));
             announcement.setContent(rs.getString("content"));
             announcement.setDate(rs.getObject("date", Timestamp.class).toLocalDateTime());
@@ -84,5 +105,31 @@ public class AnnouncementService implements IService<Announcement> {
             announcements.add(announcement);
         }
         return announcements;
+    }
+
+    public Announcement getById(int id) throws SQLException {
+        String sql = "SELECT * FROM announcement WHERE id_announcement = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
+
+        if (rs.next()) {
+            Announcement announcement = new Announcement();
+            announcement.setIdAnnouncement(rs.getInt("id_announcement"));
+
+            // Récupérer le transporteur correspondant à partir de la base de données
+            DriverService driverService = new DriverService();
+            Driver transporter = driverService.getById(rs.getInt("id_transporter"));
+            announcement.setTransporter(transporter);
+
+            announcement.setTitle(rs.getString("title"));
+            announcement.setContent(rs.getString("content"));
+            announcement.setDate(rs.getObject("date", Timestamp.class).toLocalDateTime());
+            announcement.setZone(Announcement.Zone.valueOf(rs.getString("zone")));
+            announcement.setStatus(rs.getBoolean("status"));
+
+            return announcement;
+        }
+        return null;
     }
 }

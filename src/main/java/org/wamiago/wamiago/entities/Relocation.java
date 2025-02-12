@@ -5,18 +5,18 @@ import java.util.Objects;
 
 public class Relocation {
     private int idRelocation;
-    private int idReservation;
+    private Reservation reservation;
     private LocalDateTime date;
     private boolean status;
     private float cost;
 
     public Relocation() {
-        this(0, 0, LocalDateTime.now(), false, 0.0f);
+        this(0, new Reservation(), LocalDateTime.now(), false, 0.0f);
     }
 
-    public Relocation(int idRelocation, int idReservation, LocalDateTime date, boolean status, float cost) {
+    public Relocation(int idRelocation, Reservation reservation, LocalDateTime date, boolean status, float cost) {
         this.idRelocation = idRelocation;
-        this.idReservation = idReservation;
+        this.reservation = reservation;
         this.date = date;
         this.status = status;
         this.cost = cost;
@@ -31,12 +31,12 @@ public class Relocation {
         this.idRelocation = idRelocation;
     }
 
-    public int getIdReservation() {
-        return idReservation;
+    public Reservation getReservation() {
+        return reservation;
     }
 
-    public void setIdReservation(int idReservation) {
-        this.idReservation = idReservation;
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     public LocalDateTime getDate() {
@@ -68,20 +68,21 @@ public class Relocation {
         if (this == o) return true;
         if (!(o instanceof Relocation)) return false;
         Relocation that = (Relocation) o;
-        return idRelocation == that.idRelocation && idReservation == that.idReservation &&
-                status == that.status && Float.compare(that.cost, cost) == 0 && Objects.equals(date, that.date);
+        return idRelocation == that.idRelocation && status == that.status &&
+                Float.compare(that.cost, cost) == 0 && Objects.equals(reservation, that.reservation) &&
+                Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idRelocation, idReservation, date, status, cost);
+        return Objects.hash(idRelocation, reservation, date, status, cost);
     }
 
     @Override
     public String toString() {
         return "Relocation{" +
                 "idRelocation=" + idRelocation +
-                ", idReservation=" + idReservation +
+                ", reservation=" + reservation +
                 ", date=" + date +
                 ", status=" + status +
                 ", cost=" + cost +

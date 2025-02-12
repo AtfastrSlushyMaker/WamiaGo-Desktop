@@ -1,5 +1,7 @@
 package org.wamiago.wamiago.services;
 
+import org.wamiago.wamiago.entities.Announcement;
+import org.wamiago.wamiago.entities.Location;
 import org.wamiago.wamiago.entities.Reservation;
 import org.wamiago.wamiago.utils.DataBase;
 
@@ -17,55 +19,36 @@ public class ReservationService implements IService<Reservation> {
 
     @Override
     public void create(Reservation reservation) throws SQLException {
-        // 1️⃣ Vérifier si id_start_location existe dans la table location
-        String checkStartLocationQuery = "SELECT COUNT(*) FROM location WHERE id_location = ?";
-        PreparedStatement checkStartLocationStmt = connection.prepareStatement(checkStartLocationQuery);
-        checkStartLocationStmt.setInt(1, reservation.getIdStartLocation());
-        ResultSet startLocationResult = checkStartLocationStmt.executeQuery();
-
-        // Si id_start_location n'existe pas, on ne fait rien
-        if (startLocationResult.next() && startLocationResult.getInt(1) == 0) {
-            System.out.println("❌ Annulé : La location de départ avec l'ID " + reservation.getIdStartLocation() + " n'existe pas.");
+        // Vérifier si startLocation existe
+        if (reservation.getStartLocation() == null || reservation.getStartLocation().getId() == 0) {
+            System.out.println(" Annulé : La location de départ n'est pas valide.");
             return;
         }
 
-        // 2️⃣ Vérifier si id_end_location existe dans la table location
-        String checkEndLocationQuery = "SELECT COUNT(*) FROM location WHERE id_location = ?";
-        PreparedStatement checkEndLocationStmt = connection.prepareStatement(checkEndLocationQuery);
-        checkEndLocationStmt.setInt(1, reservation.getIdEndLocation());
-        ResultSet endLocationResult = checkEndLocationStmt.executeQuery();
-
-        // Si id_end_location n'existe pas, on ne fait rien
-        if (endLocationResult.next() && endLocationResult.getInt(1) == 0) {
-            System.out.println("❌ Annulé : La location d'arrivée avec l'ID " + reservation.getIdEndLocation() + " n'existe pas.");
+        // Vérifier si endLocation existe
+        if (reservation.getEndLocation() == null || reservation.getEndLocation().getId() == 0) {
+            System.out.println(" Annulé : La location d'arrivée n'est pas valide.");
             return;
         }
 
-        // 3️⃣ Vérifier si id_announcement existe dans la table announcement
-        String checkAnnouncementQuery = "SELECT COUNT(*) FROM announcement WHERE id_announcement = ?";
-        PreparedStatement checkAnnouncementStmt = connection.prepareStatement(checkAnnouncementQuery);
-        checkAnnouncementStmt.setInt(1, reservation.getIdAnnouncement());
-        ResultSet announcementResult = checkAnnouncementStmt.executeQuery();
-
-        // Si id_announcement n'existe pas, on ne fait rien
-        if (announcementResult.next() && announcementResult.getInt(1) == 0) {
-            System.out.println("❌ Annulé : L'annonce avec l'ID " + reservation.getIdAnnouncement() + " n'existe pas.");
+        // Vérifier si announcement existe
+        if (reservation.getAnnouncement() == null || reservation.getAnnouncement().getIdAnnouncement() == 0) {
+            System.out.println(" Annulé : L'annonce n'est pas valide.");
             return;
         }
 
-        // 4️⃣ Si toutes les clés étrangères existent, procéder à l'insertion de la réservation
+        // Si toutes les vérifications sont passées, procéder à l'insertion
         String sql = "INSERT INTO reservation (date, status, description, id_start_location, id_end_location, id_announcement) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setTimestamp(1, Timestamp.valueOf(reservation.getDate()));
         preparedStatement.setString(2, reservation.getStatus().toString());
         preparedStatement.setString(3, reservation.getDescription());
-        preparedStatement.setInt(4, reservation.getIdStartLocation());
-        preparedStatement.setInt(5, reservation.getIdEndLocation());
-        preparedStatement.setInt(6, reservation.getIdAnnouncement());
+        preparedStatement.setInt(4, reservation.getStartLocation().getId());
+        preparedStatement.setInt(5, reservation.getEndLocation().getId());
+        preparedStatement.setInt(6, reservation.getAnnouncement().getIdAnnouncement());
 
-        // Exécution de la requête d'insertion
         preparedStatement.executeUpdate();
-        System.out.println("✅ Réservation ajoutée avec succès.");
+        System.out.println(" Réservation ajoutée avec succès.");
     }
 
     @Override
@@ -75,11 +58,13 @@ public class ReservationService implements IService<Reservation> {
         preparedStatement.setTimestamp(1, Timestamp.valueOf(reservation.getDate()));
         preparedStatement.setString(2, reservation.getStatus().toString());
         preparedStatement.setString(3, reservation.getDescription());
-        preparedStatement.setInt(4, reservation.getIdStartLocation());
-        preparedStatement.setInt(5, reservation.getIdEndLocation());
-        preparedStatement.setInt(6, reservation.getIdAnnouncement());
+        preparedStatement.setInt(4, reservation.getStartLocation().getId());
+        preparedStatement.setInt(5, reservation.getEndLocation().getId());
+        preparedStatement.setInt(6, reservation.getAnnouncement().getIdAnnouncement());
         preparedStatement.setInt(7, reservation.getIdReservation());
+
         preparedStatement.executeUpdate();
+        System.out.println(" Réservation mise à jour avec succès.");
     }
 
     @Override
@@ -96,17 +81,63 @@ public class ReservationService implements IService<Reservation> {
         String sql = "SELECT * FROM reservation";
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sql);
+
+        LocationService locationService = new LocationService();
+        AnnouncementService announcementService = new AnnouncementService();
+
         while (rs.next()) {
             Reservation reservation = new Reservation();
             reservation.setIdReservation(rs.getInt("id_reservation"));
             reservation.setDate(rs.getTimestamp("date").toLocalDateTime());
             reservation.setStatus(Reservation.Status.valueOf(rs.getString("status").toUpperCase()));
             reservation.setDescription(rs.getString("description"));
-            reservation.setIdStartLocation(rs.getInt("id_start_location"));
-            reservation.setIdEndLocation(rs.getInt("id_end_location"));
-            reservation.setIdAnnouncement(rs.getInt("id_announcement"));
+
+            // Récupérer startLocation
+            Location startLocation = locationService.getById(rs.getInt("id_start_location"));
+            reservation.setStartLocation(startLocation);
+
+            // Récupérer endLocation
+            Location endLocation = locationService.getById(rs.getInt("id_end_location"));
+            reservation.setEndLocation(endLocation);
+
+            // Récupérer announcement
+            Announcement announcement = announcementService.getById(rs.getInt("id_announcement"));
+            reservation.setAnnouncement(announcement);
+
             reservations.add(reservation);
         }
         return reservations;
+    }
+
+    public Reservation getById(int id) throws SQLException {
+        String sql = "SELECT * FROM reservation WHERE id_reservation = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
+
+        if (rs.next()) {
+            Reservation reservation = new Reservation();
+            reservation.setIdReservation(rs.getInt("id_reservation"));
+            reservation.setDate(rs.getTimestamp("date").toLocalDateTime());
+            reservation.setStatus(Reservation.Status.valueOf(rs.getString("status").toUpperCase()));
+            reservation.setDescription(rs.getString("description"));
+
+            // Récupérer startLocation
+            LocationService locationService = new LocationService();
+            Location startLocation = locationService.getById(rs.getInt("id_start_location"));
+            reservation.setStartLocation(startLocation);
+
+            // Récupérer endLocation
+            Location endLocation = locationService.getById(rs.getInt("id_end_location"));
+            reservation.setEndLocation(endLocation);
+
+            // Récupérer announcement
+            AnnouncementService announcementService = new AnnouncementService();
+            Announcement announcement = announcementService.getById(rs.getInt("id_announcement"));
+            reservation.setAnnouncement(announcement);
+
+            return reservation;
+        }
+        return null;
     }
 }

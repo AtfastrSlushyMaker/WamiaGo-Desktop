@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Announcement {
     private int idAnnouncement;
-    private int idTransporter;
+    private Driver transporter;
     private String title;
     private String content;
     private LocalDateTime date;
@@ -17,14 +17,16 @@ public class Announcement {
         Medenine, Monastir, Nabeul, Sfax, Sidi_Bouzid, Siliana, Sousse, Tataouine, Tozeur, Tunis, Zaghouan
     }
 
+    // Constructeur par défaut
     public Announcement() {
-        this(0, 0, "", "", LocalDateTime.now(), Zone.Tunis, false);
+        this(0, new Driver(), "", "", LocalDateTime.now(), Zone.Tunis, false);
     }
 
-    public Announcement(int idAnnouncement, int idTransporter, String title, String content,
+    // Constructeur avec tous les paramètres
+    public Announcement(int idAnnouncement, Driver transporter, String title, String content,
                         LocalDateTime date, Zone zone, boolean status) {
         this.idAnnouncement = idAnnouncement;
-        this.idTransporter = idTransporter;
+        this.transporter = transporter;
         this.title = title;
         this.content = content;
         this.date = date;
@@ -41,12 +43,12 @@ public class Announcement {
         this.idAnnouncement = idAnnouncement;
     }
 
-    public int getIdTransporter() {
-        return idTransporter;
+    public Driver getTransporter() {
+        return transporter;
     }
 
-    public void setIdTransporter(int idTransporter) {
-        this.idTransporter = idTransporter;
+    public void setTransporter(Driver transporter) {
+        this.transporter = transporter;
     }
 
     public String getTitle() {
@@ -94,21 +96,21 @@ public class Announcement {
         if (this == o) return true;
         if (!(o instanceof Announcement)) return false;
         Announcement that = (Announcement) o;
-        return idAnnouncement == that.idAnnouncement && idTransporter == that.idTransporter && status == that.status &&
-                Objects.equals(title, that.title) && Objects.equals(content, that.content) &&
-                Objects.equals(date, that.date) && zone == that.zone;
+        return idAnnouncement == that.idAnnouncement && status == that.status &&
+                Objects.equals(transporter, that.transporter) && Objects.equals(title, that.title) &&
+                Objects.equals(content, that.content) && Objects.equals(date, that.date) && zone == that.zone;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idAnnouncement, idTransporter, title, content, date, zone, status);
+        return Objects.hash(idAnnouncement, transporter, title, content, date, zone, status);
     }
 
     @Override
     public String toString() {
         return "Announcement{" +
                 "idAnnouncement=" + idAnnouncement +
-                ", idTransporter=" + idTransporter +
+                ", transporter=" + transporter +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", date=" + date +
