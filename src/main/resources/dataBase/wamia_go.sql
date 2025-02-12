@@ -171,7 +171,7 @@ CREATE TABLE `rating` (
 --
 
 CREATE TABLE `reclamation` (
-                               `id_reclamtion` int(11) NOT NULL,
+                               `id_reclamation` int(11) NOT NULL,
                                `id_user` int(11) NOT NULL,
                                `content` varchar(255) NOT NULL,
                                `date` datetime NOT NULL,
@@ -379,7 +379,7 @@ ALTER TABLE `rating`
 -- Index pour la table `reclamation`
 --
 ALTER TABLE `reclamation`
-    ADD PRIMARY KEY (`id_reclamtion`),
+    ADD PRIMARY KEY (`id_reclamation`),
   ADD KEY `idUser` (`id_user`);
 
 --
@@ -504,7 +504,7 @@ ALTER TABLE `rating`
 -- AUTO_INCREMENT pour la table `reclamation`
 --
 ALTER TABLE `reclamation`
-    MODIFY `id_reclamtion` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id_reclamation` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `relocation`
@@ -638,7 +638,7 @@ ALTER TABLE `reservation`
 -- Contraintes pour la table `response`
 --
 ALTER TABLE `response`
-    ADD CONSTRAINT `response_ibfk_1` FOREIGN KEY (`id_reclamation`) REFERENCES `reclamation` (`id_reclamtion`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT `response_ibfk_1` FOREIGN KEY (`id_reclamation`) REFERENCES `reclamation` (`id_reclamation`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `ride`

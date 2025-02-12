@@ -16,42 +16,56 @@ public class ReclamationService implements IService<Reclamation> {
     }
 
     @Override
-    public void createReclamation(Reclamation reclamation) throws SQLException {
+    public void create(Reclamation reclamation) throws SQLException {
         String sql = "INSERT INTO reclamation (id_user, content, date, status) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, reclamation.getUser().getId());
             pstmt.setString(2, reclamation.getContent());
             pstmt.setTimestamp(3, new java.sql.Timestamp(reclamation.getDate().getTime()));
             pstmt.setInt(4, reclamation.getStatus());
 
-            pstmt.executeUpdate();
-            System.out.println("Reclamation created successfully.");
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        reclamation.setIdReclamation(rs.getInt(1));
+                    }
+                }
+            }
+
+            System.out.println("Reclamation created successfully with ID: " + reclamation.getIdReclamation());
         }
     }
 
-
     @Override
-    public void updateReclamation(Reclamation reclamation) throws SQLException {
-        String sql = "UPDATE reclamation SET content = ?, date = ?, status = ? WHERE id_user = ?";
+    public void update(Reclamation reclamation) throws SQLException {
+        String sql = "UPDATE reclamation SET content = ?, date = ?, status = ? WHERE id_reclamation = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, reclamation.getContent());
             pstmt.setTimestamp(2, new java.sql.Timestamp(reclamation.getDate().getTime()));
             pstmt.setInt(3, reclamation.getStatus());
-            pstmt.setInt(4, reclamation.getUser().getId());
-            pstmt.executeUpdate();
-            System.out.println("Reclamation updated successfully.");
-
+            pstmt.setInt(4, reclamation.getIdReclamation());
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Reclamation updated successfully.");
+            } else {
+                System.out.println("No reclamation found with ID: " + reclamation.getIdReclamation());
+            }
         }
     }
 
     @Override
-    public void deleteReclamation(int id) throws SQLException {
-        String sql = "DELETE FROM reclamation WHERE id_reclamtion = ?";
+    public void delete(int id) throws SQLException {
+        String sql = "DELETE FROM reclamation WHERE id_reclamation = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-            System.out.println("Reclamation deleted successfully.");
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Reclamation deleted successfully.");
+            } else {
+                System.out.println("No reclamation found with ID: " + id);
+            }
         }
     }
 
@@ -60,32 +74,30 @@ public class ReclamationService implements IService<Reclamation> {
         List<Reclamation> reclamations = new ArrayList<>();
         String sql = "SELECT * FROM reclamation";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    User user = new User(
-                            rs.getInt("id_user"),
-                            "",
-                            "",
-                            "",
-                            "",
-                            User.Role.CLIENT,
-                            null
-                    );
+        try (PreparedStatement pstmt = connection.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("id_user"),
+                        "",
+                        "",
+                        "",
+                        "",
+                        User.Role.CLIENT,
+                        null
+                );
 
-                    Reclamation reclamation = new Reclamation(
-                            rs.getInt("id_reclamtion"),
-                            user,
-                            rs.getString("content"),
-                            rs.getTimestamp("date"),
-                            rs.getInt("status")
-                    );
+                Reclamation reclamation = new Reclamation(
+                        rs.getInt("id_reclamation"),
+                        user,
+                        rs.getString("content"),
+                        rs.getTimestamp("date"),
+                        rs.getInt("status")
+                );
 
-                    reclamations.add(reclamation);
-                }
+                reclamations.add(reclamation);
             }
         }
         return reclamations;
     }
 }
-

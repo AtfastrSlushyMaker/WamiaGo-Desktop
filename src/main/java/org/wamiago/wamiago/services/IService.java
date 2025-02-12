@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface IService<T> {
 
-    void createReclamation(T t) throws SQLException;
-    void updateReclamation(T t)throws SQLException;
-    void deleteReclamation(int id)throws SQLException;
+    void create(T t) throws SQLException;
+    void update(T t)throws SQLException;
+    void delete(int id)throws SQLException;
     List<T> read() throws SQLException;
 }
