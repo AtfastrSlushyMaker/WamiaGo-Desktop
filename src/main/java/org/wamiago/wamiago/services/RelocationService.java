@@ -17,13 +17,29 @@ public class RelocationService implements IService<Relocation> {
 
     @Override
     public void create(Relocation relocation) throws SQLException {
+        // 1️⃣ Vérifier si l'id_reservation existe dans la table reservation
+        String checkReservationQuery = "SELECT COUNT(*) FROM reservation WHERE id_reservation = ?";
+        PreparedStatement checkReservationStmt = connection.prepareStatement(checkReservationQuery);
+        checkReservationStmt.setInt(1, relocation.getIdReservation());
+        ResultSet reservationResult = checkReservationStmt.executeQuery();
+
+        // Si l'id_reservation n'existe pas, on ne fait rien
+        if (reservationResult.next() && reservationResult.getInt(1) == 0) {
+            System.out.println("❌ Annulé : La réservation avec l'ID " + relocation.getIdReservation() + " n'existe pas.");
+            return;
+        }
+
+        // 2️⃣ Si l'id_reservation existe, procéder à l'insertion de la relocation
         String sql = "INSERT INTO relocation (id_reservation, date, status, cost) VALUES (?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, relocation.getIdReservation());
         preparedStatement.setObject(2, relocation.getDate());
-        preparedStatement.setInt(3, relocation.getStatus());
+        preparedStatement.setBoolean(3, relocation.isStatus());
         preparedStatement.setFloat(4, relocation.getCost());
+
+        // Exécution de la requête d'insertion
         preparedStatement.executeUpdate();
+        System.out.println("✅ Relocation ajoutée avec succès pour la réservation avec l'ID " + relocation.getIdReservation());
     }
 
     @Override
@@ -32,7 +48,7 @@ public class RelocationService implements IService<Relocation> {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, relocation.getIdReservation());
         preparedStatement.setObject(2, relocation.getDate());
-        preparedStatement.setInt(3, relocation.getStatus());
+        preparedStatement.setBoolean(3, relocation.isStatus());
         preparedStatement.setFloat(4, relocation.getCost());
         preparedStatement.setInt(5, relocation.getIdRelocation());
         preparedStatement.executeUpdate();
@@ -57,7 +73,7 @@ public class RelocationService implements IService<Relocation> {
             relocation.setIdRelocation(rs.getInt("id_relocation"));
             relocation.setIdReservation(rs.getInt("id_reservation"));
             relocation.setDate(rs.getObject("date", Timestamp.class).toLocalDateTime());
-            relocation.setStatus(rs.getInt("status"));
+            relocation.setStatus(rs.getBoolean("status"));
             relocation.setCost(rs.getFloat("cost"));
             relocations.add(relocation);
         }

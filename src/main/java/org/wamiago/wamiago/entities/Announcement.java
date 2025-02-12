@@ -10,14 +10,19 @@ public class Announcement {
     private String content;
     private LocalDateTime date;
     private Zone zone;
-    private int status;
+    private boolean status;
 
-    // Enum pour la zone
     public enum Zone {
-        Ariana, Béja, Ben_Arous, Bizerte, Gabès, Gafsa, Jendouba, Kairouan, Kasserine, Kebili, Kef, Mahdia, Manouba, Medenine, Monastir, Nabeul, Sfax, Sidi_Bouzid, Siliana, Sousse, Tataouine, Tozeur, Tunis, Zaghouan
+        Ariana, Béja, Ben_Arous, Bizerte, Gabès, Gafsa, Jendouba, Kairouan, Kasserine, Kebili, Kef, Mahdia, Manouba,
+        Medenine, Monastir, Nabeul, Sfax, Sidi_Bouzid, Siliana, Sousse, Tataouine, Tozeur, Tunis, Zaghouan
     }
 
-    public Announcement(int idAnnouncement, int idTransporter, String title, String content, LocalDateTime date, Zone zone, int status) {
+    public Announcement() {
+        this(0, 0, "", "", LocalDateTime.now(), Zone.Tunis, false);
+    }
+
+    public Announcement(int idAnnouncement, int idTransporter, String title, String content,
+                        LocalDateTime date, Zone zone, boolean status) {
         this.idAnnouncement = idAnnouncement;
         this.idTransporter = idTransporter;
         this.title = title;
@@ -27,17 +32,7 @@ public class Announcement {
         this.status = status;
     }
 
-    public Announcement() {
-        this.idAnnouncement = 0;
-        //this.idTransporter = new Driver();
-        this.idTransporter = 0;
-        this.title = "";
-        this.content = "";
-        this.date = LocalDateTime.now();
-        this.zone = Zone.Tunis;
-        this.status = 0;
-    }
-
+    // Getters and Setters
     public int getIdAnnouncement() {
         return idAnnouncement;
     }
@@ -86,11 +81,11 @@ public class Announcement {
         this.zone = zone;
     }
 
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -99,12 +94,14 @@ public class Announcement {
         if (this == o) return true;
         if (!(o instanceof Announcement)) return false;
         Announcement that = (Announcement) o;
-        return getIdAnnouncement() == that.getIdAnnouncement() && getStatus() == that.getStatus() && Objects.equals(getIdTransporter(), that.getIdTransporter()) && Objects.equals(getTitle(), that.getTitle()) && Objects.equals(getContent(), that.getContent()) && Objects.equals(getDate(), that.getDate()) && getZone() == that.getZone();
+        return idAnnouncement == that.idAnnouncement && idTransporter == that.idTransporter && status == that.status &&
+                Objects.equals(title, that.title) && Objects.equals(content, that.content) &&
+                Objects.equals(date, that.date) && zone == that.zone;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdAnnouncement(), getIdTransporter(), getTitle(), getContent(), getDate(), getZone(), getStatus());
+        return Objects.hash(idAnnouncement, idTransporter, title, content, date, zone, status);
     }
 
     @Override

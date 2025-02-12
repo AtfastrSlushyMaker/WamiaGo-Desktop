@@ -7,21 +7,15 @@ public class Relocation {
     private int idRelocation;
     private int idReservation;
     private LocalDateTime date;
-    private int status;
+    private boolean status;
     private float cost;
 
     public Relocation() {
+        this(0, 0, LocalDateTime.now(), false, 0.0f);
     }
 
-    public Relocation(int idRelocation, int idReservation, LocalDateTime date, int status, float cost) {
+    public Relocation(int idRelocation, int idReservation, LocalDateTime date, boolean status, float cost) {
         this.idRelocation = idRelocation;
-        this.idReservation = idReservation;
-        this.date = date;
-        this.status = status;
-        this.cost = cost;
-    }
-
-    public Relocation(int idReservation, LocalDateTime date, int status, float cost) {
         this.idReservation = idReservation;
         this.date = date;
         this.status = status;
@@ -53,11 +47,11 @@ public class Relocation {
         this.date = date;
     }
 
-    public int getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -74,12 +68,13 @@ public class Relocation {
         if (this == o) return true;
         if (!(o instanceof Relocation)) return false;
         Relocation that = (Relocation) o;
-        return getIdRelocation() == that.getIdRelocation() && getIdReservation() == that.getIdReservation() && getStatus() == that.getStatus() && Float.compare(that.getCost(), getCost()) == 0 && Objects.equals(getDate(), that.getDate());
+        return idRelocation == that.idRelocation && idReservation == that.idReservation &&
+                status == that.status && Float.compare(that.cost, cost) == 0 && Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdRelocation(), getIdReservation(), getDate(), getStatus(), getCost());
+        return Objects.hash(idRelocation, idReservation, date, status, cost);
     }
 
     @Override

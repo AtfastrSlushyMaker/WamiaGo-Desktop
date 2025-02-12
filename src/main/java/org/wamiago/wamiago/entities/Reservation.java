@@ -1,6 +1,7 @@
 package org.wamiago.wamiago.entities;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Reservation {
     private int idReservation;
@@ -11,23 +12,16 @@ public class Reservation {
     private int idEndLocation;
     private int idAnnouncement;
 
-    // Enums pour le statut de la réservation
     public enum Status {
         CONFIRMED, CANCELLED, COMPLETED, ON_GOING
     }
 
-    // Constructeurs
     public Reservation() {
-        this.idReservation = 0;
-        this.date = LocalDateTime.now();
-        this.status = Status.CONFIRMED;
-        this.description = "";
-        this.idStartLocation = 0;
-        this.idEndLocation = 0;
-        this.idAnnouncement = 0;
+        this(0, LocalDateTime.now(), Status.CONFIRMED, "", 0, 0, 0);
     }
 
-    public Reservation(int idReservation, LocalDateTime date, Status status, String description, int idStartLocation, int idEndLocation, int idAnnouncement) {
+    public Reservation(int idReservation, LocalDateTime date, Status status, String description,
+                       int idStartLocation, int idEndLocation, int idAnnouncement) {
         this.idReservation = idReservation;
         this.date = date;
         this.status = status;
@@ -37,7 +31,7 @@ public class Reservation {
         this.idAnnouncement = idAnnouncement;
     }
 
-    // Getters et Setters
+    // Getters and Setters
     public int getIdReservation() {
         return idReservation;
     }
@@ -94,7 +88,22 @@ public class Reservation {
         this.idAnnouncement = idAnnouncement;
     }
 
-    // Méthode toString pour l'affichage
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Reservation)) return false;
+        Reservation that = (Reservation) o;
+        return idReservation == that.idReservation && idStartLocation == that.idStartLocation &&
+                idEndLocation == that.idEndLocation && idAnnouncement == that.idAnnouncement &&
+                Objects.equals(date, that.date) && status == that.status &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idReservation, date, status, description, idStartLocation, idEndLocation, idAnnouncement);
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
