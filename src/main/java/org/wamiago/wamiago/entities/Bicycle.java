@@ -31,7 +31,7 @@ public class Bicycle {
         this.status = STATUS.available;
         this.battery_level = 0;
         this.range_km = 0;
-        this.last_updated = Timestamp.valueOf(LocalDateTime.now());
+        this.last_updated = new Timestamp(System.currentTimeMillis());
     }
 
     public int getId() {

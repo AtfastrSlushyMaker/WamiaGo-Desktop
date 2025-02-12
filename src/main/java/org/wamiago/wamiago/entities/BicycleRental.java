@@ -1,5 +1,6 @@
 package org.wamiago.wamiago.entities;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,14 +10,14 @@ public class BicycleRental {
     private Bicycle bicycle;
     private Station start_station;
     private Station end_station;
-    private LocalDateTime start_time;
-    private LocalDateTime end_time;
+    private Timestamp start_time;
+    private Timestamp end_time;
     private float distance_km;
     private float battery_used;
     private float cost;
 
     public BicycleRental(int id, User user, Bicycle bicycle, Station start_station, Station end_station
-            , LocalDateTime start_time, LocalDateTime end_time, float distance_km, float battery_used, float cost) {
+            , Timestamp start_time, Timestamp end_time, float distance_km, float battery_used, float cost) {
         this.id = id;
         this.user = user;
         this.bicycle = bicycle;
@@ -27,6 +28,19 @@ public class BicycleRental {
         this.distance_km = distance_km;
         this.battery_used = battery_used;
         this.cost = cost;
+    }
+
+    public BicycleRental() {
+        this.id = 0;
+        this.user = new User();
+        this.bicycle = new Bicycle();
+        this.start_station = new Station();
+        this.end_station = new Station();
+        this.start_time = new Timestamp(System.currentTimeMillis());
+        this.end_time = new Timestamp(System.currentTimeMillis());
+        this.distance_km = 0;
+        this.battery_used = 0;
+        this.cost = 0;
     }
 
     public int getId() {
@@ -69,19 +83,19 @@ public class BicycleRental {
         this.end_station = end_station;
     }
 
-    public LocalDateTime getStart_time() {
+    public Timestamp getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(LocalDateTime start_time) {
+    public void setStart_time(Timestamp start_time) {
         this.start_time = start_time;
     }
 
-    public LocalDateTime getEnd_time() {
+    public Timestamp getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(LocalDateTime end_time) {
+    public void setEnd_time(Timestamp end_time) {
         this.end_time = end_time;
     }
 
