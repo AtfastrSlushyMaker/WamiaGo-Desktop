@@ -1,10 +1,15 @@
 package org.wamiago.wamiago.entities;
 
+import java.time.LocalDate;
+
 public class Driver extends User {
-    private int id_driver;
-    private String permit_number;
+    private int idDriver;
+    private String permitNumber;
     private DriverRole driverRole;
-    private int status;
+    private int driverStatus;
+
+    public static final int DRIVER_INACTIVE = 0;
+    public static final int DRIVER_ACTIVE = 1;
 
     public enum DriverRole {
         TAXI_DRIVER,
@@ -12,36 +17,38 @@ public class Driver extends User {
         CARPOOL_DRIVER
     }
 
-    public Driver(int id_driver, int id, String name, String email, String phone, String password, DriverRole driverRole, Location location, String permit_number, int status) {
-        super(id, name, email, phone, password, Role.CLIENT, location);
-        this.id_driver = id_driver;
-        this.permit_number = permit_number;
+    public Driver(int idDriver, int id, String name, String email, String phone, String password, DriverRole driverRole,
+                  Location location, String permitNumber, int driverStatus, Gender gender, String profilePicture,
+                  boolean isVerified, AccountStatus accountStatus, LocalDate dateOfBirth, Status userStatus) {
+        super(id, name, email, phone, password, Role.CLIENT, location, gender, profilePicture, isVerified, accountStatus, dateOfBirth, userStatus);
+        this.idDriver = idDriver;
+        this.permitNumber = permitNumber;
         this.driverRole = driverRole;
-        this.status = status;
+        this.driverStatus = driverStatus;
     }
 
     public Driver() {
-        super(0, "", "", "", "", Role.CLIENT, new Location());
-        this.id_driver = 0;
-        this.permit_number = "";
+        super(0, "", "", "", "", Role.CLIENT, new Location(), Gender.MALE, "", false, AccountStatus.ACTIVE, null, Status.OFFLINE);
+        this.idDriver = 0;
+        this.permitNumber = "";
         this.driverRole = null;
-        this.status = 0;
+        this.driverStatus = DRIVER_INACTIVE;
     }
 
-    public int getId_driver() {
-        return id_driver;
+    public int getIdDriver() {
+        return idDriver;
     }
 
-    public void setId_driver(int id_driver) {
-        this.id_driver = id_driver;
+    public void setIdDriver(int idDriver) {
+        this.idDriver = idDriver;
     }
 
-    public String getPermit_number() {
-        return permit_number;
+    public String getPermitNumber() {
+        return permitNumber;
     }
 
-    public void setPermit_number(String permit_number) {
-        this.permit_number = permit_number;
+    public void setPermitNumber(String permitNumber) {
+        this.permitNumber = permitNumber;
     }
 
     public DriverRole getDriverRole() {
@@ -52,17 +59,36 @@ public class Driver extends User {
         this.driverRole = driverRole;
     }
 
-    public int getStatus() {
-        return status;
+    public int getDriverStatus() {
+        return driverStatus;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setDriverStatus(int driverStatus) {
+        if (driverStatus != DRIVER_INACTIVE && driverStatus != DRIVER_ACTIVE) {
+            throw new IllegalArgumentException("Invalid driver status. Must be 0 (INACTIVE) or 1 (ACTIVE).");
+        }
+        this.driverStatus = driverStatus;
     }
-
 
     @Override
     public String toString() {
-        return "Driver [id_driver=" + id_driver + ", id=" + super.getId() + ", name=" + super.getName() + ", driverRole=" + driverRole + ", status=" + status + "]";
+        return "Driver{" +
+                "idDriver=" + idDriver +
+                ", permitNumber='" + permitNumber + '\'' +
+                ", driverRole=" + driverRole +
+                ", driverStatus=" + driverStatus +
+                ", id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", phone='" + getPhone() + '\'' +
+                ", role=" + getRole() +
+                ", location=" + getLocation() +
+                ", gender=" + getGender() +
+                ", profilePicture='" + getProfilePicture() + '\'' +
+                ", isVerified=" + isVerified() +
+                ", accountStatus=" + getAccountStatus() +
+                ", dateOfBirth=" + getDateOfBirth() +
+                ", userStatus=" + getStatus() +
+                '}';
     }
 }

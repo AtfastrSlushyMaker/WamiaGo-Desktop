@@ -25,7 +25,7 @@ public class RequestService implements IService<Request> {
             return;
         }
 
-        String checkTaxiQuery = "SELECT COUNT(*) FROM driver WHERE id_driver = ? AND role = 'taxi_driver'";
+        String checkTaxiQuery = "SELECT COUNT(*) FROM driver WHERE id_driver = ? AND role = 'TAXI_DRIVER'";
         PreparedStatement checkTaxiStmt = connection.prepareStatement(checkTaxiQuery);
         checkTaxiStmt.setInt(1, entity.getIdTaxi());
         ResultSet taxiResult = checkTaxiStmt.executeQuery();
@@ -70,7 +70,7 @@ public class RequestService implements IService<Request> {
                 request.setIdTaxi(idTaxi);
                 request.setIdDepartureLocation(idDepartureLocation);
                 request.setIdArrivalLocation(idArrivalLocation);
-                request.setStatus(Request.RequestStatus.valueOf(resultSet.getString("status").toUpperCase()));
+                request.setStatus(Request.RequestStatus.valueOf(resultSet.getString("status")));
                 request.setRequestDate(resultSet.getTimestamp("request_date"));
 
                 System.out.println("Request ID: " + request.getIdRequest());
