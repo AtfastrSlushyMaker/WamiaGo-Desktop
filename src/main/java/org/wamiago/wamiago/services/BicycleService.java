@@ -25,6 +25,7 @@ public class BicycleService implements IService<Bicycle> {
         preparedStatement.setFloat(4, bicycle.getRange_km());
         preparedStatement.setObject(5, bicycle.getLast_updated());
         preparedStatement.executeUpdate();
+        System.out.println("✅ Bicycle created successfully");
     }
 
     @Override
@@ -38,6 +39,7 @@ public class BicycleService implements IService<Bicycle> {
         preparedStatement.setObject(5, bicycle.getLast_updated());
         preparedStatement.setInt(6, bicycle.getId());
         preparedStatement.executeUpdate();
+        System.out.println("✅ Bicycle updated successfully");
 
     }
 
@@ -48,6 +50,7 @@ public class BicycleService implements IService<Bicycle> {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
+        System.out.println("✅ Bicycle deleted successfully");
 
     }
 

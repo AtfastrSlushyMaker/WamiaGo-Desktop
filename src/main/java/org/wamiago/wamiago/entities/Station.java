@@ -10,6 +10,8 @@ public class Station {
     private int available_docks;
     private int available_bikes;
     private int charging_bikes;
+
+
     public enum STATUS {active, inactive, maintenance, disabled}
     private  STATUS status;
 
