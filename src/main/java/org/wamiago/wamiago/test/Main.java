@@ -4,9 +4,9 @@ import org.wamiago.wamiago.entities.*;
 import org.wamiago.wamiago.services.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -193,5 +193,49 @@ public class Main {
             System.err.println("An error occurred: " + e.getMessage());
             e.printStackTrace();
         }
+        System.out.println("### =========================== ###");
+        System.out.println("###     Search Users            ###");
+        System.out.println("### =========================== ###");
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+        try {
+            System.out.println("\nEnter a search field (name, email, phone, role, gender, accountStatus, dob, status, location) or 'exit' to quit:");
+            String searchField = scanner.nextLine().trim();
+
+            if ("exit".equalsIgnoreCase(searchField)) {
+                System.out.println("Exiting search.");
+                break;
+            }
+
+            if (!isValidSearchField(searchField)) {
+                System.out.println("Invalid search field. Please try again.");
+                continue;
+            }
+
+            System.out.println("Enter the search value for " + searchField + ":");
+            String searchValue = scanner.nextLine().trim();
+
+            List<User> foundUsers = userService.searchUsers(searchField, searchValue);
+
+            if (foundUsers.isEmpty()) {
+                System.out.println("No users found with the "+ searchField +" "+ searchValue+".");
+            } else {
+                System.out.println("\n### Search Results ###");
+                foundUsers.forEach(System.out::println);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error executing search: " + e.getMessage());
+        }
     }
+        scanner.close();
 }
+
+private static boolean isValidSearchField(String field) {
+    return field.equals("name") || field.equals("email") || field.equals("phone") ||
+            field.equals("role") || field.equals("gender") || field.equals("accountStatus") ||
+            field.equals("dob") || field.equals("status") || field.equals("location");
+}
+}
+
