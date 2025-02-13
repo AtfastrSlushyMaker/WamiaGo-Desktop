@@ -1,27 +1,23 @@
 package org.wamiago.wamiago.services;
 
-
 import java.sql.SQLException;
 import java.util.List;
 
 public interface IService<T> {
-
     void create(T t) throws SQLException;
-    void update(T t)throws SQLException;
-    void delete(int id)throws SQLException;
+    void update(T t) throws SQLException;
+    void delete(int id) throws SQLException;
     List<T> read() throws SQLException;
-    default String getClientNameById(int idClient) throws SQLException
-    {
+    default T getById(int id) throws SQLException {
         throw new UnsupportedOperationException("getById is not implemented.");
     }
+   default String getClientNameById(int idClient) throws SQLException
+   {
+       throw new UnsupportedOperationException("getById is not implemented.");
+   }
 
     default String getLocationNameById(int idLocation) throws SQLException
     {
         throw new UnsupportedOperationException("getById is not implemented.");
     }
-    default T search(int id) throws SQLException
-    {
-        throw new UnsupportedOperationException("getById is not implemented.");
-    }
-
 }

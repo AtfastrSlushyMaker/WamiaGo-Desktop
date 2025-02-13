@@ -59,4 +59,19 @@ public class LocationService implements IService<Location> {
         }
         return locations;
     }
+    public Location getById(int id) throws SQLException {
+        String sql = "SELECT * FROM location WHERE id_location=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            Location location = new Location();
+            location.setId(rs.getInt("id_location"));
+            location.setAddress(rs.getString("address"));
+            location.setLatitude(rs.getFloat("latitude"));
+            location.setLongitude(rs.getFloat("longitude"));
+            return location;
+        }
+        return null;
+    }
 }
