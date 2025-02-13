@@ -25,7 +25,7 @@ public class Main {
                     User.Role.CLIENT, location, User.Gender.MALE, "john_profile.jpg", true,
                     User.AccountStatus.ACTIVE, LocalDate.of(1990, 5, 15), User.Status.OFFLINE);
 
-            User otherUser = new User(2, "Ahmed Ali", "ahmed@example.com", "123456", "passs",
+            User otherUser = new User(2, "Ahmed Ali", "ahmedali@example.com", "123456", "passs",
                     User.Role.CLIENT, location, User.Gender.MALE, "ahmed_profile.jpg", false,
                     User.AccountStatus.DEACTIVATED, LocalDate.of(1985, 7, 20), User.Status.OFFLINE);
 
