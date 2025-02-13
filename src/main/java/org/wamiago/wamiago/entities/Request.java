@@ -1,6 +1,6 @@
 package org.wamiago.wamiago.entities;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Request {
     public enum RequestStatus {
@@ -13,15 +13,13 @@ public class Request {
     private int idDepartureLocation;
     private int idArrivalLocation;
     private RequestStatus status;
-    private Date requestDate;
-
+    private Timestamp requestDate;
 
     public Request() {
-
     }
 
     public Request(int idClient, int idTaxi, int idDepartureLocation,
-                   int idArrivalLocation, RequestStatus status, Date requestDate) {
+                   int idArrivalLocation, RequestStatus status, Timestamp requestDate) {
         this.idClient = idClient;
         this.idTaxi = idTaxi;
         this.idDepartureLocation = idDepartureLocation;
@@ -31,7 +29,7 @@ public class Request {
     }
 
     public Request(int idRequest, int idClient, int idTaxi, int idDepartureLocation,
-                   int idArrivalLocation, RequestStatus status, Date requestDate) {
+                   int idArrivalLocation, RequestStatus status, Timestamp requestDate) {
         this.idRequest = idRequest;
         this.idClient = idClient;
         this.idTaxi = idTaxi;
@@ -89,11 +87,11 @@ public class Request {
         this.status = status;
     }
 
-    public Date getRequestDate() {
+    public Timestamp getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate(Date requestDate) {
+    public void setRequestDate(Timestamp requestDate) {
         this.requestDate = requestDate;
     }
 }
