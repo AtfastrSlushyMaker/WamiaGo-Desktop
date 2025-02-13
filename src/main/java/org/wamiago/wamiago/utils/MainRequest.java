@@ -4,6 +4,7 @@ import org.wamiago.wamiago.entities.Request;
 import org.wamiago.wamiago.services.RequestService;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class MainRequest {
             newRequest.setIdDepartureLocation(2);
             newRequest.setIdArrivalLocation(3);
             newRequest.setStatus(Request.RequestStatus.PENDING);
-            newRequest.setRequestDate(new Date());
+            newRequest.setRequestDate(new Timestamp(System.currentTimeMillis()));
 
             requestService.create(newRequest);
             System.out.println("✅ Request created successfully!");

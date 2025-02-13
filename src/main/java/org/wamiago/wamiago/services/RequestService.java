@@ -39,7 +39,7 @@ public class RequestService implements IService<Request> {
             }
         }
 
-       
+
         String insertQuery = "INSERT INTO request (id_client, id_taxi, id_departure_location, id_arrival_location, status, request_date) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {

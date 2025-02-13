@@ -87,6 +87,19 @@ public class Request {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Request{" +
+                "idRequest=" + idRequest +
+                ", idClient=" + idClient +
+                ", idTaxi=" + idTaxi +
+                ", idDepartureLocation=" + idDepartureLocation +
+                ", idArrivalLocation=" + idArrivalLocation +
+                ", status=" + status +
+                ", requestDate=" + requestDate +
+                '}';
+    }
+
     public Timestamp getRequestDate() {
         return requestDate;
     }
