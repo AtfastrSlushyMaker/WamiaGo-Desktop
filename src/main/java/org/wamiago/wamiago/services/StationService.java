@@ -212,7 +212,26 @@ public class StationService implements IService<Station> {
         stations.sort((s1, s2) -> s2.getTotal_docks() - s1.getTotal_docks());
         return stations;
     }
-
+    public List<Station> search(String By,String value) throws SQLException {
+        List<Station> stations = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle_station WHERE "+By+"= ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, value);
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            Station station = new Station();
+            station.setId(rs.getInt("id_station"));
+            station.setName(rs.getString("name"));
+            station.setLocation(new LocationService().getById(rs.getInt("id_location")));
+            station.setTotal_docks(rs.getInt("total_docks"));
+            station.setAvailable_docks(rs.getInt("available_docks"));
+            station.setAvailable_bikes(rs.getInt("available_bikes"));
+            station.setCharging_bikes(rs.getInt("charging_bikes"));
+            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
+            stations.add(station);
+        }
+        return stations;
+    }
     public List<Station> searchByName(String name) throws SQLException {
         List<Station> stations = new ArrayList<>();
         String sql = "SELECT * FROM bicycle_station WHERE name LIKE ?";
