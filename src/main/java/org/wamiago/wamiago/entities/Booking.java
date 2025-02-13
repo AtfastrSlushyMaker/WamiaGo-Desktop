@@ -2,25 +2,25 @@ package org.wamiago.wamiago.entities;
 
 public class Booking {
 
-
     public enum Status {
         Pending,
         Confirmed,
         Canceled
     }
+
     private int idBooking;
-    private int idTrip;
-    private int idPassenger;
+    private Trip trip;
+    private User passenger;
     private int reservedSeats;
     private Status status;
 
     public Booking() {
     }
 
-    public Booking(int idBooking, int idTrip, int idPassenger, int reservedSeats, Status status) {
+    public Booking(int idBooking, Trip trip, User passenger, int reservedSeats, Status status) {
         this.idBooking = idBooking;
-        this.idTrip = idTrip;
-        this.idPassenger = idPassenger;
+        this.trip = trip;
+        this.passenger = passenger;
         this.reservedSeats = reservedSeats;
         this.status = status;
     }
@@ -34,20 +34,20 @@ public class Booking {
         this.idBooking = idBooking;
     }
 
-    public int getIdTrip() {
-        return idTrip;
+    public Trip getTrip() {
+        return trip;
     }
 
-    public void setIdTrip(int idTrip) {
-        this.idTrip = idTrip;
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 
-    public int getIdPassenger() {
-        return idPassenger;
+    public User getPassenger() {
+        return passenger;
     }
 
-    public void setIdPassenger(int idPassenger) {
-        this.idPassenger = idPassenger;
+    public void setPassenger(User passenger) {
+        this.passenger = passenger;
     }
 
     public int getReservedSeats() {
