@@ -8,6 +8,8 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import javax.swing.*;
+import java.io.File;
 public class Main {
     private static UserService userService = new UserService();
     private static IService<Driver> driverService = new DriverService();
@@ -60,6 +62,9 @@ public class Main {
                             generatePDF();
                             break;
                             case 14:
+                                displayRatingsLeaderboard();
+                                break;
+                            case 15:
                         System.out.println("Exiting...");
                         return;
                     default:
@@ -94,7 +99,8 @@ public class Main {
         System.out.println("11. Delete Driver");
         System.out.println("12. Sort Users");
         System.out.println("13. Generate A PDF report for Users and Drivers.");
-        System.out.println("14. Exit");
+        System.out.println("14. Show Leaderboard Stats for Drivers.");
+        System.out.println("15. Exit");
     }
     //CRUD
     //-----------------------------------------------------------
@@ -307,10 +313,38 @@ public class Main {
 
     private static void generatePDF() throws SQLException {
         System.out.println("\n### Generating PDF Report ###");
-        String fileName = "users_drivers_report.pdf";
-        userService.exportToPdf(fileName);
-    }
 
+        // Create a parent frame to ensure the dialog appears in front
+        JFrame frame = new JFrame();
+        frame.setAlwaysOnTop(true); // Force it to appear in front
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select a location to save the PDF");
+
+        // Set the default file name
+        fileChooser.setSelectedFile(new File("users_drivers_report.pdf"));
+
+        // Show the save dialog and make sure it appears in front
+        int userSelection = fileChooser.showSaveDialog(frame);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+
+            // Ensure the file has a .pdf extension
+            if (!filePath.toLowerCase().endsWith(".pdf")) {
+                filePath += ".pdf";
+            }
+
+            // Call the export function with the selected path
+            userService.exportToPdf(filePath);
+            System.out.println("PDF successfully generated at: " + filePath);
+        } else {
+            System.out.println("PDF generation canceled.");
+        }
+
+        frame.dispose(); // Close the frame after use
+    }
     //DRIVER
     private static void createDriver(Scanner scanner) throws SQLException {
         System.out.println("\n### Convert User to Driver ###");
@@ -455,6 +489,25 @@ public class Main {
         List<Driver> drivers = driverService.read();
         drivers.forEach(System.out::println);
     }
+
+    private static void displayRatingsLeaderboard() throws SQLException {
+        System.out.println("\n### Top 5 Drivers Leaderboard ###");
+        List<Object[]> leaderboard = ratingService.getTopRatedDrivers(5);
+
+        if (leaderboard.isEmpty()) {
+            System.out.println("No ratings available yet.");
+            return;
+        }
+
+        System.out.printf("%-10s %-20s %-10s %-10s%n", "Driver ID", "Name", "Avg Rating", "Total Ratings");
+        System.out.println("------------------------------------------------------");
+
+        for (Object[] driver : leaderboard) {
+            System.out.printf("%-10d %-20s %-10.2f %-10d%n",
+                    driver[0], driver[1], driver[2], driver[3]);
+        }
+    }
+
 
     //RATING
     private static void addRating(Scanner scanner) throws SQLException {
