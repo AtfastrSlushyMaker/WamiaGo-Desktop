@@ -105,4 +105,30 @@ public class RatingService implements IService<Rating> {
         }
         return 0.0;
     }
+    public List<Object[]> getTopRatedDrivers(int limit) throws SQLException {
+        List<Object[]> leaderboard = new ArrayList<>();
+        String sql = "SELECT d.id_driver, u.name, AVG(r.rating) AS avg_rating, COUNT(r.id_rating) AS total_ratings " +
+                "FROM `rating` r " +
+                "JOIN `driver` d ON r.id_driver = d.id_driver " +
+                "JOIN `user` u ON d.id_user = u.id_user " +
+                "GROUP BY d.id_driver, u.name " +
+                "ORDER BY avg_rating DESC, total_ratings DESC " +
+                "LIMIT ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    leaderboard.add(new Object[]{
+                            rs.getInt("id_driver"),
+                            rs.getString("name"),
+                            rs.getDouble("avg_rating"),
+                            rs.getInt("total_ratings")
+                    });
+                }
+            }
+        }
+        return leaderboard;
+    }
+
 }
