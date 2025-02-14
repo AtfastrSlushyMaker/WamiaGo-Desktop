@@ -314,36 +314,32 @@ public class Main {
     private static void generatePDF() throws SQLException {
         System.out.println("\n### Generating PDF Report ###");
 
-        // Create a parent frame to ensure the dialog appears in front
+
         JFrame frame = new JFrame();
-        frame.setAlwaysOnTop(true); // Force it to appear in front
+        frame.setAlwaysOnTop(true);
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select a location to save the PDF");
 
-        // Set the default file name
         fileChooser.setSelectedFile(new File("users_drivers_report.pdf"));
 
-        // Show the save dialog and make sure it appears in front
         int userSelection = fileChooser.showSaveDialog(frame);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
             String filePath = fileToSave.getAbsolutePath();
 
-            // Ensure the file has a .pdf extension
             if (!filePath.toLowerCase().endsWith(".pdf")) {
                 filePath += ".pdf";
             }
 
-            // Call the export function with the selected path
             userService.exportToPdf(filePath);
             System.out.println("PDF successfully generated at: " + filePath);
         } else {
             System.out.println("PDF generation canceled.");
         }
 
-        frame.dispose(); // Close the frame after use
+        frame.dispose();
     }
     //DRIVER
     private static void createDriver(Scanner scanner) throws SQLException {
