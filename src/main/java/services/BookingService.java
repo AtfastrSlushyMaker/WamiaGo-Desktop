@@ -1,9 +1,9 @@
-package org.wamiago.wamiago.services;
+package services;
 
-import org.wamiago.wamiago.entities.Booking;
-import org.wamiago.wamiago.entities.Trip;
-import org.wamiago.wamiago.entities.User;
-import org.wamiago.wamiago.utils.DataBase;
+import entities.Booking;
+import entities.Trip;
+import entities.User;
+import utils.DataBase;
 
 import java.sql.*;
 import java.util.ArrayList;

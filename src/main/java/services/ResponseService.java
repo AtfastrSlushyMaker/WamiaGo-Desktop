@@ -1,7 +1,7 @@
-    package org.wamiago.wamiago.services;
-    import org.wamiago.wamiago.entities.Reclamation;
-    import org.wamiago.wamiago.entities.Response;
-    import org.wamiago.wamiago.utils.DataBase;
+    package services;
+    import entities.Reclamation;
+    import entities.Response;
+    import utils.DataBase;
 
     import java.util.List;
     import java.util.ArrayList;

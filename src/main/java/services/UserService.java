@@ -1,8 +1,8 @@
-package org.wamiago.wamiago.services;
+package services;
 
-import org.wamiago.wamiago.entities.User;
-import org.wamiago.wamiago.entities.Location;
-import org.wamiago.wamiago.utils.DataBase;
+import entities.User;
+import entities.Location;
+import utils.DataBase;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,9 +1,11 @@
-package org.wamiago.wamiago.services;
+package services;
 
-import org.wamiago.wamiago.entities.Announcement;
-import org.wamiago.wamiago.entities.Location;
-import org.wamiago.wamiago.entities.Reservation;
-import org.wamiago.wamiago.utils.DataBase;
+
+
+import entities.Announcement;
+import entities.Location;
+import entities.Reservation;
+import utils.DataBase;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -13,12 +15,12 @@ import java.util.Map;
 
 public class ReservationService implements IService<Reservation> {
     private final Connection connection;
-    private final LocationService locationService;
+    private final services.LocationService locationService;
     private final AnnouncementService announcementService;
 
     public ReservationService() {
         this.connection = DataBase.getInstance().getConnection();
-        this.locationService = new LocationService();
+        this.locationService = new services.LocationService();
         this.announcementService = new AnnouncementService();
     }
 

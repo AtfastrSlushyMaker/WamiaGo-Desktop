@@ -1,8 +1,8 @@
-package org.wamiago.wamiago.services;
+package services;
 
-import org.wamiago.wamiago.entities.Announcement;
-import org.wamiago.wamiago.entities.Driver;
-import org.wamiago.wamiago.utils.DataBase;
+import entities.Announcement;
+import entities.Driver;
+import utils.DataBase;
 
 import java.sql.*;
 import java.time.LocalDateTime;
