@@ -1,8 +1,8 @@
-package org.wamiago.wamiago.services;
+package services;
 
-import org.wamiago.wamiago.entities.Bicycle;
-import org.wamiago.wamiago.entities.Station;
-import org.wamiago.wamiago.utils.DataBase;
+import entities.Bicycle;
+import entities.Station;
+import utils.DataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
