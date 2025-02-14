@@ -1,4 +1,4 @@
-package org.wamiago.wamiago.entities;
+package entities;
 
 public class Vehicle {
     private int idVehicle;

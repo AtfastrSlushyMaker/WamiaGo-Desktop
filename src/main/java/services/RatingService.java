@@ -1,7 +1,7 @@
-package org.wamiago.wamiago.services;
+package services;
 
-import org.wamiago.wamiago.entities.Rating;
-import org.wamiago.wamiago.utils.DataBase;
+import entities.Rating;
+import utils.DataBase;
 
 import java.sql.*;
 import java.util.ArrayList;

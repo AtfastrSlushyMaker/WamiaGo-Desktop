@@ -1,9 +1,9 @@
-package org.wamiago.wamiago.services;
+package services;
 
-import org.wamiago.wamiago.entities.Driver;
-import org.wamiago.wamiago.entities.Trip;
-import org.wamiago.wamiago.entities.Vehicle;
-import org.wamiago.wamiago.utils.DataBase;
+import entities.Driver;
+import entities.Trip;
+import entities.Vehicle;
+import utils.DataBase;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package services;
 import entities.Bicycle;
 import entities.BicycleRental;
 import entities.Station;
-import entities.User
+import entities.User;
 import utils.*;
 import java.sql.*;
 import java.util.ArrayList;

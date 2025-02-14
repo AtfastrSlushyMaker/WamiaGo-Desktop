@@ -1,8 +1,8 @@
-package org.wamiago.wamiago.services;
+package services;
 
-import org.wamiago.wamiago.entities.Relocation;
-import org.wamiago.wamiago.entities.Reservation;
-import org.wamiago.wamiago.utils.DataBase;
+import entities.Relocation;
+import entities.Reservation;
+import utils.DataBase;
 
 import java.sql.*;
 import java.time.LocalDateTime;
