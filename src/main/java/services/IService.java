@@ -11,13 +11,5 @@ public interface IService<T> {
     default T getById(int id) throws SQLException {
         throw new UnsupportedOperationException("getById is not implemented.");
     }
-   default String getClientNameById(int idClient) throws SQLException
-   {
-       throw new UnsupportedOperationException("getById is not implemented.");
-   }
 
-    default String getLocationNameById(int idLocation) throws SQLException
-    {
-        throw new UnsupportedOperationException("getById is not implemented.");
-    }
 }

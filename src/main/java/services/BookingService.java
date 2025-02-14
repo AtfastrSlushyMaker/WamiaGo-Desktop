@@ -1,6 +1,8 @@
 package org.wamiago.wamiago.services;
 
 import org.wamiago.wamiago.entities.Booking;
+import org.wamiago.wamiago.entities.Trip;
+import org.wamiago.wamiago.entities.User;
 import org.wamiago.wamiago.utils.DataBase;
 
 import java.sql.*;
@@ -17,10 +19,14 @@ public class BookingService implements IService<Booking> {
 
     @Override
     public void create(Booking booking) throws SQLException {
+        if (booking.getPassenger().getRole() != User.Role.CLIENT) {
+            throw new IllegalArgumentException("Passenger must have the role CLIENT");
+        }
+
         String query = "INSERT INTO booking (id_trip, id_passenger, reserved_seats, status) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, booking.getIdTrip());
-            stmt.setInt(2, booking.getIdPassenger());
+            stmt.setInt(1, booking.getTrip().getIdTrip());
+            stmt.setInt(2, booking.getPassenger().getId());
             stmt.setInt(3, booking.getReservedSeats());
             stmt.setString(4, booking.getStatus().name());
             stmt.executeUpdate();
@@ -29,10 +35,14 @@ public class BookingService implements IService<Booking> {
 
     @Override
     public void update(Booking booking) throws SQLException {
+        if (booking.getPassenger().getRole() != User.Role.CLIENT) {
+            throw new IllegalArgumentException("Passenger must have the role CLIENT");
+        }
+
         String query = "UPDATE booking SET id_trip = ?, id_passenger = ?, reserved_seats = ?, status = ? WHERE id_booking = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, booking.getIdTrip());
-            stmt.setInt(2, booking.getIdPassenger());
+            stmt.setInt(1, booking.getTrip().getIdTrip());
+            stmt.setInt(2, booking.getPassenger().getId());
             stmt.setInt(3, booking.getReservedSeats());
             stmt.setString(4, booking.getStatus().name());
             stmt.setInt(5, booking.getIdBooking());
@@ -58,8 +68,15 @@ public class BookingService implements IService<Booking> {
             while (rs.next()) {
                 Booking booking = new Booking();
                 booking.setIdBooking(rs.getInt("id_booking"));
-                booking.setIdTrip(rs.getInt("id_trip"));
-                booking.setIdPassenger(rs.getInt("id_passenger"));
+
+                Trip trip = new Trip();
+                trip.setIdTrip(rs.getInt("id_trip"));
+                booking.setTrip(trip);
+
+                User passenger = new User();
+                passenger.setId(rs.getInt("id_passenger"));
+                booking.setPassenger(passenger);
+
                 booking.setReservedSeats(rs.getInt("reserved_seats"));
                 booking.setStatus(Booking.Status.valueOf(rs.getString("status")));
                 bookings.add(booking);

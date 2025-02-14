@@ -1,6 +1,8 @@
 package org.wamiago.wamiago.services;
 
+import org.wamiago.wamiago.entities.Driver;
 import org.wamiago.wamiago.entities.Trip;
+import org.wamiago.wamiago.entities.Vehicle;
 import org.wamiago.wamiago.utils.DataBase;
 
 import java.sql.*;
@@ -24,8 +26,8 @@ public class TripService implements IService<Trip> {
             stmt.setDate(3, new java.sql.Date(trip.getDepartureDate().getTime()));
             stmt.setInt(4, trip.getAvailableSeats());
             stmt.setDouble(5, trip.getPricePerPassenger());
-            stmt.setInt(6, trip.getIdDriver());
-            stmt.setInt(7, trip.getIdVehicle());
+            stmt.setInt(6, trip.getDriver().getIdDriver());
+            stmt.setInt(7, trip.getVehicle().getIdVehicle());
             stmt.executeUpdate();
         }
     }
@@ -39,8 +41,8 @@ public class TripService implements IService<Trip> {
             stmt.setDate(3, new java.sql.Date(trip.getDepartureDate().getTime()));
             stmt.setInt(4, trip.getAvailableSeats());
             stmt.setDouble(5, trip.getPricePerPassenger());
-            stmt.setInt(6, trip.getIdDriver());
-            stmt.setInt(7, trip.getIdVehicle());
+            stmt.setInt(6, trip.getDriver().getIdDriver());
+            stmt.setInt(7, trip.getVehicle().getIdVehicle());
             stmt.setInt(8, trip.getIdTrip());
             stmt.executeUpdate();
         }
@@ -69,8 +71,15 @@ public class TripService implements IService<Trip> {
                 trip.setDepartureDate(rs.getDate("departure_date"));
                 trip.setAvailableSeats(rs.getInt("available_seats"));
                 trip.setPricePerPassenger(rs.getDouble("price_per_passenger"));
-                trip.setIdDriver(rs.getInt("id_driver"));
-                trip.setIdVehicle(rs.getInt("id_vehicle"));
+
+                Driver driver = new Driver();
+                driver.setIdDriver(rs.getInt("id_driver"));
+                trip.setDriver(driver);
+
+                Vehicle vehicle = new Vehicle();
+                vehicle.setIdVehicle(rs.getInt("id_vehicle"));
+                trip.setVehicle(vehicle);
+
                 trips.add(trip);
             }
         }
