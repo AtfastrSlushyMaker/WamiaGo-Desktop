@@ -8,7 +8,9 @@ import org.wamiago.wamiago.services.RelocationService;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,21 +24,20 @@ public class Main {
             //  Gestion des Annonces (Announcements)
             // ===========================
 
-            //  Ajout d'une nouvelle annonce (en utilisant un transporteur existant)
+            //  Ajout d'une nouvelle annonce
             Announcement newAnnouncement = new Announcement();
-            newAnnouncement.setIdAnnouncement(1); // Utiliser un ID existant ou laisser la base de données l'auto-générer
-            newAnnouncement.setTitle(" Route");
+            newAnnouncement.setIdAnnouncement(1);
+            newAnnouncement.setTitle(" pidev");
             newAnnouncement.setContent("We have added a new route to the app!");
             newAnnouncement.setDate(Timestamp.valueOf(LocalDateTime.now()));
-            newAnnouncement.setZone(Announcement.Zone.Kef);
+            newAnnouncement.setZone(Announcement.Zone.Kairouan);
             newAnnouncement.setStatus(true);
 
-            // Utiliser un ID de transporteur existant
             newAnnouncement.setTransporter(new Driver());
             newAnnouncement.getTransporter().setIdDriver(1);
 
             announcementService.create(newAnnouncement);
-            System.out.println(" Announcement added successfully!");
+//            System.out.println(" Announcement added successfully!");
 
             //  Récupération et affichage de toutes les annonces
             List<Announcement> announcements = announcementService.read();
@@ -46,20 +47,25 @@ public class Main {
 
             }
 
-            //  Mise à jour de la première annonce (si disponible)
+            //  Mise à jour
             if (!announcements.isEmpty()) {
+                // Récupérer la première annonce de la liste
                 Announcement firstAnnouncement = announcements.get(0);
-                firstAnnouncement.setTransporter(new Driver());
-                firstAnnouncement.getTransporter().getIdDriver();
-                firstAnnouncement.setTitle("Updated Route");
-                firstAnnouncement.setContent("This route has been updated.");
-                announcementService.update(firstAnnouncement);
-                System.out.println(" Announcement updated successfully!");
 
-                // Affichage de l'annonce mise à jour
-                System.out.println(" Updated Announcement: " + firstAnnouncement);
+                // Modifier les propriétés de l'annonce
+                firstAnnouncement.setTransporter(new Driver());
+                firstAnnouncement.getTransporter().setIdDriver(1);
+                firstAnnouncement.setTitle("Updated");
+                firstAnnouncement.setContent("This route has been updated.");
+                firstAnnouncement.setStatus(true);
+
+                // Mettre à jour l'annonce dans la base de données
+                announcementService.update(firstAnnouncement);
+
+                // Afficher l'annonce mise à jour
+                System.out.println("Updated Announcement: " + firstAnnouncement);
             } else {
-                System.out.println(" No announcements available to update.");
+                System.out.println("No announcements available to update.");
             }
 
             //  Suppression de la dernière annonce (si disponible)
@@ -75,13 +81,12 @@ public class Main {
             //  Gestion des Réservations (Reservations)
             // ===========================
 
-            //  Ajout d'une nouvelle réservation (en utilisant des locations et une annonce existantes)
+            //  Ajout d'une nouvelle réservation
             Reservation newReservation = new Reservation();
             newReservation.setDate(Timestamp.valueOf(LocalDateTime.now()));
             newReservation.setStatus(Reservation.Status.CONFIRMED);
-            newReservation.setDescription("First reservation");
+            newReservation.setDescription(" pidev");
 
-            // Utiliser des IDs de locations et d'annonce existants
             newReservation.setStartLocation(new Location());
             newReservation.getStartLocation().setId(1);
 
@@ -89,10 +94,10 @@ public class Main {
             newReservation.getEndLocation().setId(1);
 
             newReservation.setAnnouncement(new Announcement());
-            newReservation.getAnnouncement().setIdAnnouncement(4);
+            newReservation.getAnnouncement().setIdAnnouncement(26);
 
             reservationService.create(newReservation);
-            System.out.println(" Reservation added successfully!");
+            //System.out.println(" Reservation added successfully!");
 
             //  Récupération et affichage de toutes les réservations
             List<Reservation> reservations = reservationService.read();
@@ -101,13 +106,13 @@ public class Main {
                 System.out.println(reservation);
             }
 
-            // Mise à jour de la première réservation (si disponible)
+            // Mise à jour de la première réservation
             if (!reservations.isEmpty()) {
                 Reservation firstReservation = reservations.get(0);
                 firstReservation.setStatus(Reservation.Status.ON_GOING);
-                firstReservation.setDescription("This reservation is updated.");
+                firstReservation.setDescription("This reservation is updated.....");
                 reservationService.update(firstReservation);
-                System.out.println(" Reservation updated successfully!");
+                //System.out.println(" Reservation updated successfully!");
 
                 // Affichage de la réservation mise à jour
                 System.out.println(" Updated Reservation: " + firstReservation);
@@ -136,14 +141,14 @@ public class Main {
 
             // Utiliser un ID de réservation existant
             newRelocation.setReservation(new Reservation());
-            newRelocation.getReservation().setIdReservation(11);
+            newRelocation.getReservation().setIdReservation(30);
 
             relocationService.create(newRelocation);
-            System.out.println(" Relocation added successfully!");
+            //System.out.println(" Relocation added successfully!");
 
             //  Récupération et affichage de tous les déménagements
             List<Relocation> relocations = relocationService.read();
-            System.out.println("📜 All Relocations:");
+            System.out.println(" All Relocations:");
             for (Relocation relocation : relocations) {
                 System.out.println(relocation);
             }
@@ -152,9 +157,9 @@ public class Main {
             if (!relocations.isEmpty()) {
                 Relocation firstRelocation = relocations.get(0);
                 firstRelocation.setStatus(false);
-                firstRelocation.setCost(1920.0f);
+                firstRelocation.setCost(192.0f);
                 relocationService.update(firstRelocation);
-                System.out.println(" Relocation updated successfully!");
+                //System.out.println(" Relocation updated successfully!");
 
                 // Affichage du déménagement mis à jour
                 System.out.println(" Updated Relocation: " + firstRelocation);
@@ -171,9 +176,81 @@ public class Main {
                 System.out.println(" No relocations available to delete.");
             }
 
+            // ===========================
+            //  Tests de recherche dynamique
+            // ===========================
+            runDynamicSearchTests(announcementService, reservationService, relocationService);
+
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(" An error occurred while performing database operations: " + e.getMessage());
+        }
+    }
+    private static void runDynamicSearchTests(AnnouncementService announcementService,
+                                              ReservationService reservationService,
+                                              RelocationService relocationService) throws SQLException {
+        System.out.println("\n==============================");
+        System.out.println(" TESTS DE RECHERCHE DYNAMIQUE");
+        System.out.println("==============================\n");
+
+        // Cas 1 : Recherche avec un seul critère (titre)
+        Map<String, Object> filters1 = new HashMap<>();
+        filters1.put("title", " pidev");
+        //filters1.put("status", true);
+        testSearch(" Recherche d'annonces par titre", announcementService.findByFilters(filters1));
+
+        // Cas 2 : Recherche avec plusieurs critères (titre + zone)
+        Map<String, Object> filters2 = new HashMap<>();
+        filters2.put("title", " pidev");
+        filters2.put("zone", "Ariana");
+        testSearch(" Recherche d'annonces par titre et zone", announcementService.findByFilters(filters2));
+
+        // Cas 3 : Recherche avec une date spécifique
+        Map<String, Object> filters3 = new HashMap<>();
+        filters3.put("date", Timestamp.valueOf("2025-02-14 01:01:03"));
+        testSearch(" Recherche d'annonces par date", announcementService.findByFilters(filters3));
+
+        // Cas 4 : Recherche avec plusieurs critères incluant une date
+        Map<String, Object> filters4 = new HashMap<>();
+        filters4.put("title", "Updated");
+        filters4.put("date", Timestamp.valueOf("2025-02-14 00:38:59"));
+        testSearch(" Recherche d'annonces par titre et date", announcementService.findByFilters(filters4));
+
+        // Cas 5 : Recherche sans résultat
+        Map<String, Object> filters5 = new HashMap<>();
+        filters5.put("title", "Inexistant");
+        testSearch(" Recherche avec un critère inexistant", announcementService.findByFilters(filters5));
+
+        // Tests pour ReservationService
+        System.out.println("\n==============================");
+        System.out.println(" TESTS SUR LES RÉSERVATIONS");
+        System.out.println("==============================\n");
+
+        Map<String, Object> reservationFilters = new HashMap<>();
+        //reservationFilters.put("status", Reservation.Status.CONFIRMED);
+        reservationFilters.put("description"," pidev" );
+        testSearch(" Recherche de réservations confirmées", reservationService.findByFilters(reservationFilters));
+
+        // Tests pour RelocationService
+        System.out.println("\n==============================");
+        System.out.println("TESTS SUR LES RELOCATIONS");
+        System.out.println("==============================\n");
+
+        Map<String, Object> relocationFilters = new HashMap<>();
+        relocationFilters.put("status", true);
+        relocationFilters.put("cost", 200.0f);
+        testSearch(" Recherche de relocalisations actives", relocationService.findByFilters(relocationFilters));
+    }
+
+    private static <T> void testSearch(String testCaseDescription, List<T> results) {
+        System.out.println("\n" + testCaseDescription);
+        if (results.isEmpty()) {
+            System.out.println(" Aucun résultat trouvé.");
+        } else {
+            System.out.println(" Résultats trouvés :");
+            for (T result : results) {
+                System.out.println(result);
+            }
         }
     }
 }
