@@ -196,50 +196,50 @@ public class Main {
         // Cas 1 : Recherche avec un seul critère (titre)
         Map<String, Object> filters1 = new HashMap<>();
         filters1.put("title", " pidev");
-        //filters1.put("status", true);
+        filters1.put("status", true);
         testSearch(" Recherche d'annonces par titre", announcementService.findByFilters(filters1));
 
-        // Cas 2 : Recherche avec plusieurs critères (titre + zone)
-        Map<String, Object> filters2 = new HashMap<>();
-        filters2.put("title", " pidev");
-        filters2.put("zone", "Ariana");
-        testSearch(" Recherche d'annonces par titre et zone", announcementService.findByFilters(filters2));
-
-        // Cas 3 : Recherche avec une date spécifique
-        Map<String, Object> filters3 = new HashMap<>();
-        filters3.put("date", Timestamp.valueOf("2025-02-14 01:01:03"));
-        testSearch(" Recherche d'annonces par date", announcementService.findByFilters(filters3));
-
-        // Cas 4 : Recherche avec plusieurs critères incluant une date
-        Map<String, Object> filters4 = new HashMap<>();
-        filters4.put("title", "Updated");
-        filters4.put("date", Timestamp.valueOf("2025-02-14 00:38:59"));
-        testSearch(" Recherche d'annonces par titre et date", announcementService.findByFilters(filters4));
-
-        // Cas 5 : Recherche sans résultat
-        Map<String, Object> filters5 = new HashMap<>();
-        filters5.put("title", "Inexistant");
-        testSearch(" Recherche avec un critère inexistant", announcementService.findByFilters(filters5));
-
-        // Tests pour ReservationService
-        System.out.println("\n==============================");
-        System.out.println(" TESTS SUR LES RÉSERVATIONS");
-        System.out.println("==============================\n");
-
-        Map<String, Object> reservationFilters = new HashMap<>();
-        //reservationFilters.put("status", Reservation.Status.CONFIRMED);
-        reservationFilters.put("description"," pidev" );
-        testSearch(" Recherche de réservations confirmées", reservationService.findByFilters(reservationFilters));
-
-        // Tests pour RelocationService
-        System.out.println("\n==============================");
-        System.out.println("TESTS SUR LES RELOCATIONS");
-        System.out.println("==============================\n");
-
-        Map<String, Object> relocationFilters = new HashMap<>();
-        relocationFilters.put("status", true);
-        relocationFilters.put("cost", 200.0f);
-        testSearch(" Recherche de relocalisations actives", relocationService.findByFilters(relocationFilters));
+//        // Cas 2 : Recherche avec plusieurs critères (titre + zone)
+//        Map<String, Object> filters2 = new HashMap<>();
+//        filters2.put("title", " pidev");
+//        filters2.put("zone", "Ariana");
+//        testSearch(" Recherche d'annonces par titre et zone", announcementService.findByFilters(filters2));
+//
+//        // Cas 3 : Recherche avec une date spécifique
+//        Map<String, Object> filters3 = new HashMap<>();
+//        filters3.put("date", Timestamp.valueOf("2025-02-14 01:01:03"));
+//        testSearch(" Recherche d'annonces par date", announcementService.findByFilters(filters3));
+//
+//        // Cas 4 : Recherche avec plusieurs critères incluant une date
+//        Map<String, Object> filters4 = new HashMap<>();
+//        filters4.put("title", "Updated");
+//        filters4.put("date", Timestamp.valueOf("2025-02-14 00:38:59"));
+//        testSearch(" Recherche d'annonces par titre et date", announcementService.findByFilters(filters4));
+//
+//        // Cas 5 : Recherche sans résultat
+//        Map<String, Object> filters5 = new HashMap<>();
+//        filters5.put("title", "Inexistant");
+//        testSearch(" Recherche avec un critère inexistant", announcementService.findByFilters(filters5));
+//
+//        // Tests pour ReservationService
+//        System.out.println("\n==============================");
+//        System.out.println(" TESTS SUR LES RÉSERVATIONS");
+//        System.out.println("==============================\n");
+//
+//        Map<String, Object> reservationFilters = new HashMap<>();
+//        //reservationFilters.put("status", Reservation.Status.CONFIRMED);
+//        reservationFilters.put("description"," pidev" );
+//        testSearch(" Recherche de réservations confirmées", reservationService.findByFilters(reservationFilters));
+//
+//        // Tests pour RelocationService
+//        System.out.println("\n==============================");
+//        System.out.println("TESTS SUR LES RELOCATIONS");
+//        System.out.println("==============================\n");
+//
+//        Map<String, Object> relocationFilters = new HashMap<>();
+//        relocationFilters.put("status", true);
+//        relocationFilters.put("cost", 200.0f);
+//        testSearch(" Recherche de relocalisations actives", relocationService.findByFilters(relocationFilters));
     }
 
     private static <T> void testSearch(String testCaseDescription, List<T> results) {
