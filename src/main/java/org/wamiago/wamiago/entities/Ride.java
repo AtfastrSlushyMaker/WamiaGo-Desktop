@@ -108,6 +108,21 @@ public class Ride {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Ride{" +
+                "idRide=" + idRide +
+                ", idTaxi=" + idTaxi +
+                ", idClient=" + idClient +
+                ", idRequest=" + idRequest +
+                ", distance=" + distance +
+                ", duration=" + duration +
+                ", price=" + price +
+                ", status=" + status +
+                ", rideDate=" + rideDate +
+                '}';
+    }
+
     public Timestamp getRideDate() {
         return rideDate;
     }
