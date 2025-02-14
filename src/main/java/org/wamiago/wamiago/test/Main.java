@@ -19,7 +19,7 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 displayMainMenu();
-                int choice = promptForIntegerInRange("Choose an option: ", 1, 14, scanner);
+                int choice = promptForIntegerInRange("Choose an option: ", 1, 15, scanner);
 
                 switch (choice) {
                     case 1:
