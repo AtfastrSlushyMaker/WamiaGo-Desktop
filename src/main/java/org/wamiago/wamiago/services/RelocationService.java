@@ -8,46 +8,54 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RelocationService implements IService<Relocation> {
     private final Connection connection;
+    private final ReservationService reservationService;
 
     public RelocationService() {
         this.connection = DataBase.getInstance().getConnection();
+        this.reservationService = new ReservationService();
     }
 
     @Override
     public void create(Relocation relocation) throws SQLException {
-        // Vérifier si la réservation existe
-        if (relocation.getReservation() == null || relocation.getReservation().getIdReservation() == 0) {
-            System.out.println(" Annulé : La réservation n'est pas valide.");
+        if (relocation.getReservation() == null || reservationService.getById(relocation.getReservation().getIdReservation()) == null) {
+            System.out.println("Annulé : La réservation associée n'existe pas.");
             return;
         }
 
-        // Si la vérification est passée, procéder à l'insertion
         String sql = "INSERT INTO relocation (id_reservation, date, status, cost) VALUES (?, ?, ?, ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, relocation.getReservation().getIdReservation());
-        preparedStatement.setObject(2, relocation.getDate());
-        preparedStatement.setBoolean(3, relocation.isStatus());
-        preparedStatement.setFloat(4, relocation.getCost());
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, relocation.getReservation().getIdReservation());
+            preparedStatement.setObject(2, relocation.getDate());
+            preparedStatement.setBoolean(3, relocation.isStatus());
+            preparedStatement.setFloat(4, relocation.getCost());
 
-        preparedStatement.executeUpdate();
-        System.out.println(" Relocation ajoutée avec succès pour la réservation avec l'ID " + relocation.getReservation().getIdReservation());
+            preparedStatement.executeUpdate();
+            System.out.println("Relocation ajoutée avec succès.");
+        }
     }
 
     @Override
     public void update(Relocation relocation) throws SQLException {
-        String sql = "UPDATE relocation SET id_reservation = ?, date = ?, status = ?, cost = ? WHERE id_relocation = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, relocation.getReservation().getIdReservation());
-        preparedStatement.setObject(2, relocation.getDate());
-        preparedStatement.setBoolean(3, relocation.isStatus());
-        preparedStatement.setFloat(4, relocation.getCost());
-        preparedStatement.setInt(5, relocation.getIdRelocation());
+//        if (reservationService.getById(relocation.getReservation().getIdReservation()) == null) {
+//            System.out.println("Annulé : La réservation associée n'existe pas.");
+//            return;
+//        }
 
-        preparedStatement.executeUpdate();
-        System.out.println(" Relocation mise à jour avec succès.");
+        String sql = "UPDATE relocation SET id_reservation = ?, date = ?, status = ?, cost = ? WHERE id_relocation = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, relocation.getReservation().getIdReservation());
+            preparedStatement.setObject(2, relocation.getDate());
+            preparedStatement.setBoolean(3, relocation.isStatus());
+            preparedStatement.setFloat(4, relocation.getCost());
+            preparedStatement.setInt(5, relocation.getIdRelocation());
+
+            preparedStatement.executeUpdate();
+            System.out.println("Relocation mise à jour avec succès.");
+        }
     }
 
     @Override
@@ -78,6 +86,44 @@ public class RelocationService implements IService<Relocation> {
             relocation.setDate(rs.getTimestamp("date"));
             relocation.setStatus(rs.getBoolean("status"));
             relocation.setCost(rs.getFloat("cost"));
+            relocations.add(relocation);
+        }
+        return relocations;
+    }
+
+    public List<Relocation> findByFilters(Map<String, Object> filters) throws SQLException {
+        List<Relocation> relocations = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM relocation WHERE 1=1 ");
+        List<Object> parameters = new ArrayList<>();
+
+        // Construire dynamiquement la requête
+        for (String key : filters.keySet()) {
+            sql.append(" AND ").append(key).append(" = ?");
+            parameters.add(filters.get(key));
+        }
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+        // Assigner les valeurs aux paramètres
+        for (int i = 0; i < parameters.size(); i++) {
+            preparedStatement.setObject(i + 1, parameters.get(i));
+        }
+
+        ResultSet rs = preparedStatement.executeQuery();
+        ReservationService reservationService = new ReservationService();
+
+        while (rs.next()) {
+            Relocation relocation = new Relocation();
+            relocation.setIdRelocation(rs.getInt("id_relocation"));
+
+            // Récupérer la réservation associée
+            Reservation reservation = reservationService.getById(rs.getInt("id_reservation"));
+            relocation.setReservation(reservation);
+
+            relocation.setDate(rs.getTimestamp("date"));
+            relocation.setStatus(rs.getBoolean("status"));
+            relocation.setCost(rs.getFloat("cost"));
+
             relocations.add(relocation);
         }
         return relocations;
