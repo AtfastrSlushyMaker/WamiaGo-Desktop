@@ -3,11 +3,9 @@ package entities;
 import java.sql.Timestamp;
 
 public class Ride {
-
     private int idRide;
-    private int idTaxi;
-    private int idClient;
-    private int idRequest;
+    private Request request;  // Contient déjà le client
+    private Driver driver;  // Ajout du conducteur
     private double distance;
     private int duration;
     private double price;
@@ -15,16 +13,15 @@ public class Ride {
     private Timestamp rideDate;
 
     public enum Status {
-            ONGOING,COMPLETED,CANCELED
+        ONGOING, COMPLETED, CANCELED
     }
 
     public Ride() {
     }
 
-    public Ride(int idTaxi, int idClient, int idRequest, double distance, int duration, double price, Status status, Timestamp rideDate) {
-        this.idTaxi = idTaxi;
-        this.idClient = idClient;
-        this.idRequest = idRequest;
+    public Ride(Request request, Driver driver, double distance, int duration, double price, Status status, Timestamp rideDate) {
+        this.request = request;
+        this.driver = driver;
         this.distance = distance;
         this.duration = duration;
         this.price = price;
@@ -32,11 +29,10 @@ public class Ride {
         this.rideDate = rideDate;
     }
 
-    public Ride(int idRide, int idTaxi, int idClient, int idRequest, double distance, int duration, double price, Status status, Timestamp rideDate) {
+    public Ride(int idRide, Request request, Driver driver, double distance, int duration, double price, Status status, Timestamp rideDate) {
         this.idRide = idRide;
-        this.idTaxi = idTaxi;
-        this.idClient = idClient;
-        this.idRequest = idRequest;
+        this.request = request;
+        this.driver = driver;
         this.distance = distance;
         this.duration = duration;
         this.price = price;
@@ -52,28 +48,20 @@ public class Ride {
         this.idRide = idRide;
     }
 
-    public int getIdTaxi() {
-        return idTaxi;
+    public Request getRequest() {
+        return request;
     }
 
-    public void setIdTaxi(int idTaxi) {
-        this.idTaxi = idTaxi;
+    public void setRequest(Request request) {
+        this.request = request;
     }
 
-    public int getIdClient() {
-        return idClient;
+    public Driver getDriver() {
+        return driver;  // Getter pour driver
     }
 
-    public void setIdClient(int idClient) {
-        this.idClient = idClient;
-    }
-
-    public int getIdRequest() {
-        return idRequest;
-    }
-
-    public void setIdRequest(int idRequest) {
-        this.idRequest = idRequest;
+    public void setDriver(Driver driver) {
+        this.driver = driver;  // Setter pour driver
     }
 
     public double getDistance() {
@@ -108,26 +96,25 @@ public class Ride {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "Ride{" +
-                "idRide=" + idRide +
-                ", idTaxi=" + idTaxi +
-                ", idClient=" + idClient +
-                ", idRequest=" + idRequest +
-                ", distance=" + distance +
-                ", duration=" + duration +
-                ", price=" + price +
-                ", status=" + status +
-                ", rideDate=" + rideDate +
-                '}';
-    }
-
     public Timestamp getRideDate() {
         return rideDate;
     }
 
     public void setRideDate(Timestamp rideDate) {
         this.rideDate = rideDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Ride{" +
+                "idRide=" + idRide +
+                ", request=" + request +
+                ", driver=" + driver +  // Affichage du driver
+                ", distance=" + distance +
+                ", duration=" + duration +
+                ", price=" + price +
+                ", status=" + status +
+                ", rideDate=" + rideDate +
+                '}';
     }
 }

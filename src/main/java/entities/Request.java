@@ -10,20 +10,18 @@ public class Request {
 
     private int idRequest;
     private User client;
-    private Driver driver;
     private Location departureLocation;
     private Location arrivalLocation;
     private RequestStatus status;
     private LocalDateTime requestDate;
 
-    // Constructeur par défaut
+
     public Request() {
     }
 
-    // Constructeur sans idRequest (utile pour les nouvelles requêtes)
-    public Request(User client, Driver driver, Location departureLocation, Location arrivalLocation, RequestStatus status, LocalDateTime requestDate) {
+
+    public Request(User client, Location departureLocation, Location arrivalLocation, RequestStatus status, LocalDateTime requestDate) {
         this.client = client;
-        this.driver = driver;
         this.departureLocation = departureLocation;
         this.arrivalLocation = arrivalLocation;
         this.status = status;
@@ -31,17 +29,16 @@ public class Request {
     }
 
     // Constructeur avec idRequest (utile pour les requêtes existantes)
-    public Request(int idRequest, User client, Driver driver, Location departureLocation, Location arrivalLocation, RequestStatus status, LocalDateTime requestDate) {
+    public Request(int idRequest, User client, Location departureLocation, Location arrivalLocation, RequestStatus status, LocalDateTime requestDate) {
         this.idRequest = idRequest;
         this.client = client;
-        this.driver = driver;
         this.departureLocation = departureLocation;
         this.arrivalLocation = arrivalLocation;
         this.status = status;
         this.requestDate = requestDate != null ? requestDate : LocalDateTime.now();
     }
 
-    // Getters et Setters
+
     public int getIdRequest() {
         return idRequest;
     }
@@ -56,14 +53,6 @@ public class Request {
 
     public void setClient(User client) {
         this.client = client;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
     }
 
     public Location getDepartureLocation() {
@@ -117,7 +106,6 @@ public class Request {
         return "Request{" +
                 "idRequest=" + idRequest +
                 ", client=" + client +
-                ", driver=" + driver +
                 ", departureLocation=" + departureLocation +
                 ", arrivalLocation=" + arrivalLocation +
                 ", status=" + status +

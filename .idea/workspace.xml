@@ -5,64 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/test/MainRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/entities/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Ride.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Ride.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RequestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/HelloApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/HelloController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Announcement$Zone.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Announcement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Bicycle$STATUS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Bicycle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/BicycleRental.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Booking$Status.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Booking.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Driver$DriverRole.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Driver.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Location.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Rating.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Reclamation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Relocation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Request$RequestStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Request.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Reservation$Status.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Reservation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Response.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Ride$Status.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Ride.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Station$STATUS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Station.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Trip.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/User$AccountStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/User$Gender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/User$Role.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/User$Status.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/entities/Vehicle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/hello-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/AnnouncementService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/BicycleRentalService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/BicycleService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/BookingService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/DriverService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/IService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/LocationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/RatingService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/ReclamationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/RelocationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/RequestService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/ReservationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/ResponseService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/RideService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/StationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/TripService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/services/VehicleService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/test/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/utils/DataBase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/utils/MainRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/wamiago/wamiago/utils/RideMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/RideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RideService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/test/MainRequest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +58,7 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "Application.MainRequest.executor": "Run",
+    "Application.MainRide.executor": "Run",
     "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "Taxi-managment",
@@ -127,7 +76,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.MainRide">
     <configuration name="MainRequest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="test.MainRequest" />
       <module name="WamiaGo" />
@@ -141,8 +90,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MainRide" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.MainRide" />
+      <module name="WamiaGo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MainRide" />
         <item itemvalue="Application.MainRequest" />
       </list>
     </recent_temporary>
@@ -169,7 +132,7 @@
       <workItem from="1739282027546" duration="13102000" />
       <workItem from="1739482142717" duration="2496000" />
       <workItem from="1739522113736" duration="8063000" />
-      <workItem from="1739640077208" duration="3326000" />
+      <workItem from="1739640077208" duration="8343000" />
     </task>
     <servers />
   </component>
