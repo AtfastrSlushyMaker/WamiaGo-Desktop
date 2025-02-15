@@ -2,17 +2,18 @@ package services;
 
 import entities.Ride;
 import entities.Request;
-import entities.Driver;  
+import entities.Driver;
 import utils.DataBase;
 
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+//pdf
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-
 import java.io.FileOutputStream;
+
 
 public class RideService implements IService<Ride> {
     private final Connection connection;
