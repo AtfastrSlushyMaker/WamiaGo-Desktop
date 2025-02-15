@@ -172,4 +172,41 @@ public class RideService implements IService<Ride> {
         }
         return rides;
     }
+
+    public List<Ride> sortRidesByDate(boolean ascending) throws SQLException {
+        // Build the SQL query to fetch rides, joined with the request and driver tables
+        String sqlQuery = "SELECT * FROM ride r " +
+                "JOIN request req ON r.id_request = req.id_request " +
+                "JOIN driver d ON r.id_taxi = d.id_driver ";
+
+        // Add sorting by ride_date to the query
+        sqlQuery += "ORDER BY r.ride_date " + (ascending ? "ASC" : "DESC");
+
+        List<Ride> sortedRides = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(sqlQuery);
+             ResultSet rs = ps.executeQuery()) {
+
+            // Process the result set and build the list of sorted Rides
+            RequestService requestService = new RequestService();
+            DriverService driverService = new DriverService();
+
+            while (rs.next()) {
+                Request request = requestService.getById(rs.getInt("id_request"));
+                Driver driver = driverService.getById(rs.getInt("id_taxi"));
+                Ride ride = new Ride(
+                        rs.getInt("id_ride"),
+                        request,
+                        driver,
+                        rs.getDouble("distance"),
+                        rs.getInt("duration"),
+                        rs.getDouble("price"),
+                        Ride.Status.valueOf(rs.getString("status")),
+                        rs.getTimestamp("ride_date")
+                );
+                sortedRides.add(ride);
+            }
+        }
+        return sortedRides;
+    }
+
 }
