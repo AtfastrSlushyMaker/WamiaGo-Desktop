@@ -1,6 +1,7 @@
 package entities;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Request {
     public enum RequestStatus {
@@ -8,37 +9,39 @@ public class Request {
     }
 
     private int idRequest;
-    private int idClient;
-    private int idTaxi;
-    private int idDepartureLocation;
-    private int idArrivalLocation;
+    private User client;
+    private Driver driver;
+    private Location departureLocation;
+    private Location arrivalLocation;
     private RequestStatus status;
-    private Timestamp requestDate;
+    private LocalDateTime requestDate;
 
+    // Constructeur par défaut
     public Request() {
     }
 
-    public Request(int idClient, int idTaxi, int idDepartureLocation,
-                   int idArrivalLocation, RequestStatus status, Timestamp requestDate) {
-        this.idClient = idClient;
-        this.idTaxi = idTaxi;
-        this.idDepartureLocation = idDepartureLocation;
-        this.idArrivalLocation = idArrivalLocation;
+    // Constructeur sans idRequest (utile pour les nouvelles requêtes)
+    public Request(User client, Driver driver, Location departureLocation, Location arrivalLocation, RequestStatus status, LocalDateTime requestDate) {
+        this.client = client;
+        this.driver = driver;
+        this.departureLocation = departureLocation;
+        this.arrivalLocation = arrivalLocation;
         this.status = status;
-        this.requestDate = requestDate;
+        this.requestDate = requestDate != null ? requestDate : LocalDateTime.now();
     }
 
-    public Request(int idRequest, int idClient, int idTaxi, int idDepartureLocation,
-                   int idArrivalLocation, RequestStatus status, Timestamp requestDate) {
+    // Constructeur avec idRequest (utile pour les requêtes existantes)
+    public Request(int idRequest, User client, Driver driver, Location departureLocation, Location arrivalLocation, RequestStatus status, LocalDateTime requestDate) {
         this.idRequest = idRequest;
-        this.idClient = idClient;
-        this.idTaxi = idTaxi;
-        this.idDepartureLocation = idDepartureLocation;
-        this.idArrivalLocation = idArrivalLocation;
+        this.client = client;
+        this.driver = driver;
+        this.departureLocation = departureLocation;
+        this.arrivalLocation = arrivalLocation;
         this.status = status;
-        this.requestDate = requestDate;
+        this.requestDate = requestDate != null ? requestDate : LocalDateTime.now();
     }
 
+    // Getters et Setters
     public int getIdRequest() {
         return idRequest;
     }
@@ -47,36 +50,36 @@ public class Request {
         this.idRequest = idRequest;
     }
 
-    public int getIdClient() {
-        return idClient;
+    public User getClient() {
+        return client;
     }
 
-    public void setIdClient(int idClient) {
-        this.idClient = idClient;
+    public void setClient(User client) {
+        this.client = client;
     }
 
-    public int getIdTaxi() {
-        return idTaxi;
+    public Driver getDriver() {
+        return driver;
     }
 
-    public void setIdTaxi(int idTaxi) {
-        this.idTaxi = idTaxi;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
-    public int getIdDepartureLocation() {
-        return idDepartureLocation;
+    public Location getDepartureLocation() {
+        return departureLocation;
     }
 
-    public void setIdDepartureLocation(int idDepartureLocation) {
-        this.idDepartureLocation = idDepartureLocation;
+    public void setDepartureLocation(Location departureLocation) {
+        this.departureLocation = departureLocation;
     }
 
-    public int getIdArrivalLocation() {
-        return idArrivalLocation;
+    public Location getArrivalLocation() {
+        return arrivalLocation;
     }
 
-    public void setIdArrivalLocation(int idArrivalLocation) {
-        this.idArrivalLocation = idArrivalLocation;
+    public void setArrivalLocation(Location arrivalLocation) {
+        this.arrivalLocation = arrivalLocation;
     }
 
     public RequestStatus getStatus() {
@@ -87,24 +90,38 @@ public class Request {
         this.status = status;
     }
 
+    public LocalDateTime getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(LocalDateTime requestDate) {
+        this.requestDate = requestDate;
+    }
+
+    // Méthodes utilitaires : equals, hashCode, toString
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Request request = (Request) o;
+        return idRequest == request.idRequest;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idRequest);
+    }
+
     @Override
     public String toString() {
         return "Request{" +
                 "idRequest=" + idRequest +
-                ", idClient=" + idClient +
-                ", idTaxi=" + idTaxi +
-                ", idDepartureLocation=" + idDepartureLocation +
-                ", idArrivalLocation=" + idArrivalLocation +
+                ", client=" + client +
+                ", driver=" + driver +
+                ", departureLocation=" + departureLocation +
+                ", arrivalLocation=" + arrivalLocation +
                 ", status=" + status +
                 ", requestDate=" + requestDate +
                 '}';
-    }
-
-    public Timestamp getRequestDate() {
-        return requestDate;
-    }
-
-    public void setRequestDate(Timestamp requestDate) {
-        this.requestDate = requestDate;
     }
 }
