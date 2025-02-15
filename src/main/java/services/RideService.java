@@ -5,6 +5,7 @@ import entities.Request;
 import entities.Driver;
 import utils.DataBase;
 
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,19 +25,38 @@ public class RideService implements IService<Ride> {
 
     @Override
     public void create(Ride ride) throws SQLException {
+        // Step 1: Retrieve departure and arrival location IDs from the request table
+        String getLocationQuery = "SELECT id_departure_location, id_arrival_location FROM request WHERE id_request = ?";
+        try (PreparedStatement getLocationStmt = connection.prepareStatement(getLocationQuery)) {
+            getLocationStmt.setInt(1, ride.getRequest().getIdRequest());
+            try (ResultSet locationResult = getLocationStmt.executeQuery()) {
+                if (locationResult.next()) {
+                    int departureLocationId = locationResult.getInt("id_departure_location");
+                    int arrivalLocationId = locationResult.getInt("id_arrival_location");
 
-        String sql = "INSERT INTO ride (id_request, id_taxi, distance, duration, price, status, ride_date) VALUES (?,?,?,?,?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, ride.getRequest().getIdRequest());
-        preparedStatement.setInt(2, ride.getDriver().getIdDriver());  // Ajouter l'id du driver
-        preparedStatement.setBigDecimal(3, new BigDecimal(ride.getDistance()));
-        preparedStatement.setInt(4, ride.getDuration());
-        preparedStatement.setBigDecimal(5, new BigDecimal(ride.getPrice()));
-        preparedStatement.setString(6, ride.getStatus().toString());
-        preparedStatement.setTimestamp(7, ride.getRideDate());
-        preparedStatement.executeUpdate();
-        System.out.println("✅ Ride created successfully");
+                    // Step 2: Calculate distance using LocationService
+                    double distance = LocationService.calculateDistance(departureLocationId, arrivalLocationId);
+
+                    // Step 3: Insert the ride into the database
+                    String sql = "INSERT INTO ride (id_request, id_taxi, distance, duration, price, status, ride_date) VALUES (?,?,?,?,?,?,?)";
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                        preparedStatement.setInt(1, ride.getRequest().getIdRequest());
+                        preparedStatement.setInt(2, ride.getDriver().getIdDriver()); // Add driver ID
+                        preparedStatement.setBigDecimal(3, new BigDecimal(distance)); // Use calculated distance
+                        preparedStatement.setInt(4, ride.getDuration());
+                        preparedStatement.setBigDecimal(5, new BigDecimal(ride.getPrice()));
+                        preparedStatement.setString(6, ride.getStatus().toString());
+                        preparedStatement.setTimestamp(7, ride.getRideDate());
+                        preparedStatement.executeUpdate();
+                    }
+                    System.out.println("✅ Ride created successfully");
+                } else {
+                    System.out.println("❌ Request not found");
+                }
+            }
+        }
     }
+
 
     @Override
     public void update(Ride ride) throws SQLException {
