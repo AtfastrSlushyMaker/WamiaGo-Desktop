@@ -159,7 +159,7 @@ public class RideService implements IService<Ride> {
                     Ride ride = new Ride(
                             rs.getInt("id_ride"),
                             request,
-                            driver, 
+                            driver,
                             rs.getDouble("distance"),
                             rs.getInt("duration"),
                             rs.getDouble("price"),
