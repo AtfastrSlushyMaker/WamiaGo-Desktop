@@ -1,0 +1,34 @@
+
+.root {
+    -fx-padding: 20;
+    -fx-background-color: #f4f4f4;
+}
+
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.text-field, .text-area, .combo-box, .check-box {
+    -fx-pref-width: 300px;
+}
+
+.text-area {
+    -fx-pref-height: 100px;
+}
+
+.submit-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+}
+
+.submit-button:hover {
+    -fx-background-color: #45a049;
+}
+
+.alert {
+    -fx-font-size: 14px;
+}

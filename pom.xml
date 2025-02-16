@@ -38,11 +38,16 @@
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.6</version>
         </dependency>
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>5.5.13.2</version>
-        </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-graphics</artifactId>
+                    <version>17.0.6</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.itextpdf</groupId>
+                    <artifactId>itextpdf</artifactId>
+                    <version>5.5.13.2</version>
+                </dependency>
     </dependencies>
 
     <build>
@@ -57,7 +62,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>tn.esprit.controllers.Home</mainClass>
+                            <mainClass>controllers.Home</mainClass>
                         </configuration>
                     </execution>
                 </executions>

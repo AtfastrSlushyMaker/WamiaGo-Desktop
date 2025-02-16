@@ -1,0 +1,82 @@
+/* Style général */
+.root {
+    -fx-background-color: #f4f4f4;
+    -fx-font-family: 'Arial';
+}
+
+/* En-tête */
+.header {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 10px;
+}
+
+.header-title {
+    -fx-text-fill: #ecf0f1;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.add-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+}
+
+.add-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Grille des annonces */
+.announcements-grid {
+    -fx-padding: 20px;
+}
+
+.announcement-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-padding: 15px;
+    -fx-spacing: 10px;
+}
+
+.announcement-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.announcement-content {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+}
+
+.announcement-date {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.announcement-actions {
+    -fx-spacing: 5px;
+}
+
+.action-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 3px 8px;
+    -fx-border-radius: 3px;
+}
+
+.action-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b;
+}

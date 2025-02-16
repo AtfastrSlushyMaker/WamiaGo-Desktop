@@ -1,0 +1,23 @@
+.title-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+}
+
+.list-cell {
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+}
+
+.list-cell:filled:selected, .list-cell:filled:hover {
+    -fx-background-color: #d6eaf8;
+}
