@@ -10,7 +10,6 @@
         <URL value="@styles.css" />
     </stylesheets>
 
-
     <Label text="Ajouter une Annonce" styleClass="title-label" />
 
     <GridPane hgap="10" vgap="10" alignment="CENTER">
