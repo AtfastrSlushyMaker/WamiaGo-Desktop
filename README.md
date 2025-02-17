@@ -102,4 +102,4 @@ mvn javafx:run
 ### Contact
 For any inquiries, please reach out at wamiago.contact@gmail.com.
 
-<p align="right">(<a href="#top">back to top</a>)</p> 
+<p align="right">(<a href="#top">back to top</a>)</p>
