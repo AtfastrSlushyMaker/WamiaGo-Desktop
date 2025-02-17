@@ -4,29 +4,27 @@ import java.util.Date;
 
 public class Trip {
     private int idTrip;
+    private String departureCity;
+    private String arrivalCity;
+    private Date departureDate;
+    private int availableSeats;
+    private double pricePerPassenger;
+    private Driver driver;
+    private Vehicle vehicle;
 
     public Trip() {
     }
 
-    private String departureCity;
-    private String arrivalCity;
-
-    public Trip(int idTrip, String departureCity, String arrivalCity, Date departureDate, int availableSeats, double pricePerPassenger, int idDriver, int idVehicle) {
+    public Trip(int idTrip, String departureCity, String arrivalCity, Date departureDate, int availableSeats, double pricePerPassenger, Driver driver, Vehicle vehicle) {
         this.idTrip = idTrip;
         this.departureCity = departureCity;
         this.arrivalCity = arrivalCity;
         this.departureDate = departureDate;
         this.availableSeats = availableSeats;
         this.pricePerPassenger = pricePerPassenger;
-        this.idDriver = idDriver;
-        this.idVehicle = idVehicle;
+        this.driver = driver;
+        this.vehicle = vehicle;
     }
-
-    private Date departureDate;
-    private int availableSeats;
-    private double pricePerPassenger;
-    private int idDriver;
-    private int idVehicle;
 
     // Getters and Setters
     public int getIdTrip() {
@@ -77,19 +75,19 @@ public class Trip {
         this.pricePerPassenger = pricePerPassenger;
     }
 
-    public int getIdDriver() {
-        return idDriver;
+    public Driver getDriver() {
+        return driver;
     }
 
-    public void setIdDriver(int idDriver) {
-        this.idDriver = idDriver;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
-    public int getIdVehicle() {
-        return idVehicle;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setIdVehicle(int idVehicle) {
-        this.idVehicle = idVehicle;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 }
