@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.dashboard.DashboardController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.dashboard.DashboardController">
 
    <children>
 
@@ -146,7 +145,7 @@
                                  </font>
 
                               </Label>
-                  <Button layoutX="51.0" layoutY="158.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" stylesheets="@style.css" text="Reserve" textAlignment="CENTER">
+                  <Button fx:id="relocation_reserve_button" layoutX="51.0" layoutY="158.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" stylesheets="@style.css" text="Reserve" textAlignment="CENTER">
                      <styleClass>
                         <String fx:value="action-button" />
                         <String fx:value="relocation-action-button" />
@@ -174,7 +173,7 @@
                         <Font name="Inter 24pt SemiBold" size="30.0" />
                      </font>
                   </Label>
-                  <Button layoutX="49.0" layoutY="159.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" stylesheets="@style.css" text="Request" textAlignment="CENTER">
+                  <Button fx:id="taxi_request_button" layoutX="49.0" layoutY="159.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" stylesheets="@style.css" text="Request" textAlignment="CENTER">
                      <styleClass>
                         <String fx:value="taxi-action-button" />
                         <String fx:value="card-quick" />
@@ -200,7 +199,7 @@
                         <Font name="Inter 24pt SemiBold" size="30.0" />
                      </font>
                   </Label>
-                  <Button layoutX="51.0" layoutY="155.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" stylesheets="@style.css" text="Join" textAlignment="CENTER">
+                  <Button fx:id="carpool_join_button" layoutX="51.0" layoutY="155.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" stylesheets="@style.css" text="Join" textAlignment="CENTER">
                      <styleClass>
                         <String fx:value="action-button" />
                         <String fx:value="carpooling-action-button" />
@@ -226,7 +225,7 @@
                         <Font name="Inter 24pt SemiBold" size="30.0" />
                      </font>
                   </Label>
-                  <Button layoutX="59.0" layoutY="155.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" stylesheets="@style.css" text="Rent" textAlignment="CENTER">
+                  <Button fx:id="bicycle_rent_button" layoutX="59.0" layoutY="155.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" stylesheets="@style.css" text="Rent" textAlignment="CENTER">
                      <styleClass>
                         <String fx:value="action-button" />
                         <String fx:value="ebike-action-button" />
@@ -256,7 +255,7 @@
 
                                                             </Label>
 
-                  <Label layoutX="161.0" layoutY="156.0" prefHeight="25.0" prefWidth="182.0" text="UserName">
+                  <Label fx:id="user_name_label" layoutX="161.0" layoutY="156.0" prefHeight="25.0" prefWidth="182.0" text="UserName">
 
                      <font>
 
@@ -275,19 +274,19 @@
                      </font>
 
                   </Label>
-            <Button id="user" layoutX="993.0" layoutY="142.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="43.0" />
+            <Button id="user" fx:id="profile_button" layoutX="993.0" layoutY="142.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="43.0" />
             <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="997.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/icons/user.png" />
                </image>
             </ImageView>
-            <Button id="feedback" layoutX="981.0" layoutY="739.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="45.0" stylesheets="@style.css" />
+            <Button id="feedback" fx:id="reclamation_button" layoutX="981.0" layoutY="739.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="45.0" stylesheets="@style.css" />
             <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="985.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/icons/review.png" />
                </image>
             </ImageView>
-            <Label id="date" layoutX="785.0" layoutY="139.0" prefHeight="45.0" prefWidth="150.0" text="Date" />
+            <Label id="date" fx:id="date_label" layoutX="785.0" layoutY="139.0" prefHeight="45.0" prefWidth="150.0" text="Date" />
 
          </children>
 
