@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
 
     <children>
 
@@ -126,14 +126,14 @@
                     </image>
                 </ImageView>
                 <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1100.0" />
-                <Pane id="taxi_quick" fx:id="pane_112" layoutX="-1.0" layoutY="88.0" prefHeight="740.0" prefWidth="366.0" stylesheets="@style.css">
+                <Pane id="taxi_quick" fx:id="pane_112" blendMode="SRC_ATOP" layoutX="-1.0" layoutY="88.0" prefHeight="740.0" prefWidth="366.0" stylesheets="@style.css">
                     <children>
                         <Label contentDisplay="CENTER" layoutX="145.0" layoutY="14.0" text="Taxi" textAlignment="CENTER" textFill="#f7f0f0">
                             <font>
                                 <Font name="Inter 24pt SemiBold" size="30.0" />
                             </font>
                         </Label>
-                        <Button layoutX="72.0" layoutY="580.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" stylesheets="@style.css" text="Request" textAlignment="CENTER">
+                        <Button layoutX="46.0" layoutY="580.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" stylesheets="@style.css" text="Request" textAlignment="CENTER">
                             <styleClass>
                                 <String fx:value="taxi-action-button" />
                                 <String fx:value="card-quick" />
@@ -162,7 +162,7 @@
                                 <Font name="Inter 24pt SemiBold" size="30.0" />
                             </font>
                         </Label>
-                        <Button layoutX="75.0" layoutY="580.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" stylesheets="@style.css" text="Join" textAlignment="CENTER">
+                        <Button layoutX="58.0" layoutY="579.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" stylesheets="@style.css" text="Join" textAlignment="CENTER">
                             <styleClass>
                                 <String fx:value="action-button" />
                                 <String fx:value="carpooling-action-button" />
@@ -188,7 +188,7 @@
                                 <Font name="Inter 24pt SemiBold" size="30.0" />
                             </font>
                         </Label>
-                        <Button layoutX="77.0" layoutY="580.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" stylesheets="@style.css" text="Rent" textAlignment="CENTER">
+                        <Button layoutX="58.0" layoutY="578.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" stylesheets="@style.css" text="Rent" textAlignment="CENTER">
                             <styleClass>
                                 <String fx:value="action-button" />
                                 <String fx:value="ebike-action-button" />
