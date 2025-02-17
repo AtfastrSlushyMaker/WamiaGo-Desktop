@@ -96,9 +96,9 @@
 /* Carpooling Card Fix */
 .carpool-quick {
     -fx-background-color: #85A9FF; /* Soft Blue */
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-color: white;
+
+
+
     -fx-border-width: 2px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
 }
@@ -115,23 +115,25 @@
 
 /* Quick Action Cards */
 .card-quick {
-    -fx-background-radius: 16px;
-    -fx-border-radius: 16px;
-    -fx-border-width: 2px;
-    -fx-border-color: white;
+
+
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
 }
 
 .card-quick:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);
+    -fx-scale-x: 1.02; /* Subtle zoom */
+    -fx-scale-y: 1.02;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 4);
 }
+
+
 
 /* Quick Action Buttons */
 .taxi_quick, .Relocation_quick, .E-Bicycle_quick {
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-color: #ffffff;
+
+
+
+
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
 }
 
@@ -146,7 +148,7 @@
 
 /* Action Buttons */
 .action-button {
-    -fx-font-size: 16px;
+    -fx-font-size: 40px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-padding: 10px 20px;
