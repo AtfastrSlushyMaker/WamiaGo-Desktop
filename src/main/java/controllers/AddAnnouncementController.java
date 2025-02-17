@@ -4,10 +4,12 @@ import entities.Announcement;
 import entities.Driver;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import services.AnnouncementService;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import org.controlsfx.control.Notifications;
 
 public class AddAnnouncementController {
 
@@ -26,7 +28,12 @@ public class AddAnnouncementController {
     @FXML
     private Button submitButton;
 
+    @FXML
+    private Button cancelButton;
+
     private AnnouncementService announcementService;
+
+    private Label messageLabel;
 
     public AddAnnouncementController() {
         this.announcementService = new AnnouncementService();
@@ -34,9 +41,25 @@ public class AddAnnouncementController {
 
     @FXML
     public void initialize() {
-        // Remplir la ComboBox avec les zones disponibles
-        zoneComboBox.getItems().setAll(Announcement.Zone.values());
+        if (zoneComboBox != null) {
+            zoneComboBox.getItems().setAll(Announcement.Zone.values());
+        }
     }
+
+
+
+
+
+    @FXML
+    public void handleCancelButtonAction() {
+        // Fermer la fenêtre actuelle
+        //((Stage) cancelButton.getScene().getWindow()).close();
+        titleField.clear();
+        contentField.clear();
+        zoneComboBox.getSelectionModel().clearSelection();
+        statusCheckBox.setSelected(false);
+    }
+
 
     @FXML
     public void handleSubmitButtonAction() {
@@ -63,8 +86,12 @@ public class AddAnnouncementController {
             // Ajouter l'annonce via le service
             announcementService.create(announcement);
 
-            // Afficher un message de succès
-            showAlert("Succès", "L'annonce a été ajoutée avec succès.", Alert.AlertType.INFORMATION);
+            // Afficher une notification de type "toast"
+            Notifications.create()
+                    .title("Success")
+                    .text("The announcement has been added successfully.")
+                    .showInformation();
+
 
             // Réinitialiser les champs
             titleField.clear();
@@ -73,7 +100,12 @@ public class AddAnnouncementController {
             statusCheckBox.setSelected(false);
 
         } catch (Exception e) {
-            showAlert("Erreur", "Erreur lors de l'ajout de l'annonce : " + e.getMessage(), Alert.AlertType.ERROR);
+            // Afficher une notification d'erreur
+            Notifications.create()
+                    .title("Error")
+                    .text("An error occurred while adding the announcement: " + e.getMessage())
+                    .showError();
+
         }
     }
 

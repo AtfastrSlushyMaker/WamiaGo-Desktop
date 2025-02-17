@@ -1,5 +1,6 @@
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\controllers\AddAnnouncementController.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\controllers\AnnouncementController.java
+C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\controllers\FXMLDocumentController.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\controllers\Home.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\entities\Announcement.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\entities\Bicycle.java
@@ -33,8 +34,10 @@ C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\services\Rese
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\services\ResponseService.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\services\RideService.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\services\StationService.java
+C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\services\TrafficService.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\services\TripService.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\services\UserService.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\services\VehicleService.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\test\Main.java
+C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\test\MainRide.java
 C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\java\utils\DataBase.java

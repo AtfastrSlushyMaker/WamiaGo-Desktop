@@ -1,32 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.FontWeight?>
+
+
 <?import javafx.scene.image.ImageView?>
-<?import controllers.AnnouncementController?>
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AnnouncementController">
+    <stylesheets>
+        <URL value="@Dashboard/style.css" />
+        <URL value="@announcementsStyle.css" />
+    </stylesheets>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AnnouncementController">
-    <children>
-        <!-- Arrière-plan avec une image de camion -->
-        <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="false">
-            <image>
-                <Image url="@/Upload_photos/camion.jpg" />
-            </image>
-        </ImageView>
+    <!-- Navbar à gauche -->
+    <HBox>
+        <VBox prefHeight="781.0" prefWidth="281.0" styleClass="navbar">
+            <children>
+                <AnchorPane fx:id="side_ankerpane" prefHeight="827.0" prefWidth="281.0" styleClass="side_ankerpane">
+                    <children>
+                        <Button fx:id="btn_workbench1" layoutX="17.0" layoutY="211.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Filters" textFill="#c6b6b6">
+                            <graphic>
+                                <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            </graphic>
+                            <font>
+                                <Font name="Century Gothic Bold" size="13.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btn_workbench11" layoutX="16.0" layoutY="301.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Management" textFill="#c6b6b6">
+                            <graphic>
+                                <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            </graphic>
+                            <font>
+                                <Font name="Century Gothic Bold" size="13.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btn_workbench12" layoutX="17.0" layoutY="398.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Unlock" textFill="#c6b6b6">
+                            <graphic>
+                                <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            </graphic>
+                            <font>
+                                <Font name="Century Gothic Bold" size="13.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btn_workbench121" layoutX="17.0" layoutY="488.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Unlock" textFill="#c6b6b6">
+                            <graphic>
+                                <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            </graphic>
+                            <font>
+                                <Font name="Century Gothic Bold" size="13.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btn_workbench1211" layoutX="17.0" layoutY="583.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Unlock" textFill="#c6b6b6">
+                            <graphic>
+                                <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            </graphic>
+                            <font>
+                                <Font name="Century Gothic Bold" size="13.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
 
-        <!-- Liste des annonces -->
-        <ListView fx:id="announcementListView" layoutX="50.0" layoutY="100.0" prefHeight="400.0" prefWidth="800.0" />
-
-        <!-- Bouton Ajouter une annonce -->
-        <Button fx:id="btnAdd" layoutX="50.0" layoutY="520.0" mnemonicParsing="false" text="Ajouter une annonce" />
-
-        <!-- Boutons Modifier et Supprimer pour chaque annonce -->
-        <Button fx:id="btnEdit" layoutX="700.0" layoutY="520.0" mnemonicParsing="false" text="Modifier"  />
-
-        <Button fx:id="btnDelete" layoutX="800.0" layoutY="520.0" mnemonicParsing="false" text="Supprimer"  />
-    </children>
-</AnchorPane>
+        <!-- Contenu principal -->
+        <VBox styleClass="content">
+            <Button fx:id="btnAdd" text="Ajouter une annonce" styleClass="add-button"  />
+            <ListView fx:id="announcementListView" styleClass="announcements-list" />
+        </VBox>
+    </HBox>
+</VBox>

@@ -10,9 +10,9 @@ public class Home extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/addAnnouncement.fxml"));
-        primaryStage.setTitle("Ajouter une Annonce");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        Parent root = FXMLLoader.load(getClass().getResource("/announcements.fxml"));
+        primaryStage.setTitle("Gestion des Annonces");
+        primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
     }
 

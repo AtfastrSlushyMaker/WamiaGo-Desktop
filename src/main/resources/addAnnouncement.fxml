@@ -1,30 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 
 <?import java.net.URL?>
-<VBox fx:id="root" spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddAnnouncementController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane fx:id="root" dividerPositions="0.2" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddAnnouncementController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
 
-    <Label text="Ajouter une Annonce" styleClass="title-label" />
+    <!-- Navbar à gauche -->
+    <VBox prefHeight="781.0" prefWidth="281.0" styleClass="navbar">
+        <children>
+            <AnchorPane fx:id="side_ankerpane" prefHeight="827.0" prefWidth="281.0" styleClass="side_ankerpane">
+                <children>
+                    <Button fx:id="btn_workbench1" layoutX="17.0" layoutY="211.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Filters" textFill="#c6b6b6">
+                        <graphic>
+                            <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                        </graphic>
+                        <font>
+                            <Font name="Century Gothic Bold" size="13.0" />
+                        </font>
+                    </Button>
+                    <Button fx:id="btn_workbench11" layoutX="16.0" layoutY="301.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Management" textFill="#c6b6b6">
+                        <graphic>
+                            <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                        </graphic>
+                        <font>
+                            <Font name="Century Gothic Bold" size="13.0" />
+                        </font>
+                    </Button>
+                    <Button fx:id="btn_workbench12" layoutX="17.0" layoutY="398.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Unlock" textFill="#c6b6b6">
+                        <graphic>
+                            <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                        </graphic>
+                        <font>
+                            <Font name="Century Gothic Bold" size="13.0" />
+                        </font>
+                    </Button>
+                    <Button fx:id="btn_workbench121" layoutX="17.0" layoutY="488.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Unlock" textFill="#c6b6b6">
+                        <graphic>
+                            <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                        </graphic>
+                        <font>
+                            <Font name="Century Gothic Bold" size="13.0" />
+                        </font>
+                    </Button>
+                    <Button fx:id="btn_workbench1211" layoutX="17.0" layoutY="583.0" prefHeight="53.0" prefWidth="248.0" styleClass="btn_workbench11" text="Unlock" textFill="#c6b6b6">
+                        <graphic>
+                            <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                        </graphic>
+                        <font>
+                            <Font name="Century Gothic Bold" size="13.0" />
+                        </font>
+                    </Button>
+                </children>
+            </AnchorPane>
+        </children>
+    </VBox>
 
-    <GridPane hgap="10" vgap="10" alignment="CENTER">
-        <Label text="Titre :" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-        <TextField fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+    <!-- Partie droite : Formulaire d'ajout d'annonce -->
 
-        <Label text="Contenu :" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-        <TextArea fx:id="contentField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+    <VBox fx:id="contentBox" alignment="TOP_CENTER" prefHeight="782.0" prefWidth="458.0" spacing="20" styleClass="content-box">
+        <!-- En-tête avec image -->
+        <HBox alignment="CENTER" prefHeight="81.0" prefWidth="480.0" spacing="10" styleClass="header">
+            <ImageView fitHeight="50" fitWidth="50">
+                <Image url="@images/icons/announcement_icon.png" />
+            </ImageView>
+            <Text styleClass="title-label" text="Announcement Details" />
+        </HBox>
+        <Text styleClass="subtitle-label" text="Customize the announcement to ensure clarity and engagement across platforms." />
+      <ImageView fitHeight="165.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/icons/pngtree-removal-man-moving-delivery-van-circle-retro-removal-truck-van-circle-vector-png-image_14246688.png" />
+         </image>
+      </ImageView>
 
-        <Label text="Zone :" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-        <ComboBox fx:id="zoneComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
-        <Label text="Statut :" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-        <CheckBox fx:id="statusCheckBox" text="Actif" GridPane.rowIndex="3" GridPane.columnIndex="1" />
-    </GridPane>
+        <!-- Conteneur principal -->
+        <GridPane alignment="CENTER" hgap="15" vgap="15">
+            <Label styleClass="form-label" text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="titleField" promptText="Enter the title here..." styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-    <Button fx:id="submitButton" text="Soumettre" onAction="#handleSubmitButtonAction" styleClass="submit-button" />
-</VBox>
+            <Label styleClass="form-label" text="Content:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextArea fx:id="contentField" prefWidth="299.0" promptText="Write your announcement here..." styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label styleClass="form-label" text="Zone:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <ComboBox fx:id="zoneComboBox" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label styleClass="form-label" text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <CheckBox fx:id="statusCheckBox" styleClass="form-field" text="Active" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+
+        <!-- Boutons avec icônes -->
+        <HBox alignment="CENTER" prefHeight="80.0" prefWidth="424.0" spacing="20">
+            <Button fx:id="submitButton" onAction="#handleSubmitButtonAction" styleClass="submit-button" text="Submit">
+                <graphic>
+                    <ImageView fitHeight="20" fitWidth="20">
+                        <Image url="@images/icons/check_icon.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+   
+            <Button fx:id="cancelButton" onAction="#handleCancelButtonAction" styleClass="cancel-button" text="Cancel">
+                <graphic>
+                    <ImageView fitHeight="20" fitWidth="20">
+                        <Image url="@images/icons/cancel_icon.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+    </VBox>
+</SplitPane>
