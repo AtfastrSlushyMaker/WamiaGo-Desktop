@@ -30,9 +30,9 @@
     -fx-background-color: #ffffff;
     -fx-border-color: #bdc3c7;
     -fx-border-radius: 5px;
-    -fx-padding: 15px;
+    -fx-padding: 50;
     -fx-spacing: 10px;
-    -fx-margin: 5px;
+    -fx-margin:10x;
 }
 
 .list-cell:filled:hover {
