@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <children>
+
+        <VBox prefHeight="781.0" prefWidth="280.0">
+
+            <children>
+
+                <AnchorPane fx:id="side_ankerpane" prefHeight="827.0" prefWidth="254.0" styleClass="navbar" stylesheets="@style.css">
+
+                    <children>
+
+                        <Button fx:id="btn_workbench1" layoutX="18.0" layoutY="258.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Home" textFill="#c6b6b6">
+
+                            <font>
+
+                                <Font name="Century Gothic Bold" size="13.0" />
+
+                            </font>
+
+                        </Button>
+
+                        <Button fx:id="btn_workbench11" layoutX="18.0" layoutY="361.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Rides " textFill="#c6b6b6">
+
+                            <font>
+
+                                <Font name="Century Gothic Bold" size="13.0" />
+
+                            </font>
+
+                        </Button>
+
+                        <Button fx:id="btn_workbench12" layoutX="18.0" layoutY="471.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Bookings " textFill="#c6b6b6">
+
+                            <font>
+
+                                <Font name="Century Gothic Bold" size="13.0" />
+
+                            </font>
+
+                        </Button>
+                        <Button fx:id="btn_workbench121" layoutX="18.0" layoutY="572.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="History" textFill="#c6b6b6">
+                            <font>
+                                <Font name="Century Gothic Bold" size="13.0" />
+                            </font>
+                        </Button>
+                        <Button id="logout-button" fx:id="btn_workbench1211" layoutX="73.0" layoutY="711.0" prefHeight="56.0" prefWidth="160.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Logout" textFill="#c6b6b6">
+                            <font>
+                                <Font name="Century Gothic Bold" size="13.0" />
+                            </font>
+                        </Button>
+                        <ImageView fitHeight="36.0" fitWidth="44.0" layoutX="83.0" layoutY="721.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/icons/logout.png" />
+                            </image></ImageView>
+                        <Pane fx:id="pane_1121" layoutX="19.0" layoutY="47.0" prefHeight="140.0" prefWidth="248.0" styleClass="logo-pane" stylesheets="@style.css">
+                            <children>
+                                <ImageView id="logo" fitHeight="118.0" fitWidth="176.0" layoutX="40.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/logo/wamiaGO.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                        <ImageView id="home" fitHeight="36.0" fitWidth="44.0" layoutX="47.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" styleClass="home">
+                            <image>
+                                <Image url="@../images/icons/home.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="48.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/icons/rides.png" />
+                            </image></ImageView>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="47.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/icons/delivery-truck.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="40.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/icons/history.png" />
+                            </image></ImageView>
+
+                    </children>
+
+                </AnchorPane>
+
+            </children>
+
+        </VBox>
+
+        <Pane prefHeight="827.0" prefWidth="1143.0">
+
+            <children>
+
+                <Pane fx:id="pane_131" layoutX="48.0" layoutY="687.0" prefHeight="18.0" prefWidth="9.0" styleClass="pane_11" stylesheets="@style.css">
+
+                    <children>
+
+                        <ImageView fitHeight="56.0" fitWidth="50.0" layoutX="12.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+
+
+
+                        </ImageView>
+
+                    </children>
+
+                </Pane>
+                <ImageView fitHeight="42.0" fitWidth="36.0" layoutX="143.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/icons/quick-response.png" />
+                    </image>
+                </ImageView>
+                <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1100.0" />
+                <Pane id="taxi_quick" fx:id="pane_112" layoutX="-1.0" layoutY="88.0" prefHeight="740.0" prefWidth="366.0" stylesheets="@style.css">
+                    <children>
+                        <Label contentDisplay="CENTER" layoutX="145.0" layoutY="14.0" text="Taxi" textAlignment="CENTER" textFill="#f7f0f0">
+                            <font>
+                                <Font name="Inter 24pt SemiBold" size="30.0" />
+                            </font>
+                        </Label>
+                        <Button layoutX="72.0" layoutY="580.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" stylesheets="@style.css" text="Request" textAlignment="CENTER">
+                            <styleClass>
+                                <String fx:value="taxi-action-button" />
+                                <String fx:value="card-quick" />
+                                <String fx:value="action-button" />
+                            </styleClass>
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                        </Button>
+                        <ImageView fitHeight="204.0" fitWidth="208.0" layoutX="59.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/icons/taxi.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                    <styleClass>
+                        <String fx:value="taxi_quick" />
+                        <String fx:value="card-quick" />
+                        <String fx:value="shadow_quick" />
+                    </styleClass>
+                </Pane>
+                <Pane fx:id="pane_111" layoutX="365.0" layoutY="87.0" prefHeight="741.0" prefWidth="366.0" stylesheets="@style.css">
+                    <children>
+                        <Label id="carpool-text" contentDisplay="CENTER" layoutX="92.0" layoutY="14.0" stylesheets="@style.css" text="Carpooling" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font name="Inter 24pt SemiBold" size="30.0" />
+                            </font>
+                        </Label>
+                        <Button layoutX="75.0" layoutY="580.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" stylesheets="@style.css" text="Join" textAlignment="CENTER">
+                            <styleClass>
+                                <String fx:value="action-button" />
+                                <String fx:value="carpooling-action-button" />
+                                <String fx:value="card-quick" />
+                            </styleClass>
+                        </Button>
+                        <ImageView fitHeight="204.0" fitWidth="208.0" layoutX="54.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/icons/carpool.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                    <styleClass>
+                        <String fx:value="carpool-quick" />
+                        <String fx:value="card-quick" />
+                        <String fx:value="shadow_quick" />
+                    </styleClass>
+                </Pane>
+                <Pane fx:id="pane_1111" layoutX="731.0" layoutY="87.0" prefHeight="741.0" prefWidth="366.0" stylesheets="@style.css">
+                    <children>
+                        <Label id="E-Bicycle_quick" contentDisplay="CENTER" layoutX="93.0" layoutY="14.0" text="E-Bicycle" textFill="WHITE">
+                            <font>
+                                <Font name="Inter 24pt SemiBold" size="30.0" />
+                            </font>
+                        </Label>
+                        <Button layoutX="77.0" layoutY="580.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" stylesheets="@style.css" text="Rent" textAlignment="CENTER">
+                            <styleClass>
+                                <String fx:value="action-button" />
+                                <String fx:value="ebike-action-button" />
+                                <String fx:value="card-quick" />
+                            </styleClass>
+                        </Button>
+                        <ImageView fitHeight="204.0" fitWidth="208.0" layoutX="53.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/icons/bicycle.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                    <styleClass>
+                        <String fx:value="shadow_quick" />
+                        <String fx:value="card-quick" />
+                        <String fx:value="E-Bicycle_quick" />
+                    </styleClass>
+                </Pane>
+
+                <Label layoutX="143.0" layoutY="314.0" textFill="#323131">
+
+                    <font>
+
+                        <Font name="Century Gothic Bold" size="20.0" />
+
+                    </font>
+
+                </Label>
+
+            </children>
+
+        </Pane>
+
+    </children>
+
+</HBox>
