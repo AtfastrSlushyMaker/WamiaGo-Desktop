@@ -1,193 +1,150 @@
-/* Styles de base */
-root {
-    -fx-background-color: #EAEEF4;
+/* Base Styles */
+.root {
+    -fx-background-color: #F5F7FA;
+    -fx-font-family: "Arial", sans-serif;
 }
 
-.side_ankerpane {
-    -fx-background-color: #1a60b0;
-    -fx-border-width: 2px;
+/* Navbar */
+/* Modern Navbar */
+.navbar {
+    -fx-background-color: #2D2F33; /* Dark Gray for a modern look */
+    -fx-padding: 20px;
+    -fx-pref-width: 250px;
+    -fx-min-height: 100vh;
+    -fx-border-width: 1px;
     -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 12, 0, 4, 4);
 }
 
-.inner_pane {
-    -fx-background-color: #D36D6D;
-    -fx-border-width: 2px;
+.logo-pane {
+    -fx-background-radius: 20px;
+    -fx-padding: 20px;
     -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #748CF1;
+    -fx-border-width: 2px;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 12, 0.3, 4, 4);
 }
 
-.most_inner_pane {
-    -fx-background-color: #6780E2;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #748CF1;
+/* Logo - Modern & Clean */
+#logo {
+    -fx-background-color: transparent;
+    -fx-padding: 15px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.15), 8, 0, 2, 2);
 }
 
-/* Styles des boutons avec ombre */
-#btn_workbench {
-    -fx-background-color: #135089;
-    -fx-border-width: 2px;
-    -fx-border-radius: 50px;
-    -fx-background-radius: 50px;
-    -fx-border-style: solid;
-    -fx-border-color: #135089;
+/* Logo Hover - Soft Glow (Not Overpowering) */
+#logo:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 12, 0.3, 0, 0);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+
+
+
+
+
+
+/* Modern Navbar Buttons */
+.navbar_buttons {
+    -fx-background-color: #3A3D42; /* Soft dark tone */
     -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 10px 20px;
-    -fx-transition: background-color 0.3s, border-color 0.3s;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 2, 2);
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 20;
+    -fx-background-radius: 12px;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 4, 4);
+    -fx-transition: all 0.3s ease-in-out;
 }
 
-#btn_workbench:hover {
-    -fx-background-color: #1a60b0;
-    -fx-border-color: #1a60b0;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0.5, 2, 2);
+/* Modern Hover Effect */
+.navbar_buttons:hover {
+    -fx-background-color: #4A4E54; /* Slightly lighter gray */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0, 4, 4);
+    -fx-border-color: #FFC107;
+}
+#logout-button {
+    -fx-background-color: #E57373; /* Red */
+    -fx-border-color: #E57373;
 }
 
-.btn_workbench11 {
-    -fx-background-color: #135089;
-    -fx-border-width: 2px;
-    -fx-border-radius: 50px;
-    -fx-background-radius: 50px;
-    -fx-border-style: solid;
-    -fx-border-color: #135089;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 10px 20px;
-    -fx-transition: background-color 0.3s, border-color 0.3s;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 2, 2);
+#logout-button:hover {
+    -fx-background-color: #D32F2F; /* Darker Red */
+    -fx-border-color: #D32F2F;
 }
 
-.btn_workbench11:hover {
-    -fx-background-color: #1a60b0;
-    -fx-border-color: #ffbf00;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0.5, 2, 2);
+/* Click Effect */
+.navbar_buttons:pressed {
+    -fx-background-color: #5A5F66; /* Lightest shade on click */
 }
 
-/* Styles des autres panneaux */
-.pane_1 {
+
+/* Panels */
+.inner_pane, .most_inner_pane, .pane_1 {
     -fx-background-color: #748CF1;
     -fx-border-width: 2px;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #748CF1;
+    -fx-border-color: #5A6BE5;
+}
+
+/* Carpooling Card Fix */
+.carpool-quick {
+    -fx-background-color: #85A9FF; /* Soft Blue */
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
+}
+
+/* Carpooling Hover Effect */
+.carpool-quick:hover {
+    -fx-background-color: #5A6BE5; /* Darker shade */
+}
+
+/* Carpooling Click Effect */
+.carpool-quick:pressed {
+    -fx-background-color: #3F6EDD;
+}
+
+/* Quick Action Cards */
+.card-quick {
+    -fx-background-radius: 16px;
+    -fx-border-radius: 16px;
+    -fx-border-width: 2px;
+    -fx-border-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
 }
 
 .card-quick:hover {
-
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);
 }
 
-.progress {
-    -fx-background-color: #ffffff;
+/* Quick Action Buttons */
+.taxi_quick, .Relocation_quick, .E-Bicycle_quick {
     -fx-border-width: 2px;
     -fx-border-radius: 16px;
     -fx-background-radius: 16px;
-    -fx-border-style: solid;
     -fx-border-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
 }
 
-.taxi_quick {
-    -fx-background-color: #ffbf00;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4); /* Ombre légère et translucide */
-}
-.Relocation_quick {
-    -fx-background-color: #e57373;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4); /* Ombre légère et translucide */
-}
-.E-Bicycle_quick{
-    -fx-background-color: #6bbf59;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4); /* Ombre légère et translucide */
-}
+.taxi_quick { -fx-background-color: #FFC107; } /* Yellow */
+.Relocation_quick { -fx-background-color: #E57373; } /* Red */
+.E-Bicycle_quick { -fx-background-color: #6BBF59; } /* Green */
 
+/* Hover Effects */
+.taxi_quick:hover { -fx-background-color: #FFA000; }
+.Relocation_quick:hover { -fx-background-color: #D32F2F; }
+.E-Bicycle_quick:hover { -fx-background-color: #4E9D3A; }
 
-
-.pane_111 {
-    -fx-background-color: #FD9999;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #FD9999;
-}
-
-.pane_1111 {
-    -fx-background-color: #72BF55;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #72BF55;
-}
-
-/* Hover effect for other elements */
-.pane_11:hover {
-    -fx-background-color: #e59999;
-    -fx-border-color: #ffbf00;
-}
-
-.pane_111:hover {
-    -fx-background-color: #ffcccc;
-    -fx-border-color: #ffbf00;
-}
-
-.pane_1111:hover {
-    -fx-background-color: #85d285;
-    -fx-border-color: #ffbf00;
-}
-#Quick_action {
-    -fx-font-size: 18px; /* Readable modern font size */
-    -fx-font-weight: bold; /* Emphasized text */
-    -fx-text-fill: #2C2C2C; /* Deep modern gray for elegance */
-    -fx-alignment: center; /* Proper text alignment */
-
-    /* Soft, subtle elevation effect */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0.3, 0, 3);
-
-    /* Smooth transition for hover effects */
-    -fx-transition: all 0.3s ease-in-out;
-}
-/*.taxi-action-button {*/
-/*    background: white;*/
-/*    color: #FF9800; !* Orange text *!*/
-/*    font-size: 16px;*/
-/*    font-weight: bold;*/
-/*    padding: 10px 20px;*/
-/*    border: 2px solid #FF9800; !* Orange border *!*/
-/*    border-radius: 8px;*/
-/*    cursor: pointer;*/
-/*    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
-/*    transition: all 0.3s ease-in-out;*/
-/*}*/
-
-/*.taxi-action-button:hover {*/
-/*    background: #FF9800;*/
-/*    color: white;*/
-/*    transform: scale(1.05);*/
-/*}*/
-/* Common button style */
+/* Action Buttons */
 .action-button {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
@@ -200,61 +157,73 @@ root {
     -fx-transition: all 0.3s ease-in-out;
     -fx-alignment: center;
 }
-.feedback-box {
-    -fx-alignment: center;
-    -fx-font-style: italic;
-    -fx-text-fill: #e57373;
-    -fx-border-width: 2px;
-    -fx-border-style: solid;
+
+/* Specific Action Buttons */
+.taxi-action-button {
+    -fx-background-color: #FFC107;
     -fx-border-color: white;
 }
 
-
-
-/* Taxi Button */
-.taxi-action-button {
-    -fx-background-color: #ffbf00; /* Match taxi_quick */
-    -fx-border-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(255, 191, 0, 0.4), 10, 0, 0, 4);
-}
-.taxi-action-button:hover {
-    -fx-background-color: #ff9900;
-    -fx-border-color: #ffbf00;
-    -fx-effect: dropshadow(gaussian, rgba(255, 153, 0, 0.6), 15, 0, 0, 6);
-}
-
-/* Relocation Button */
 .relocation-action-button {
-    -fx-background-color: #e57373; /* Match Relocation_quick */
-    -fx-border-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(229, 115, 115, 0.4), 10, 0, 0, 4);
-}
-.relocation-action-button:hover {
-    -fx-background-color: #d32f2f;
-    -fx-border-color: #e57373;
-    -fx-effect: dropshadow(gaussian, rgba(211, 47, 47, 0.6), 15, 0, 0, 6);
+    -fx-background-color: #E57373;
+    -fx-border-color: white;
 }
 
-/* Carpooling Button */
 .carpooling-action-button {
-    -fx-background-color: #748CF1; /* Match pane_1 */
-    -fx-border-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(116, 140, 241, 0.4), 10, 0, 0, 4);
-}
-.carpooling-action-button:hover {
-    -fx-background-color: #5a6be5;
-    -fx-border-color: #748CF1;
-    -fx-effect: dropshadow(gaussian, rgba(90, 107, 229, 0.6), 15, 0, 0, 6);
+    -fx-background-color: #85A9FF ;
+    -fx-border-color: white;
 }
 
-/* E-Bike Button */
 .ebike-action-button {
-    -fx-background-color: #6bbf59; /* Match E-Bicycle_quick */
-    -fx-border-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(107, 191, 89, 0.4), 10, 0, 0, 4);
+    -fx-background-color: #6BBF59;
+    -fx-border-color: white;
 }
-.ebike-action-button:hover {
-    -fx-background-color: #4e9d3a;
-    -fx-border-color: #6bbf59;
-    -fx-effect: dropshadow(gaussian, rgba(78, 157, 58, 0.6), 15, 0, 0, 6);
+
+/* Hover Effects */
+.taxi-action-button:hover { -fx-background-color: #FFA000; }
+.relocation-action-button:hover { -fx-background-color: #D32F2F; }
+.carpooling-action-button:hover { -fx-background-color: #5A6BE5; }
+.ebike-action-button:hover { -fx-background-color: #4E9D3A; }
+
+/* Labels */
+#date {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5A6BE5;
+    -fx-background-color: #f5f5f5;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #5A6BE5;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-min-width: 150px;
+    -fx-max-width: 200px;
 }
+
+#user, #feedback {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: none;
+    -fx-background-radius: 25px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 25px;
+    -fx-border-width: 2px;
+}
+
+#user { -fx-border-color: #388E3C; } /* Green */
+#feedback { -fx-border-color: #E57373; } /* Red */
+
+/* Upper Navbar - Sleek, Modern & Premium */
+#upper_nav {
+    -fx-background-color: #2D2F33; /* Keep your color */
+    -fx-padding: 20px;
+    -fx-alignment: center;
+
+
+}
+#navbar {
+    -fx-background-color: #2D2F33; /* Keep same dark gray */
+    -fx-background-radius: 0 40px 0 0; /* Smooth rounded top-right */
+}
+
