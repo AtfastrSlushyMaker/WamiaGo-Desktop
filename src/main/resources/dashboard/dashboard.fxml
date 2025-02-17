@@ -12,7 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.dashboard.DashboardController">
 
    <children>
 
@@ -24,7 +25,7 @@
 
                <children>
             
-                  <Button fx:id="btn_workbench1" layoutX="18.0" layoutY="258.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Home" textFill="#c6b6b6">
+                  <Button fx:id="home_button" layoutX="18.0" layoutY="258.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Home" textFill="#c6b6b6">
             
                      <font>
             
@@ -34,7 +35,7 @@
             
                   </Button>
 
-                  <Button fx:id="btn_workbench11" layoutX="18.0" layoutY="361.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Rides " textFill="#c6b6b6">
+                  <Button fx:id="rides_button" layoutX="18.0" layoutY="361.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Rides " textFill="#c6b6b6">
 
                      <font>
 
@@ -44,7 +45,7 @@
 
                   </Button>
 
-                  <Button fx:id="btn_workbench12" layoutX="18.0" layoutY="471.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Bookings " textFill="#c6b6b6">
+                  <Button fx:id="booking_button" layoutX="18.0" layoutY="471.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Bookings " textFill="#c6b6b6">
 
                      <font>
 
@@ -53,12 +54,12 @@
                      </font>
 
                   </Button>
-                  <Button fx:id="btn_workbench121" layoutX="18.0" layoutY="572.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="History" textFill="#c6b6b6">
+                  <Button fx:id="history_button" layoutX="18.0" layoutY="572.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="History" textFill="#c6b6b6">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
                   </Button>
-                  <Button id="logout-button" fx:id="btn_workbench1211" layoutX="73.0" layoutY="711.0" prefHeight="56.0" prefWidth="160.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Logout" textFill="#c6b6b6">
+                  <Button id="logout-button" fx:id="logout_button" layoutX="73.0" layoutY="711.0" prefHeight="56.0" prefWidth="160.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Logout" textFill="#c6b6b6">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>

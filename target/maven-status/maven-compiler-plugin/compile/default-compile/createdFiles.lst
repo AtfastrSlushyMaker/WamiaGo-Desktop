@@ -41,6 +41,7 @@ utils\DataBase.class
 entities\User$Status.class
 services\ReservationService.class
 entities\Station.class
+controllers\dashboard\DashboardController.class
 entities\Driver.class
 services\BicycleService.class
 entities\Reservation$Status.class
