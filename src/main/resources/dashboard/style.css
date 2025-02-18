@@ -146,7 +146,7 @@
 
 /* Action Buttons */
 .action-button {
-    -fx-font-size: 16px;
+
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-padding: 10px 20px;
@@ -170,6 +170,7 @@
 }
 
 .carpooling-action-button {
+    -fx-font-size: 16px;
     -fx-background-color: #85A9FF ;
     -fx-border-color: white;
 }

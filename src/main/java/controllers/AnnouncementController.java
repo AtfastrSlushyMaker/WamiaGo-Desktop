@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AnnouncementController implements Initializable {
@@ -38,6 +41,8 @@ public class AnnouncementController implements Initializable {
         // Gestionnaire d'événements pour le bouton "Ajouter une annonce"
         btnAdd.setOnAction(event -> handleAddButton());
     }
+
+
 
     private void handleAddButton() {
         try {
@@ -93,9 +98,14 @@ public class AnnouncementController implements Initializable {
 
                                 Button editButton = new Button("Modifier");
                                 editButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+                                editButton.setOnAction(event -> handleEditButtonAction(announcement));
+
 
                                 Button deleteButton = new Button("Supprimer");
                                 deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+
+                                // Gestionnaire d'événements pour le bouton "Supprimer"
+                                deleteButton.setOnAction(event -> handleDeleteButton(announcement));
 
                                 actionsBox.getChildren().addAll(editButton, deleteButton);
 
@@ -111,4 +121,43 @@ public class AnnouncementController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void handleEditButtonAction(Announcement announcement) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditAnnouncement.fxml"));
+            Parent root = loader.load();
+
+            EditAnnouncementController controller = loader.getController();
+            controller.setAnnouncementToEdit(announcement);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void handleDeleteButton(Announcement announcement) {
+        // Afficher une boîte de dialogue de confirmation
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de suppression");
+        alert.setHeaderText("Êtes-vous sûr de vouloir supprimer cette annonce ?");
+        alert.setContentText("Cette action est irréversible.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                // Supprimer l'annonce de la base de données
+                announcementService.delete(announcement.getIdAnnouncement());
+                // Recharger la liste des annonces
+                loadAnnouncements();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }
