@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/rides/RidesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/rides/RidesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/BicycleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/BicycleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/StationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/StationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/BicycleRentalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/BicycleRentalService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +47,10 @@
     &quot;accountId&quot;: &quot;46535ebf-73b9-42d2-ba27-6b0d2fe2271e&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://C:/Program Files/Java/jdk-17/lib/src.zip!/java.base/java/lang/NullPointerException.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://C:/Program Files/Java/jdk-17/lib/src.zip!/java.sql/java/sql/Types.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -181,7 +185,10 @@
       <workItem from="1739809585069" duration="398000" />
       <workItem from="1739809994491" duration="7009000" />
       <workItem from="1739827363887" duration="60000" />
-      <workItem from="1739883865144" duration="3079000" />
+      <workItem from="1739883865144" duration="5421000" />
+      <workItem from="1739890621538" duration="274000" />
+      <workItem from="1739890920562" duration="7000" />
+      <workItem from="1739890934517" duration="555000" />
     </task>
     <servers />
   </component>

@@ -1,7 +1,9 @@
 package controllers.station.front;
 
 import entities.Bicycle;
+import entities.BicycleRental;
 import entities.Station;
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -14,12 +16,16 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.BicycleRentalService;
+import services.BicycleService;
 import services.StationService;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import services.UserService;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class StationController {
@@ -69,8 +75,7 @@ public class StationController {
 
     private void loadStationsIntoFlowPane() {
         try {
-            List<Station> stations = stationService.read();
-            for (Station station : stations) {
+            for (Station station : stationService.read()) {
                 VBox stationCard = createStationCard(station);
                 stationFlowPane.getChildren().add(stationCard); // Add cards to FlowPane
             }
@@ -114,7 +119,6 @@ public class StationController {
     }
 
 
-
     private HBox createImageAndTextBox(Station station) {
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);  // Center align the elements
@@ -129,7 +133,6 @@ public class StationController {
         Text nameText = new Text(station.getName());
         nameText.setWrappingWidth(180);  // Set the wrapping width for the text
         nameText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #FFFFFF;");
-
 
 
         // Allow text to grow and fill space
@@ -176,8 +179,7 @@ public class StationController {
         // Close button for the modal
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> modalStage.close());
-        closeButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;-fx-text-alignment: center;-fx-font-family: Inter");
-
+        closeButton.getStyleClass().add("station-bike-close-button");
         // Create an HBox to center the button at the bottom
         HBox closeButtonContainer = new HBox();
         closeButtonContainer.setAlignment(Pos.CENTER);  // Center the button in the HBox
@@ -225,15 +227,14 @@ public class StationController {
             });
 
             // Make the bike button clickable
-            bikeButton.setOnAction(e -> showBikeDetails(bicycle));
+            bikeButton.setOnAction(e -> showBikeDetails(bicycle, station));
 
             bicycleFlowPane.getChildren().add(bikeButton);  // Add bike button to the FlowPane
         }
     }
 
 
-
-    private void showBikeDetails(Bicycle bicycle) {
+    private void showBikeDetails(Bicycle bicycle, Station station) {
         // Create a new Stage (popup/modal)
         Stage modalStage = new Stage();
         modalStage.setTitle("Bike Details: " + bicycle.getId());
@@ -275,7 +276,7 @@ public class StationController {
         Button reserveButton = new Button("Reserve Bike");
         reserveButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10px; -fx-border-radius: 5px;");
         reserveButton.setOnAction(e -> {
-            reserveBike(bicycle);
+            reserveBike(bicycle, station);
             modalStage.close(); // Close modal after reserving
         });
 
@@ -304,19 +305,24 @@ public class StationController {
     }
 
 
-    private void reserveBike(Bicycle bicycle) {
+    private void reserveBike(Bicycle bicycle, Station station) {
         // Logic to reserve the bike (e.g., mark the bike as reserved, update status in the database)
         BicycleRentalService bicycleRentalService = new BicycleRentalService();
+        StationService stationService = new StationService();
+        BicycleService bicycleService = new BicycleService();
+        try {
+            bicycle.setStatus(Bicycle.STATUS.reserved);
 
-        // You could update the bike's reservation status in your database or system
-        // Example:
-        // bicycle.setReserved(true);
-        // stationService.updateBikeReservation(bicycle);
+            bicycleRentalService.create(new BicycleRental(0,new UserService().getById(1), bicycle, station,null,new Timestamp(System.currentTimeMillis()), null, 0, 0, 0));
+            bicycleService.update(bicycle);
+            stationService.updateAvailableBikes(station,station.getAvailable_bikes()-1);
+            System.out.println("Bike " + bicycle.getId() + " reserved successfully.");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
-
-
-
-
-
-
 }

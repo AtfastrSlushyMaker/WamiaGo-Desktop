@@ -122,7 +122,10 @@
     -fx-padding: 5px;
 }
 
-
+.station-bike-close-button :hover
+{
+    -fx-background-color: #ff4444;
+}
 
 
 
