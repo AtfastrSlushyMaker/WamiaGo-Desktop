@@ -80,5 +80,18 @@ public class RidesController {
                 e.printStackTrace();
             }
         });
+
+        request_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/taxi-dashboard.fxml"));
+                Parent ridesRoot = loader.load();
+                Scene ridesScene = new Scene(ridesRoot);
+                Stage stage = (Stage) request_button.getScene().getWindow();
+                stage.setScene(ridesScene);
+            } catch (IOException e) {
+                System.out.println("Error loading the FXML file: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
     }
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.dashboard.DashboardController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.request.RequestController">
 
     <children>
 
@@ -140,7 +140,7 @@
                      <font>
                         <Font name="Inter 18pt Light" size="12.0" />
                      </font></Label>
-                        <ScrollPane id="scroll" prefHeight="243.0" prefWidth="578.0" styleClass="scroll-pane" stylesheets="@style.css">
+                        <ScrollPane id="scrollPane" prefHeight="243.0" prefWidth="578.0" styleClass="scroll-pane" stylesheets="@style.css" fitToWidth="true" >
                             <VBox fx:id="pendingRequestsCardBox" alignment="TOP_CENTER" spacing="10">
                                 <!-- Cards will be added dynamically here -->
                                 <HBox id="hbox_cards">
