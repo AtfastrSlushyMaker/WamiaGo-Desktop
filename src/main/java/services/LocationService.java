@@ -76,41 +76,7 @@ public class LocationService implements IService<Location> {
         return null;
     }
 
-    public static double calculateDistance(int locationId1, int locationId2) throws SQLException {
 
-        LocationService locationService = new LocationService();
-
-
-        Location location1 = locationService.getById(locationId1);
-        Location location2 = locationService.getById(locationId2);
-
-
-        if (location1 == null || location2 == null) {
-            throw new SQLException("One or both locations not found");
-        }
-
-        // Step 2: Use the Haversine formula to calculate the distance
-        final int R = 6371; // Radius of the Earth in kilometers
-
-        double lat1 = location1.getLatitude();
-        double lon1 = location1.getLongitude();
-        double lat2 = location2.getLatitude();
-        double lon2 = location2.getLongitude();
-
-        // Calculate the difference in latitudes and longitudes
-        double latDistance = Math.toRadians(lat2 - lat1);
-        double lonDistance = Math.toRadians(lon2 - lon1);
-
-        // Haversine formula
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        // Calculate and return the distance
-        return R * c; // Distance in kilometers
-    }
 
 
 

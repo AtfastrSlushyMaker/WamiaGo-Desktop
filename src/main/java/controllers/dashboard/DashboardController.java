@@ -83,31 +83,34 @@ public class DashboardController {
 
         @FXML
         private Label user_name_label;
-
+    private void pageNavigation()
+    {
+        home_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
+                Parent homeRoot = loader.load();
+                Scene homeScene = new Scene(homeRoot);
+                Stage stage = (Stage) home_button.getScene().getWindow();
+                stage.setScene(homeScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        rides_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/rides/rides.fxml"));
+                Parent ridesRoot = loader.load();
+                Scene ridesScene = new Scene(ridesRoot);
+                Stage stage = (Stage) rides_button.getScene().getWindow();
+                stage.setScene(ridesScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
         @FXML
         void initialize() {
-            rides_button.setOnAction(event -> {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/rides/rides.fxml"));
-                    Parent ridesRoot = loader.load();
-                    Scene ridesScene = new Scene(ridesRoot);
-                    Stage stage = (Stage) rides_button.getScene().getWindow();
-                    stage.setScene(ridesScene);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            home_button.setOnAction(event -> {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
-                    Parent homeRoot = loader.load();
-                    Scene homeScene = new Scene(homeRoot);
-                    Stage stage = (Stage) home_button.getScene().getWindow();
-                    stage.setScene(homeScene);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            pageNavigation();
         }
 
 

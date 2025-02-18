@@ -1,5 +1,6 @@
 package services;
 
+import entities.Bicycle;
 import entities.Location;
 import entities.Station;
 import utils.DataBase;
@@ -140,6 +141,7 @@ public class StationService implements IService<Station> {
         }
         return stations;
     }
+
     public void updateAvailableBikes(Station station, int available_bikes) throws SQLException {
         String sql = "UPDATE bicycle_station SET available_bikes=? WHERE id_station=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -335,5 +337,29 @@ public class StationService implements IService<Station> {
             stations.add(station);
         }
         return stations;
+    }
+    public List<Bicycle> getAvailableBikes(Station station) {
+        List<Bicycle> bicycles = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle WHERE id_station = ? AND status = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, station.getId());
+            ps.setString(2, Bicycle.STATUS.available.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Bicycle bicycle = new Bicycle();
+                bicycle.setId(rs.getInt("id_bike"));
+                bicycle.getStation().setId(rs.getInt("id_station"));
+                bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
+                bicycle.setBattery_level(rs.getFloat("battery_level"));
+                bicycle.setRange_km(rs.getFloat("range_km"));
+                bicycle.setLast_updated(rs.getTimestamp("last_updated"));
+                bicycles.add(bicycle);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return bicycles;
     }
 }
