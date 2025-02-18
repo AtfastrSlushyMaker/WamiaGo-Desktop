@@ -148,26 +148,38 @@
                                         <Label text="Request #1" />
                                         <Label text="Client: John Doe" />
                                         <Label text="From: Location A To: Location B" />
-                                        <Button styleClass="reject" text="Delete" />
+                              <HBox prefHeight="36.0" prefWidth="137.0">
+                                 <children>
+                                    <Button styleClass="reject" text="Delete" />
+                                    <Button styleClass="accept" text="Update" />
+                                 </children>
+                              </HBox>
                                     </VBox>
                                 </HBox>
                             </VBox>
                         </ScrollPane>
                     </VBox>
 
-                    <!-- Ongoing Rides Section -->
-                    <VBox fx:id="ongoingRidesBox" prefHeight="315.0" prefWidth="607.0" spacing="10" styleClass="vbox-section" stylesheets="@style.css">
-                        <Label fx:id="ongoingRidesLabel" styleClass="section-title" text="Rides" />
-                        <ScrollPane id="scroll" prefHeight="248.0" prefWidth="578.0" styleClass="scroll-pane" stylesheets="@style.css">
-                            <VBox id="vbox" fx:id="ongoingRidesCardBox" alignment="TOP_CENTER" spacing="10" stylesheets="@style.css">
+                    <!-- Pending Requests Section -->
+                    <VBox fx:id="RideRequestsBox" prefHeight="329.0" prefWidth="612.0" spacing="10" styleClass="vbox-section" stylesheets="@style.css">
+                        <Label fx:id="RideRequestsLabel" styleClass="section-title" text="Requests">
+                            <font>
+                                <Font name="Inter 18pt Light" size="12.0" />
+                            </font></Label>
+                        <ScrollPane id="scroll" prefHeight="243.0" prefWidth="578.0" styleClass="scroll-pane" stylesheets="@style.css">
+                            <VBox fx:id="RideRequestsCardBox" alignment="TOP_CENTER" spacing="10">
                                 <!-- Cards will be added dynamically here -->
-                                <HBox id="hashbox_cards">
-                                    <VBox id="card" prefHeight="166.0" prefWidth="204.0" spacing="10" stylesheets="@style.css">
-                                        <Label text="Ride #1" />
-                                        <Label text="Taxi: XYZ123" />
-                                        <Label text="Duration: 15 min" />
-                                        <Label text="From: Location C To: Location D" />
-                                        <Button styleClass="cancel" text="Delete" />
+                                <HBox id="hbox_cards">
+                                    <VBox id="card" spacing="10" stylesheets="@style.css">
+                                        <Label text="Request #1" />
+                                        <Label text="Client: John Doe" />
+                                        <Label text="From: Location A To: Location B" />
+                              <HBox prefHeight="36.0" prefWidth="138.0">
+                                 <children>
+                                    <Button styleClass="reject" text="Delete" />
+                                    <Button styleClass="accept" text="Update" />
+                                 </children>
+                              </HBox>
                                     </VBox>
                                 </HBox>
                             </VBox>
