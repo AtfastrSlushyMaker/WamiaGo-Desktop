@@ -89,7 +89,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>tn.esprit.controllers.Home</mainClass>
+                            <mainClass>controllers.Home</mainClass>
                         </configuration>
                     </execution>
                 </executions>
