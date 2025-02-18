@@ -1,4 +1,4 @@
-package controllers;
+package controllers.Annoucement;
 
 import entities.Announcement;
 import javafx.fxml.FXML;
@@ -47,7 +47,7 @@ public class AnnouncementController implements Initializable {
     private void handleAddButton() {
         try {
             // Charger la vue d'ajout d'annonce
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/addAnnouncement.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/addAnnouncement.fxml"));
             Parent root = loader.load();
 
             // Obtenir la scène actuelle et la remplacer par la nouvelle vue
@@ -124,7 +124,7 @@ public class AnnouncementController implements Initializable {
 
     public void handleEditButtonAction(Announcement announcement) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditAnnouncement.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/EditAnnouncement.fxml"));
             Parent root = loader.load();
 
             EditAnnouncementController controller = loader.getController();

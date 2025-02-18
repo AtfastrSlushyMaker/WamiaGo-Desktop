@@ -94,7 +94,7 @@ public class Main {
             newReservation.getEndLocation().setId(1);
 
             newReservation.setAnnouncement(new Announcement());
-            newReservation.getAnnouncement().setIdAnnouncement(26);
+            newReservation.getAnnouncement().setIdAnnouncement(65);
 
             reservationService.create(newReservation);
             //System.out.println(" Reservation added successfully!");
@@ -106,28 +106,28 @@ public class Main {
                 System.out.println(reservation);
             }
 
-            // Mise à jour de la première réservation
-            if (!reservations.isEmpty()) {
-                Reservation firstReservation = reservations.get(0);
-                firstReservation.setStatus(Reservation.Status.ON_GOING);
-                firstReservation.setDescription("This reservation is updated.....");
-                reservationService.update(firstReservation);
-                //System.out.println(" Reservation updated successfully!");
-
-                // Affichage de la réservation mise à jour
-                System.out.println(" Updated Reservation: " + firstReservation);
-            } else {
-                System.out.println(" No reservations available to update.");
-            }
-
-            //  Suppression de la dernière réservation (si disponible)
-            if (!reservations.isEmpty()) {
-                int reservationIdToDelete = reservations.get(reservations.size() - 1).getIdReservation();
-                reservationService.delete(reservationIdToDelete);
-                System.out.println(" Reservation with ID " + reservationIdToDelete + " deleted successfully!");
-            } else {
-                System.out.println(" No reservations available to delete.");
-            }
+//            // Mise à jour de la première réservation
+//            if (!reservations.isEmpty()) {
+//                Reservation firstReservation = reservations.get(0);
+//                firstReservation.setStatus(Reservation.Status.ON_GOING);
+//                firstReservation.setDescription("This reservation is updated.....");
+//                reservationService.update(firstReservation);
+//                //System.out.println(" Reservation updated successfully!");
+//
+//                // Affichage de la réservation mise à jour
+//                System.out.println(" Updated Reservation: " + firstReservation);
+//            } else {
+//                System.out.println(" No reservations available to update.");
+//            }
+//
+//            //  Suppression de la dernière réservation (si disponible)
+//            if (!reservations.isEmpty()) {
+//                int reservationIdToDelete = reservations.get(reservations.size() - 1).getIdReservation();
+//                reservationService.delete(reservationIdToDelete);
+//                System.out.println(" Reservation with ID " + reservationIdToDelete + " deleted successfully!");
+//            } else {
+//                System.out.println(" No reservations available to delete.");
+//            }
 
             // ===========================
             //  Gestion des Déménagements (Relocations)
@@ -141,7 +141,7 @@ public class Main {
 
             // Utiliser un ID de réservation existant
             newRelocation.setReservation(new Reservation());
-            newRelocation.getReservation().setIdReservation(30);
+            newRelocation.getReservation().setIdReservation(71);
 
             relocationService.create(newRelocation);
             //System.out.println(" Relocation added successfully!");
@@ -153,28 +153,28 @@ public class Main {
                 System.out.println(relocation);
             }
 
-            //  Mise à jour du premier déménagement (si disponible)
-            if (!relocations.isEmpty()) {
-                Relocation firstRelocation = relocations.get(0);
-                firstRelocation.setStatus(false);
-                firstRelocation.setCost(192.0f);
-                relocationService.update(firstRelocation);
-                //System.out.println(" Relocation updated successfully!");
-
-                // Affichage du déménagement mis à jour
-                System.out.println(" Updated Relocation: " + firstRelocation);
-            } else {
-                System.out.println(" No relocations available to update.");
-            }
-
-            //  Suppression du dernier déménagement (si disponible)
-            if (!relocations.isEmpty()) {
-                int relocationIdToDelete = relocations.get(relocations.size() - 1).getIdRelocation();
-                relocationService.delete(relocationIdToDelete);
-                System.out.println(" Relocation with ID " + relocationIdToDelete + " deleted successfully!");
-            } else {
-                System.out.println(" No relocations available to delete.");
-            }
+//            //  Mise à jour du premier déménagement (si disponible)
+//            if (!relocations.isEmpty()) {
+//                Relocation firstRelocation = relocations.get(0);
+//                firstRelocation.setStatus(false);
+//                firstRelocation.setCost(192.0f);
+//                relocationService.update(firstRelocation);
+//                //System.out.println(" Relocation updated successfully!");
+//
+//                // Affichage du déménagement mis à jour
+//                System.out.println(" Updated Relocation: " + firstRelocation);
+//            } else {
+//                System.out.println(" No relocations available to update.");
+//            }
+//
+//            //  Suppression du dernier déménagement (si disponible)
+//            if (!relocations.isEmpty()) {
+//                int relocationIdToDelete = relocations.get(relocations.size() - 1).getIdRelocation();
+//                relocationService.delete(relocationIdToDelete);
+//                System.out.println(" Relocation with ID " + relocationIdToDelete + " deleted successfully!");
+//            } else {
+//                System.out.println(" No relocations available to delete.");
+//            }
 
             // ===========================
             //  Tests de recherche dynamique

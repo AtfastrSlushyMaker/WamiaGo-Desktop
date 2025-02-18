@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddAnnouncementController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Annoucement.EditAnnouncementController">
 
     <children>
 
@@ -72,34 +72,34 @@
                         </Button>
                         <ImageView fitHeight="36.0" fitWidth="44.0" layoutX="83.0" layoutY="721.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/icons/logout.png" />
+                                <Image url="@../../images/icons/logout.png" />
                             </image></ImageView>
                         <Pane fx:id="pane_1121" layoutX="19.0" layoutY="47.0" prefHeight="140.0" prefWidth="248.0" styleClass="logo-pane" stylesheets="@styles.css">
                             <children>
                                 <ImageView id="logo" fitHeight="118.0" fitWidth="176.0" layoutX="40.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@images/logo/wamiaGO.png" />
+                                        <Image url="@../../images/logo/wamiaGO.png" />
                                     </image>
                                 </ImageView>
                             </children>
                         </Pane>
                         <ImageView id="home" fitHeight="36.0" fitWidth="44.0" layoutX="47.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" styleClass="home">
                             <image>
-                                <Image url="@images/icons/home.png" />
+                                <Image url="@../../images/icons/home.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="48.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/icons/rides.png" />
+                                <Image url="@../../images/icons/rides.png" />
                             </image></ImageView>
                         <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="47.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/icons/delivery-truck.png" />
+                                <Image url="@../../images/icons/delivery-truck.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="40.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/icons/history.png" />
+                                <Image url="@../../images/icons/history.png" />
                             </image></ImageView>
 
                     </children>
@@ -118,17 +118,17 @@
                 <!-- En-tête avec image -->
                 <HBox alignment="CENTER" prefHeight="82.0" prefWidth="1102.0" spacing="10" styleClass="header">
                     <ImageView fitHeight="50" fitWidth="50">
-                        <Image url="@images/icons/announcement_icon.png" />
+                        <Image url="@../../images/icons/announcement_icon.png" />
                     </ImageView>
                     <Text styleClass="title-label" text="Announcement Details" />
                 </HBox>
                 <Text fontSmoothingType="LCD" styleClass="subtitle-label" text="Customize the announcement to ensure clarity and engagement across platforms." wrappingWidth="697.1683225631714">
-               <font>
-                  <Font size="16.0" />
-               </font></Text>
+                    <font>
+                        <Font size="16.0" />
+                    </font></Text>
                 <ImageView fitHeight="165.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/icons/pngtree-removal-man-moving-delivery-van-circle-retro-removal-truck-van-circle-vector-png-image_14246688.png" />
+                        <Image url="@../../images/icons/pngtree-removal-man-moving-delivery-van-circle-retro-removal-truck-van-circle-vector-png-image_14246688.png" />
                     </image>
                 </ImageView>
 
@@ -160,10 +160,10 @@
 
                 <!-- Boutons avec icônes -->
                 <HBox alignment="CENTER" prefHeight="80.0" prefWidth="424.0" spacing="20">
-                    <Button fx:id="submitButton" onAction="#handleSubmitButtonAction" styleClass="submit-button" text="Submit">
+                    <Button fx:id="submitButton" onAction="#handleSubmitButtonAction" styleClass="submit-button" text="Modifier">
                         <graphic>
                             <ImageView fitHeight="20" fitWidth="20">
-                                <Image url="@images/icons/check_icon.png" />
+                                <Image url="@../../images/icons/check_icon.png" />
                             </ImageView>
                         </graphic>
                     </Button>
@@ -171,7 +171,7 @@
                     <Button fx:id="cancelButton" onAction="#handleCancelButtonAction" styleClass="cancel-button" text="Cancel">
                         <graphic>
                             <ImageView fitHeight="20" fitWidth="20">
-                                <Image url="@images/icons/cancel_icon.png" />
+                                <Image url="@../../images/icons/cancel_icon.png" />
                             </ImageView>
                         </graphic>
                     </Button>
