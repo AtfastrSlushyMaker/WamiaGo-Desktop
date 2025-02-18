@@ -5,26 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/AddReservationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/EditReservationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements_client.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/EditReservation.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/Reservations.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/addReservation.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons/reservation_icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AddAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/AddAnnouncementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/AnnouncementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/EditAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/EditAnnouncementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/EditAnnouncement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/EditAnnouncement.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/addAnnouncement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/addAnnouncement.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/announcements.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/announcementsStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementsStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -63,74 +43,67 @@
     &quot;accountId&quot;: &quot;46535ebf-73b9-42d2-ba27-6b0d2fe2271e&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://C:/Program Files/Java/jdk-17/lib/src.zip!/java.base/java/lang/NullPointerException.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://C:/Program Files/Java/jdk-17/lib/src.zip!/java.sql/java/sql/Types.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2sp7bSMVe9pQ8Bp9uQXyX79iuvQ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Home.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MainRequest.executor": "Run",
-    "Application.MainRide.executor": "Run",
-    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
-    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor": "Run",
-    "Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Relocation-management",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop/src/main/resources/Reservation/Front",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Home.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainRequest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainRide.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;bicycle-station-management&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/WamiaGo_desktop/src/main/resources/images/station/icons&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;io.github.pandier.intellijdiscordrp.settings.project.DiscordProjectSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\resources\Reservation\Front" />
-      <recent name="C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\resources\images\icons" />
-      <recent name="C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\resources" />
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\station\icons" />
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\station\front" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\resources\Reservation\Front" />
-      <recent name="C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\resources\Annoucement\Front" />
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\station\icons" />
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\station\frontOffice" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Home">
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
       <module name="WamiaGo" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\lib\openjfx-23.0.2_windows-x64_bin-sdk\javafx-sdk-23.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml  " />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.Main" />
-      <module name="WamiaGo" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.*" />
@@ -168,7 +141,6 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
       <item itemvalue="Application.Home" />
       <item itemvalue="Application.MainRequest" />
       <item itemvalue="Application.MainRide" />
@@ -176,7 +148,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Home" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.MainRide" />
         <item itemvalue="Application.MainRequest" />
       </list>
@@ -185,8 +156,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19416.15" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19416.15" />
       </set>
     </attachedChunks>
   </component>
@@ -210,10 +181,12 @@
       <workItem from="1739809585069" duration="398000" />
       <workItem from="1739809994491" duration="7009000" />
       <workItem from="1739827363887" duration="60000" />
-      <workItem from="1739843017921" duration="24000" />
-      <workItem from="1739873867945" duration="18099000" />
-      <workItem from="1739895810688" duration="15336000" />
-      <workItem from="1739914268569" duration="2382000" />
+      <workItem from="1739883865144" duration="5421000" />
+      <workItem from="1739890621538" duration="274000" />
+      <workItem from="1739890920562" duration="7000" />
+      <workItem from="1739890934517" duration="2426000" />
+      <workItem from="1739893711924" duration="172000" />
+      <workItem from="1739894034665" duration="1119000" />
     </task>
     <servers />
   </component>

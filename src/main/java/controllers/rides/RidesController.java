@@ -56,8 +56,8 @@ public class RidesController {
 
     @FXML
     private AnchorPane side_ankerpane;
-    @FXML
-    void initialize() {
+    private void pageNavigation()
+    {
         home_button.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
@@ -80,5 +80,21 @@ public class RidesController {
                 e.printStackTrace();
             }
         });
+        rent_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/station/front/station.fxml"));
+                Parent rentRoot = loader.load();
+                Scene rentScene = new Scene(rentRoot);
+                Stage stage = (Stage) rent_button.getScene().getWindow();
+                stage.setScene(rentScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+    }
+    @FXML
+    void initialize() {
+        pageNavigation();
     }
 }
