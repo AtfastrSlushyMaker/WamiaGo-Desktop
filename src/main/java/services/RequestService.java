@@ -4,7 +4,6 @@ import entities.Request;
 import entities.User;
 import entities.Location;
 import utils.DataBase;
-import services.UserService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class RequestService implements IService<Request> {
     }
 
     @Override
-    public void create(Request request) throws SQLException {
+    public boolean create(Request request) throws SQLException {
         String sql = "INSERT INTO request (id_client, id_departure_location, id_arrival_location, status, request_date) VALUES (?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, request.getClient().getId());
@@ -28,6 +27,7 @@ public class RequestService implements IService<Request> {
         preparedStatement.setTimestamp(5, Timestamp.valueOf(request.getRequestDate()));
         preparedStatement.executeUpdate();
         System.out.println("✅ Request created successfully");
+        return false;
     }
 
     @Override

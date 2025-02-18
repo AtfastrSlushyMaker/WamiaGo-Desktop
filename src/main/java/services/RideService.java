@@ -24,7 +24,7 @@ public class RideService implements IService<Ride> {
     }
 
     @Override
-    public void create(Ride ride) throws SQLException {
+    public boolean create(Ride ride) throws SQLException {
         // Step 1: Retrieve departure and arrival location IDs from the request table
         String getLocationQuery = "SELECT id_departure_location, id_arrival_location FROM request WHERE id_request = ?";
         try (PreparedStatement getLocationStmt = connection.prepareStatement(getLocationQuery)) {
@@ -55,6 +55,7 @@ public class RideService implements IService<Ride> {
                 }
             }
         }
+        return false;
     }
 
 

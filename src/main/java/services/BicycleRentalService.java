@@ -15,7 +15,7 @@ public class BicycleRentalService implements IService<BicycleRental> {
         this.connection = DataBase.getInstance().getConnection();
     }
     @Override
-    public void create(BicycleRental bicycleRental) throws SQLException {
+    public boolean create(BicycleRental bicycleRental) throws SQLException {
         String sql = "INSERT INTO bicycle_rental ( id_user,id_bike,id_start_station,id_end_station, start_time, end_time,distance_km,battery_used,cost) VALUES (?,?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, bicycleRental.getUser().getId());
@@ -29,6 +29,7 @@ public class BicycleRentalService implements IService<BicycleRental> {
         preparedStatement.setFloat(9, bicycleRental.getCost());
         preparedStatement.executeUpdate();
         System.out.println("✅ BicycleRental created successfully.");
+        return false;
     }
 
     @Override

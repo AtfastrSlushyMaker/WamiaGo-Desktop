@@ -15,13 +15,14 @@ public class LocationService implements IService<Location> {
     }
 
     @Override
-    public void create(Location location) throws SQLException {
+    public boolean create(Location location) throws SQLException {
         String sql = "INSERT INTO location (address,latitude,longitude) VALUES (?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, location.getAddress());
         preparedStatement.setFloat(2, location.getLatitude());
         preparedStatement.setFloat(3, location.getLongitude());
         preparedStatement.executeUpdate();
+        return false;
     }
 
     @Override

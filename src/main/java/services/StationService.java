@@ -16,7 +16,7 @@ public class StationService implements IService<Station> {
     }
 
     @Override
-    public void create(Station station) throws SQLException {
+    public boolean create(Station station) throws SQLException {
         String sql ="INSERT INTO bicycle_station (name,id_location,total_docks," +
                 "available_docks,available_bikes,charging_bikes,status) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -29,6 +29,7 @@ public class StationService implements IService<Station> {
         preparedStatement.setString(7, station.getStatus().toString());
         preparedStatement.executeUpdate();
         System.out.println("✅ Station created successfully.");
+        return false;
     }
 
     @Override

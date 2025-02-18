@@ -16,7 +16,7 @@ public class RatingService implements IService<Rating> {
     }
 
     @Override
-    public void create(Rating rating) throws SQLException {
+    public boolean create(Rating rating) throws SQLException {
         String sql = "INSERT INTO `rating`(`id_user`, `id_driver`, `comment`, `rating`) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, rating.getUserId());
@@ -31,6 +31,7 @@ public class RatingService implements IService<Rating> {
                 }
             }
         }
+        return false;
     }
 
     @Override

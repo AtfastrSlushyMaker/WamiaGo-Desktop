@@ -18,7 +18,7 @@
             connection = DataBase.getInstance().getConnection();
         }
 
-        public void create(Response response) throws SQLException {
+        public boolean create(Response response) throws SQLException {
             String sql = "INSERT INTO response(id_reclamation, content, date) VALUES (?, ?, ?)";
 
             try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -38,6 +38,7 @@
                     }
                 }
             }
+            return false;
         }
 
         @Override

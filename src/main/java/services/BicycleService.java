@@ -16,7 +16,7 @@ public class BicycleService implements IService<Bicycle> {
     }
 
     @Override
-    public void create(Bicycle bicycle) throws SQLException {
+    public boolean create(Bicycle bicycle) throws SQLException {
         String sql = "INSERT INTO bicycle ( id_station, status, battery_level, range_km, last_updated) VALUES (?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, bicycle.getStation().getId());
@@ -26,6 +26,7 @@ public class BicycleService implements IService<Bicycle> {
         preparedStatement.setObject(5, bicycle.getLast_updated());
         preparedStatement.executeUpdate();
         System.out.println("✅ Bicycle created successfully");
+        return false;
     }
 
     @Override
