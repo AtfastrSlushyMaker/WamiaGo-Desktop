@@ -229,10 +229,10 @@
 /* Styling for both Pending Requests and Ongoing Rides sections */
 .vbox-section {
     -fx-background-color: transparent; /* Fond blanc */
-    -fx-border-radius: 16px; /* Coins plus arrondis */
+    -fx-border-radius: 10px; /* Coins plus arrondis */
 
     -fx-border-color: black; /* Bordure noire */
-    -fx-border-width: 2px; /* Bordure de 2px */
+    -fx-border-width: 1px; /* Bordure de 2px */
     -fx-padding: 2px;
 
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 3, 3); /* Ombre douce */
@@ -355,7 +355,7 @@
     -fx-background-color: transparent; /* Fond blanc */
     -fx-border-color: #85A9FF; /* Bordure noire */
     -fx-border-width: 2px;
-    -fx-border-radius: 8px; /* Coins arrondis */
+    -fx-border-radius: 5px; /* Coins arrondis */
     -fx-padding: 12px;
     -fx-spacing: 8px;
 
