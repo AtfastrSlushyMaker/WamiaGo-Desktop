@@ -116,6 +116,9 @@
     -fx-border-width: 2px;
     -fx-border-color: white;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    -fx-padding: 12px;
+    -fx-spacing: 8px;
+
 }
 
 .card-quick:hover {
@@ -231,7 +234,7 @@
     -fx-background-color: transparent; /* Fond blanc */
     -fx-border-radius: 10px; /* Coins plus arrondis */
 
-    -fx-border-color: black; /* Bordure noire */
+    -fx-border-color: #5A6BE5; /* Bordure noire */
     -fx-border-width: 1px; /* Bordure de 2px */
     -fx-padding: 2px;
 
@@ -247,7 +250,7 @@
 .vbox-section > .section-title {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333;
+
 }
 
 
@@ -269,7 +272,8 @@
 }
 
 .vbox-section .accept:hover, .vbox-section .finish:hover {
-    -fx-background-color: rgba(107, 191, 89, 0.1); /* Fond très léger vert au survol */
+    -fx-background-color: #e7f3ee;
+
     -fx-text-fill: #6BBF59; /* Texte restant vert */
     -fx-border-color: #6BBF59; /* Bordure inchangée au survol */
     -fx-effect: none; /* Pas d'effet d'ombre pour un survol plus léger */
@@ -277,20 +281,23 @@
 
 
 .vbox-section .reject, .vbox-section .cancel {
-    -fx-background-color: transparent; /* Fond transparent */
-    -fx-border-color: #E57373; /* Rose d'origine pour la bordure */
+    -fx-background-color: transparent; /* Fond blanc */
+    -fx-border-color: #E57373; /* Bordure verte de la palette */
     -fx-border-width: 2px; /* Bordure de 2px */
-    -fx-text-fill: #E57373; /* Texte rose d'origine */
+    -fx-text-fill: #E57373; /* Texte de couleur verte pour correspondre à la bordure */
     -fx-font-weight: bold;
     -fx-padding: 8px 15px;
     -fx-border-radius: 5px;
     -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out;
+
 }
 
 .vbox-section .reject:hover, .vbox-section .cancel:hover {
-    -fx-background-color: #FFCBCB; /* Couleur rouge très claire pour le survol */
-    -fx-text-fill: #E57373; /* Couleur rose douce pour le texte */
-    -fx-border-color: #E57373; /* Bordure rose douce */
+    -fx-background-color: rgba(246, 180, 188, 0.28);
+
+    -fx-text-fill: #E57373; /* Texte restant vert */
+    -fx-border-color: #E57373; /* Bordure inchangée au survol */
     -fx-effect: none; /* Pas d'effet d'ombre pour un survol plus léger */
 }
 
@@ -300,7 +307,7 @@
 
 
 #scroll {
-    -fx-background: white; /* Fond transparent */
+    -fx-background: transparent; /* Fond transparent */
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-border-width: 2px; /* Épaisseur de la bordure */
@@ -353,17 +360,28 @@
 /* Style général des cartes */
 #card {
     -fx-background-color: transparent; /* Fond blanc */
-    -fx-border-color: #85A9FF; /* Bordure noire */
+
     -fx-border-width: 2px;
-    -fx-border-radius: 5px; /* Coins arrondis */
+
     -fx-padding: 12px;
     -fx-spacing: 8px;
+
+
+
+    -fx-border-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    -fx-background-color: white; /* Soft Blue */
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
 
 }
 
 /* Effet au survol des cartes */
 #card:hover {
-    -fx-background-color: transparent; /* Légère teinte grise */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);
 
 }
 

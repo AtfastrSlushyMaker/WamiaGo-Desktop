@@ -89,7 +89,7 @@ public class RidesController {
                 Stage stage = (Stage) request_button.getScene().getWindow();
                 stage.setScene(ridesScene);
             } catch (IOException e) {
-                System.out.println("Error loading the FXML file: " + e.getMessage());
+
                 e.printStackTrace();
             }
         });

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
@@ -135,51 +136,88 @@
                 <VBox alignment="TOP_CENTER" layoutX="13.0" layoutY="100" prefHeight="722.0" prefWidth="612.0" spacing="20" stylesheets="@style.css">
 
                     <!-- Pending Requests Section -->
-                    <VBox fx:id="pendingRequestsBox" prefHeight="329.0" prefWidth="612.0" spacing="10" styleClass="vbox-section" stylesheets="@style.css">
-                        <Label fx:id="pendingRequestsLabel" styleClass="section-title" text="Requests">
+                    <VBox fx:id="RequestsBox" prefHeight="329.0" prefWidth="612.0" spacing="10" styleClass="vbox-section" stylesheets="@style.css">
+                  <Label text="Request">
                      <font>
-                        <Font name="Inter 18pt Light" size="12.0" />
-                     </font></Label>
-                        <ScrollPane id="scrollPane" prefHeight="243.0" prefWidth="578.0" styleClass="scroll-pane" stylesheets="@style.css" fitToWidth="true" >
-                            <VBox fx:id="pendingRequestsCardBox" alignment="TOP_CENTER" spacing="10">
-                                <!-- Cards will be added dynamically here -->
-                                <HBox id="hbox_cards">
-                                    <VBox id="card" spacing="10" stylesheets="@style.css">
-                                        <Label text="Request #1" />
-                                        <Label text="Client: John Doe" />
-                                        <Label text="From: Location A To: Location B" />
-                              <HBox prefHeight="36.0" prefWidth="137.0">
+                        <Font name="Inter 28pt ExtraBold" size="27.0" />
+                     </font>
+                  </Label>
+                  <ScrollPane id="scroll" prefHeight="243.0" prefWidth="578.0" styleClass="scroll-pane" stylesheets="@style.css">
+                     <content>
+                        <VBox fx:id="RequestsCardBox1" alignment="TOP_CENTER" spacing="10">
+                           <children>
+                              <HBox id="hbox_cards">
                                  <children>
-                                    <Button styleClass="reject" text="Delete" />
-                                    <Button styleClass="accept" text="Update" />
+                                    <VBox prefHeight="138.0" prefWidth="200.0" spacing="10" stylesheets="@style.css">
+                                       <children>
+                                          <Label text="farah" textFill="#232121" />
+                                          <Label text="name" textFill="#232121" />
+                                          <Label text="From: Location A To: Location B" />
+                                          <HBox prefHeight="31.0" prefWidth="175.0">
+                                             <children>
+                                                <Button stylesheets="@style.css" text="Delete">
+                                                   <styleClass>
+                                                      <String fx:value="taxi-action-button" />
+                                                      <String fx:value="action-button" />
+                                                      <String fx:value="card-quick" />
+                                                   </styleClass></Button>
+                                                <Button text="Update">
+                                                   <styleClass>
+                                                      <String fx:value="action-button" />
+                                                      <String fx:value="taxi-action-button" />
+                                                      <String fx:value="card-quick" />
+                                                   </styleClass></Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="card-quick" />
+                                          <String fx:value="taxi_quick" />
+                                       </styleClass>
+                                    </VBox>
                                  </children>
                               </HBox>
-                                    </VBox>
-                                </HBox>
-                            </VBox>
-                        </ScrollPane>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
                     </VBox>
 
                     <!-- Pending Requests Section -->
                     <VBox fx:id="RideRequestsBox" prefHeight="329.0" prefWidth="612.0" spacing="10" styleClass="vbox-section" stylesheets="@style.css">
-                        <Label fx:id="RideRequestsLabel" styleClass="section-title" text="Requests">
-                            <font>
-                                <Font name="Inter 18pt Light" size="12.0" />
-                            </font></Label>
+                  <Label text="Rides">
+                     <font>
+                        <Font name="Inter 28pt ExtraBold" size="27.0" />
+                     </font>
+                  </Label>
                         <ScrollPane id="scroll" prefHeight="243.0" prefWidth="578.0" styleClass="scroll-pane" stylesheets="@style.css">
                             <VBox fx:id="RideRequestsCardBox" alignment="TOP_CENTER" spacing="10">
                                 <!-- Cards will be added dynamically here -->
                                 <HBox id="hbox_cards">
-                                    <VBox id="card" spacing="10" stylesheets="@style.css">
+                                    <VBox spacing="10" stylesheets="@style.css">
                                         <Label text="Request #1" />
                                         <Label text="Client: John Doe" />
                                         <Label text="From: Location A To: Location B" />
                               <HBox prefHeight="36.0" prefWidth="138.0">
                                  <children>
-                                    <Button styleClass="reject" text="Delete" />
-                                    <Button styleClass="accept" text="Update" />
+                                    <Button text="Delete">
+                                       <styleClass>
+                                          <String fx:value="action-button" />
+                                          <String fx:value="card-quick" />
+                                          <String fx:value="E-Bicycle_quick" />
+                                       </styleClass></Button>
+                                    <Button text="Update">
+                                       <styleClass>
+                                          <String fx:value="action-button" />
+                                          <String fx:value="card-quick" />
+                                          <String fx:value="E-Bicycle_quick" />
+                                       </styleClass></Button>
                                  </children>
                               </HBox>
+                              <styleClass>
+                                 <String fx:value="card-quick" />
+                                 <String fx:value="E-Bicycle_quick" />
+                              </styleClass>
                                     </VBox>
                                 </HBox>
                             </VBox>
