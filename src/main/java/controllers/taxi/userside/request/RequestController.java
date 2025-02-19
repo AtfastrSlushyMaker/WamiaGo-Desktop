@@ -4,9 +4,7 @@ import entities.Location;
 import entities.Request;
 import entities.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -28,6 +26,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class RequestController {
 
@@ -223,18 +222,32 @@ public class RequestController {
         deleteButton.getStyleClass().add("request-button-delete");
 
         deleteButton.setOnAction(event -> {
-            try {
-                requestService.delete(request.getIdRequest());
-                requestFlowPane.getChildren().remove(requestCard);
-                System.out.println("Request ID " + request.getIdRequest() + " deleted.");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("Failed to delete request ID " + request.getIdRequest());
+            // Create the confirmation dialog
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Confirmation");
+            alert.setHeaderText("Are you sure you want to delete this request?");
+            alert.setContentText("This action cannot be undone.");
+
+            // Wait for user response
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    requestService.delete(request.getIdRequest());
+                    requestFlowPane.getChildren().remove(requestCard);
+                    System.out.println("Request ID " + request.getIdRequest() + " deleted.");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("Failed to delete request ID " + request.getIdRequest());
+                }
+            } else {
+                System.out.println("Deletion canceled.");
             }
         });
 
         return deleteButton;
     }
+
 
     private Button createUpdateButton(Request request, VBox requestCard) {
         Button updateButton = new Button("Update");

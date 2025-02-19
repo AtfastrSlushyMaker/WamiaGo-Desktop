@@ -7,7 +7,7 @@
 
 /* Style for each ride card */
 .ride-card {
-    -fx-background-color: #FFC107; /* Yellow */
+    -fx-background-color: #E57373; /* Yellow */
     -fx-background-radius: 12px; /* Rounded corners */
     -fx-padding: 30px; /* Increase padding for more space inside the card */
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 5); /* Floating shadow */
@@ -24,7 +24,7 @@
     -fx-alignment: center; /* Center the text */
 }
 .ride-card:hover {
-    -fx-background-color: #FFA000
+    -fx-background-color: #D32F2F
 }
 
 /* Style for the ride name */

@@ -89,6 +89,20 @@
 
     /* Lighter green on hover */
 }
+.request-button-update{
+    -fx-background-color: #85A9FF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+
+}
+.request-button-update:hover{
+    -fx-background-color: #5A6BE5;
+
+}
 
 .request-button:hover {
     -fx-background-color: #FFC107;
@@ -221,4 +235,39 @@
 
 
 
+/* Style for the whole alert dialog */
+.alert {
+    -fx-background-color: #f8d7da; /* Light red background */
+    -fx-border-color: #721c24; /* Dark red border */
+    -fx-border-width: 2px;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+
+/* Style for the header (title) of the alert */
+.alert-header {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #721c24; /* Dark red text color */
+}
+
+/* Style for the content text area */
+.alert-content {
+    -fx-font-size: 14px;
+    -fx-text-fill: #721c24; /* Dark red text color */
+}
+
+/* Style for the buttons */
+.button {
+    -fx-background-color: #28a745; /* Green background for buttons */
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #218838; /* Darker green on hover */
+}
+
+.button.default {
+    -fx-background-color: #007bff; /* Blue for the default button (OK) */
+}
 
