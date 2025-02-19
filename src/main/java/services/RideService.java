@@ -1,8 +1,6 @@
 package services;
 
-import entities.Location;
-import entities.Ride;
-import entities.Request;
+import entities.*;
 import entities.Driver;
 import utils.DataBase;
 
@@ -145,34 +143,68 @@ public class RideService implements IService<Ride> {
     }
 
     // Autres méthodes
-    public List<Ride> getByClient(entities.User client) throws SQLException {
+    public List<Ride> getByClient(User client) throws SQLException {
         List<Ride> rides = new ArrayList<>();
-        // On joint la table ride et request pour filtrer par id_client dans request
-        String sql = "SELECT r.* FROM ride r JOIN request req ON r.id_request = req.id_request WHERE req.id_client = ?";
+
+        // SQL query to fetch rides based on the user's request (client's ID)
+        String sql = "SELECT r.* FROM ride r " +
+                "JOIN request req ON r.id_request = req.id_request " +
+                "WHERE req.id_client = ?";  // Ensure this selects rides based on the user's ID
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, client.getId());
+            ps.setInt(1, client.getId());  // Set the client's user ID
+
             try (ResultSet rs = ps.executeQuery()) {
+                // Services to fetch associated Request and Driver
                 RequestService requestService = new RequestService();
                 DriverService driverService = new DriverService();
+
                 while (rs.next()) {
+                    // Debugging log to ensure the correct data is fetched
+                    System.out.println("Fetching Ride with ID: " + rs.getInt("id_ride"));
+                    System.out.println("Request ID: " + rs.getInt("id_request"));
+                    System.out.println("Driver ID: " + rs.getInt("id_taxi"));
+                    System.out.println("Ride Date: " + rs.getTimestamp("ride_date"));
+
+                    // Fetch the associated Request and Driver
                     Request request = requestService.getById(rs.getInt("id_request"));
                     Driver driver = driverService.getById(rs.getInt("id_taxi"));
+
+                    // Create a Ride object and add it to the list
                     Ride ride = new Ride(
                             rs.getInt("id_ride"),
-                            request,
-                            driver,  // Ajouter le driver ici
+                            request,  // The ride is linked to a request
+                            driver,   // The ride is linked to a driver
                             rs.getDouble("distance"),
                             rs.getInt("duration"),
                             rs.getDouble("price"),
                             Ride.Status.valueOf(rs.getString("status")),
                             rs.getTimestamp("ride_date")
                     );
-                    rides.add(ride);
+                    rides.add(ride);  // Add the ride to the list
                 }
             }
+        } catch (SQLException e) {
+            // Print error details and rethrow exception
+            System.err.println("SQL Exception occurred while fetching rides for client: " + client.getId());
+            e.printStackTrace();
+            throw e;
         }
-        return rides;
+
+        // Check if rides were found and print out the total count
+        if (rides.isEmpty()) {
+            System.out.println("No rides found for client with ID: " + client.getId());
+        } else {
+            System.out.println("Total rides found: " + rides.size());
+        }
+
+        return rides;  // Return the list of rides
     }
+
+
+
+
+
 
     public List<Ride> getByStatus(Ride.Status status) throws SQLException {
         List<Ride> rides = new ArrayList<>();
@@ -201,6 +233,7 @@ public class RideService implements IService<Ride> {
         }
         return rides;
     }
+
 
     public List<Ride> sortRidesByDate(boolean ascending) throws SQLException {
         // Build the SQL query to fetch rides, joined with the request and driver tables

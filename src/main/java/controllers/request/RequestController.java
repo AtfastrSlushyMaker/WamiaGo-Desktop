@@ -1,6 +1,5 @@
 package controllers.request;
 
-import com.mysql.cj.xdevapi.Client;
 import entities.Location;
 import entities.Request;
 import entities.User;
@@ -9,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -25,9 +23,9 @@ import javafx.stage.Stage;
 import services.RequestService;
 import services.LocationService;
 import services.UserService;
+import utils.SessionManager;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -52,35 +50,26 @@ public class RequestController {
     private AnchorPane side_ankerpane;
     @FXML
     private FlowPane requestFlowPane;
-
     @FXML
     private Button request_taxi_button;
-
+    @FXML
+    private  Button See_you_Rides_button;
 
     private final RequestService requestService = new RequestService();
 
     @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
-
         loadRequestsIntoFlowPane();
         setupNavigation();
         request_taxi_button.setOnAction(event -> openRequestForm());
-
-
-
-
-
-
+        See_you_Rides_button.setOnAction(event -> loadScene("/taxi-managment/ride.fxml"));
     }
 
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
-
-        // bookings_button.setOnAction(event -> loadScene("/bookings/bookings.fxml"));
-        // history_button.setOnAction(event -> loadScene("/history/history.fxml"));
-        // logout_button.setOnAction(event -> logout());
+        // Other navigation buttons commented out.
     }
 
     private void loadScene(String fxmlPath) {
@@ -96,7 +85,12 @@ public class RequestController {
 
     private void loadRequestsIntoFlowPane() {
         try {
-            List<Request> requests =  requestService.getRequestsByUserId(3);
+            // Get the logged-in user from session
+            SessionManager sessionManager = SessionManager.getInstance();
+            User user = sessionManager.getUser();
+            int loggedInUserId = user.getId();
+
+            List<Request> requests = requestService.getRequestsByUserId(loggedInUserId);
             for (Request request : requests) {
                 System.out.println("Request ID: " + request.getIdRequest());
                 System.out.println("Arrival Location: " + request.getArrivalLocation().getAddress());
@@ -105,7 +99,6 @@ public class RequestController {
                 VBox requestCard = createRequestCard(request);
                 requestFlowPane.getChildren().add(requestCard);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -129,11 +122,12 @@ public class RequestController {
         // Create buttons
         Button selectButton = createSelectButton(request);
         Button deleteButton = createDeleteButton(request, requestCard);
+        Button updateButton = createUpdateButton(request, requestCard);
 
         // Place buttons in an HBox to align them horizontally
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, deleteButton);
+        buttonContainer.getChildren().addAll(selectButton, deleteButton, updateButton);
 
         requestCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
 
@@ -142,7 +136,6 @@ public class RequestController {
             requestCard.setScaleX(1);
             requestCard.setScaleY(1);
         });
-
         requestCard.setOnMouseEntered(event -> {
             requestCard.setScaleX(1.05);
             requestCard.setScaleY(1.05);
@@ -150,8 +143,6 @@ public class RequestController {
 
         return requestCard;
     }
-
-
 
     private HBox createImageAndTextBox(Request request) {
         HBox hbox = new HBox(10);
@@ -172,38 +163,31 @@ public class RequestController {
 
         return hbox;
     }
+
     private void openRequestDetails(Request request) {
         System.out.println("Opening details for Request ID: " + request.getIdRequest());
 
-        // Create a new Stage (popup/modal)
         Stage modalStage = new Stage();
         modalStage.setTitle("Request Details - " + request.getIdRequest());
 
-        // Create the stack pane for the dark overlay with transparency
         StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: rgba(255, 255, 193, 0.027);"); // Semi-transparent yellow overlay
+        stackPane.setStyle("-fx-background-color: rgba(255, 255, 193, 0.027);");
 
-
-        // Modal layout container
         VBox modalLayout = new VBox(10);
-        modalLayout.getStyleClass().add("modal"); // Add custom modal style from CSS
-        modalLayout.setPadding(new Insets(20)); // Padding around the modal
+        modalLayout.getStyleClass().add("modal");
+        modalLayout.setPadding(new Insets(20));
 
-        // Title label for the modal
         Label titleLabel = new Label("Request Details");
-        titleLabel.getStyleClass().add("modal-label"); // Apply modal label style from CSS
+        titleLabel.getStyleClass().add("modal-label");
 
-        // Create a VBox to hold the request details
         VBox requestDetailsBox = new VBox(8);
-        requestDetailsBox.getStyleClass().add("request-details-box"); // Apply custom details box style
+        requestDetailsBox.getStyleClass().add("request-details-box");
 
-        // Request details labels
         Label arrivalLabel = new Label("Arrival Location: " + request.getArrivalLocation().getAddress());
         Label departureLabel = new Label("Departure Location: " + request.getDepartureLocation().getAddress());
         Label statusLabel = new Label("Status: " + request.getStatus());
         Label dateLabel = new Label("Date: " + request.getRequestDate().toString());
 
-        // Add labels to the requestDetailsBox with custom styling
         arrivalLabel.getStyleClass().add("modal-detail-label");
         departureLabel.getStyleClass().add("modal-detail-label");
         statusLabel.getStyleClass().add("modal-detail-label");
@@ -211,46 +195,38 @@ public class RequestController {
 
         requestDetailsBox.getChildren().addAll(arrivalLabel, departureLabel, statusLabel, dateLabel);
 
-        // Close button with style
         Button closeButton = new Button("Close");
-        closeButton.getStyleClass().add("modal-close-button"); // Apply close button style
+        closeButton.getStyleClass().add("modal-close-button");
         closeButton.setOnAction(e -> modalStage.close());
 
-        // Close button container (HBox for centering)
         HBox closeButtonContainer = new HBox();
         closeButtonContainer.setAlignment(Pos.CENTER);
         closeButtonContainer.getChildren().add(closeButton);
 
-        // Add all components to the modal layout
         modalLayout.getChildren().addAll(titleLabel, requestDetailsBox, closeButtonContainer);
-
-        // Add the modal layout to the stack pane
         stackPane.getChildren().add(modalLayout);
 
-        // Set up the Scene and Stage
-        Scene modalScene = new Scene(stackPane, 350, 250); // Adjust the size as needed
-        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm()); // Ensure correct path to your CSS file
+        Scene modalScene = new Scene(stackPane, 350, 250);
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
         modalStage.setScene(modalScene);
         modalStage.show();
     }
 
-
-
     private Button createSelectButton(Request request) {
         Button selectButton = new Button("Details");
-        selectButton.getStyleClass().add("request-button"); // Optional: use a specific CSS class for request buttons
-        selectButton.setOnAction(e -> openRequestDetails(request)); // Open request details when clicked
+        selectButton.getStyleClass().add("request-button");
+        selectButton.setOnAction(e -> openRequestDetails(request));
         return selectButton;
     }
 
     private Button createDeleteButton(Request request, VBox requestCard) {
         Button deleteButton = new Button("Delete");
-        deleteButton.getStyleClass().add("request-button-delete"); // Optional: Apply a CSS class for styling
+        deleteButton.getStyleClass().add("request-button-delete");
 
         deleteButton.setOnAction(event -> {
             try {
-                requestService.delete(request.getIdRequest()); // Delete from the database
-                requestFlowPane.getChildren().remove(requestCard); // Remove from the UI
+                requestService.delete(request.getIdRequest());
+                requestFlowPane.getChildren().remove(requestCard);
                 System.out.println("Request ID " + request.getIdRequest() + " deleted.");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -261,26 +237,40 @@ public class RequestController {
         return deleteButton;
     }
 
+    private Button createUpdateButton(Request request, VBox requestCard) {
+        Button updateButton = new Button("Update");
+        updateButton.getStyleClass().add("request-button-update");
 
-    private void openRequestForm() {
+        updateButton.setOnAction(event -> {
+            openUpdateRequestModal(request, requestCard);
+        });
+
+        return updateButton;
+    }
+
+    private void openUpdateRequestModal(Request request, VBox requestCard) {
         // Create a new Stage (popup/modal)
         Stage modalStage = new Stage();
-        modalStage.setTitle("Request Taxi");
+        modalStage.setTitle("Update Request Locations - " + request.getIdRequest());
+
+        // Create the stack pane for the dark overlay with transparency
+        StackPane stackPane = new StackPane();
+        stackPane.setStyle("-fx-background-color: rgba(255, 255, 193, 0.027);");
 
         // Modal layout container
         VBox modalLayout = new VBox(10);
-        modalLayout.getStyleClass().add("modal"); // Add custom modal style from CSS
-        modalLayout.setPadding(new Insets(20)); // Padding around the modal
+        modalLayout.getStyleClass().add("modal");
+        modalLayout.setPadding(new Insets(20));
 
-        // Title label
-        Label titleLabel = new Label("Request Taxi");
+        // Title label for the modal
+        Label titleLabel = new Label("Update Request Locations");
         titleLabel.getStyleClass().add("modal-label");
 
-        // Create ComboBoxes for departure and arrival locations
+        // Create ComboBoxes for updating departure and arrival locations
         ComboBox<Location> departureComboBox = new ComboBox<>();
         ComboBox<Location> arrivalComboBox = new ComboBox<>();
 
-        // Get locations from database
+        // Populate the ComboBoxes with all available locations
         LocationService locationService = new LocationService();
         try {
             List<Location> locations = locationService.read();
@@ -290,40 +280,112 @@ public class RequestController {
             e.printStackTrace();
         }
 
-        // VBox to hold the ComboBoxes
+        // Set the current locations as default selections
+        departureComboBox.setValue(request.getDepartureLocation());
+        arrivalComboBox.setValue(request.getArrivalLocation());
+
+        // Create an "Update" button
+        Button updateRequestButton = new Button("Update Locations");
+        updateRequestButton.setOnAction(event -> {
+            // Retrieve the new locations
+            Location newDeparture = departureComboBox.getValue();
+            Location newArrival = arrivalComboBox.getValue();
+
+            if(newDeparture != null && newArrival != null) {
+                // Update the request with new locations
+                request.setDepartureLocation(newDeparture);
+                request.setArrivalLocation(newArrival);
+
+                try {
+                    // Call service method to update the request locations in the database
+                    // (Ensure your update method handles updating only the location columns)
+                    requestService.update(request);
+                    System.out.println("✅ Request locations updated successfully!");
+
+                    // Close the modal after update
+                    modalStage.close();
+
+                    // Refresh the request in the FlowPane to reflect the changes
+                    refreshRequestsFlowPane();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("⚠️ Please select both departure and arrival locations.");
+            }
+        });
+
+        // Add all components to the modal layout
+        modalLayout.getChildren().addAll(titleLabel,
+                new Label("Departure Location:"), departureComboBox,
+                new Label("Arrival Location:"), arrivalComboBox,
+                updateRequestButton);
+
+        // Add the modal layout to the stack pane
+        stackPane.getChildren().add(modalLayout);
+
+        // Set up the Scene and Stage
+        Scene modalScene = new Scene(stackPane, 350, 300);
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
+        modalStage.setScene(modalScene);
+        modalStage.show();
+    }
+
+
+    private void openRequestForm() {
+        Stage modalStage = new Stage();
+        modalStage.setTitle("Request Taxi");
+
+        VBox modalLayout = new VBox(10);
+        modalLayout.getStyleClass().add("modal");
+        modalLayout.setPadding(new Insets(20));
+
+        Label titleLabel = new Label("Request Taxi");
+        titleLabel.getStyleClass().add("modal-label");
+
+        ComboBox<Location> departureComboBox = new ComboBox<>();
+        ComboBox<Location> arrivalComboBox = new ComboBox<>();
+
+        LocationService locationService = new LocationService();
+        try {
+            List<Location> locations = locationService.read();
+            departureComboBox.getItems().setAll(locations);
+            arrivalComboBox.getItems().setAll(locations);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         VBox comboBoxBox = new VBox(10);
         comboBoxBox.getChildren().addAll(
                 new Label("Departure Location:"), departureComboBox,
                 new Label("Arrival Location:"), arrivalComboBox
         );
 
-        // 'Request Taxi' button
         Button requestTaxiButton = new Button("Request Taxi");
         requestTaxiButton.setOnAction(event -> {
             Location departureLocation = departureComboBox.getValue();
             Location arrivalLocation = arrivalComboBox.getValue();
 
             if (departureLocation != null && arrivalLocation != null) {
-                // Set the status to PENDING by default
                 Request newRequest = new Request();
                 newRequest.setDepartureLocation(departureLocation);
                 newRequest.setArrivalLocation(arrivalLocation);
                 newRequest.setStatus(Request.RequestStatus.PENDING);
                 newRequest.setRequestDate(LocalDateTime.now());
 
-                // Temporary user ID (replace this with the actual logged-in user's ID)
-                int loggedInUserId = 3;
+                SessionManager sessionManager = SessionManager.getInstance();
+                User user = sessionManager.getUser();
+                int loggedInUserId = user.getId();
 
-                // Fetch the client object using the user ID
                 UserService clientService = new UserService();
                 try {
                     User client = clientService.getById(loggedInUserId);
                     newRequest.setClient(client);
 
-                    // Call the service method to create the request
                     requestService.create(newRequest);
                     System.out.println("✅ Request created successfully!");
-                    refreshRequestsFlowPane(3);
+                    // Refresh requests using session-based method
+                    refreshRequestsFlowPane();
 
                     modalStage.close();
                 } catch (SQLException ex) {
@@ -334,36 +396,30 @@ public class RequestController {
             }
         });
 
-        // Add components to modal layout
         modalLayout.getChildren().addAll(titleLabel, comboBoxBox, requestTaxiButton);
-
-        // Set up Scene and Stage
         Scene modalScene = new Scene(modalLayout, 350, 250);
         modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
         modalStage.setScene(modalScene);
         modalStage.show();
     }
 
-    private void refreshRequestsFlowPane(int userId) {
+    private void refreshRequestsFlowPane() {
         try {
-            requestFlowPane.getChildren().clear(); // Clear existing requests
+            // Retrieve logged-in user from session
+            SessionManager sessionManager = SessionManager.getInstance();
+            User user = sessionManager.getUser();
+            int loggedInUserId = user.getId();
 
-            List<Request> updatedRequests = requestService.getRequestsByUserId(userId);
+            requestFlowPane.getChildren().clear();
+
+            List<Request> updatedRequests = requestService.getRequestsByUserId(loggedInUserId);
             for (Request request : updatedRequests) {
                 VBox requestCard = createRequestCard(request);
                 requestFlowPane.getChildren().add(requestCard);
             }
-
             System.out.println("🔄 Requests refreshed successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
 }

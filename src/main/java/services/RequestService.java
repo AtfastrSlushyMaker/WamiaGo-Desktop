@@ -4,7 +4,6 @@ import entities.Request;
 import entities.User;
 import entities.Location;
 import utils.DataBase;
-import services.UserService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class RequestService implements IService<Request> {
     }
 
     @Override
-    public void create(Request request) throws SQLException {
+    public boolean create(Request request) throws SQLException {
         // Check if Client and Locations are not null
         if (request.getClient() == null) {
             throw new IllegalArgumentException("Client cannot be null");
@@ -41,6 +40,7 @@ public class RequestService implements IService<Request> {
             e.printStackTrace();
             throw new SQLException("Error creating request", e);
         }
+        return false;
     }
 
 
