@@ -1,5 +1,5 @@
-
-/*package test;
+/*
+package test;
 import entities.*;
 import services.*;
 import java.sql.SQLException;
@@ -368,12 +368,7 @@ public class Main {
         Driver.DriverRole driverRole = selectEnum(Driver.DriverRole.class, "\n### Select Driver Role ###", scanner);
         int driverStatus = promptForIntegerInRange("Enter driver status (0 for INACTIVE, 1 for ACTIVE): ", 0, 1, scanner);
 
-        Driver newDriver = new Driver(
-                driverId, selectedUser.getId(), selectedUser.getName(), selectedUser.getEmail(), selectedUser.getPhone(),
-                selectedUser.getPassword(), driverRole, selectedUser.getLocation(), permitNumber, driverStatus,
-                selectedUser.getGender(), selectedUser.getProfilePicture(), selectedUser.isVerified(),
-                selectedUser.getAccountStatus(), selectedUser.getDateOfBirth(), selectedUser.getStatus()
-        );
+        Driver newDriver = new Driver(selectedUser, driverId, permitNumber, driverRole, driverStatus);
 
         driverService.create(newDriver);
         System.out.println("User " + selectedUser.getName() + " is now a Driver!");
@@ -408,16 +403,16 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    driver.setName(promptForNonEmptyString("Enter new name: ", "Name cannot be empty.", scanner));
+                    driver.getUser().setName(promptForNonEmptyString("Enter new name: ", "Name cannot be empty.", scanner));
                     break;
                 case 2:
-                    driver.setEmail(promptForValidInput("Enter new email: ", Main::isValidEmail, "Invalid email format.", scanner));
+                    driver.getUser().setEmail(promptForValidInput("Enter new email: ", Main::isValidEmail, "Invalid email format.", scanner));
                     break;
                 case 3:
-                    driver.setPhone(promptForValidInput("Enter new phone: ", Main::isValidPhone, "Invalid phone number.", scanner));
+                    driver.getUser().setPhone(promptForValidInput("Enter new phone: ", Main::isValidPhone, "Invalid phone number.", scanner));
                     break;
                 case 4:
-                    driver.setPassword(promptForValidInput("Enter new password: ", p -> p.length() >= 8, "Password must be at least 8 characters long.", scanner));
+                    driver.getUser().setPassword(promptForValidInput("Enter new password: ", p -> p.length() >= 8, "Password must be at least 8 characters long.", scanner));
                     break;
                 case 5:
                     driver.setDriverRole(selectEnum(Driver.DriverRole.class, "\n### Select New Driver Role ###", scanner));
@@ -430,30 +425,30 @@ public class Main {
                     driver.setDriverStatus(driverStatus);
                     break;
                 case 8:
-                    driver.setGender(selectEnum(User.Gender.class, "\n### Select New Gender ###", scanner));
+                    driver.getUser().setGender(selectEnum(User.Gender.class, "\n### Select New Gender ###", scanner));
                     break;
                 case 9:
-                    driver.setProfilePicture(promptForNonEmptyString("Enter new profile picture filename: ", "Filename cannot be empty.", scanner));
+                    driver.getUser().setProfilePicture(promptForNonEmptyString("Enter new profile picture filename: ", "Filename cannot be empty.", scanner));
                     break;
                 case 10:
                     boolean verificationStatus = promptForIntegerInRange("Is driver verified? (0 for NO, 1 for YES): ", 0, 1, scanner) == 1;
-                    driver.setVerified(verificationStatus);
+                    driver.getUser().setVerified(verificationStatus);
                     break;
                 case 11:
-                    driver.setAccountStatus(selectEnum(User.AccountStatus.class, "\n### Select New Account Status ###", scanner));
+                    driver.getUser().setAccountStatus(selectEnum(User.AccountStatus.class, "\n### Select New Account Status ###", scanner));
                     break;
                 case 12:
-                    driver.setDateOfBirth(promptForDate("Enter new date of birth (yyyy-mm-dd): ", "Invalid date format. Use yyyy-mm-dd.", scanner));
+                    driver.getUser().setDateOfBirth(promptForDate("Enter new date of birth (yyyy-mm-dd): ", "Invalid date format. Use yyyy-mm-dd.", scanner));
                     break;
                 case 13:
-                    driver.setStatus(selectEnum(User.Status.class, "\n### Select New Status ###", scanner));
+                    driver.getUser().setStatus(selectEnum(User.Status.class, "\n### Select New Status ###", scanner));
                     break;
                 case 14:
                     int locationId = promptForPositiveInteger("Enter new location ID: ", "Invalid location ID. Must be positive.", scanner);
                     String address = promptForNonEmptyString("Enter new address: ", "Address cannot be empty.", scanner);
                     float latitude = promptForFloat("Enter new latitude: ", scanner);
                     float longitude = promptForFloat("Enter new longitude: ", scanner);
-                    driver.setLocation(new Location(locationId, address, latitude, longitude));
+                    driver.getUser().setLocation(new Location(locationId, address, latitude, longitude));
                     break;
                 case 15:
                     driverService.update(driver);
@@ -735,7 +730,7 @@ public class Main {
 
         System.out.println("\n### Select Driver ###");
         for (int i = 0; i < drivers.size(); i++) {
-            System.out.println((i + 1) + ". " + drivers.get(i).getName() + " (ID: " + drivers.get(i).getIdDriver() + ")");
+            System.out.println((i + 1) + ". " + drivers.get(i).getUser().getName() + " (ID: " + drivers.get(i).getIdDriver() + ")");
         }
 
         int choice = promptForIntegerInRange("Choose an option: ", 1, drivers.size(), scanner);
@@ -759,5 +754,7 @@ public class Main {
 }
 
  */
+
+
 
 
