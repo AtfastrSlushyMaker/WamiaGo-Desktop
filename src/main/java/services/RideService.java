@@ -1,5 +1,6 @@
 package services;
 
+import entities.Location;
 import entities.Ride;
 import entities.Request;
 import entities.Driver;
@@ -24,7 +25,7 @@ public class RideService implements IService<Ride> {
     }
 
     @Override
-    public boolean create(Ride ride) throws SQLException {
+    public void create(Ride ride) throws SQLException {
         // Step 1: Retrieve departure and arrival location IDs from the request table
         String getLocationQuery = "SELECT id_departure_location, id_arrival_location FROM request WHERE id_request = ?";
         try (PreparedStatement getLocationStmt = connection.prepareStatement(getLocationQuery)) {
@@ -35,7 +36,7 @@ public class RideService implements IService<Ride> {
                     int arrivalLocationId = locationResult.getInt("id_arrival_location");
 
                     // Step 2: Calculate distance using LocationService
-                    double distance = 0;//LocationService.calculateDistance(departureLocationId, arrivalLocationId);
+                    double distance = new Location().calculateDistance(new LocationService().getById(departureLocationId),new LocationService().getById( arrivalLocationId));
 
                     // Step 3: Insert the ride into the database
                     String sql = "INSERT INTO ride (id_request, id_taxi, distance, duration, price, status, ride_date) VALUES (?,?,?,?,?,?,?)";
@@ -55,7 +56,6 @@ public class RideService implements IService<Ride> {
                 }
             }
         }
-        return false;
     }
 
 
