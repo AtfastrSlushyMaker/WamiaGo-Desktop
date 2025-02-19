@@ -60,6 +60,7 @@ public class LocationService implements IService<Location> {
         }
         return locations;
     }
+
     public Location getById(int id) throws SQLException {
         String sql = "SELECT * FROM location WHERE id_location=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);

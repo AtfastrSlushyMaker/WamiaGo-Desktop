@@ -60,6 +60,38 @@ public class UserService implements IService<User> {
         }
         return true;
     }
+    @Override
+    public List<User> read() throws SQLException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM `user` u JOIN `location` l ON u.id_location = l.id_location";
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id_user"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setPhone(rs.getString("phone_number"));
+                user.setRole(User.Role.valueOf(rs.getString("role")));
+                user.setLocation(new Location(
+                        rs.getInt("id_location"),
+                        rs.getString("address"),
+                        rs.getBigDecimal("latitude").floatValue(),
+                        rs.getBigDecimal("longitude").floatValue()
+                ));
+                user.setGender(User.Gender.valueOf(rs.getString("gender")));
+                user.setProfilePicture(rs.getString("profile_picture"));
+                user.setVerified(rs.getBoolean("is_verified"));
+                user.setAccountStatus(User.AccountStatus.valueOf(rs.getString("account_status")));
+                user.setDateOfBirth(rs.getDate("date_of_birth") != null ? rs.getDate("date_of_birth").toLocalDate() : null);
+                user.setStatus(User.Status.valueOf(rs.getString("status")));
+
+                users.add(user);
+            }
+        }
+        return users;
+    }
 
     @Override
     public void update(User user) throws SQLException {
@@ -99,53 +131,6 @@ public class UserService implements IService<User> {
                 throw new SQLException("Deleting user failed, no rows affected.");
             }
         }
-    }
-
-    public boolean verifyPassword(String email, String inputPassword) throws SQLException {
-        String sql = "SELECT password FROM `user` WHERE email = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, email);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    String storedHash = rs.getString("password");
-                    return Password.check(inputPassword, storedHash).withBcrypt();
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public List<User> read() throws SQLException {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM `user` u JOIN `location` l ON u.id_location = l.id_location";
-        try (PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id_user"));
-                user.setName(rs.getString("name"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-                user.setPhone(rs.getString("phone_number"));
-                user.setRole(User.Role.valueOf(rs.getString("role")));
-                user.setLocation(new Location(
-                        rs.getInt("id_location"),
-                        rs.getString("address"),
-                        rs.getBigDecimal("latitude").floatValue(),
-                        rs.getBigDecimal("longitude").floatValue()
-                ));
-                user.setGender(User.Gender.valueOf(rs.getString("gender")));
-                user.setProfilePicture(rs.getString("profile_picture"));
-                user.setVerified(rs.getBoolean("is_verified"));
-                user.setAccountStatus(User.AccountStatus.valueOf(rs.getString("account_status")));
-                user.setDateOfBirth(rs.getDate("date_of_birth") != null ? rs.getDate("date_of_birth").toLocalDate() : null);
-                user.setStatus(User.Status.valueOf(rs.getString("status")));
-
-                users.add(user);
-            }
-        }
-        return users;
     }
 
     public User getById(int id) throws SQLException {

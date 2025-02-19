@@ -1,17 +1,25 @@
 package controllers.user;
 
+import entities.Location;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import entities.User;
 import entities.User.Gender;
 import entities.User.Role;
+import services.LocationService;
 import services.UserService;
-import utils.sessionManager;
+import utils.SessionManager;
+
+import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.util.List;
 
 public class LoginController {
     @FXML private TextField signupEmailField;
@@ -20,6 +28,7 @@ public class LoginController {
     @FXML private TextField signupPhoneField;
     @FXML private DatePicker signupDatePicker;
     @FXML private RadioButton maleRadioButton;
+    @FXML private ComboBox<Location> signupLocationComboBox;
     @FXML private RadioButton femaleRadioButton;
     @FXML private PasswordField signupPasswordField;
     @FXML private PasswordField signupConfirmPasswordField;
@@ -37,7 +46,22 @@ public class LoginController {
     @FXML private ToggleGroup genderGroup;
 
     private final UserService userService = new UserService();
+    private final LocationService locationService = new LocationService();
     private boolean isSignUpVisible = false;
+
+    @FXML
+    public void initialize() {
+        loadLocations();
+    }
+
+    private void loadLocations() {
+        try {
+            List<Location> locations = locationService.read();
+            signupLocationComboBox.getItems().setAll(locations);
+        } catch (SQLException e) {
+            showAlert("Database Error", "Could not load locations.");
+        }
+    }
 
     @FXML
     private void handleSignUpButtonClick() throws SQLException {
@@ -49,6 +73,7 @@ public class LoginController {
             newUser.setDateOfBirth(signupDatePicker.getValue());
             newUser.setGender(maleRadioButton.isSelected() ? Gender.MALE : Gender.FEMALE);
             newUser.setPassword(signupPasswordField.getText());
+            newUser.setLocation(signupLocationComboBox.getValue());
             newUser.setRole(Role.CLIENT);
             newUser.setVerified(false);
             newUser.setAccountStatus(User.AccountStatus.ACTIVE);
@@ -73,10 +98,11 @@ public class LoginController {
 
             User authenticatedUser = userService.authenticateUser(email, password);
             if (authenticatedUser != null) {
-                sessionManager.getInstance().setUser(authenticatedUser);
+                SessionManager.getInstance().setUser(authenticatedUser);
+                authenticatedUser.setStatus(User.Status.ONLINE);
                 showAlert("Login Successful", "Welcome back, " + authenticatedUser.getName() + "!");
                 clearLoginForm();
-                //loadMainApp();
+                loadDashboard();
             } else {
                 showAlert("Login Failed", "Invalid credentials. Try again.");
             }
@@ -84,7 +110,21 @@ public class LoginController {
             showAlert("Validation Error", "Please enter a valid email and password.");
         }
     }
-//#####################ANIMATION##############################
+
+    private void loadDashboard() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.setTitle("Dashboards");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Error", "Failed to load the dashboard.");
+        }
+    }
+
     @FXML
     private void handleSwitchFormButtonClick() {
         if (isSignUpVisible) {
@@ -108,7 +148,7 @@ public class LoginController {
         transition.setToX(0);
         transition.play();
     }
-//###########################################################
+
     private boolean validateSignUpForm() {
         return !signupEmailField.getText().isEmpty() &&
                 !signupFirstNameField.getText().isEmpty() &&
@@ -117,7 +157,8 @@ public class LoginController {
                 signupDatePicker.getValue() != null &&
                 (maleRadioButton.isSelected() || femaleRadioButton.isSelected()) &&
                 !signupPasswordField.getText().isEmpty() &&
-                signupPasswordField.getText().equals(signupConfirmPasswordField.getText());
+                signupPasswordField.getText().equals(signupConfirmPasswordField.getText()) &&
+                signupLocationComboBox.getValue() != null;
     }
 
     private boolean validateLoginForm() {
@@ -133,6 +174,7 @@ public class LoginController {
         genderGroup.selectToggle(null);
         signupPasswordField.clear();
         signupConfirmPasswordField.clear();
+        signupLocationComboBox.getSelectionModel().clearSelection();
     }
 
     private void clearLoginForm() {

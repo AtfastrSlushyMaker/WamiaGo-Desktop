@@ -2,6 +2,7 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -38,7 +39,7 @@
         <TextField fx:id="signupLastNameField" promptText="Last Name" styleClass="form-field" />
         <TextField fx:id="signupPhoneField" promptText="Phone Number" styleClass="form-field" />
         <DatePicker fx:id="signupDatePicker" promptText="Date Of Birth" styleClass="form-field" />
-
+        <ComboBox fx:id="signupLocationComboBox" promptText="Select Location" styleClass="form-field" />
         <!-- Gender Selection -->
         <HBox alignment="CENTER_LEFT" spacing="10">
             <Label styleClass="form-label" text="Gender:" />
@@ -84,7 +85,7 @@
     </VBox>
 
     <!-- Sliding Panel -->
-    <Pane fx:id="slidingPanel" layoutX="0.0" prefHeight="632.0" prefWidth="478.0" styleClass="sliding-panel">
+    <Pane fx:id="slidingPanel" layoutX="0.0" prefHeight="694.0" prefWidth="478.0" styleClass="sliding-panel">
         <ImageView fitHeight="350.0" fitWidth="420.0" layoutX="37.0" layoutY="31.0">
             <image>
                 <Image url="@../Images/wamiaGO.png" />
