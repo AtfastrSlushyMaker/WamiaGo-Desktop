@@ -18,7 +18,7 @@ public class BookingService implements IService<Booking> {
     }
 
     @Override
-    public void create(Booking booking) throws SQLException {
+    public boolean create(Booking booking) throws SQLException {
         if (booking.getPassenger().getRole() != User.Role.CLIENT) {
             throw new IllegalArgumentException("Passenger must have the role CLIENT");
         }
@@ -31,6 +31,7 @@ public class BookingService implements IService<Booking> {
             stmt.setString(4, booking.getStatus().name());
             stmt.executeUpdate();
         }
+        return false;
     }
 
     @Override
