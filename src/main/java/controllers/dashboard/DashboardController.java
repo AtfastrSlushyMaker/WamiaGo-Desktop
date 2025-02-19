@@ -163,6 +163,18 @@ public class DashboardController {
             }
         });
 
+        carpool_join_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/trips/trip.fxml"));
+                Parent tripRoot = loader.load();
+                Scene tripScene = new Scene(tripRoot);
+                Stage stage = (Stage) carpool_join_button.getScene().getWindow();
+                stage.setScene(tripScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         logout_button.setOnAction(event -> {
             SessionManager.getInstance().logout();
             try {
@@ -176,6 +188,7 @@ public class DashboardController {
                 e.printStackTrace();
             }
         });
+
     }
 
     private void setupUserDropdownMenu() {
@@ -235,4 +248,3 @@ public class DashboardController {
        }
     }
 }
-
