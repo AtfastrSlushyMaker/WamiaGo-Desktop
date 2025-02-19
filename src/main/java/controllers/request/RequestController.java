@@ -4,8 +4,18 @@ import entities.Request;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
+import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import services.RequestService;
 
 import java.io.IOException;
@@ -15,61 +25,62 @@ import java.util.List;
 public class RequestController {
 
     @FXML
-    private VBox requestsContainer; // Conteneur des cartes (VBox dans le FXML)
-
+    private Button bookings_button;
+    @FXML
+    private Button history_button;
     @FXML
     private Button home_button;
+    @FXML
+    private Button logout_button;
+    @FXML
+    private Pane pane_1121;
+    @FXML
+    private Button rides_button;
+    @FXML
+    private HBox root;
+    @FXML
+    private AnchorPane side_ankerpane;
+    @FXML
+    private FlowPane requestFlowPane;
 
-    private final RequestService requestService = new RequestService(); // Service pour accéder aux données de la base
-
-    private static final int CARDS_PER_ROW = 2; // Nombre de cartes par ligne
+    private final RequestService requestService = new RequestService();
 
     @FXML
-    void initialize() {
+    public void initialize() {
+        root.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
+        loadRequestsIntoFlowPane();
+        setupNavigation();
+    }
+
+    private void setupNavigation() {
+        home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
+        rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
+       // bookings_button.setOnAction(event -> loadScene("/bookings/bookings.fxml"));
+       // history_button.setOnAction(event -> loadScene("/history/history.fxml"));
+      //  logout_button.setOnAction(event -> logout());
+    }
+
+    private void loadScene(String fxmlPath) {
         try {
-            // Récupérer toutes les demandes avec la fonction read()
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Stage stage = (Stage) home_button.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadRequestsIntoFlowPane() {
+        try {
             List<Request> requests = requestService.read();
-
-            // Créer un HBox pour chaque ligne de cartes
-            HBox row = new HBox(20); // Conteneur pour les cartes sur une ligne
-            int count = 0;
-
-            // Remplir les cartes avec les demandes récupérées
             for (Request request : requests) {
-                // Créer une nouvelle carte (un VBox)
-                VBox card = new VBox(10);
-
-                // Créer les labels pour afficher les informations de la demande
-                Label clientNameLabel = new Label(request.getClient().getName());
-                Label locationsLabel = new Label("From: " + request.getDepartureLocation().getAddress() +
-                        " To: " + request.getArrivalLocation().getAddress());
-                Label statusLabel = new Label("Status: " + request.getStatus().toString());
-                Label dateLabel = new Label("Date: " + request.getRequestDate().toLocalDate());
-
-                // Ajouter les labels à la carte (VBox)
-                card.getChildren().addAll(clientNameLabel, locationsLabel, statusLabel, dateLabel);
-
-                // Créer les boutons de suppression et de mise à jour
-                Button deleteButton = new Button("Delete");
-                Button updateButton = new Button("Update");
-
-                // Ajouter les boutons à la carte
-                card.getChildren().addAll(deleteButton, updateButton);
-
-                // Ajouter la carte à la ligne
-                row.getChildren().add(card);
-                count++;
-
-                // Ajouter une nouvelle ligne après chaque 2 cartes
-                if (count % CARDS_PER_ROW == 0) {
-                    requestsContainer.getChildren().add(row);
-                    row = new HBox(20);
-                }
-            }
-
-            // Ajouter la dernière ligne si elle contient encore des cartes
-            if (!row.getChildren().isEmpty()) {
-                requestsContainer.getChildren().add(row);
+                System.out.println("Request ID: " + request.getIdRequest());
+                System.out.println("Arrival Location: " + request.getArrivalLocation().getAddress());
+                System.out.println("Departure Location: " + request.getDepartureLocation().getAddress());
+                System.out.println("Status: " + request.getStatus());
+                VBox requestCard = createRequestCard(request);
+                requestFlowPane.getChildren().add(requestCard);
             }
 
         } catch (SQLException e) {
@@ -77,11 +88,132 @@ public class RequestController {
         }
     }
 
+    private VBox createRequestCard(Request request) {
+        VBox requestCard = new VBox(10);
+        requestCard.setPadding(new Insets(10));
+        requestCard.getStyleClass().add("Request-card");
+        requestCard.setAlignment(Pos.CENTER);
 
-    // Retour à l'écran d'accueil
-    @FXML
-    void goToHome() {
-        // Implémentation pour le bouton de retour
-        System.out.println("Naviguer vers l'écran d'accueil");
+        // Create image and text box for request name
+        HBox imageAndTextBox = createImageAndTextBox(request);
+        requestCard.getChildren().add(imageAndTextBox);
+
+        // Add additional information (e.g., ID, arrival, departure, status)
+        HBox infoBox = new HBox(10);
+        infoBox.setAlignment(Pos.CENTER_LEFT);
+
+        Label idLabel = new Label("ID: " + request.getIdRequest());
+        Label arrivalLabel = new Label("Arrival: " + request.getArrivalLocation().getAddress());
+        Label departureLabel = new Label("Departure: " + request.getDepartureLocation().getAddress());
+        Label statusLabel = new Label("Status: " + request.getStatus());
+
+        idLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        arrivalLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        departureLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+
+        infoBox.getChildren().addAll(idLabel, arrivalLabel, departureLabel, statusLabel);
+        requestCard.getChildren().add(infoBox);
+
+        // Add event for mouse hover effect
+        requestCard.setOnMouseExited(event -> {
+            requestCard.setScaleX(1);
+            requestCard.setScaleY(1);
+        });
+
+        requestCard.setOnMouseEntered(event -> {
+            requestCard.setScaleX(1.05);
+            requestCard.setScaleY(1.05);
+        });
+
+        return requestCard;
     }
+
+
+    private HBox createImageAndTextBox(Request request) {
+        HBox hbox = new HBox(10);
+        hbox.setAlignment(Pos.CENTER_LEFT);
+        hbox.setFillHeight(true);
+
+        ImageView requestImage = new ImageView(new Image(getClass().getResource("/images/icons/taxi.png").toExternalForm()));
+        requestImage.setFitWidth(50);
+        requestImage.setFitHeight(50);
+        requestImage.setPreserveRatio(true);
+
+        Text nameText = new Text(request.getClient().getName());
+        nameText.setWrappingWidth(180);
+        nameText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #FFFFFF;");
+
+        HBox.setHgrow(nameText, Priority.ALWAYS);
+        hbox.getChildren().addAll(requestImage, nameText);
+
+        return hbox;
+    }
+
+    private void openRequestDetails(Request request) {
+        System.out.println("Opening details for Request ID: " + request.getIdRequest());
+
+        // Create a new Stage (popup/modal)
+        Stage modalStage = new Stage();
+        modalStage.setTitle("Request Details - " + request.getIdRequest());
+
+        // Dark overlay with some transparency
+        StackPane stackPane = new StackPane();
+        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);"); // Semi-transparent black overlay
+
+        VBox modalLayout = new VBox(10);
+        modalLayout.setPadding(new Insets(20));
+        modalLayout.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, black, 20, 0.5, 0, 0);"); // Dark background and shadow for modal
+
+        // Title for the modal
+        Label titleLabel = new Label("Request Details");
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;-fx-text-alignment: center;-fx-font-family: Inter");
+
+        // Display request details in the modal
+        VBox requestDetailsBox = new VBox(8);
+
+        // Add fields of the request entity
+        Label idLabel = new Label("Request ID: " + request.getIdRequest());
+        Label arrivalLabel = new Label("Arrival Location: " + request.getArrivalLocation().getAddress());
+        Label departureLabel = new Label("Departure Location: " + request.getDepartureLocation().getAddress());
+        Label statusLabel = new Label("Status: " + request.getStatus());
+        Label dateLabel = new Label("Date: " + request.getRequestDate().toString());
+
+        // Apply styles to labels
+        idLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        arrivalLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        departureLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+
+        requestDetailsBox.getChildren().addAll(idLabel, arrivalLabel, departureLabel, statusLabel, dateLabel);
+
+        // Close button for the modal
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(e -> modalStage.close());
+        closeButton.getStyleClass().add("request-details-close-button");
+
+        // Create an HBox to center the button at the bottom
+        HBox closeButtonContainer = new HBox();
+        closeButtonContainer.setAlignment(Pos.CENTER);  // Center the button in the HBox
+        closeButtonContainer.getChildren().add(closeButton);
+
+        // Add components to the VBox
+        modalLayout.getChildren().addAll(titleLabel, requestDetailsBox, closeButtonContainer);
+
+        stackPane.getChildren().add(modalLayout);  // Add the modal layout to the stack pane
+
+        // Set up the Scene and Stage
+        Scene modalScene = new Scene(stackPane, 400, 300);
+        modalStage.setScene(modalScene);
+        modalStage.show();
+    }
+    private Button createSelectButton(Request request) {
+        Button selectButton = new Button("Select");
+        selectButton.getStyleClass().add("request-button"); // Optional: use a specific CSS class for request buttons
+        selectButton.setOnAction(e -> openRequestDetails(request)); // Open request details when clicked
+        return selectButton;
+    }
+
+
 }

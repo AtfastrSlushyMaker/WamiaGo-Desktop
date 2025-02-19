@@ -1,0 +1,133 @@
+
+#stationFlowPane {
+    -fx-padding: 0 0 0 0;  /* Adds space on top */
+    -fx-hgap: 20px;
+    -fx-vgap: 20px;
+    -fx-alignment: center;
+}
+/* Style for each station card */
+#available_stations_label
+{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: Black;
+    -fx-font-family: Inter;
+    -fx-padding: 10px;
+    -fx-alignment: center;}
+.station-card {
+    -fx-background-color: #6BBF59; /* Fresh green */
+    -fx-background-radius: 12px; /* Rounded corners */
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 5); /* Floating shadow for card */
+    -fx-pref-width: 250px; /* Fixed card width */
+    -fx-min-width: 250px;
+    -fx-max-width: 250px;
+    -fx-alignment: center;
+    -fx-transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+.station-card:hover {
+    -fx-background-color: #4E9D3A
+}
+
+/* Style for the station name */
+.station-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 200px;
+    -fx-text-alignment: center;
+    -fx-ellipsize: middle;
+    -fx-font-family: Inter;
+}
+
+/* Style for the bike count label */
+.station-bike-count {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-family: Inter;
+    -fx-font-weight: bold;
+}
+
+/* Style for the select button */
+.station-button {
+    -fx-background-color: #6BBF59; /* Fresh green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.station-button:hover {
+    -fx-background-color: #4E9D3A;
+
+    /* Lighter green on hover */
+}
+
+/* Add some margin to the ImageView */
+.station-image {
+    -fx-fit-width: 100px;
+    -fx-fit-height: 100px;
+    -fx-preserve-ratio: true;
+    -fx-margin-bottom: 10px;
+}
+
+.modal {
+    -fx-background-color: #F5F7FA;
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 20, 0, 0, 5);
+}
+
+.modal-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.modal-close-button {
+    -fx-background-color: #ff4444;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+}
+
+.modal-close-button:hover {
+    -fx-background-color: #e73737;
+}
+
+/* Bicycle Rectangle and Label */
+/* Bicycle Icon */
+.bicycle-icon {
+    -fx-width: 40px;  /* Icon width */
+    -fx-height: 40px; /* Icon height */
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+/* Bicycle Label */
+.bicycle-label {
+    -fx-font-size: 10px; /* Smaller font for the label */
+    -fx-text-fill: black;
+    -fx-alignment: center;
+}
+
+/* FlowPane Styling */
+.flow-pane {
+    -fx-hgap: 5px;
+    -fx-vgap: 5px;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+.station-bike-close-button :hover
+{
+    -fx-background-color: #ff4444;
+}
+
+
+
+
+

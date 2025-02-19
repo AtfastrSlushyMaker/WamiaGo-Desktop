@@ -1,16 +1,14 @@
 /* Base Styles */
 .root {
-    -fx-background-color: white;
+    -fx-background-color: #F5F7FA;
     -fx-font-family: "Arial", sans-serif;
 }
 
 /* Navbar */
-/* Modern Navbar */
 .navbar {
     -fx-background-color: #2D2F33; /* Dark Gray for a modern look */
     -fx-padding: 20px;
     -fx-pref-width: 250px;
-    -fx-min-height: 100vh;
     -fx-border-width: 1px;
     -fx-border-radius: 20px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 12, 0, 4, 4);
@@ -33,15 +31,13 @@
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.15), 8, 0, 2, 2);
 }
 
-/* Logo Hover - Soft Glow (Not Overpowering) */
+/* Logo Hover - Soft Glow */
 #logo:hover {
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 12, 0.3, 0, 0);
     -fx-scale-x: 1.03;
     -fx-scale-y: 1.03;
     -fx-transition: all 0.3s ease-in-out;
 }
-
-
 
 /* Modern Navbar Buttons */
 .navbar_buttons {
@@ -64,6 +60,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0, 4, 4);
     -fx-border-color: #FFC107;
 }
+
 #logout-button {
     -fx-background-color: #E57373; /* Red */
     -fx-border-color: #E57373;
@@ -79,7 +76,6 @@
     -fx-background-color: #5A5F66; /* Lightest shade on click */
 }
 
-
 /* Panels */
 .inner_pane, .most_inner_pane, .pane_1 {
     -fx-background-color: #748CF1;
@@ -92,9 +88,6 @@
 /* Carpooling Card Fix */
 .carpool-quick {
     -fx-background-color: #85A9FF; /* Soft Blue */
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-color: white;
     -fx-border-width: 2px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
 }
@@ -111,26 +104,17 @@
 
 /* Quick Action Cards */
 .card-quick {
-    -fx-background-radius: 16px;
-    -fx-border-radius: 16px;
-    -fx-border-width: 2px;
-    -fx-border-color: white;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
-    -fx-padding: 12px;
-    -fx-spacing: 8px;
-
 }
 
 .card-quick:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);
+    -fx-scale-x: 1.02; /* Subtle zoom */
+    -fx-scale-y: 1.02;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 4);
 }
 
 /* Quick Action Buttons */
 .taxi_quick, .Relocation_quick, .E-Bicycle_quick {
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-color: #ffffff;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
 }
 
@@ -145,7 +129,7 @@
 
 /* Action Buttons */
 .action-button {
-
+    -fx-font-size: 40px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-padding: 10px 20px;
@@ -169,8 +153,7 @@
 }
 
 .carpooling-action-button {
-    -fx-font-size: 16px;
-    -fx-background-color: #85A9FF ;
+    -fx-background-color: #85A9FF;
     -fx-border-color: white;
 }
 
@@ -214,183 +197,14 @@
 #user { -fx-border-color: #388E3C; } /* Green */
 #feedback { -fx-border-color: #E57373; } /* Red */
 
-/* Upper Navbar - Sleek, Modern & Premium */
+/* Upper Navbar */
 #upper_nav {
     -fx-background-color: #2D2F33; /* Keep your color */
     -fx-padding: 20px;
     -fx-alignment: center;
-
-
 }
+
 #navbar {
     -fx-background-color: #2D2F33; /* Keep same dark gray */
     -fx-background-radius: 0 40px 0 0; /* Smooth rounded top-right */
 }
-
-
-
-/* Styling for both Pending Requests and Ongoing Rides sections */
-.vbox-section {
-    -fx-background-color: transparent; /* Fond blanc */
-    -fx-border-radius: 10px; /* Coins plus arrondis */
-
-    -fx-border-color: #5A6BE5; /* Bordure noire */
-    -fx-border-width: 1px; /* Bordure de 2px */
-    -fx-padding: 2px;
-
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 3, 3); /* Ombre douce */
-}
-
-
-#vbox{
-    -fx-background-color: white;
-}
-
-/* Section Title Styling */
-.vbox-section > .section-title {
-    -fx-font-size: 22px;
-    -fx-font-weight: bold;
-
-}
-
-
-
-
-
-
-
-/* Buttons inside the cards for both sections */
-.vbox-section .accept, .vbox-section .finish {
-    -fx-background-color: transparent; /* Fond blanc */
-    -fx-border-color: #6BBF59; /* Bordure verte de la palette */
-    -fx-border-width: 2px; /* Bordure de 2px */
-    -fx-text-fill: #6BBF59; /* Texte de couleur verte pour correspondre à la bordure */
-    -fx-font-weight: bold;
-    -fx-padding: 8px 15px;
-    -fx-border-radius: 5px;
-    -fx-cursor: hand;
-}
-
-.vbox-section .accept:hover, .vbox-section .finish:hover {
-    -fx-background-color: #e7f3ee;
-
-    -fx-text-fill: #6BBF59; /* Texte restant vert */
-    -fx-border-color: #6BBF59; /* Bordure inchangée au survol */
-    -fx-effect: none; /* Pas d'effet d'ombre pour un survol plus léger */
-}
-
-
-.vbox-section .reject, .vbox-section .cancel {
-    -fx-background-color: transparent; /* Fond blanc */
-    -fx-border-color: #E57373; /* Bordure verte de la palette */
-    -fx-border-width: 2px; /* Bordure de 2px */
-    -fx-text-fill: #E57373; /* Texte de couleur verte pour correspondre à la bordure */
-    -fx-font-weight: bold;
-    -fx-padding: 8px 15px;
-    -fx-border-radius: 5px;
-    -fx-cursor: hand;
-    -fx-transition: all 0.3s ease-in-out;
-
-}
-
-.vbox-section .reject:hover, .vbox-section .cancel:hover {
-    -fx-background-color: rgba(246, 180, 188, 0.28);
-
-    -fx-text-fill: #E57373; /* Texte restant vert */
-    -fx-border-color: #E57373; /* Bordure inchangée au survol */
-    -fx-effect: none; /* Pas d'effet d'ombre pour un survol plus léger */
-}
-
-
-
-
-
-
-#scroll {
-    -fx-background: transparent; /* Fond transparent */
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-border-width: 2px; /* Épaisseur de la bordure */
-    -fx-border-radius: 8px; /* Coins arrondis */
-    -fx-padding: 5px; /* Espacement interne */
-}
-
-/* Style pour rendre le viewport du ScrollPane transparent */
-#scroll .viewport {
-    -fx-background-color: transparent;
-}
-
-/* Personnalisation de la barre de défilement verticale */
-#scroll .scroll-bar:vertical {
-    -fx-background-color: transparent;
-}
-
-#scroll .scroll-bar:vertical .thumb {
-    -fx-background-color: #FFC107; /* Jaune de la palette */
-    -fx-background-radius: 5px;
-}
-
-#scroll .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: #e0a800; /* Un jaune plus foncé au survol */
-}
-
-/* Personnalisation de la barre de défilement horizontale */
-#scroll .scroll-bar:horizontal {
-    -fx-background-color: transparent;
-}
-
-#scroll .scroll-bar:horizontal .thumb {
-    -fx-background-color: #FFC107; /* Jaune de la palette */
-    -fx-background-radius: 5px;
-}
-
-#scroll .scroll-bar:horizontal .thumb:hover {
-    -fx-background-color: #e0a800;
-}
-
-/* Cacher les boutons haut/bas et gauche/droite des scrollbars */
-#scroll .increment-button, #scroll .decrement-button {
-    -fx-opacity: 0;
-    -fx-padding: 0;
-}
-
-
-
-
-/* Style général des cartes */
-#card {
-    -fx-background-color: transparent; /* Fond blanc */
-
-    -fx-border-width: 2px;
-
-    -fx-padding: 12px;
-    -fx-spacing: 8px;
-
-
-
-    -fx-border-color: white;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
-    -fx-background-color: white; /* Soft Blue */
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-color: white;
-    -fx-border-width: 2px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
-
-}
-
-/* Effet au survol des cartes */
-#card:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);
-
-}
-
-/* Titres dans la carte (sans gras) */
-#card Label {
-    -fx-font-size: 11px; /* Police légèrement réduite */
-    -fx-font-weight: normal; /* Texte non gras */
-    -fx-text-fill: #333; /* Couleur foncée pour le texte */
-    /* -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0.3, 3, 3); (Supprimé pour enlever l'ombre) */
-}
-
-

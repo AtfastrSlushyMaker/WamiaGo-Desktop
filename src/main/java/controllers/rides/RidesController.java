@@ -83,7 +83,7 @@ public class RidesController {
 
         request_button.setOnAction(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/taxi-dashboard.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/request.fxml"));
                 Parent ridesRoot = loader.load();
                 Scene ridesScene = new Scene(ridesRoot);
                 Stage stage = (Stage) request_button.getScene().getWindow();
