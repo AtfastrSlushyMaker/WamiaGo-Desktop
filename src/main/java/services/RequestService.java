@@ -185,4 +185,39 @@ public class RequestService implements IService<Request> {
         }
         return requests;
     }
+
+    public List<Request> getRequestsByUserId(int userId) throws SQLException {
+        List<Request> requests = new ArrayList<>();
+        String sql = "SELECT * FROM request WHERE id_client = ?";  // Query to get requests for a specific user
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userId);  // Set the user ID parameter
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                UserService userService = new UserService();
+                LocationService locationService = new LocationService();
+
+                // Iterate over the result set and create Request objects
+                while (rs.next()) {
+                    User client = userService.getById(rs.getInt("id_client"));  // Get the user for this request
+                    Location departure = locationService.getById(rs.getInt("id_departure_location"));  // Get the departure location
+                    Location arrival = locationService.getById(rs.getInt("id_arrival_location"));  // Get the arrival location
+
+                    // Create the Request object from the result set data
+                    Request request = new Request(
+                            rs.getInt("id_request"),
+                            client,
+                            departure,
+                            arrival,
+                            Request.RequestStatus.valueOf(rs.getString("status")),
+                            rs.getTimestamp("request_date").toLocalDateTime()
+                    );
+                    requests.add(request);  // Add the request to the list
+                }
+            }
+        }
+        return requests;
+    }
+
 }

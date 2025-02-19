@@ -48,10 +48,12 @@
     -fx-font-family: Inter;
 }
 .request-details-box {
+    -fx-background-color: white;
     -fx-spacing: 10px;
-    -fx-alignment: center-left;
+    -fx-alignment: center;
     -fx-padding: 10px;
-    -fx-background-color: #444444;
+    -fx-background-color: #FFC107;
+    -fx-border-radius: 10px;
 }
 
 
@@ -73,6 +75,20 @@
     -fx-border-color: white;
     -fx-border-width: 2px;
 }
+.request-button-delete{
+    -fx-background-color: #E57373;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+.request-button-delete:hover {
+    -fx-background-color: #D32F2F;
+
+    /* Lighter green on hover */
+}
 
 .request-button:hover {
     -fx-background-color: #FFC107;
@@ -88,27 +104,50 @@
     -fx-margin-bottom: 10px;
 }
 
+/* Modal Styling */
+/* Modal Styling */
 .modal {
-    -fx-background-color: #F5F7FA;
+    -fx-background-color: white; /* Green background color */
     -fx-padding: 20px;
-    -fx-border-radius: 10px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 20, 0, 0, 5);
+    -fx-border-radius: 30px; /* Fully rounded corners */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 2, 4); /* Subtle shadow */
 }
 
+
+/* Title Label in Modal */
 .modal-label {
-    -fx-font-size: 18px;
+    -fx-font-size: 20px; /* Larger title font size for better visibility */
     -fx-font-weight: bold;
+    -fx-text-fill: #444444; /* Darker gray for better contrast */
+    -fx-text-alignment: center; /* Centered title */
+    -fx-font-family: "Helvetica Neue", sans-serif; /* Modern font */
 }
 
+/* Close Button Styling */
 .modal-close-button {
-    -fx-background-color: #ff4444;
+    -fx-background-color: #E57373; /* Green button */
     -fx-text-fill: white;
-    -fx-padding: 10px 20px;
-    -fx-border-radius: 5px;
+    -fx-padding: 12px 25px; /* Slightly bigger padding for a cleaner look */
+    -fx-border-radius: 10px;
+    -fx-border-color: #E57373; /* Slightly darker green for the border */
+    -fx-border-width: 2px;
+    -fx-font-size: 14px; /* Adjust font size for balance */
+    -fx-font-weight: bold;
+    -fx-transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
 }
 
+/* Hover Effect for Close Button */
 .modal-close-button:hover {
-    -fx-background-color: #e73737;
+    -fx-background-color: #D32F2F; /* Darker green on hover */
+
+}
+
+
+/* Active/Pressed State */
+.modal-close-button:pressed {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 4); /* Subtle shadow on click */
+    -fx-transform: scale(0.98); /* Slight shrink effect when pressed */
+
 }
 
 /* Bicycle Rectangle and Label */

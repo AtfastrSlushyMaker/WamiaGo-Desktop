@@ -81,7 +81,7 @@ public class RequestController {
 
     private void loadRequestsIntoFlowPane() {
         try {
-            List<Request> requests = requestService.read();
+            List<Request> requests =  requestService.getRequestsByUserId(3);
             for (Request request : requests) {
                 System.out.println("Request ID: " + request.getIdRequest());
                 System.out.println("Arrival Location: " + request.getArrivalLocation().getAddress());
@@ -102,30 +102,27 @@ public class RequestController {
         requestCard.getStyleClass().add("request-card");
         requestCard.setAlignment(Pos.CENTER);
 
-        // Create image and text box for request name
+        // Create image and text box for request status
         HBox imageAndTextBox = createImageAndTextBox(request);
         requestCard.getChildren().add(imageAndTextBox);
 
-        // Add additional information (e.g., ID, arrival, departure, status)
-        HBox infoBox = new HBox(10);
-        infoBox.setAlignment(Pos.CENTER_LEFT);
+        // Show only the request date
+        Label dateLabel = new Label("Date: " + request.getRequestDate().toString());
+        dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        requestCard.getChildren().add(dateLabel);
 
-        Label arrivalLabel = new Label("Arrival: " + request.getArrivalLocation().getAddress());
-        Label departureLabel = new Label("Departure: " + request.getDepartureLocation().getAddress());
-        Label statusLabel = new Label("Status: " + request.getStatus());
-
-        arrivalLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        departureLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-
-        infoBox.getChildren().addAll(arrivalLabel, departureLabel, statusLabel);
-        requestCard.getChildren().add(infoBox);
-
-        // Add "Select" button for the request card
+        // Create buttons
         Button selectButton = createSelectButton(request);
-        requestCard.getChildren().add(selectButton);
+        Button deleteButton = createDeleteButton(request, requestCard);
 
-        // Add event for mouse hover effect
+        // Place buttons in an HBox to align them horizontally
+        HBox buttonContainer = new HBox(10);
+        buttonContainer.setAlignment(Pos.CENTER);
+        buttonContainer.getChildren().addAll(selectButton, deleteButton);
+
+        requestCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
+
+        // Add hover effect for the request card
         requestCard.setOnMouseExited(event -> {
             requestCard.setScaleX(1);
             requestCard.setScaleY(1);
@@ -139,6 +136,8 @@ public class RequestController {
         return requestCard;
     }
 
+
+
     private HBox createImageAndTextBox(Request request) {
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);
@@ -149,16 +148,15 @@ public class RequestController {
         requestImage.setFitHeight(50);
         requestImage.setPreserveRatio(true);
 
-        Text nameText = new Text(request.getClient().getName());
-        nameText.setWrappingWidth(180);
-        nameText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #FFFFFF;");
+        Text statusText = new Text("Status: " + request.getStatus());
+        statusText.setWrappingWidth(180);
+        statusText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #FFFFFF;");
 
-        HBox.setHgrow(nameText, Priority.ALWAYS);
-        hbox.getChildren().addAll(requestImage, nameText);
+        HBox.setHgrow(statusText, Priority.ALWAYS);
+        hbox.getChildren().addAll(requestImage, statusText);
 
         return hbox;
     }
-
     private void openRequestDetails(Request request) {
         System.out.println("Opening details for Request ID: " + request.getIdRequest());
 
@@ -166,56 +164,62 @@ public class RequestController {
         Stage modalStage = new Stage();
         modalStage.setTitle("Request Details - " + request.getIdRequest());
 
-        // Dark overlay with some transparency
+        // Create the stack pane for the dark overlay with transparency
         StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);"); // Semi-transparent black overlay
+        stackPane.setStyle("-fx-background-color: rgba(255, 255, 193, 0.027);"); // Semi-transparent yellow overlay
 
+
+        // Modal layout container
         VBox modalLayout = new VBox(10);
-        modalLayout.setPadding(new Insets(20));
-        modalLayout.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, black, 20, 0.5, 0, 0);"); // Dark background and shadow for modal
+        modalLayout.getStyleClass().add("modal"); // Add custom modal style from CSS
+        modalLayout.setPadding(new Insets(20)); // Padding around the modal
 
-        // Title for the modal
+        // Title label for the modal
         Label titleLabel = new Label("Request Details");
-        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;-fx-text-alignment: center;-fx-font-family: Inter");
+        titleLabel.getStyleClass().add("modal-label"); // Apply modal label style from CSS
 
-        // Display request details in the modal
+        // Create a VBox to hold the request details
         VBox requestDetailsBox = new VBox(8);
+        requestDetailsBox.getStyleClass().add("request-details-box"); // Apply custom details box style
 
-        // Add only selected fields (Arrival and Departure Locations, Status, Date)
+        // Request details labels
         Label arrivalLabel = new Label("Arrival Location: " + request.getArrivalLocation().getAddress());
         Label departureLabel = new Label("Departure Location: " + request.getDepartureLocation().getAddress());
         Label statusLabel = new Label("Status: " + request.getStatus());
         Label dateLabel = new Label("Date: " + request.getRequestDate().toString());
 
-        // Apply styles to labels
-        arrivalLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
-        departureLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
-        statusLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
-        dateLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
+        // Add labels to the requestDetailsBox with custom styling
+        arrivalLabel.getStyleClass().add("modal-detail-label");
+        departureLabel.getStyleClass().add("modal-detail-label");
+        statusLabel.getStyleClass().add("modal-detail-label");
+        dateLabel.getStyleClass().add("modal-detail-label");
 
-        // Add the selected labels to the VBox
         requestDetailsBox.getChildren().addAll(arrivalLabel, departureLabel, statusLabel, dateLabel);
 
-        // Close button for the modal
+        // Close button with style
         Button closeButton = new Button("Close");
+        closeButton.getStyleClass().add("modal-close-button"); // Apply close button style
         closeButton.setOnAction(e -> modalStage.close());
-        closeButton.getStyleClass().add("request-details-close-button");
 
-        // Create an HBox to center the button at the bottom
+        // Close button container (HBox for centering)
         HBox closeButtonContainer = new HBox();
-        closeButtonContainer.setAlignment(Pos.CENTER);  // Center the button in the HBox
+        closeButtonContainer.setAlignment(Pos.CENTER);
         closeButtonContainer.getChildren().add(closeButton);
 
-        // Add components to the VBox
+        // Add all components to the modal layout
         modalLayout.getChildren().addAll(titleLabel, requestDetailsBox, closeButtonContainer);
 
-        stackPane.getChildren().add(modalLayout);  // Add the modal layout to the stack pane
+        // Add the modal layout to the stack pane
+        stackPane.getChildren().add(modalLayout);
 
         // Set up the Scene and Stage
-        Scene modalScene = new Scene(stackPane, 400, 300);
+        Scene modalScene = new Scene(stackPane, 350, 250); // Adjust the size as needed
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm()); // Ensure correct path to your CSS file
         modalStage.setScene(modalScene);
         modalStage.show();
     }
+
+
 
     private Button createSelectButton(Request request) {
         Button selectButton = new Button("Details");
@@ -223,4 +227,23 @@ public class RequestController {
         selectButton.setOnAction(e -> openRequestDetails(request)); // Open request details when clicked
         return selectButton;
     }
+
+    private Button createDeleteButton(Request request, VBox requestCard) {
+        Button deleteButton = new Button("Delete");
+        deleteButton.getStyleClass().add("request-button-delete"); // Optional: Apply a CSS class for styling
+
+        deleteButton.setOnAction(event -> {
+            try {
+                requestService.delete(request.getIdRequest()); // Delete from the database
+                requestFlowPane.getChildren().remove(requestCard); // Remove from the UI
+                System.out.println("Request ID " + request.getIdRequest() + " deleted.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Failed to delete request ID " + request.getIdRequest());
+            }
+        });
+
+        return deleteButton;
+    }
+
 }
