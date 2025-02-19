@@ -18,7 +18,7 @@ public class DriverService implements IService<Driver> {
     }
 
     @Override
-    public void create(Driver driver) throws SQLException {
+    public boolean create(Driver driver) throws SQLException {
         // Check if the user exists before creating a driver
         String sqlCheckUser = "SELECT COUNT(*) FROM `user` WHERE `id_user` = ?";
         try (PreparedStatement psCheckUser = connection.prepareStatement(sqlCheckUser)) {
@@ -39,6 +39,7 @@ public class DriverService implements IService<Driver> {
                 }
             }
         }
+        return false;
     }
 
     @Override

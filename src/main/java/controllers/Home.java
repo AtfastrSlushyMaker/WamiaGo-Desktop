@@ -1,6 +1,5 @@
 package controllers;
 
-import controllers.dashboard.DashboardController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,10 +10,10 @@ public class Home extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/dashboard/dashboard.fxml"));
-        DashboardController dashboardController = new DashboardController();
+        Parent root = FXMLLoader.load(getClass().getResource("/user/login.fxml"));
+       // Parent root = FXMLLoader.load(getClass().getResource("/dashboard/dashboard.fxml"));
         primaryStage.setScene(new Scene(root));
-        primaryStage.setTitle("Dashboards");
+        primaryStage.setTitle("Wamia Go - Welcome!");
         primaryStage.setResizable(false);
         primaryStage.show();
 

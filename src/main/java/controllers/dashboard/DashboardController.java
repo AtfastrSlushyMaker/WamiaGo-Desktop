@@ -8,11 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import utils.SessionManager;
+import entities.User;
 
 public class DashboardController {
         @FXML
@@ -83,8 +87,30 @@ public class DashboardController {
 
         @FXML
         private Label user_name_label;
-    private void pageNavigation()
-    {
+
+    @FXML
+    void initialize() {
+        pageNavigation();
+        SessionManager sessionManager = SessionManager.getInstance();
+        User user = sessionManager.getUser();
+        System.out.println(user);
+        if (user != null) {
+            user_name_label.setText(user.getName());
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user/login.fxml"));
+                Parent loginRoot = loader.load();
+                Scene loginScene = new Scene(loginRoot);
+                Stage stage = (Stage) user_name_label.getScene().getWindow();
+                stage.setScene(loginScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        setupUserDropdownMenu();
+    }
+
+    private void pageNavigation() {
         home_button.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
@@ -107,17 +133,33 @@ public class DashboardController {
                 e.printStackTrace();
             }
         });
+        logout_button.setOnAction(event -> {
+            SessionManager.getInstance().logout();
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user/login.fxml"));
+                Parent loginRoot = loader.load();
+                Scene loginScene = new Scene(loginRoot);
+                Stage stage = (Stage) logout_button.getScene().getWindow();
+                stage.setTitle("Wamia Go - Welcome!");
+                stage.setScene(loginScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
-        @FXML
-        void initialize() {
-            pageNavigation();
-        }
 
+    private void setupUserDropdownMenu() {
 
-        public void setUser_name_label(String user_name) {
-            user_name_label.setText(user_name);
-        }
+        ContextMenu userMenu = new ContextMenu();
+        MenuItem profileItem = new MenuItem("Profile");
+        userMenu.getItems().addAll(profileItem);
 
+        profile_button.setOnAction(event -> {
+            double screenX = profile_button.localToScreen(profile_button.getBoundsInLocal()).getMinX();
+            double screenY = profile_button.localToScreen(profile_button.getBoundsInLocal()).getMaxY();
 
-
+            userMenu.show(profile_button, screenX, screenY);
+        });
+    }
 }

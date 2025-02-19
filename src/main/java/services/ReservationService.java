@@ -8,7 +8,6 @@ import entities.Reservation;
 import utils.DataBase;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,18 +24,18 @@ public class ReservationService implements IService<Reservation> {
     }
 
     @Override
-    public void create(Reservation reservation) throws SQLException {
+    public boolean create(Reservation reservation) throws SQLException {
         if (reservation.getStartLocation() == null || locationService.getById(reservation.getStartLocation().getId()) == null) {
             System.out.println("Annulé : La location de départ n'existe pas.");
-            return;
+            return false;
         }
         if (reservation.getEndLocation() == null || locationService.getById(reservation.getEndLocation().getId()) == null) {
             System.out.println("Annulé : La location d'arrivée n'existe pas.");
-            return;
+            return false;
         }
         if (reservation.getAnnouncement() == null || announcementService.getById(reservation.getAnnouncement().getIdAnnouncement()) == null) {
             System.out.println("Annulé : L'annonce n'existe pas.");
-            return;
+            return false;
         }
 
         String sql = "INSERT INTO reservation (date, status, description, id_start_location, id_end_location, id_announcement) VALUES (?, ?, ?, ?, ?, ?)";
@@ -51,6 +50,7 @@ public class ReservationService implements IService<Reservation> {
             preparedStatement.executeUpdate();
             System.out.println("Réservation ajoutée avec succès.");
         }
+        return false;
     }
 
     @Override
