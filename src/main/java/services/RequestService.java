@@ -19,16 +19,30 @@ public class RequestService implements IService<Request> {
 
     @Override
     public void create(Request request) throws SQLException {
+        // Check if Client and Locations are not null
+        if (request.getClient() == null) {
+            throw new IllegalArgumentException("Client cannot be null");
+        }
+        if (request.getDepartureLocation() == null || request.getArrivalLocation() == null) {
+            throw new IllegalArgumentException("Departure and Arrival locations cannot be null");
+        }
+
+        // SQL query for inserting a new request
         String sql = "INSERT INTO request (id_client, id_departure_location, id_arrival_location, status, request_date) VALUES (?,?,?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, request.getClient().getId());
-        preparedStatement.setInt(2, request.getDepartureLocation().getId());
-        preparedStatement.setInt(3, request.getArrivalLocation().getId());
-        preparedStatement.setString(4, request.getStatus().toString());
-        preparedStatement.setTimestamp(5, Timestamp.valueOf(request.getRequestDate()));
-        preparedStatement.executeUpdate();
-        System.out.println("✅ Request created successfully");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, request.getClient().getId()); // Set client ID
+            preparedStatement.setInt(2, request.getDepartureLocation().getId()); // Set departure location ID
+            preparedStatement.setInt(3, request.getArrivalLocation().getId()); // Set arrival location ID
+            preparedStatement.setString(4, request.getStatus().toString()); // Set request status
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(request.getRequestDate())); // Set request date
+            preparedStatement.executeUpdate(); // Execute the insertion
+            System.out.println("✅ Request created successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Error creating request", e);
+        }
     }
+
 
     @Override
     public void update(Request request) throws SQLException {

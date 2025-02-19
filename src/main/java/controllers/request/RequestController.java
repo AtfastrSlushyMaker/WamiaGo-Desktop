@@ -1,7 +1,9 @@
 package controllers.request;
 
+import com.mysql.cj.xdevapi.Client;
 import entities.Location;
 import entities.Request;
+import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import services.RequestService;
 import services.LocationService;
+import services.UserService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -59,20 +62,22 @@ public class RequestController {
     @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
-        loadRequestsIntoFlowPane();
 
+        loadRequestsIntoFlowPane();
         setupNavigation();
-        URL cssURL = getClass().getResource("/taxi-managment/request.css");
-        if (cssURL == null) {
-            System.out.println("CSS file not found!");
-        } else {
-            System.out.println("CSS file found: " + cssURL.toExternalForm());
-        }
+        request_taxi_button.setOnAction(event -> openRequestForm());
+
+
+
+
+
+
     }
 
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
+
         // bookings_button.setOnAction(event -> loadScene("/bookings/bookings.fxml"));
         // history_button.setOnAction(event -> loadScene("/history/history.fxml"));
         // logout_button.setOnAction(event -> logout());
@@ -262,41 +267,37 @@ public class RequestController {
         Stage modalStage = new Stage();
         modalStage.setTitle("Request Taxi");
 
-        // Create the stack pane for the dark overlay with transparency
-        StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: rgba(255, 255, 193, 0.027);"); // Semi-transparent yellow overlay
-
         // Modal layout container
         VBox modalLayout = new VBox(10);
         modalLayout.getStyleClass().add("modal"); // Add custom modal style from CSS
         modalLayout.setPadding(new Insets(20)); // Padding around the modal
 
-        // Title label for the modal
+        // Title label
         Label titleLabel = new Label("Request Taxi");
-        titleLabel.getStyleClass().add("modal-label"); // Apply modal label style from CSS
+        titleLabel.getStyleClass().add("modal-label");
 
-        // Create the ComboBoxes for departure and arrival locations
+        // Create ComboBoxes for departure and arrival locations
         ComboBox<Location> departureComboBox = new ComboBox<>();
         ComboBox<Location> arrivalComboBox = new ComboBox<>();
 
-        // Get all locations from the database using the LocationService
+        // Get locations from database
         LocationService locationService = new LocationService();
         try {
-            List<Location> locations = locationService.read(); // Get all locations
-            departureComboBox.getItems().setAll(locations); // Populate departure locations
-            arrivalComboBox.getItems().setAll(locations); // Populate arrival locations
+            List<Location> locations = locationService.read();
+            departureComboBox.getItems().setAll(locations);
+            arrivalComboBox.getItems().setAll(locations);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Create a VBox to hold the ComboBoxes and labels
+        // VBox to hold the ComboBoxes
         VBox comboBoxBox = new VBox(10);
         comboBoxBox.getChildren().addAll(
                 new Label("Departure Location:"), departureComboBox,
                 new Label("Arrival Location:"), arrivalComboBox
         );
 
-        // Create the 'Request Taxi' button
+        // 'Request Taxi' button
         Button requestTaxiButton = new Button("Request Taxi");
         requestTaxiButton.setOnAction(event -> {
             Location departureLocation = departureComboBox.getValue();
@@ -307,37 +308,57 @@ public class RequestController {
                 Request newRequest = new Request();
                 newRequest.setDepartureLocation(departureLocation);
                 newRequest.setArrivalLocation(arrivalLocation);
-                newRequest.setStatus(Request.RequestStatus.PENDING);  // Using enum
-
-                // Set the request date as the current timestamp
+                newRequest.setStatus(Request.RequestStatus.PENDING);
                 newRequest.setRequestDate(LocalDateTime.now());
 
+                // Temporary user ID (replace this with the actual logged-in user's ID)
+                int loggedInUserId = 3;
+
+                // Fetch the client object using the user ID
+                UserService clientService = new UserService();
                 try {
-                    // Call the service method to create the request in the database
+                    User client = clientService.getById(loggedInUserId);
+                    newRequest.setClient(client);
+
+                    // Call the service method to create the request
                     requestService.create(newRequest);
-                    System.out.println("Request created successfully!");
-                    modalStage.close(); // Close the modal after request creation
+                    System.out.println("✅ Request created successfully!");
+                    refreshRequestsFlowPane(3);
+
+                    modalStage.close();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
             } else {
-                System.out.println("Please select both departure and arrival locations.");
+                System.out.println("⚠️ Please select both departure and arrival locations.");
             }
         });
 
-        // Add all components to the modal layout
+        // Add components to modal layout
         modalLayout.getChildren().addAll(titleLabel, comboBoxBox, requestTaxiButton);
 
-        // Add the modal layout to the stack pane
-        stackPane.getChildren().add(modalLayout);
-
-        // Set up the Scene and Stage
-        Scene modalScene = new Scene(stackPane, 350, 250); // Adjust the size as needed
-        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm()); // Ensure correct path to your CSS file
+        // Set up Scene and Stage
+        Scene modalScene = new Scene(modalLayout, 350, 250);
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
         modalStage.setScene(modalScene);
         modalStage.show();
     }
 
+    private void refreshRequestsFlowPane(int userId) {
+        try {
+            requestFlowPane.getChildren().clear(); // Clear existing requests
+
+            List<Request> updatedRequests = requestService.getRequestsByUserId(userId);
+            for (Request request : updatedRequests) {
+                VBox requestCard = createRequestCard(request);
+                requestFlowPane.getChildren().add(requestCard);
+            }
+
+            System.out.println("🔄 Requests refreshed successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

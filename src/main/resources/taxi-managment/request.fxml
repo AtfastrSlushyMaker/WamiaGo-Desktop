@@ -116,8 +116,8 @@
                 <FlowPane fx:id="requestFlowPane" hgap="20" layoutX="4.0" layoutY="185.0" prefHeight="638.0" prefWidth="1087.0" vgap="20">
                     <!-- Dynamically populated station cards will go here -->
                 </FlowPane>
-            <Button id="request_taxi_button" layoutX="46.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="138.0" stylesheets="@request.css" text="Raquest A Taxi" />
-            <Button id="See_you_Rides_buuton" layoutX="201.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="138.0" stylesheets="@request.css" text="See Your Rides" />
+            <Button fx:id="request_taxi_button" id="request_taxi_button" layoutX="46.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="138.0" stylesheets="@request.css" text="Raquest A Taxi" />
+            <Button fx:id="See_you_Rides_buuton"  id="See_you_Rides_buuton" layoutX="201.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="138.0" stylesheets="@request.css" text="See Your Rides" />
 
             </children>
         </Pane>
