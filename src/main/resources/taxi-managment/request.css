@@ -150,6 +150,23 @@
 
 }
 
+/* Style for the request taxi button */
+#request_taxi_button {
+    -fx-background-color: #4E9D3A; /* Primary color */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+
+    -fx-border-width: 2px;
+}
+
+/* Hover effect */
+#request_taxi_button:hover {
+    -fx-background-color: #6FBF66; /* Lighter green on hover */
+}
+
+
 /* Bicycle Rectangle and Label */
 /* Bicycle Icon */
 .bicycle-icon {
@@ -158,6 +175,28 @@
     -fx-border-color: white;
     -fx-border-width: 2px;
 }
+
+/* Style for the See You Rides button */
+#See_you_Rides_buuton {
+    -fx-background-color: #85A9FF; /* Light blue color */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+
+    -fx-border-width: 2px;
+}
+
+/* Hover effect for the See You Rides button */
+#See_you_Rides_buuton:hover {
+    -fx-background-color: #5A6BE5; /* Darker blue on hover */
+}
+
+
+
+
+
+
 
 /* Bicycle Label */
 .bicycle-label {

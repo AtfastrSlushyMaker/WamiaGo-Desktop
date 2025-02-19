@@ -1,9 +1,13 @@
 package controllers.request;
 
+import entities.Location;
 import entities.Request;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -17,10 +21,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import services.RequestService;
+import services.LocationService;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RequestController {
@@ -43,6 +49,10 @@ public class RequestController {
     private AnchorPane side_ankerpane;
     @FXML
     private FlowPane requestFlowPane;
+
+    @FXML
+    private Button request_taxi_button;
+
 
     private final RequestService requestService = new RequestService();
 
@@ -245,5 +255,94 @@ public class RequestController {
 
         return deleteButton;
     }
+
+
+    private void openRequestForm() {
+        // Create a new Stage (popup/modal)
+        Stage modalStage = new Stage();
+        modalStage.setTitle("Request Taxi");
+
+        // Create the stack pane for the dark overlay with transparency
+        StackPane stackPane = new StackPane();
+        stackPane.setStyle("-fx-background-color: rgba(255, 255, 193, 0.027);"); // Semi-transparent yellow overlay
+
+        // Modal layout container
+        VBox modalLayout = new VBox(10);
+        modalLayout.getStyleClass().add("modal"); // Add custom modal style from CSS
+        modalLayout.setPadding(new Insets(20)); // Padding around the modal
+
+        // Title label for the modal
+        Label titleLabel = new Label("Request Taxi");
+        titleLabel.getStyleClass().add("modal-label"); // Apply modal label style from CSS
+
+        // Create the ComboBoxes for departure and arrival locations
+        ComboBox<Location> departureComboBox = new ComboBox<>();
+        ComboBox<Location> arrivalComboBox = new ComboBox<>();
+
+        // Get all locations from the database using the LocationService
+        LocationService locationService = new LocationService();
+        try {
+            List<Location> locations = locationService.read(); // Get all locations
+            departureComboBox.getItems().setAll(locations); // Populate departure locations
+            arrivalComboBox.getItems().setAll(locations); // Populate arrival locations
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Create a VBox to hold the ComboBoxes and labels
+        VBox comboBoxBox = new VBox(10);
+        comboBoxBox.getChildren().addAll(
+                new Label("Departure Location:"), departureComboBox,
+                new Label("Arrival Location:"), arrivalComboBox
+        );
+
+        // Create the 'Request Taxi' button
+        Button requestTaxiButton = new Button("Request Taxi");
+        requestTaxiButton.setOnAction(event -> {
+            Location departureLocation = departureComboBox.getValue();
+            Location arrivalLocation = arrivalComboBox.getValue();
+
+            if (departureLocation != null && arrivalLocation != null) {
+                // Set the status to PENDING by default
+                Request newRequest = new Request();
+                newRequest.setDepartureLocation(departureLocation);
+                newRequest.setArrivalLocation(arrivalLocation);
+                newRequest.setStatus(Request.RequestStatus.PENDING);  // Using enum
+
+                // Set the request date as the current timestamp
+                newRequest.setRequestDate(LocalDateTime.now());
+
+                try {
+                    // Call the service method to create the request in the database
+                    requestService.create(newRequest);
+                    System.out.println("Request created successfully!");
+                    modalStage.close(); // Close the modal after request creation
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                System.out.println("Please select both departure and arrival locations.");
+            }
+        });
+
+        // Add all components to the modal layout
+        modalLayout.getChildren().addAll(titleLabel, comboBoxBox, requestTaxiButton);
+
+        // Add the modal layout to the stack pane
+        stackPane.getChildren().add(modalLayout);
+
+        // Set up the Scene and Stage
+        Scene modalScene = new Scene(stackPane, 350, 250); // Adjust the size as needed
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm()); // Ensure correct path to your CSS file
+        modalStage.setScene(modalScene);
+        modalStage.show();
+    }
+
+
+
+
+
+
+
 
 }
