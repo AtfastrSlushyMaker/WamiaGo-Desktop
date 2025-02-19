@@ -18,7 +18,7 @@ public class TripService implements IService<Trip> {
     }
 
     @Override
-    public void create(Trip trip) throws SQLException {
+    public boolean create(Trip trip) throws SQLException {
         String query = "INSERT INTO trip (departure_city, arrival_city, departure_date, available_seats, price_per_passenger, id_driver, id_vehicle) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, trip.getDepartureCity());
@@ -30,6 +30,7 @@ public class TripService implements IService<Trip> {
             stmt.setInt(7, trip.getVehicle().getIdVehicle());
             stmt.executeUpdate();
         }
+        return false;
     }
 
     @Override

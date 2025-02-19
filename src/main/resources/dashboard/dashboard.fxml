@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.dashboard.DashboardController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.dashboard.DashboardController">
 
    <children>
 
@@ -130,7 +130,19 @@
                   <Image url="@../images/icons/quick-response.png" />
                </image>
             </ImageView>
-            <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
+            <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0">
+               <buttons>
+                  <Label id="date" fx:id="date_label" maxWidth="208.0" prefHeight="45.0" prefWidth="208.0" text="Date" />
+                  <Button fx:id="profile_button" mnemonicParsing="false" prefHeight="51.0" prefWidth="51.0" styleClass="navbar_buttons" stylesheets="@style.css">
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/icons/user.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </buttons></ButtonBar>
 
                         <Pane fx:id="pane_11" layoutX="284.0" layoutY="373.0" prefHeight="234.0" prefWidth="218.0" stylesheets="@style.css">
 
@@ -274,19 +286,12 @@
                      </font>
 
                   </Label>
-            <Button id="user" fx:id="profile_button" layoutX="993.0" layoutY="142.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="43.0" />
-            <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="997.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/icons/user.png" />
-               </image>
-            </ImageView>
             <Button id="feedback" fx:id="reclamation_button" layoutX="981.0" layoutY="739.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="45.0" stylesheets="@style.css" />
             <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="985.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/icons/review.png" />
                </image>
             </ImageView>
-            <Label id="date" fx:id="date_label" layoutX="785.0" layoutY="139.0" prefHeight="45.0" prefWidth="150.0" text="Date" />
 
          </children>
 

@@ -5,7 +5,6 @@ import entities.Driver;
 import utils.DataBase;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,7 @@ public class AnnouncementService implements IService<Announcement> {
     }
 
     @Override
-    public void create(Announcement announcement) throws SQLException {
+    public boolean create(Announcement announcement) throws SQLException {
         String checkDriverQuery = "SELECT COUNT(*) FROM driver WHERE id_driver = ?";
         try (PreparedStatement checkDriverStmt = connection.prepareStatement(checkDriverQuery)) {
             checkDriverStmt.setInt(1, announcement.getTransporter().getIdDriver());
@@ -26,7 +25,7 @@ public class AnnouncementService implements IService<Announcement> {
 
             if (driverResult.next() && driverResult.getInt(1) == 0) {
                 System.out.println("Erreur : Le chauffeur avec l'ID " + announcement.getTransporter().getIdDriver() + " n'existe pas.");
-                return;
+                return false;
             }
         }
 
@@ -45,6 +44,7 @@ public class AnnouncementService implements IService<Announcement> {
         } catch (SQLException e) {
             System.err.println("Erreur lors de l'ajout de l'annonce : " + e.getMessage());
         }
+        return false;
     }
 
     @Override

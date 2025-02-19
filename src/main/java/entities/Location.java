@@ -75,4 +75,27 @@ public class Location {
                 ", longitude=" + longitude +
                 '}';
     }
+    public static double calculateDistance(Location start, Location end) {
+
+        // Step 2: Use the Haversine formula to calculate the distance
+        final int R = 6371; // Radius of the Earth in kilometers
+
+        double lat1 = start.getLatitude();
+        double lon1 = start.getLongitude();
+        double lat2 = end.getLatitude();
+        double lon2 = end.getLongitude();
+
+        // Calculate the difference in latitudes and longitudes
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+
+        // Haversine formula
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c;
+    }
 }

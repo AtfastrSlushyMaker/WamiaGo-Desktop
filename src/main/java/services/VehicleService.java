@@ -15,7 +15,7 @@ public class VehicleService implements IService<Vehicle> {
     }
 
     @Override
-    public void create(Vehicle vehicle) throws SQLException {
+    public boolean create(Vehicle vehicle) throws SQLException {
         String sql = "INSERT INTO vehicle (id_driver, registration, color, model, brand) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, vehicle.getIdDriver());
@@ -24,6 +24,7 @@ public class VehicleService implements IService<Vehicle> {
         preparedStatement.setString(4, vehicle.getModel());
         preparedStatement.setString(5, vehicle.getBrand());
         preparedStatement.executeUpdate();
+        return false;
     }
 
     @Override
