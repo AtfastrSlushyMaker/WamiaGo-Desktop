@@ -1,5 +1,6 @@
 package services;
 
+import entities.Location;
 import entities.Ride;
 import entities.Request;
 import entities.Driver;
@@ -35,7 +36,7 @@ public class RideService implements IService<Ride> {
                     int arrivalLocationId = locationResult.getInt("id_arrival_location");
 
                     // Step 2: Calculate distance using LocationService
-                    double distance = LocationService.calculateDistance(departureLocationId, arrivalLocationId);
+                    double distance = new Location().calculateDistance(new LocationService().getById(departureLocationId),new LocationService().getById( arrivalLocationId));
 
                     // Step 3: Insert the ride into the database
                     String sql = "INSERT INTO ride (id_request, id_taxi, distance, duration, price, status, ride_date) VALUES (?,?,?,?,?,?,?)";
