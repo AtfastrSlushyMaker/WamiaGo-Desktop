@@ -18,7 +18,6 @@ services\TrafficService.class
 entities\Driver$DriverRole.class
 entities\User$AccountStatus.class
 entities\User$Gender.class
-test\MainRide.class
 entities\Announcement.class
 test\Main.class
 entities\Bicycle.class
@@ -27,6 +26,7 @@ entities\Ride$Status.class
 entities\Ride.class
 services\BicycleRentalService.class
 services\IService.class
+controllers\booking\BookingController$1.class
 services\UserService.class
 services\ResponseService.class
 services\TrafficService$Route.class
@@ -48,6 +48,7 @@ entities\Reservation$Status.class
 services\AnnouncementService.class
 services\TrafficService$Summary.class
 entities\User.class
+controllers\booking\BookingController.class
 entities\Booking$Status.class
 entities\Vehicle.class
 controllers\Home.class
