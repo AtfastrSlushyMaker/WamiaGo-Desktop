@@ -12,8 +12,9 @@ public class Home extends Application {
     public void start(Stage primaryStage) throws Exception {
 //        Parent root = FXMLLoader.load(getClass().getResource("/announcements.fxml"));
 //        primaryStage.setTitle("Gestion des Annonces");
-        Parent root = FXMLLoader.load(getClass().getResource("/Reservation/Front/Reservations.fxml"));
-        primaryStage.setTitle("annonces");
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Reservation/Front/Reservations.fxml"));
+        Parent root = loader.load();
+
         primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
     }

@@ -91,15 +91,13 @@ public class ReservationService implements IService<Reservation> {
         preparedStatement.executeUpdate();
     }
 
+
     @Override
     public List<Reservation> read() throws SQLException {
         List<Reservation> reservations = new ArrayList<>();
         String sql = "SELECT * FROM reservation";
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sql);
-
-        LocationService locationService = new LocationService();
-        AnnouncementService announcementService = new AnnouncementService();
 
         while (rs.next()) {
             Reservation reservation = new Reservation();
@@ -109,15 +107,15 @@ public class ReservationService implements IService<Reservation> {
             reservation.setDescription(rs.getString("description"));
 
             // Récupérer startLocation
-            Location startLocation = locationService.getById(rs.getInt("id_start_location"));
+            Location startLocation = this.locationService.getById(rs.getInt("id_start_location"));
             reservation.setStartLocation(startLocation);
 
             // Récupérer endLocation
-            Location endLocation = locationService.getById(rs.getInt("id_end_location"));
+            Location endLocation = this.locationService.getById(rs.getInt("id_end_location"));
             reservation.setEndLocation(endLocation);
 
             // Récupérer announcement
-            Announcement announcement = announcementService.getById(rs.getInt("id_announcement"));
+            Announcement announcement = this.announcementService.getById(rs.getInt("id_announcement"));
             reservation.setAnnouncement(announcement);
 
             reservations.add(reservation);

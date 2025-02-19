@@ -1,6 +1,6 @@
 package controllers.Annoucement;
 
-import controllers.Reservation.AddReservationController;
+import controllers.Reservation.ReservationController;
 import entities.Announcement;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +37,7 @@ public class AnnoucementClientController implements Initializable {
             List<Announcement> announcements = announcementService.read();
             announcementListView.getItems().setAll(announcements);
 
-            // Personnalisation de l'affichage des annonces
+            // Customize the display of announcements
             announcementListView.setCellFactory(new Callback<>() {
                 @Override
                 public ListCell<Announcement> call(ListView<Announcement> listView) {
@@ -67,10 +67,10 @@ public class AnnoucementClientController implements Initializable {
                                 Button reserveButton = new Button("Réserver");
                                 reserveButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
 
-                                // Gestionnaire d'événements avec le bon type d'ActionEvent
+                                // Event handler with the correct ActionEvent type
                                 reserveButton.setOnAction(event -> handleReserveButtonAction(announcement));
 
-                                vbox.getChildren().addAll(titleLabel, contentLabel, dateLabel,zoneLabel, reserveButton);
+                                vbox.getChildren().addAll(titleLabel, contentLabel, dateLabel, zoneLabel, reserveButton);
                                 setGraphic(vbox);
                             }
                         }
@@ -85,16 +85,11 @@ public class AnnoucementClientController implements Initializable {
     @FXML
     private void handleReserveButtonAction(Announcement announcement) {
         try {
-            System.out.println("--------------");
-            System.out.println(announcement);
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reservation/Front/addReservation.fxml"));
             Parent root = loader.load();
 
-            AddReservationController controller = loader.getController();
-
-            announcement = announcementListView.getSelectionModel().getSelectedItem();
-            controller.setSelectedAnnouncement(announcement);
+            ReservationController controller = loader.getController();
+           // controller.setSelectedAnnouncement(announcement);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

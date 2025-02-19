@@ -1,56 +1,41 @@
 package controllers.Reservation;
 
-import entities.Reservation;
-import entities.Location;
 import entities.Announcement;
+import entities.Location;
+import entities.Reservation;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import services.ReservationService;
 import services.LocationService;
-import services.AnnouncementService;
+import services.ReservationService;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.util.ResourceBundle;
 
-public class AddReservationController {
-    @FXML
-    private DatePicker datePicker;
-
-    @FXML
-    private ComboBox<Reservation.Status> statusComboBox;
-
-    @FXML
-    private TextArea descriptionField;
-
+public class AddReservationController implements Initializable {
     @FXML
     private ComboBox<Location> startLocationComboBox;
-
     @FXML
     private ComboBox<Location> endLocationComboBox;
+    @FXML
+    private TextField descriptionField;
+    @FXML
+    private Button submitButton;
+    @FXML
+    private Button cancelButton;
 
     @FXML
     private ComboBox<Announcement> announcementComboBox;
 
-    @FXML
-    private Button submitButton;
+    private Announcement selectedAnnouncement; // L'annonce sélectionnée
+    private final ReservationService reservationService = new ReservationService();
+    private final LocationService locationService = new LocationService();
 
-    @FXML
-    private Button cancelButton;
-
-    private ReservationService reservationService;
-    private LocationService locationService;
-    private AnnouncementService announcementService;
-
-    public AddReservationController() {
-        this.reservationService = new ReservationService();
-        this.locationService = new LocationService();
-        this.announcementService = new AnnouncementService();
-    }
-
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         try {
 
             System.out.println("Initializing AddReservationController...");
@@ -65,103 +50,62 @@ public class AddReservationController {
             startLocationComboBox.getItems().setAll(locationService.read());
             endLocationComboBox.getItems().setAll(locationService.read());
 
-            // Remplir la ComboBox pour les annonces
-            announcementComboBox.getItems().setAll(announcementService.read());
+
 
         } catch (SQLException e) {
             // Afficher une notification d'erreur
             showAlert("Database Error", "An error occurred while loading data: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace(); // Pour déboguer
         }
-
-        // Définir le statut par défaut à "ON_GO"
-        statusComboBox.getItems().setAll(Reservation.Status.values());
-        statusComboBox.setValue(Reservation.Status.ON_GOING);
     }
 
-    @FXML
-    public void handleCancelButtonAction() {
-        // Fermer la fenêtre actuelle
-        ((Stage) cancelButton.getScene().getWindow()).close();
-    }
 
+
+
+    // Méthode pour définir l'annonce sélectionnée
     public void setSelectedAnnouncement(Announcement announcement) {
-        this.announcementComboBox.setValue(announcement);
+        this.selectedAnnouncement = announcement;
     }
 
-//    @FXML
-//    public void handleSubmitButtonAction() {
-//        try {
-//            // Récupérer les valeurs des champs
-//            LocalDate localDate = datePicker.getValue();
-//            Timestamp date = Timestamp.valueOf(localDate.atStartOfDay());
-//            Reservation.Status status = statusComboBox.getValue();
-//            String description = descriptionField.getText();
-//            Location startLocation = startLocationComboBox.getValue();
-//            Location endLocation = endLocationComboBox.getValue();
-//            Announcement announcement = announcementComboBox.getValue();
-//
-//            // Créer un objet Reservation
-//            Reservation reservation = new Reservation();
-//            reservation.setDate(date);
-//            reservation.setStatus(status);
-//            reservation.setDescription(description);
-//            reservation.setStartLocation(startLocation);
-//            reservation.setEndLocation(endLocation);
-//            reservation.setAnnouncement(announcement);
-//
-//            // Ajouter la réservation via le service
-//            reservationService.create(reservation);
-//
-//            // Afficher une notification de succès
-//            showAlert("Success", "Reservation added successfully!", Alert.AlertType.INFORMATION);
-//
-//            // Fermer la fenêtre
-//            ((Stage) submitButton.getScene().getWindow()).close();
-//
-//        } catch (Exception e) {
-//            // Afficher une notification d'erreur
-//            showAlert("Error", "An error occurred: " + e.getMessage(), Alert.AlertType.ERROR);
-//        }
-//    }
+    @FXML
+    private void handleSubmitButtonAction() {
+        // Récupérer les valeurs des champs
+        Location startLocation = startLocationComboBox.getValue();
+        Location endLocation = endLocationComboBox.getValue();
+        String description = descriptionField.getText();
+
+        // Vérifier que tous les champs sont remplis
+        if (startLocation == null || endLocation == null || description.isEmpty() || selectedAnnouncement == null) {
+            showAlert("Erreur", "Veuillez remplir tous les champs.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        // Créer une nouvelle réservation
+        Reservation reservation = new Reservation();
+        reservation.setDate(new Timestamp(System.currentTimeMillis())); // Date actuelle
+        reservation.setStatus(Reservation.Status.ON_GOING); // Statut par défaut
+        reservation.setDescription(description);
+        reservation.setStartLocation(startLocation);
+        reservation.setEndLocation(endLocation);
+        reservation.setAnnouncement(selectedAnnouncement);
+
+        try {
+            // Enregistrer la réservation dans la base de données
+            reservationService.create(reservation);
+            showAlert("Succès", "Réservation créée avec succès.", Alert.AlertType.INFORMATION);
+
+            // Fermer la fenêtre après la réservation
+            ((Stage) submitButton.getScene().getWindow()).close();
+        } catch (SQLException e) {
+            showAlert("Erreur", "Une erreur s'est produite lors de la création de la réservation.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
 
     @FXML
-    public void handleSubmitButtonAction() {
-        try {
-            // Récupérer les valeurs des champs
-            LocalDate localDate = datePicker.getValue();
-            Timestamp date = Timestamp.valueOf(localDate.atStartOfDay());
-            Reservation.Status status = statusComboBox.getValue();
-            String description = descriptionField.getText();
-            Location startLocation = startLocationComboBox.getValue();
-            Location endLocation = endLocationComboBox.getValue();
-            Announcement announcement = announcementComboBox.getValue();
-
-            // Créer un objet Reservation
-            Reservation reservation = new Reservation();
-            reservation.setDate(date);
-            reservation.setStatus(status);
-            reservation.setDescription(description);
-            reservation.setStartLocation(startLocation);
-            reservation.setEndLocation(endLocation);
-
-            Announcement a  = new Announcement();
-            announcement.setIdAnnouncement(65);
-            reservation.setAnnouncement(a);
-
-            // Ajouter la réservation via le service
-            reservationService.create(reservation);
-
-            // Afficher une notification de succès
-            showAlert("Success", "Reservation added successfully!", Alert.AlertType.INFORMATION);
-
-            // Fermer la fenêtre
-            ((Stage) submitButton.getScene().getWindow()).close();
-
-        } catch (Exception e) {
-            // Afficher une notification d'erreur
-            showAlert("Error", "An error occurred: " + e.getMessage(), Alert.AlertType.ERROR);
-        }
+    private void handleCancelButtonAction() {
+        // Fermer la fenêtre sans enregistrer
+        ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
     private void showAlert(String title, String message, Alert.AlertType alertType) {
