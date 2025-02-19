@@ -168,6 +168,58 @@ public class UserService implements IService<User> {
         return null;
     }
 
+    public boolean isDriver(User user) {
+        String sql = "SELECT id_driver FROM driver WHERE id_user = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, user.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Driver getDriver(User user) throws SQLException {
+        String sql = "SELECT d.id_driver, u.id_user, u.name, u.email, u.phone_number, u.role, u.gender, u.profile_picture, " +
+                "u.is_verified, u.account_status, u.date_of_birth, u.status, d.permit_number, d.driver_role, d.driver_status " +
+                "FROM `driver` d JOIN `user` u ON d.id_user = u.id_user WHERE u.id_user = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, user.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+
+                    User driverUser = new User();
+                    driverUser.setId(rs.getInt("id_user"));
+                    driverUser.setName(rs.getString("name"));
+                    driverUser.setEmail(rs.getString("email"));
+                    driverUser.setPhone(rs.getString("phone_number"));
+                    driverUser.setRole(User.Role.valueOf(rs.getString("role")));
+                    driverUser.setGender(User.Gender.valueOf(rs.getString("gender")));
+                    driverUser.setProfilePicture(rs.getString("profile_picture"));
+                    driverUser.setVerified(rs.getBoolean("is_verified"));
+                    driverUser.setAccountStatus(User.AccountStatus.valueOf(rs.getString("account_status")));
+                    driverUser.setDateOfBirth(rs.getDate("date_of_birth") != null ? rs.getDate("date_of_birth").toLocalDate() : null);
+                    driverUser.setStatus(User.Status.valueOf(rs.getString("status")));
+
+                    Driver driver = new Driver();
+                    driver.setIdDriver(rs.getInt("id_driver"));
+                    driver.setPermitNumber(rs.getString("permit_number"));
+                    driver.setDriverRole(Driver.DriverRole.valueOf(rs.getString("driver_role")));
+                    driver.setDriverStatus(rs.getInt("driver_status"));
+
+                    driver.setUser(driverUser);
+
+                    return driver;
+                }
+            }
+        }
+        return null;
+
+    }
+
     public List<User> sortUsers(String sortField, boolean ascending) throws SQLException {
         StringBuilder sqlQuery = new StringBuilder("SELECT * FROM `user` u JOIN `location` l ON u.id_location = l.id_location");
 
@@ -436,57 +488,6 @@ public class UserService implements IService<User> {
         return null;
     }
 
-    public boolean isDriver(User user) {
-        String sql = "SELECT id_driver FROM driver WHERE id_user = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, user.getId());
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public Driver getDriver(User user) throws SQLException {
-        String sql = "SELECT d.id_driver, u.id_user, u.name, u.email, u.phone_number, u.role, u.gender, u.profile_picture, " +
-                "u.is_verified, u.account_status, u.date_of_birth, u.status, d.permit_number, d.driver_role, d.driver_status " +
-                "FROM `driver` d JOIN `user` u ON d.id_user = u.id_user WHERE u.id_user = ?";
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, user.getId());
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-
-                    User driverUser = new User();
-                    driverUser.setId(rs.getInt("id_user"));
-                    driverUser.setName(rs.getString("name"));
-                    driverUser.setEmail(rs.getString("email"));
-                    driverUser.setPhone(rs.getString("phone_number"));
-                    driverUser.setRole(User.Role.valueOf(rs.getString("role")));
-                    driverUser.setGender(User.Gender.valueOf(rs.getString("gender")));
-                    driverUser.setProfilePicture(rs.getString("profile_picture"));
-                    driverUser.setVerified(rs.getBoolean("is_verified"));
-                    driverUser.setAccountStatus(User.AccountStatus.valueOf(rs.getString("account_status")));
-                    driverUser.setDateOfBirth(rs.getDate("date_of_birth") != null ? rs.getDate("date_of_birth").toLocalDate() : null);
-                    driverUser.setStatus(User.Status.valueOf(rs.getString("status")));
-
-                    Driver driver = new Driver();
-                    driver.setIdDriver(rs.getInt("id_driver"));
-                    driver.setPermitNumber(rs.getString("permit_number"));
-                    driver.setDriverRole(Driver.DriverRole.valueOf(rs.getString("driver_role")));
-                    driver.setDriverStatus(rs.getInt("driver_status"));
-
-                    driver.setUser(driverUser);
-
-                    return driver;
-                }
-            }
-        }
-        return null;
-
-    }
 }
 
 
