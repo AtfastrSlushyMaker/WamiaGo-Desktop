@@ -1,0 +1,31 @@
+/* Dark Theme Stylesheet */
+
+/* HBox */
+.hbox-dark {
+    -fx-background-color: #2C3E50; /* Dark blue background */
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+/* VBox */
+.vbox-dark {
+    -fx-background-color: #34495E; /* Slightly lighter dark blue */
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+/* Labels */
+.label-dark {
+    -fx-text-fill: #ECF0F1; /* Light grey text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Shadow Effect */
+.shadow {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 0); /* Soft shadow */
+}
