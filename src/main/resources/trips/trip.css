@@ -1,0 +1,37 @@
+/* Booking button styling */
+.booking-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+}
+
+.booking-button:hover {
+    -fx-opacity: 0.8;
+}
+
+/* Table styling */
+.styled-table {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 5px;
+}
+
+.styled-table .column-header-background {
+    -fx-background-color: #4a90e2;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.styled-table .column-header {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Century Gothic';
+}
+
+.styled-table .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+}
+
+.styled-table .table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
