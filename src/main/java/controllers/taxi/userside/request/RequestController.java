@@ -1,9 +1,8 @@
-package controllers.request;
+package controllers.taxi.userside.request;
 
 import entities.Location;
 import entities.Request;
 import entities.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -59,11 +58,11 @@ public class RequestController {
 
     @FXML
     public void initialize() {
-        root.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
+        root.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/request.css").toExternalForm());
         loadRequestsIntoFlowPane();
         setupNavigation();
         request_taxi_button.setOnAction(event -> openRequestForm());
-        See_you_Rides_button.setOnAction(event -> loadScene("/taxi-managment/ride.fxml"));
+        See_you_Rides_button.setOnAction(event -> loadScene("/taxi-managment/user_side/ride.fxml"));
     }
 
     private void setupNavigation() {
@@ -207,7 +206,7 @@ public class RequestController {
         stackPane.getChildren().add(modalLayout);
 
         Scene modalScene = new Scene(stackPane, 350, 250);
-        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/request.css").toExternalForm());
         modalStage.setScene(modalScene);
         modalStage.show();
     }
@@ -326,7 +325,7 @@ public class RequestController {
 
         // Set up the Scene and Stage
         Scene modalScene = new Scene(stackPane, 350, 300);
-        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/request.css").toExternalForm());
         modalStage.setScene(modalScene);
         modalStage.show();
     }
@@ -398,7 +397,7 @@ public class RequestController {
 
         modalLayout.getChildren().addAll(titleLabel, comboBoxBox, requestTaxiButton);
         Scene modalScene = new Scene(modalLayout, 350, 250);
-        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/request.css").toExternalForm());
         modalStage.setScene(modalScene);
         modalStage.show();
     }

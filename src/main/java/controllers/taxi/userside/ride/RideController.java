@@ -1,12 +1,8 @@
-package controllers.ride;
-import entities.Location;
-import entities.Request;
+package controllers.taxi.userside.ride;
 import entities.Ride;
 import entities.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -20,15 +16,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import services.RequestService;
-import services.LocationService;
 import services.RideService;
-import services.UserService;
 import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class RideController {
@@ -59,7 +51,7 @@ public class RideController {
 
     @FXML
     public void initialize() {
-        root.getStylesheets().add(getClass().getResource("/taxi-managment/ride.css").toExternalForm());
+        root.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/ride.css").toExternalForm());
         loadRidesIntoFlowPane();
           setupNavigation();
         back_to_request.setOnAction(event -> handleBackToRequest());
@@ -76,7 +68,7 @@ public class RideController {
     private void handleBackToRequest() {
         try {
             // Load the FXML for the request scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/request.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/user_side/request.fxml"));
             Parent requestRoot = loader.load();
 
             // Get the current stage (using home_button as an example)
@@ -265,7 +257,7 @@ public class RideController {
         stackPane.getChildren().add(modalLayout);
 
         Scene modalScene = new Scene(stackPane, 400, 350);
-        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/ride.css").toExternalForm());
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/ride.css").toExternalForm());
         modalStage.setScene(modalScene);
         modalStage.show();
     }
