@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import services.RequestService;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -49,15 +50,22 @@ public class RequestController {
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/request.css").toExternalForm());
         loadRequestsIntoFlowPane();
+
         setupNavigation();
+        URL cssURL = getClass().getResource("/taxi-managment/request.css");
+        if (cssURL == null) {
+            System.out.println("CSS file not found!");
+        } else {
+            System.out.println("CSS file found: " + cssURL.toExternalForm());
+        }
     }
 
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
-       // bookings_button.setOnAction(event -> loadScene("/bookings/bookings.fxml"));
-       // history_button.setOnAction(event -> loadScene("/history/history.fxml"));
-      //  logout_button.setOnAction(event -> logout());
+        // bookings_button.setOnAction(event -> loadScene("/bookings/bookings.fxml"));
+        // history_button.setOnAction(event -> loadScene("/history/history.fxml"));
+        // logout_button.setOnAction(event -> logout());
     }
 
     private void loadScene(String fxmlPath) {
@@ -91,7 +99,7 @@ public class RequestController {
     private VBox createRequestCard(Request request) {
         VBox requestCard = new VBox(10);
         requestCard.setPadding(new Insets(10));
-        requestCard.getStyleClass().add("Request-card");
+        requestCard.getStyleClass().add("request-card");
         requestCard.setAlignment(Pos.CENTER);
 
         // Create image and text box for request name
@@ -102,18 +110,20 @@ public class RequestController {
         HBox infoBox = new HBox(10);
         infoBox.setAlignment(Pos.CENTER_LEFT);
 
-        Label idLabel = new Label("ID: " + request.getIdRequest());
         Label arrivalLabel = new Label("Arrival: " + request.getArrivalLocation().getAddress());
         Label departureLabel = new Label("Departure: " + request.getDepartureLocation().getAddress());
         Label statusLabel = new Label("Status: " + request.getStatus());
 
-        idLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
         arrivalLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
         departureLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
         statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
 
-        infoBox.getChildren().addAll(idLabel, arrivalLabel, departureLabel, statusLabel);
+        infoBox.getChildren().addAll(arrivalLabel, departureLabel, statusLabel);
         requestCard.getChildren().add(infoBox);
+
+        // Add "Select" button for the request card
+        Button selectButton = createSelectButton(request);
+        requestCard.getChildren().add(selectButton);
 
         // Add event for mouse hover effect
         requestCard.setOnMouseExited(event -> {
@@ -128,7 +138,6 @@ public class RequestController {
 
         return requestCard;
     }
-
 
     private HBox createImageAndTextBox(Request request) {
         HBox hbox = new HBox(10);
@@ -172,21 +181,20 @@ public class RequestController {
         // Display request details in the modal
         VBox requestDetailsBox = new VBox(8);
 
-        // Add fields of the request entity
-        Label idLabel = new Label("Request ID: " + request.getIdRequest());
+        // Add only selected fields (Arrival and Departure Locations, Status, Date)
         Label arrivalLabel = new Label("Arrival Location: " + request.getArrivalLocation().getAddress());
         Label departureLabel = new Label("Departure Location: " + request.getDepartureLocation().getAddress());
         Label statusLabel = new Label("Status: " + request.getStatus());
         Label dateLabel = new Label("Date: " + request.getRequestDate().toString());
 
         // Apply styles to labels
-        idLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        arrivalLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        departureLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        arrivalLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
+        departureLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
+        statusLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
+        dateLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
 
-        requestDetailsBox.getChildren().addAll(idLabel, arrivalLabel, departureLabel, statusLabel, dateLabel);
+        // Add the selected labels to the VBox
+        requestDetailsBox.getChildren().addAll(arrivalLabel, departureLabel, statusLabel, dateLabel);
 
         // Close button for the modal
         Button closeButton = new Button("Close");
@@ -208,12 +216,11 @@ public class RequestController {
         modalStage.setScene(modalScene);
         modalStage.show();
     }
+
     private Button createSelectButton(Request request) {
         Button selectButton = new Button("Select");
         selectButton.getStyleClass().add("request-button"); // Optional: use a specific CSS class for request buttons
         selectButton.setOnAction(e -> openRequestDetails(request)); // Open request details when clicked
         return selectButton;
     }
-
-
 }

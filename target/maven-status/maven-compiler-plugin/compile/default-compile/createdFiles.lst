@@ -9,6 +9,7 @@ services\ReclamationService.class
 services\RatingService.class
 services\RelocationService.class
 services\RideService.class
+controllers\request\RequestController.class
 entities\Rating.class
 services\RequestService.class
 services\StationService.class
@@ -35,6 +36,7 @@ services\TrafficService$RouteResponse.class
 services\LocationService.class
 entities\Bicycle$STATUS.class
 services\TripService.class
+controllers\rides\RidesController.class
 entities\Location.class
 entities\Reclamation.class
 utils\DataBase.class

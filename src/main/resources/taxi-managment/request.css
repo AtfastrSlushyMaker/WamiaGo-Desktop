@@ -1,5 +1,5 @@
 
-#stationFlowPane {
+#requestFlowPane {
     -fx-padding: 0 0 0 0;  /* Adds space on top */
     -fx-hgap: 20px;
     -fx-vgap: 20px;
@@ -14,23 +14,29 @@
     -fx-font-family: Inter;
     -fx-padding: 10px;
     -fx-alignment: center;}
-.station-card {
-    -fx-background-color: #6BBF59; /* Fresh green */
+.request-card {
+    -fx-background-color: #FFC107; /* Yellow */
     -fx-background-radius: 12px; /* Rounded corners */
-    -fx-padding: 15px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 5); /* Floating shadow for card */
-    -fx-pref-width: 250px; /* Fixed card width */
-    -fx-min-width: 250px;
-    -fx-max-width: 250px;
+    -fx-padding: 30px; /* Increase padding for more space inside the card */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 5); /* Floating shadow */
+    -fx-pref-width: 350px; /* Increased width */
+    -fx-min-width: 350px; /* Minimum width */
+    -fx-max-width: 350px; /* Maximum width */
     -fx-alignment: center;
-    -fx-transition: transform 0.2s ease-in-out; /* Smooth transition */
+    -fx-transition: transform 0.2s ease-in-out;
+    -fx-height: 400px; /* Increased height */
 }
-.station-card:hover {
-    -fx-background-color: #4E9D3A
+.request-card Label {
+    -fx-font-size: 10px; /* Larger font size */
+    -fx-text-fill: white; /* White text color for contrast */
+    -fx-alignment: center; /* Center the text */
+}
+.request-card:hover {
+    -fx-background-color: #FFA000
 }
 
 /* Style for the station name */
-.station-name {
+.request-name {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
@@ -41,6 +47,13 @@
     -fx-ellipsize: middle;
     -fx-font-family: Inter;
 }
+.request-details-box {
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+    -fx-padding: 10px;
+    -fx-background-color: #444444;
+}
+
 
 /* Style for the bike count label */
 .station-bike-count {
@@ -51,8 +64,8 @@
 }
 
 /* Style for the select button */
-.station-button {
-    -fx-background-color: #6BBF59; /* Fresh green */
+.request-button {
+    -fx-background-color: #FFC10793; /* Fresh green */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 10px;
@@ -61,14 +74,14 @@
     -fx-border-width: 2px;
 }
 
-.station-button:hover {
-    -fx-background-color: #4E9D3A;
+.request-button:hover {
+    -fx-background-color: #FFC107;
 
     /* Lighter green on hover */
 }
 
 /* Add some margin to the ImageView */
-.station-image {
+.request-image {
     -fx-fit-width: 100px;
     -fx-fit-height: 100px;
     -fx-preserve-ratio: true;
