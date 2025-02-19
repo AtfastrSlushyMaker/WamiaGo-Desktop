@@ -218,7 +218,7 @@ public class RequestController {
     }
 
     private Button createSelectButton(Request request) {
-        Button selectButton = new Button("Select");
+        Button selectButton = new Button("Details");
         selectButton.getStyleClass().add("request-button"); // Optional: use a specific CSS class for request buttons
         selectButton.setOnAction(e -> openRequestDetails(request)); // Open request details when clicked
         return selectButton;
