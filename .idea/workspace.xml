@@ -5,19 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/AnnoucementClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/AnnoucementClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/AddAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/AnnoucementClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnoucementClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/AnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/EditAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/EditAnnouncementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Annoucement/UnifiedController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reservation/AddReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/AddReservationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/LocationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ReclamationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ReclamationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RideService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/MainRide.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/EditAnnouncement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/EditAnnouncement.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/addAnnouncement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/addAnnouncement.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementsStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementsStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements_client.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements_client.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Reservation/Front/Reservations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/Reservations.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Reservation/Front/addReservation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/addReservation.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reservation/Front/reservation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/reservation.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +35,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
         <option value="CSS File" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -86,10 +91,11 @@
     "Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "Relocation-management",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/WamiaGo_desktop/src/main/resources/images/station/icons",
+    "last_opened_file_path": "C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop/src/main/resources/Reservation/Front",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -105,6 +111,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\resources\Reservation\Front" />
+      <recent name="C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\resources\Relocation\Front" />
       <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\station\icons" />
       <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\station\front" />
     </key>
@@ -113,6 +121,8 @@
       <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\station\frontOffice" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="controllers.Relocation" />
+      <recent name="controllers.Reservation" />
       <recent name="controllers.Annoucement" />
     </key>
   </component>
@@ -188,8 +198,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19416.15" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19416.15" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
       </set>
     </attachedChunks>
   </component>
@@ -219,6 +229,8 @@
       <workItem from="1739890934517" duration="2426000" />
       <workItem from="1739893711924" duration="172000" />
       <workItem from="1739894034665" duration="1119000" />
+      <workItem from="1739953654862" duration="25957000" />
+      <workItem from="1739996551384" duration="13118000" />
     </task>
     <servers />
   </component>
@@ -229,6 +241,26 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationController.java</url>
+          <line>138</line>
+          <properties class="controllers.Reservation.ReservationController" method="openStationDetails">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/controllers/Announcement/EditAnnouncementController.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

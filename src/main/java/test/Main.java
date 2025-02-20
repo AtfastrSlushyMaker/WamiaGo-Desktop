@@ -84,7 +84,7 @@ public class Main {
             //  Ajout d'une nouvelle réservation
             Reservation newReservation = new Reservation();
             newReservation.setDate(Timestamp.valueOf(LocalDateTime.now()));
-            newReservation.setStatus(Reservation.Status.CONFIRMED);
+            //newReservation.setStatus(Reservation.Status.CONFIRMED);
             newReservation.setDescription(" pidev");
 
             newReservation.setStartLocation(new Location());
@@ -141,7 +141,7 @@ public class Main {
 
             // Utiliser un ID de réservation existant
             newRelocation.setReservation(new Reservation());
-            newRelocation.getReservation().setIdReservation(71);
+            newRelocation.getReservation().setIdReservation(76);
 
             relocationService.create(newRelocation);
             //System.out.println(" Relocation added successfully!");

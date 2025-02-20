@@ -23,7 +23,8 @@ public class ReclamationService implements IService<Reclamation> {
             pstmt.setInt(1, reclamation.getUser().getId());
             pstmt.setString(2, reclamation.getContent());
             pstmt.setTimestamp(3, new java.sql.Timestamp(reclamation.getDate().getTime()));
-            pstmt.setInt(4, reclamation.getStatus());
+            //pstmt.setInt(4, reclamation.getStatus());
+            pstmt.setInt(4, 0);
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {

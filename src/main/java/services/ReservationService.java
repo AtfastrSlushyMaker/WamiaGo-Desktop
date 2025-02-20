@@ -42,7 +42,7 @@ public class ReservationService implements IService<Reservation> {
         String sql = "INSERT INTO reservation (date, status, description, id_start_location, id_end_location, id_announcement) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setObject(1, reservation.getDate());
-            preparedStatement.setString(2, reservation.getStatus().toString());
+            preparedStatement.setString(2, "ON_GOING");
             preparedStatement.setString(3, reservation.getDescription());
             preparedStatement.setInt(4, reservation.getStartLocation().getId());
             preparedStatement.setInt(5, reservation.getEndLocation().getId());
@@ -80,6 +80,14 @@ public class ReservationService implements IService<Reservation> {
 
             preparedStatement.executeUpdate();
             System.out.println("Réservation mise à jour avec succès.");
+        }
+    }
+    public void updateStatus(int idReservation, Reservation.Status status) throws SQLException {
+        String sql = "UPDATE reservation SET status = ? WHERE id_reservation = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, status.toString());
+            preparedStatement.setInt(2, idReservation);
+            preparedStatement.executeUpdate();
         }
     }
 

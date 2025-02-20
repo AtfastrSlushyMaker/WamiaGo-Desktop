@@ -1,4 +1,4 @@
-package controllers.Annoucement;
+package controllers.Announcement;
 
 import controllers.Reservation.ReservationController;
 import entities.Announcement;

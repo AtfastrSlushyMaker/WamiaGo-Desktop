@@ -1,18 +1,16 @@
-
-package controllers.Annoucement;
+package controllers.Announcement;
 
 import entities.Announcement;
 import entities.Driver;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import services.AnnouncementService;
-import org.controlsfx.control.Notifications;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import org.controlsfx.control.Notifications;
 
-public class EditAnnouncementController {
+public class AddAnnouncementController {
 
     @FXML
     private TextField titleField;
@@ -33,9 +31,10 @@ public class EditAnnouncementController {
     private Button cancelButton;
 
     private AnnouncementService announcementService;
-    private Announcement announcementToEdit;
 
-    public EditAnnouncementController() {
+    private Label messageLabel;
+
+    public AddAnnouncementController() {
         this.announcementService = new AnnouncementService();
     }
 
@@ -46,20 +45,20 @@ public class EditAnnouncementController {
         }
     }
 
-    public void setAnnouncementToEdit(Announcement announcement) {
-        this.announcementToEdit = announcement;
-        // Remplir les champs avec les données de l'annonce à modifier
-        titleField.setText(announcement.getTitle());
-        contentField.setText(announcement.getContent());
-        zoneComboBox.setValue(announcement.getZone());
-        statusCheckBox.setSelected(announcement.getStatus());
-    }
+
+
+
 
     @FXML
     public void handleCancelButtonAction() {
         // Fermer la fenêtre actuelle
-        ((Stage) cancelButton.getScene().getWindow()).close();
+        //((Stage) cancelButton.getScene().getWindow()).close();
+        titleField.clear();
+        contentField.clear();
+        zoneComboBox.getSelectionModel().clearSelection();
+        statusCheckBox.setSelected(false);
     }
+
 
     @FXML
     public void handleSubmitButtonAction() {
@@ -70,34 +69,50 @@ public class EditAnnouncementController {
             Announcement.Zone zone = zoneComboBox.getValue();
             boolean status = statusCheckBox.isSelected();
 
-            // Mettre à jour l'objet Announcement
-            announcementToEdit.setTitle(title);
-            announcementToEdit.setContent(content);
-            announcementToEdit.setZone(zone);
-            announcementToEdit.setStatus(status);
-            announcementToEdit.setDate(Timestamp.valueOf(LocalDateTime.now()));
+            // Créer un objet Announcement
+            Announcement announcement = new Announcement();
+            announcement.setTitle(title);
+            announcement.setContent(content);
+            announcement.setZone(zone);
+            announcement.setStatus(status);
+            announcement.setDate(Timestamp.valueOf(LocalDateTime.now()));
 
+            // Attribuer l'ID du transporteur (ici, on utilise l'ID 7 pour tester)
             Driver transporter = new Driver();
             transporter.setIdDriver(7);  // ID du transporteur
-            announcementToEdit.setTransporter(transporter);
-            // Mettre à jour l'annonce via le service
-            announcementService.update(announcementToEdit);
+            announcement.setTransporter(transporter);
+
+            // Ajouter l'annonce via le service
+            announcementService.create(announcement);
 
             // Afficher une notification de type "toast"
             Notifications.create()
                     .title("Success")
-                    .text("The announcement has been updated successfully.")
+                    .text("The announcement has been added successfully.")
                     .showInformation();
 
-            // Fermer la fenêtre
-            ((Stage) submitButton.getScene().getWindow()).close();
+
+            // Réinitialiser les champs
+            titleField.clear();
+            contentField.clear();
+            zoneComboBox.getSelectionModel().clearSelection();
+            statusCheckBox.setSelected(false);
 
         } catch (Exception e) {
             // Afficher une notification d'erreur
             Notifications.create()
                     .title("Error")
-                    .text("An error occurred while updating the announcement: " + e.getMessage())
+                    .text("An error occurred while adding the announcement: " + e.getMessage())
                     .showError();
+
         }
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

@@ -15,7 +15,7 @@
     -fx-padding: 10px;
     -fx-alignment: center;}
 .station-card {
-    -fx-background-color: #E57373;; /* Fresh green */
+    -fx-background-color: #6BBF59; /* Fresh green */
     -fx-background-radius: 12px; /* Rounded corners */
     -fx-padding: 15px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 5); /* Floating shadow for card */
@@ -127,25 +127,7 @@
     -fx-background-color: #ff4444;
 }
 
-.button {
-    -fx-background-color: #4CAF50; /* Green */
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 5px 10px;
-    -fx-border-radius: 5px;
-}
 
-.button:hover {
-    -fx-background-color: #45a049;
-}
-
-.delete-button {
-    -fx-background-color: #f44336; /* Red */
-}
-
-.delete-button:hover {
-    -fx-background-color: #d32f2f;
-}
 
 
 

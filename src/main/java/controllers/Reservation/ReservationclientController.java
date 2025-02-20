@@ -1,31 +1,27 @@
 package controllers.Reservation;
 
 import entities.Reservation;
-import entities.Station;
-import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.ReservationService;
 import services.StationService;
-import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import services.UserService;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
-public class ReservationController {
+public class ReservationclientController {
     @FXML
     private Button bookings_button, history_button, home_button, logout_button, rides_button;
     @FXML

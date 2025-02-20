@@ -1,8 +1,6 @@
 package controllers.Reservation;
 
 import entities.Reservation;
-import entities.Station;
-import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -14,18 +12,15 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.ReservationService;
-import services.StationService;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
-import services.UserService;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 
-public class ReservationController {
+public class ReservationTransporterController {
     @FXML
     private Button bookings_button, history_button, home_button, logout_button, rides_button;
     @FXML
@@ -34,7 +29,6 @@ public class ReservationController {
     private FlowPane stationFlowPane;
 
     private final ReservationService reservationService = new ReservationService();
-    private final StationService stationService = new StationService();
 
     @FXML
     public void initialize() {
@@ -61,8 +55,8 @@ public class ReservationController {
 
     private void loadStationsIntoFlowPane() {
         try {
-            for (Reservation station : reservationService.read()) {
-                VBox stationCard = createStationCard(station);
+            for (Reservation reservation : reservationService.read()) {
+                VBox stationCard = createStationCard(reservation);
                 stationFlowPane.getChildren().add(stationCard);
             }
         } catch (Exception e) {
@@ -70,34 +64,40 @@ public class ReservationController {
         }
     }
 
-    private VBox createStationCard(Reservation station) {
+    private VBox createStationCard(Reservation reservation) {
         VBox stationCard = new VBox(10);
         stationCard.setPadding(new Insets(10));
         stationCard.getStyleClass().add("station-card");
         stationCard.setAlignment(Pos.CENTER);
 
-        HBox imageAndTextBox = createImageAndTextBox(station);
+        HBox imageAndTextBox = createImageAndTextBox(reservation);
 
-        Label localDate = new Label("Date: " + station.getDate());
-        Label status = new Label("Status: " + station.getStatus());
-        Label description = new Label("Description: " + station.getDescription());
-        Label startLocation = new Label("Start: " + station.getStartLocation().getAddress());
-        Label endLocation = new Label("End: " + station.getEndLocation().getAddress());
+        Label localDate = new Label("Date: " + reservation.getDate());
+        Label status = new Label("Status: " + reservation.getStatus());
+        Label description = new Label("Description: " + reservation.getDescription());
+        Label startLocation = new Label("Start: " + reservation.getStartLocation().getAddress());
+        Label endLocation = new Label("End: " + reservation.getEndLocation().getAddress());
 
-        //Label transporteur = new Label("Transporter: " + new UserService().getById(station.getAnnouncement().getTransporter().getIdDriver());
+        Button selectButton = createSelectButton(reservation);
 
-        Button selectButton = createSelectButton(station);
+        Button acceptButton = new Button("Accept");
+        acceptButton.setOnAction(e -> handleAccept(reservation));
 
-        Button editButton = new Button("Edit");
-        editButton.setOnAction(e -> editReservation(station));
+        Button refuseButton = new Button("Refuse");
+        refuseButton.setOnAction(e -> handleRefuse(reservation));
 
-        Button deleteButton = new Button("Delete");
-        deleteButton.setOnAction(e -> deleteReservation(station));
-
-        HBox buttonBox = new HBox(10, editButton, deleteButton);
+        HBox buttonBox = new HBox(10, acceptButton, refuseButton);
         buttonBox.setAlignment(Pos.CENTER);
 
         stationCard.getChildren().addAll(imageAndTextBox, localDate, status, description, startLocation, endLocation, selectButton, buttonBox);
+
+        // Désactiver les boutons si la réservation est déjà traitée
+        if (reservation.getStatus() == Reservation.Status.CANCELLED || reservation.getStatus() == Reservation.Status.COMPLETED) {
+            stationCard.setStyle("-fx-opacity: 0.5;"); // Griser la carte
+            selectButton.setDisable(true);
+            acceptButton.setDisable(true);
+            refuseButton.setDisable(true);
+        }
 
         stationCard.setOnMouseEntered(event -> {
             stationCard.setScaleX(1.05);
@@ -112,7 +112,7 @@ public class ReservationController {
         return stationCard;
     }
 
-    private HBox createImageAndTextBox(Reservation station) {
+    private HBox createImageAndTextBox(Reservation reservation) {
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);
 
@@ -120,7 +120,7 @@ public class ReservationController {
         stationImage.setFitWidth(50);
         stationImage.setFitHeight(50);
 
-        Text nameText = new Text(station.getAnnouncement().getTitle());
+        Text nameText = new Text(reservation.getAnnouncement().getTitle());
         nameText.setWrappingWidth(180);
         nameText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #FFFFFF;");
 
@@ -129,16 +129,16 @@ public class ReservationController {
         return hbox;
     }
 
-    private Button createSelectButton(Reservation station) {
+    private Button createSelectButton(Reservation reservation) {
         Button selectButton = new Button("Select");
         selectButton.getStyleClass().add("station-button");
-        selectButton.setOnAction(e -> openStationDetails(station));
+        selectButton.setOnAction(e -> openStationDetails(reservation));
         return selectButton;
     }
 
-    private void openStationDetails(Reservation station) {
+    private void openStationDetails(Reservation reservation) {
         Stage modalStage = new Stage();
-        modalStage.setTitle(station.getAnnouncement().getTitle());
+        modalStage.setTitle(reservation.getAnnouncement().getTitle());
 
         StackPane stackPane = new StackPane();
         stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
@@ -147,22 +147,22 @@ public class ReservationController {
         modalLayout.setPadding(new Insets(20));
         modalLayout.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px;");
 
-        Label titleLabel = new Label("Detail for: " + station.getAnnouncement().getTitle());
+        Label titleLabel = new Label("Detail for: " + reservation.getAnnouncement().getTitle());
         titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label localDate = new Label("Date: " + station.getDate());
+        Label localDate = new Label("Date: " + reservation.getDate());
         localDate.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label status = new Label("Status: " + station.getStatus());
+        Label status = new Label("Status: " + reservation.getStatus());
         status.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label description = new Label("Description: " + station.getDescription());
+        Label description = new Label("Description: " + reservation.getDescription());
         description.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label startLocation = new Label("Start: " + station.getStartLocation().getAddress());
+        Label startLocation = new Label("Start: " + reservation.getStartLocation().getAddress());
         startLocation.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label endLocation = new Label("End: " + station.getEndLocation().getAddress());
+        Label endLocation = new Label("End: " + reservation.getEndLocation().getAddress());
         endLocation.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
 
         Button closeButton = new Button("Close");
@@ -181,20 +181,15 @@ public class ReservationController {
         modalStage.show();
     }
 
-    private void editReservation(Reservation reservation) {
-        // Création du Dialog personnalisé
+    private void handleAccept(Reservation reservation) {
+        // Création du formulaire pour l'ajout d'une relocalisation
         Dialog<Reservation> dialog = new Dialog<>();
-        dialog.setTitle("Edit Reservation");
-        dialog.setHeaderText("Modify reservation details");
+        dialog.setTitle("Accept Reservation");
+        dialog.setHeaderText("Enter relocation details");
 
         // Création des champs de saisie
-        DatePicker datePicker = new DatePicker(reservation.getDate().toLocalDateTime().toLocalDate()); // Convertir Timestamp en LocalDate
-        ComboBox<String> statusComboBox = new ComboBox<>();
-//        statusComboBox.getItems().addAll("Pending", "Confirmed", "Cancelled");
-//        statusComboBox.setValue(reservation.getStatus());
-        TextField descriptionField = new TextField(reservation.getDescription());
-        TextField startLocationField = new TextField(reservation.getStartLocation().getAddress());
-        TextField endLocationField = new TextField(reservation.getEndLocation().getAddress());
+        DatePicker datePicker = new DatePicker(LocalDate.now());
+        TextField costField = new TextField();
 
         // Ajout des champs au Dialog
         GridPane grid = new GridPane();
@@ -202,14 +197,8 @@ public class ReservationController {
         grid.setVgap(10);
         grid.add(new Label("Date:"), 0, 0);
         grid.add(datePicker, 1, 0);
-        grid.add(new Label("Status:"), 0, 1);
-        grid.add(statusComboBox, 1, 1);
-        grid.add(new Label("Description:"), 0, 2);
-        grid.add(descriptionField, 1, 2);
-        grid.add(new Label("Start Location:"), 0, 3);
-        grid.add(startLocationField, 1, 3);
-        grid.add(new Label("End Location:"), 0, 4);
-        grid.add(endLocationField, 1, 4);
+        grid.add(new Label("Cost:"), 0, 1);
+        grid.add(costField, 1, 1);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -220,11 +209,8 @@ public class ReservationController {
         // Conversion des résultats en objet Reservation
         dialog.setResultConverter(buttonType -> {
             if (buttonType == saveButtonType) {
-                // Mettre à jour les champs de la réservation
-                reservation.setDate(Timestamp.valueOf(datePicker.getValue().atStartOfDay())); // Convertir LocalDate en Timestamp
-                //reservation.setStatus(statusComboBox.getValue());
-                reservation.setDescription(descriptionField.getText());
-                // Ne pas mettre à jour les adresses directement, car ce sont des objets complexes
+                // Mettre à jour le statut de la réservation
+                reservation.setStatus(Reservation.Status.COMPLETED);
                 return reservation;
             }
             return null;
@@ -233,44 +219,37 @@ public class ReservationController {
         // Affichage du Dialog et gestion de la réponse
         Optional<Reservation> result = dialog.showAndWait();
         result.ifPresent(updatedReservation -> {
-            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmAlert.setTitle("Confirm Update");
-            confirmAlert.setHeaderText("Are you sure you want to update this reservation?");
-            confirmAlert.setContentText("This action cannot be undone.");
-
-            Optional<ButtonType> confirmResult = confirmAlert.showAndWait();
-            if (confirmResult.isPresent() && confirmResult.get() == ButtonType.OK) {
-                try {
-                    reservationService.update(updatedReservation);
-                    refreshReservations();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("An error occurred while updating the reservation.");
-                    alert.setContentText(e.getMessage());
-                    alert.showAndWait();
-                }
+            try {
+                reservationService.update(updatedReservation);
+                refreshReservations();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("An error occurred while updating the reservation.");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
             }
         });
     }
 
-    private void deleteReservation(Reservation reservation) {
+    private void handleRefuse(Reservation reservation) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Reservation");
-        alert.setHeaderText("Are you sure you want to delete this reservation?");
+        alert.setTitle("Refuse Reservation");
+        alert.setHeaderText("Are you sure you want to refuse this reservation?");
         alert.setContentText("This action cannot be undone.");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                reservationService.delete(reservation.getIdReservation());
+                reservation.setStatus(Reservation.Status.CANCELLED);
+                reservationService.update(reservation);
                 refreshReservations();
             } catch (SQLException e) {
                 e.printStackTrace();
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setTitle("Error");
-                errorAlert.setHeaderText("An error occurred while deleting the reservation.");
+                errorAlert.setHeaderText("An error occurred while refusing the reservation.");
                 errorAlert.setContentText(e.getMessage());
                 errorAlert.showAndWait();
             }
