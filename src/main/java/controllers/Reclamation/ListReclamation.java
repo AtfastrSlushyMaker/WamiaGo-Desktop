@@ -1,5 +1,6 @@
 package controllers.Reclamation;
 
+import controllers.Response.AddResponse;
 import entities.Reclamation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +38,9 @@ public class ListReclamation {
     @FXML
     private Button btn_workbench11;
 
+    @FXML
+    private Button responseButton;
+
     private final ReclamationService reclamationService;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -53,6 +57,7 @@ public class ListReclamation {
         deleteButton.setOnAction(e -> handleDelete());
         home_button.setOnAction(this::navigateToHome);
         btn_workbench11.setOnAction(this::navigateToRide);
+        responseButton.setOnAction(this::handleResponse);
 
         // Add double-click handler for update
         reclamationListView.setOnMouseClicked(event -> {
@@ -63,9 +68,6 @@ public class ListReclamation {
                 }
             }
         });
-
-
-
 
         // Add delete key handler
         reclamationListView.setOnKeyPressed(event -> {
@@ -167,9 +169,6 @@ public class ListReclamation {
         }
     }
 
-
-
-
     private void navigateToRide(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/rides/rides.fxml"));
@@ -226,6 +225,32 @@ public class ListReclamation {
                 }
             }
         });
+    }
+
+    @FXML
+    private void handleResponse(ActionEvent event) {
+        Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
+        if (selectedReclamation == null) {
+            showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to respond to");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Response/AddResponse.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller and pass the reclamation data
+            controllers.Response.AddResponse responseController = loader.getController();
+            responseController.initData(selectedReclamation);
+
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Navigation failed");
+            e.printStackTrace();
+        }
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {

@@ -10,6 +10,7 @@ public class Reclamation {
     private String content;
     private Timestamp date;
     private int status;
+    private Response response;
 
     public Reclamation(int idReclamation, User user, String title, String content, Timestamp date, int status) {
         this.idReclamation = idReclamation;
@@ -18,6 +19,7 @@ public class Reclamation {
         this.content = content;
         this.date = date;
         this.status = status;
+        this.response = null;
     }
 
     public Reclamation() {
@@ -27,6 +29,7 @@ public class Reclamation {
         this.content = "";
         this.date = new Timestamp(System.currentTimeMillis());
         this.status = 0;
+        this.response = null;
     }
 
     public Reclamation(User user, String title, String content, Timestamp date, int status) {
@@ -35,6 +38,7 @@ public class Reclamation {
         this.content = content;
         this.date = date;
         this.status = status;
+        this.response = null;
     }
 
     public int getIdReclamation() {
@@ -61,6 +65,10 @@ public class Reclamation {
         return status;
     }
 
+    public Response getResponse() {
+        return response;
+    }
+
     public void setIdReclamation(int idReclamation) {
         this.idReclamation = idReclamation;
     }
@@ -85,6 +93,13 @@ public class Reclamation {
         this.status = status;
     }
 
+    public void setResponse(Response response) {
+        this.response = response;
+        if (response != null && response.getReclamation() != this) {
+            response.setReclamation(this);
+        }
+    }
+
     @Override
     public String toString() {
         return "Reclamation{" +
@@ -94,6 +109,7 @@ public class Reclamation {
                 ", content='" + content + '\'' +
                 ", date=" + date +
                 ", status=" + status +
+                ", hasResponse=" + (response != null) +
                 '}';
     }
 

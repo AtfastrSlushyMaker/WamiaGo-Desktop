@@ -100,7 +100,7 @@
 .E-Bicycle_quick { -fx-background-color: #6BBF59; } /* Green */
 
 /* Hover Effects */
-.taxi_quick:hover { -fx-background-color: #FFA000; }
+.taxi_quick:hover { -fx-background-color: #FFA000;-fx-border-color:#FFA010 }
 .Relocation_quick:hover { -fx-background-color: #D32F2F; }
 .E-Bicycle_quick:hover { -fx-background-color: #4E9D3A; }
 
@@ -212,29 +212,4 @@
     -fx-scale-x: 1.03;
     -fx-scale-y: 1.03;
     -fx-transition: all 0.3s ease-in-out;
-}
-
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.button:hover {
-    background-color: #0056b3;
-}
-
-
-.button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
 }

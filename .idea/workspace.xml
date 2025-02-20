@@ -5,31 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/AddReclamation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/ListReclamation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/UpdateReclamation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/AddReclamation.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/AddReclamation.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/UpdateReclamation.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons/Status.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons/newfeedback.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons/userRec_add.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/ListReclamation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/ListReclamation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/entities/Reclamation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Reclamation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/ReclamationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ReclamationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ResponseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ResponseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reclamation/AddReclamation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/AddReclamation.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reclamation/AddReclamation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/AddReclamation.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,12 +46,12 @@
     &quot;assignee&quot;: &quot;walaaghrairi&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git",
-    "accountId": "1f6687d3-54c2-4756-9e4a-372c3b9f3f90"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git&quot;,
+    &quot;accountId&quot;: &quot;1f6687d3-54c2-4756-9e4a-372c3b9f3f90&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -102,7 +87,7 @@
     "git-widget-placeholder": "Reclamation-management",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Pidev/src/main/resources/dashboard",
+    "last_opened_file_path": "C:/Pidev/src/main/resources/Response",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -117,7 +102,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Pidev\src\main\resources\Response" />
       <recent name="C:\Pidev\src\main\resources\dashboard" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Pidev\src\main\resources\Response" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Home">
