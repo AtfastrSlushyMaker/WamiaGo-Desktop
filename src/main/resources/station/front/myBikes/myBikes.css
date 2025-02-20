@@ -1,0 +1,65 @@
+#rent_button {
+    -fx-background-color: #E57373;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-font-family: Inter;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
+}
+#rent_button:hover {
+    -fx-background-color: #D32F2F;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 10, 0, 0, 2);
+}
+/* ListView general styling */
+/* styles.css */
+
+/* Style for the ListView */
+.list-view {
+    -fx-background-color: #f4f4f4; /* Light gray background */
+    -fx-border-color: #ccc; /* Light gray border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-padding: 10px;
+    -fx-margin: 10px 0; /* Margin around the ListView */
+}
+
+/* Style for each item in the ListView */
+.list-cell {
+    -fx-background-color: #fff; /* White background for each item */
+    -fx-border-color: #ddd; /* Light gray border for each item */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px; /* Rounded corners for each item */
+    -fx-padding: 10px;
+    -fx-margin: 5px 0; /* Margin between items */
+}
+.list-cell:empty {
+    -fx-background-color: transparent; /* Transparent background for empty items */
+}
+
+/* Style for the selected item in the ListView */
+.list-cell:filled:selected {
+    -fx-background-color: #0078d7; /* Blue background for selected item */
+    -fx-text-fill: white; /* White text for selected item */
+}
+
+/* Style for the hovered item in the ListView */
+.list-cell:filled:hover {
+    -fx-background-color: #e0e0e0; /* Light gray background for hovered item */
+}
+
+/* Style for the buttons inside the ListView items */
+.list-cell .button {
+    -fx-background-color: #0078d7; /* Blue background for buttons */
+    -fx-text-fill: white; /* White text for buttons */
+    -fx-border-radius: 3px; /* Rounded corners for buttons */
+    -fx-padding: 5px 10px; /* Padding for buttons */
+}
+
+/* Style for the buttons when hovered */
+.list-cell .button:hover {
+    -fx-background-color: #005bb5; /* Darker blue background for hovered buttons */
+}
