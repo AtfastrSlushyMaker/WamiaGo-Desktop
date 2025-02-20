@@ -10,8 +10,9 @@ public class Home extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //Parent root = FXMLLoader.load(getClass().getResource("/Reclamation/ListReclamation.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("/user/login.fxml"));
-       // Parent root = FXMLLoader.load(getClass().getResource("/dashboard/dashboard.fxml"));
+       //Parent root = FXMLLoader.load(getClass().getResource("/dashboard/dashboard.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Wamia Go - Welcome!");
         primaryStage.setResizable(false);

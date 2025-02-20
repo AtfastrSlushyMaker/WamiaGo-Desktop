@@ -41,9 +41,8 @@
     -fx-transition: all 0.3s ease-in-out;
 }
 
-#UserLabel {
 
-}
+
 
 
 
@@ -95,47 +94,6 @@
     -fx-border-color: #5A6BE5;
 }
 
-/* Carpooling Card Fix */
-.carpool-quick {
-    -fx-background-color: #85A9FF; /* Soft Blue */
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-color: white;
-    -fx-border-width: 2px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
-}
-
-/* Carpooling Hover Effect */
-.carpool-quick:hover {
-    -fx-background-color: #5A6BE5; /* Darker shade */
-}
-
-/* Carpooling Click Effect */
-.carpool-quick:pressed {
-    -fx-background-color: #3F6EDD;
-}
-
-/* Quick Action Cards */
-.card-quick {
-    -fx-background-radius: 16px;
-    -fx-border-radius: 16px;
-    -fx-border-width: 2px;
-    -fx-border-color: white;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
-}
-
-.card-quick:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);
-}
-
-/* Quick Action Buttons */
-.taxi_quick, .Relocation_quick, .E-Bicycle_quick {
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-color: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
-}
 
 .taxi_quick { -fx-background-color: #FFC107; } /* Yellow */
 .Relocation_quick { -fx-background-color: #E57373; } /* Red */
@@ -148,7 +106,7 @@
 
 /* Action Buttons */
 .action-button {
-
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-padding: 10px 20px;
@@ -172,7 +130,6 @@
 }
 
 .carpooling-action-button {
-    -fx-font-size: 16px;
     -fx-background-color: #85A9FF ;
     -fx-border-color: white;
 }
@@ -229,25 +186,30 @@
     -fx-background-color: #2D2F33; /* Keep same dark gray */
     -fx-background-radius: 0 40px 0 0; /* Smooth rounded top-right */
 }
-#StatusAdd{
-    -fx-text-fill: black;  /* Black font color */
-    -fx-font-weight: bold; /* Bold text */
-}
 
-.context-menu {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1px;
-    -fx-padding: 5px;
-}
+#Titre{
 
-.menu-item {
-    -fx-text-fill: #333333;
-    -fx-font-size: 14px;
+    -fx-font-size: 27px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5A6BE5;
+    -fx-background-color: #f5f5f5;
     -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #5A6BE5;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-min-width: 150px;
+    -fx-max-width: 200px;
 }
-
-.menu-item:hover {
-    -fx-background-color: #f0f0f0;
+#Titre{
+    -fx-background-color: transparent;
+    -fx-padding: 15px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.15), 8, 0, 2, 2);
 }
-
+#Titre:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 12, 0.3, 0, 0);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-transition: all 0.3s ease-in-out;
+}

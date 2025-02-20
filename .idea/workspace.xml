@@ -5,9 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/AddReclamation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/ListReclamation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/UpdateReclamation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/AddReclamation.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/AddReclamation.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/UpdateReclamation.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons/Status.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons/newfeedback.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons/userRec_add.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RideService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Reclamation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Reclamation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ReclamationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ReclamationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,12 +61,12 @@
     &quot;assignee&quot;: &quot;walaaghrairi&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git&quot;,
-    &quot;accountId&quot;: &quot;d97ce61e-b7a1-4193-b1e5-0c7119f3fde6&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git",
+    "accountId": "1f6687d3-54c2-4756-9e4a-372c3b9f3f90"
   }
-}</component>
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -77,26 +99,31 @@
     "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Reclamation-management",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/farah/Downloads/Fruits-Market-master",
+    "last_opened_file_path": "C:/Pidev/src/main/resources/dashboard",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "MavenSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Pidev\src\main\resources\dashboard" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.Home">
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="Pidev3a11" />
+      <module name="Pidev3a10" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
@@ -159,8 +186,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
-        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -190,6 +217,7 @@
       <workItem from="1739895110015" duration="2640000" />
       <workItem from="1739898136784" duration="3265000" />
       <workItem from="1739903249076" duration="1548000" />
+      <workItem from="1739982982365" duration="9338000" />
     </task>
     <servers />
   </component>
