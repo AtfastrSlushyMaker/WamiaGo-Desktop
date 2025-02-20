@@ -3,9 +3,11 @@ package controllers.taxi.driverside.request;
 import entities.Driver;
 import entities.Request;
 import entities.User;
+import entities.Ride;  // Ensure your Ride entity is imported
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -19,9 +21,12 @@ import javafx.stage.Stage;
 import services.DriverService;
 import services.RequestService;
 import services.UserService;
+import services.RideService;  // Import your RideService
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class RequestController {
@@ -51,54 +56,49 @@ public class RequestController {
 
     private final RequestService requestService = new RequestService();
     private final UserService userService = new UserService();
+    private final DriverService driverService = new DriverService();
+    private final RideService rideService = new RideService();  // Ride service instance
 
-    private Driver currentDriver; // Chauffeur utilisé pour tester
+    // Class-level field to hold the current driver.
+    private Driver currentDriver;
 
+    @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/request.css").toExternalForm());
 
-
-
-        UserService userService = new UserService();
-        DriverService driverService = new DriverService();
-
         try {
-            // Assuming you get the logged-in user (this could be from session or context)
-            User loggedInUser = userService.getById(2);  // Example: fetch user with ID = 2
+            // Retrieve the logged-in user. (For testing, using a hard-coded ID)
+            User loggedInUser = userService.getById(2);
 
-            // Check if the user has an associated driver
-            Driver currentDriver = driverService.getById(loggedInUser.getId());  // Adjust based on how you get a driver for the user
+            // Assign the driver to the class-level field.
+            currentDriver = driverService.getById(loggedInUser.getId());
 
             if (currentDriver != null) {
-                // The user is also a driver, so we can proceed to driver-specific logic
                 System.out.println("User is also a driver. Initializing driver-specific logic.");
                 loadRequestsIntoFlowPane();
                 setupNavigation();
             } else {
-                // The user does not have a driver role, handle it as a regular user
                 System.out.println("User is not a driver.");
-                // You can display a message or navigate to a regular user interface
+                // Optionally handle non-driver users.
             }
         } catch (SQLException e) {
-            System.err.println("Erreur SQL lors de la récupération du chauffeur : " + e.getMessage());
+            System.err.println("SQL error while retrieving the driver: " + e.getMessage());
             e.printStackTrace();
         }
-
-        loadRequestsIntoFlowPane();
-        setupNavigation();
     }
 
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
+        See_you_Rides_button.setOnAction(event -> loadScene("/ride.fxml"));
     }
 
     private void loadScene(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
+            Parent rootScene = loader.load();
             Stage stage = (Stage) home_button.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setScene(new Scene(rootScene));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -106,13 +106,15 @@ public class RequestController {
 
     private void loadRequestsIntoFlowPane() {
         try {
-            List<Request> requests = requestService.read(); // Récupérer toutes les demandes
-
-            requestFlowPane.getChildren().clear(); // Nettoyer avant d'ajouter de nouvelles cartes
+            List<Request> requests = requestService.read(); // Retrieve all requests
+            requestFlowPane.getChildren().clear(); // Clear existing cards
 
             for (Request request : requests) {
-                VBox requestCard = createRequestCard(request);
-                requestFlowPane.getChildren().add(requestCard);
+                // Only display requests that are not accepted.
+                if (request.getStatus() != Request.RequestStatus.ACCEPTED) {
+                    VBox requestCard = createRequestCard(request);
+                    requestFlowPane.getChildren().add(requestCard);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -125,26 +127,23 @@ public class RequestController {
         requestCard.getStyleClass().add("request-card");
         requestCard.setAlignment(Pos.CENTER);
 
-        // Crée la boîte avec l'image et le texte du statut
         HBox imageAndTextBox = createImageAndTextBox(request);
         requestCard.getChildren().add(imageAndTextBox);
 
-        // Création des labels de date et autres détails
         Label dateLabel = new Label("Date: " + request.getRequestDate().toString());
         dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
         requestCard.getChildren().add(dateLabel);
 
-        // Création des boutons
+        // Create buttons: Accept and Details.
         Button acceptButton = createAcceptButton(request);
-        Button selectButton = createSelectButton(request);  // Ajout du bouton "Details"
+        Button selectButton = createSelectButton(request);
 
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(acceptButton, selectButton);  // Ajout du bouton "Details" dans la même ligne
-
+        buttonContainer.getChildren().addAll(acceptButton, selectButton);
         requestCard.getChildren().add(buttonContainer);
 
-        // Effet de survol
+        // Hover effects.
         requestCard.setOnMouseExited(event -> {
             requestCard.setScaleX(1);
             requestCard.setScaleY(1);
@@ -156,7 +155,6 @@ public class RequestController {
 
         return requestCard;
     }
-
 
     private HBox createImageAndTextBox(Request request) {
         HBox hbox = new HBox(10);
@@ -171,28 +169,37 @@ public class RequestController {
         Text statusText = new Text("Status: " + request.getStatus());
         statusText.setWrappingWidth(180);
         statusText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #FFFFFF;");
-
         HBox.setHgrow(statusText, Priority.ALWAYS);
-        hbox.getChildren().addAll(requestImage, statusText);
 
+        hbox.getChildren().addAll(requestImage, statusText);
         return hbox;
     }
 
+    // Accept button: opens the duration modal if the request is not already accepted.
     private Button createAcceptButton(Request request) {
         Button acceptButton = new Button("Accept");
         acceptButton.getStyleClass().add("request-button");
+
+        // Disable the button if the request is already accepted.
+        if (request.getStatus() == Request.RequestStatus.ACCEPTED) {
+            acceptButton.setDisable(true);
+        }
         acceptButton.setOnAction(event -> {
-            try {
-                // Utiliser le type correct de currentDriver, sans le caster
-                requestService.acceptRequest(request, currentDriver);  // Passer un vrai chauffeur
-                loadRequestsIntoFlowPane();  // Rafraîchir après acceptation
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (request.getStatus() != Request.RequestStatus.ACCEPTED) {
+                openDurationModal(request);
+            } else {
+                System.out.println("Request already accepted.");
             }
         });
         return acceptButton;
     }
 
+    private Button createSelectButton(Request request) {
+        Button selectButton = new Button("Details");
+        selectButton.getStyleClass().add("request-button");
+        selectButton.setOnAction(e -> openRequestDetails(request));
+        return selectButton;
+    }
 
     private void openRequestDetails(Request request) {
         Stage modalStage = new Stage();
@@ -239,10 +246,62 @@ public class RequestController {
         modalStage.setScene(modalScene);
         modalStage.show();
     }
-    private Button createSelectButton(Request request) {
-        Button selectButton = new Button("Details");
-        selectButton.getStyleClass().add("request-button");
-        selectButton.setOnAction(e -> openRequestDetails(request));
-        return selectButton;
+
+    // Modal to input the ride duration.
+    // After submitting, a new Ride is created, the request status is updated to ACCEPTED, and the UI is refreshed.
+    private void openDurationModal(Request request) {
+        Stage durationStage = new Stage();
+        durationStage.setTitle("Enter Ride Duration");
+
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(20));
+        layout.setAlignment(Pos.CENTER);
+
+        Label label = new Label("Enter ride duration (in minutes):");
+        TextField durationField = new TextField();
+        durationField.setPromptText("Duration in minutes");
+
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(e -> {
+            String durationText = durationField.getText();
+            if (durationText != null && !durationText.trim().isEmpty()) {
+                try {
+                    int duration = Integer.parseInt(durationText.trim());
+
+                    // Create a new Ride using the provided duration.
+                    Ride newRide = new Ride();
+                    newRide.setRequest(request);
+                    newRide.setDriver(currentDriver);
+                    newRide.setStatus(Ride.Status.ONGOING); // Adjust based on your enum definition.
+                    newRide.setRideDate(new Timestamp(System.currentTimeMillis()));
+                    newRide.setDuration(duration);
+                    newRide.setPrice(0.0);  // Set price to 0.0 or calculate later.
+
+                    boolean created = rideService.create(newRide);
+                    if (created) {
+                        System.out.println("✅ Ride created successfully");
+                        // Update the request status to ACCEPTED.
+                        request.setStatus(Request.RequestStatus.ACCEPTED);
+                        // Update the request in the database.
+                        requestService.update(request);
+                    } else {
+                        System.out.println("❌ Ride creation failed");
+                    }
+                    durationStage.close();
+                    loadRequestsIntoFlowPane(); // Refresh the request list.
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Invalid duration. Please enter a valid number.");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                System.out.println("Please fill in the duration field.");
+            }
+        });
+
+        layout.getChildren().addAll(label, durationField, submitButton);
+        Scene scene = new Scene(layout, 300, 150);
+        durationStage.setScene(scene);
+        durationStage.show();
     }
 }

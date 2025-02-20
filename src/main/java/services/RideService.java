@@ -202,23 +202,7 @@ public class RideService implements IService<Ride> {
         return rides;  // Return the list of rides
     }
 
-    public void createRide(Request request, Driver driver) throws SQLException {
-        String query = "INSERT INTO ride (id_request, id_driver, id_client, id_departure_location, id_arrival_location, ride_date, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            // Utiliser les données de l'objet Request pour les paramètres
-            statement.setInt(1, request.getIdRequest());  // id_request
-            statement.setInt(2, driver.getIdDriver());  // id_driver (directement à partir de l'objet Driver)
-            statement.setInt(3, request.getClient().getId());  // id_client (à partir de l'objet Client dans Request)
-            statement.setInt(4, request.getDepartureLocation().getId());  // id_departure_location (à partir de l'objet DepartureLocation dans Request)
-            statement.setInt(5, request.getArrivalLocation().getId());  // id_arrival_location (à partir de l'objet ArrivalLocation dans Request)
-            statement.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));  // ride_date
-            statement.setString(7, "ON_GOING");  // Statut initial de la course
 
-            // Exécuter l'insertion
-            statement.executeUpdate();
-            System.out.println("✅ Ride created successfully for request ID: " + request.getIdRequest());
-        }
-    }
 
 
 

@@ -234,23 +234,7 @@ public class RequestService implements IService<Request> {
         }
         return requests;
     }
-    public void acceptRequest(Request request, Driver driver) throws SQLException {
-        RideService rideService = new RideService();
 
-        // Vérifier que la demande existe
-        if (request != null) {
-            // 1. Mettre à jour le statut de la demande à "ACCEPTED"
-            String updateRequestQuery = "UPDATE request SET status = 'ACCEPTED' WHERE id_request = ?";
-            try (PreparedStatement statement = connection.prepareStatement(updateRequestQuery)) {
-                statement.setInt(1, request.getIdRequest());
-                statement.executeUpdate();
-                System.out.println("✅ Request accepted successfully");
-
-                // 2. Créer une nouvelle course (Ride) en associant le chauffeur et la demande
-                rideService.createRide(request, driver);  // Passer l'objet Request et Driver
-            }
-        }
-    }
 
 
 
