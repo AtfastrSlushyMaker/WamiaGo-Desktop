@@ -147,6 +147,40 @@
     -fx-background-color: #d32f2f;
 }
 
+/* Style pour les alertes d'erreur */
+.error-alert {
+    -fx-background-color: #ffebee; /* Fond rouge clair */
+    -fx-border-color: #c62828; /* Bordure rouge foncé */
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+.error-alert .header-panel {
+    -fx-background-color: #c62828; /* Fond rouge foncé pour le header */
+}
+
+.error-alert .header-panel .label {
+    -fx-text-fill: white; /* Texte blanc pour le header */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.error-alert .content.label {
+    -fx-text-fill: #c62828; /* Texte rouge foncé pour le contenu */
+    -fx-font-size: 14px;
+}
+
+.error-alert .button-bar .button {
+    -fx-background-color: #c62828; /* Bouton rouge foncé */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+}
+
+.error-alert .button-bar .button:hover {
+    -fx-background-color: #b71c1c; /* Changement de couleur au survol */
+}
 
 
 
