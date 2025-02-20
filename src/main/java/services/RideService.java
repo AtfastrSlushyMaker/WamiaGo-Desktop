@@ -211,8 +211,6 @@ public class RideService implements IService<Ride> {
 
 
 
-
-
     public List<Ride> getByStatus(Ride.Status status) throws SQLException {
         List<Ride> rides = new ArrayList<>();
         String sql = "SELECT * FROM ride WHERE status = ?";
