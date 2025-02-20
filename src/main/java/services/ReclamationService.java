@@ -16,7 +16,7 @@ public class ReclamationService implements IService<Reclamation> {
     }
 
     @Override
-    public void create(Reclamation reclamation) throws SQLException {
+    public boolean create(Reclamation reclamation) throws SQLException {
         String sql = "INSERT INTO reclamation (id_user, content, date, status) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -37,6 +37,7 @@ public class ReclamationService implements IService<Reclamation> {
 
             System.out.println("Reclamation created successfully with ID: " + reclamation.getIdReclamation());
         }
+        return false;
     }
 
     @Override

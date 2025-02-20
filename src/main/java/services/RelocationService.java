@@ -5,7 +5,6 @@ import entities.Reservation;
 import utils.DataBase;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +19,10 @@ public class RelocationService implements IService<Relocation> {
     }
 
     @Override
-    public void create(Relocation relocation) throws SQLException {
+    public boolean create(Relocation relocation) throws SQLException {
         if (relocation.getReservation() == null || reservationService.getById(relocation.getReservation().getIdReservation()) == null) {
             System.out.println("Annulé : La réservation associée n'existe pas.");
-            return;
+            return false;
         }
 
         String sql = "INSERT INTO relocation (id_reservation, date, status, cost) VALUES (?, ?, ?, ?)";
@@ -36,6 +35,7 @@ public class RelocationService implements IService<Relocation> {
             preparedStatement.executeUpdate();
             System.out.println("Relocation ajoutée avec succès.");
         }
+        return false;
     }
 
     @Override
