@@ -116,8 +116,18 @@
                 <FlowPane fx:id="requestFlowPane" hgap="20" layoutX="4.0" layoutY="185.0" prefHeight="638.0" prefWidth="1087.0" vgap="20">
                     <!-- Dynamically populated station cards will go here -->
                 </FlowPane>
-                <Button fx:id="request_taxi_button" id="request_taxi_button" layoutX="46.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="138.0" stylesheets="@request.css" text="Raquest A Taxi" />
-                <Button fx:id="See_you_Rides_button" id="See_you_Rides_buuton" layoutX="201.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="138.0" stylesheets="@request.css" text="See Your Rides" />
+                <Button id="request_taxi_button" fx:id="request_taxi_button" alignment="BASELINE_LEFT" layoutX="46.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="138.0" stylesheets="@request.css" text="See Raquest" />
+                <Button id="See_you_Rides_buuton" fx:id="See_you_Rides_button" alignment="BASELINE_LEFT" layoutX="201.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="132.0" stylesheets="@request.css" text="See Rides" />
+            <ImageView fitHeight="34.0" fitWidth="37.0" layoutX="140.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons/see.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="36.0" fitWidth="49.0" layoutX="282.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons/see.png" />
+               </image>
+            </ImageView>
 
             </children>
         </Pane>
