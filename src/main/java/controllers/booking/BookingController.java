@@ -137,14 +137,14 @@ public class BookingController {
         seatsLabel.setStyle("-fx-text-fill: white;");
 
         Button minusButton = new Button();
-        ImageView minusIcon = new ImageView(new Image(getClass().getResource("/images/icons/minus.png").toExternalForm()));
+        ImageView minusIcon = new ImageView(new Image(getClass().getResource("/images/icons/minus1.png").toExternalForm()));
         minusIcon.setFitHeight(20);
         minusIcon.setFitWidth(20);
         minusButton.setGraphic(minusIcon);
         minusButton.setOnAction(e -> handleMinusButton(booking, seatsLabel));
 
         Button addButton = new Button();
-        ImageView addIcon = new ImageView(new Image(getClass().getResource("/images/icons/add.png").toExternalForm()));
+        ImageView addIcon = new ImageView(new Image(getClass().getResource("/images/icons/add1.png").toExternalForm()));
         addIcon.setFitHeight(20);
         addIcon.setFitWidth(20);
         addButton.setGraphic(addIcon);

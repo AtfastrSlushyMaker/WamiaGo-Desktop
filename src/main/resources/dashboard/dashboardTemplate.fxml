@@ -38,7 +38,7 @@
                     <graphic>
                         <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@/images/icons/minus.png" />
+                                <Image url="@/images/icons/minus1.png" />
                             </image>
                         </ImageView>
                     </graphic>
