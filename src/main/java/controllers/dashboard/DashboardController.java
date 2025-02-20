@@ -120,7 +120,7 @@ public class DashboardController {
             //manageDashboardByRole(user);
         } else {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.front/login.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.front/LoginSignup.fxml"));
                 Parent loginRoot = loader.load();
                 Scene loginScene = new Scene(loginRoot);
                 Stage stage = (Stage) user_name_label.getScene().getWindow();
@@ -166,7 +166,7 @@ public class DashboardController {
         logout_button.setOnAction(event -> {
             SessionManager.getInstance().logout();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.front/login.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.front/LoginSignup.fxml"));
                 Parent loginRoot = loader.load();
                 Scene loginScene = new Scene(loginRoot);
                 Stage stage = (Stage) logout_button.getScene().getWindow();
