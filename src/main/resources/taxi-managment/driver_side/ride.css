@@ -119,6 +119,24 @@
     -fx-background-color: #D32F2F; /* Darker green on hover */
 }
 
+.ride-button-update {
+    -fx-background-color:#6BBF59;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+
+
+    
+
+}
+
+.ride-button-update:hover{
+    -fx-background-color: #4E9D3A
+}
+
 /* Active/Pressed State */
 .modal-close-button:pressed {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 4); /* Subtle shadow on click */

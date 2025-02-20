@@ -250,11 +250,10 @@ public class RequestController {
         modalStage.show();
     }
 
-    // Modal to input the ride duration.
-    // After submitting, a new Ride is created, the request status is updated to ACCEPTED, and the UI is refreshed.
     private void openDurationModal(Request request) {
         Stage durationStage = new Stage();
         durationStage.setTitle("Enter Ride Duration");
+        RideService rideService1 =new RideService();
 
         // Apply the CSS class to the root layout
         VBox layout = new VBox(10);
@@ -308,6 +307,9 @@ public class RequestController {
                 // Masquer l'avertissement si la durée est valide
                 warningLabel.setVisible(false);
 
+                // Calculer le prix en fonction de la distance (1 DT par km)
+                double price = RideService.calculatePrice(request);
+
                 // Créer un nouveau Ride
                 Ride newRide = new Ride();
                 newRide.setRequest(request);
@@ -315,7 +317,7 @@ public class RequestController {
                 newRide.setStatus(Ride.Status.ONGOING);
                 newRide.setRideDate(new Timestamp(System.currentTimeMillis()));
                 newRide.setDuration(duration);
-                newRide.setPrice(0.0);
+                newRide.setPrice(price);  // Prix calculé
 
                 boolean created = rideService.create(newRide);
                 if (created) {
