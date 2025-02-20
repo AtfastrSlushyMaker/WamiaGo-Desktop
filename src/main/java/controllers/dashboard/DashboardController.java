@@ -83,6 +83,9 @@ public class DashboardController {
     private Button profile_button;
 
     @FXML
+    private Button driverspace;
+
+    @FXML
     private Button reclamation_button;
 
     @FXML
@@ -264,9 +267,11 @@ taxi_request_button.setOnAction(event -> openRequestForm());
     private void setupUserDropdownMenu() {
         ContextMenu userMenu = new ContextMenu();
         MenuItem profileItem = new MenuItem("Profile");
+        MenuItem driverSpaceItem = new MenuItem("Driver Space"); // Ajout du bouton
 
-        userMenu.getItems().addAll(profileItem);
+        userMenu.getItems().addAll(profileItem, driverSpaceItem);
 
+        // Action pour le profil
         profileItem.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.back/profile.fxml"));
@@ -278,19 +283,33 @@ taxi_request_button.setOnAction(event -> openRequestForm());
 
                 Stage stage = (Stage) profile_button.getScene().getWindow();
                 stage.setScene(profileScene);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
+        // Action pour "Driver Space"
+        driverSpaceItem.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/driver_side/request.fxml"));
+                Parent ridesRoot = loader.load();
+                Scene ridesScene = new Scene(ridesRoot);
+
+                Stage stage = (Stage) profile_button.getScene().getWindow();
+                stage.setScene(ridesScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Afficher le menu au clic sur le bouton
         profile_button.setOnAction(event -> {
             double screenX = profile_button.localToScreen(profile_button.getBoundsInLocal()).getMinX();
             double screenY = profile_button.localToScreen(profile_button.getBoundsInLocal()).getMaxY();
-
             userMenu.show(profile_button, screenX, screenY);
         });
     }
+
 
     private void manageDashboardByRole(User user) throws SQLException {
         User.Role role = user.getRole();

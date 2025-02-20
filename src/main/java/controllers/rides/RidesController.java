@@ -94,18 +94,7 @@ public class RidesController {
             }
         });
 
-        history_button.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/driver_side/request.fxml"));
-                Parent ridesRoot = loader.load();
-                Scene ridesScene = new Scene(ridesRoot);
-                Stage stage = (Stage) history_button.getScene().getWindow();
-                stage.setScene(ridesScene);
-            } catch (IOException e) {
 
-                e.printStackTrace();
-            }
-        });
 
 
 
