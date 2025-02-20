@@ -37,9 +37,14 @@
         private void loadPanels() {
             try {
                 AnchorPane usersPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.back/users.fxml")));
-
+                AnchorPane requestPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
                 panels.addAll(Arrays.asList(
                         usersPanel
+                ));
+
+                panels.addAll(Arrays.asList(
+                        usersPanel,
+                        requestPanel
                 ));
 
                 for(AnchorPane panel : panels) {
@@ -121,6 +126,8 @@
         private void QueriesBtn() {
             showPanel(6);
         }
+
+
 
 
         @FXML
