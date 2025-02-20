@@ -49,8 +49,7 @@ public class RequestController {
     private AnchorPane side_ankerpane;
     @FXML
     private FlowPane requestFlowPane;
-    @FXML
-    private Button request_taxi_button;
+
     @FXML
     private Button See_you_Rides_button;
 
@@ -65,6 +64,7 @@ public class RequestController {
     @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/request.css").toExternalForm());
+
 
         try {
             // Retrieve the logged-in user. (For testing, using a hard-coded ID)
@@ -85,6 +85,7 @@ public class RequestController {
             System.err.println("SQL error while retrieving the driver: " + e.getMessage());
             e.printStackTrace();
         }
+        See_you_Rides_button.setOnAction(event -> loadScene("/taxi-managment/driver_side/ride.fxml"));
     }
 
     private void setupNavigation() {

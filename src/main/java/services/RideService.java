@@ -202,6 +202,46 @@ public class RideService implements IService<Ride> {
         return rides;  // Return the list of rides
     }
 
+    public List<Ride> getRidesByDriver(Driver driver) throws SQLException {
+        List<Ride> rides = new ArrayList<>();
+        String sql = "SELECT * FROM ride WHERE id_taxi = ?";  // Assuming the 'ride' table has an 'id_taxi' column
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, driver.getIdDriver());  // Set the driver's ID in the query
+            try (ResultSet rs = ps.executeQuery()) {
+                RequestService requestService = new RequestService();  // To fetch associated requests
+                DriverService driverService = new DriverService();  // To fetch the driver associated with the ride
+
+                while (rs.next()) {
+                    Request request = requestService.getById(rs.getInt("id_request"));
+                    Driver rideDriver = driverService.getById(rs.getInt("id_taxi"));  // Fetch the driver for each ride
+
+                    // Safely handling the status conversion from String to Enum
+                    Ride.Status status;
+                    try {
+                        status = Ride.Status.valueOf(rs.getString("status"));
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Invalid status value: " + rs.getString("status"));
+                        status = Ride.Status.CANCELED;  // Use a default status
+                    }
+
+                    // Create a Ride object and add it to the list
+                    Ride ride = new Ride(
+                            rs.getInt("id_ride"),
+                            request,  // The ride is linked to a request
+                            rideDriver,  // The ride is linked to a driver
+                            rs.getDouble("distance"),
+                            rs.getInt("duration"),
+                            rs.getDouble("price"),
+                            status,  // The ride status
+                            rs.getTimestamp("ride_date")
+                    );
+                    rides.add(ride);  // Add the ride to the list
+                }
+            }
+        }
+        return rides;  // Return the list of rides
+    }
 
 
 
