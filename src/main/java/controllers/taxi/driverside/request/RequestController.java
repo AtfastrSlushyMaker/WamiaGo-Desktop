@@ -3,7 +3,7 @@ package controllers.taxi.driverside.request;
 import entities.Driver;
 import entities.Request;
 import entities.User;
-import entities.Ride;  // Ensure your Ride entity is imported
+import entities.Ride;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,8 +21,9 @@ import javafx.stage.Stage;
 import services.DriverService;
 import services.RequestService;
 import services.UserService;
-import services.RideService;  // Import your RideService
+import services.RideService;
 import utils.SessionManager;
+import javafx.scene.control.TextFormatter;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -56,7 +57,7 @@ public class RequestController {
     private final RequestService requestService = new RequestService();
     private final UserService userService = new UserService();
     private final DriverService driverService = new DriverService();
-    private final RideService rideService = new RideService();  // Ride service instance
+    private final RideService rideService = new RideService();
 
     // Class-level field to hold the current driver.
     private Driver currentDriver;
@@ -255,55 +256,92 @@ public class RequestController {
         Stage durationStage = new Stage();
         durationStage.setTitle("Enter Ride Duration");
 
+        // Apply the CSS class to the root layout
         VBox layout = new VBox(10);
+        layout.getStyleClass().add("modal-container");  // Apply the custom modal style
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.CENTER);
 
         Label label = new Label("Enter ride duration (in minutes):");
+        label.getStyleClass().add("modal-label");  // Apply the label style
+
         TextField durationField = new TextField();
         durationField.setPromptText("Duration in minutes");
+        durationField.getStyleClass().add("duration-field");  // Apply the duration field style
+
+        // Appliquer un filtre pour empêcher la saisie de caractères non numériques
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*")) {
+                return change; // Accepter seulement les chiffres
+            } else {
+                return null; // Bloquer la modification
+            }
+        });
+        durationField.setTextFormatter(textFormatter);
+
+        // Label pour afficher les erreurs
+        Label warningLabel = new Label();
+        warningLabel.getStyleClass().add("warning-label");  // Apply the warning label style
+        warningLabel.setVisible(false); // Masquer le label par défaut
 
         Button submitButton = new Button("Submit");
+        submitButton.getStyleClass().add("submit-button");  // Apply the submit button style
         submitButton.setOnAction(e -> {
-            String durationText = durationField.getText();
-            if (durationText != null && !durationText.trim().isEmpty()) {
-                try {
-                    int duration = Integer.parseInt(durationText.trim());
+            String durationText = durationField.getText().trim();
+            if (durationText.isEmpty()) {
+                warningLabel.setText("⚠️ Please enter a duration.");
+                warningLabel.setVisible(true);
+                return;
+            }
 
-                    // Create a new Ride using the provided duration.
-                    Ride newRide = new Ride();
-                    newRide.setRequest(request);
-                    newRide.setDriver(currentDriver);
-                    newRide.setStatus(Ride.Status.ONGOING); // Adjust based on your enum definition.
-                    newRide.setRideDate(new Timestamp(System.currentTimeMillis()));
-                    newRide.setDuration(duration);
-                    newRide.setPrice(0.0);  // Set price to 0.0 or calculate later.
+            try {
+                int duration = Integer.parseInt(durationText);
 
-                    boolean created = rideService.create(newRide);
-                    if (created) {
-                        System.out.println("✅ Ride created successfully");
-                        // Update the request status to ACCEPTED.
-                        request.setStatus(Request.RequestStatus.ACCEPTED);
-                        // Update the request in the database.
-                        requestService.update(request);
-                    } else {
-                        System.out.println("❌ Ride creation failed");
-                    }
-                    durationStage.close();
-                    loadRequestsIntoFlowPane(); // Refresh the request list.
-                } catch (NumberFormatException nfe) {
-                    System.out.println("Invalid duration. Please enter a valid number.");
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+                // Vérifier si la durée est dans une plage acceptable
+                if (duration < 1 || duration > 300) {
+                    warningLabel.setText("⚠️ Duration must be between 1 and 300 minutes.");
+                    warningLabel.setVisible(true);
+                    return;
                 }
-            } else {
-                System.out.println("Please fill in the duration field.");
+
+                // Masquer l'avertissement si la durée est valide
+                warningLabel.setVisible(false);
+
+                // Créer un nouveau Ride
+                Ride newRide = new Ride();
+                newRide.setRequest(request);
+                newRide.setDriver(currentDriver);
+                newRide.setStatus(Ride.Status.ONGOING);
+                newRide.setRideDate(new Timestamp(System.currentTimeMillis()));
+                newRide.setDuration(duration);
+                newRide.setPrice(0.0);
+
+                boolean created = rideService.create(newRide);
+                if (created) {
+                    System.out.println("✅ Ride created successfully");
+                    request.setStatus(Request.RequestStatus.ACCEPTED);
+                    requestService.update(request);
+                } else {
+                    System.out.println("❌ Ride creation failed");
+                }
+                durationStage.close();
+                loadRequestsIntoFlowPane();
+            } catch (NumberFormatException ex) {
+                warningLabel.setText("⚠️ Invalid duration. Please enter a valid number.");
+                warningLabel.setVisible(true);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         });
 
-        layout.getChildren().addAll(label, durationField, submitButton);
-        Scene scene = new Scene(layout, 300, 150);
+        layout.getChildren().addAll(label, durationField, warningLabel, submitButton);
+
+        // Load the CSS file
+        Scene scene = new Scene(layout, 300, 200);
+        scene.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/duration-modal.css").toExternalForm());  // Add your CSS file path here
         durationStage.setScene(scene);
         durationStage.show();
     }
+
 }

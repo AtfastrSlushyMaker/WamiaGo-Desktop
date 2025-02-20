@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -247,6 +248,12 @@ public class RideController {
     private void openRideDetails(Ride ride) {
         System.out.println("Opening details for Ride ID: " + ride.getIdRide());
 
+        // Null checks for ride attributes
+        if (ride == null || ride.getRequest() == null) {
+            System.out.println("Invalid ride data.");
+            return;  // Handle the case where ride data is not valid
+        }
+
         Stage modalStage = new Stage();
         modalStage.setTitle("Ride Details - " + ride.getIdRide());
 
@@ -263,16 +270,17 @@ public class RideController {
         VBox rideDetailsBox = new VBox(8);
         rideDetailsBox.getStyleClass().add("ride-details-box");
 
-        // Displaying the details from the Ride object
-        Label arrivalLabel = new Label("Arrival Location: " + ride.getRequest().getArrivalLocation().getAddress());
-        Label departureLabel = new Label("Departure Location: " + ride.getRequest().getDepartureLocation().getAddress());
-        Label driverLabel = new Label("Driver: " + ride.getDriver().getUser().getName());  // Assuming Driver class has a getName() method
+        // Safely display ride details
+        Label arrivalLabel = new Label("Arrival Location: " + (ride.getRequest().getArrivalLocation() != null ? ride.getRequest().getArrivalLocation().getAddress() : "Unknown"));
+        Label departureLabel = new Label("Departure Location: " + (ride.getRequest().getDepartureLocation() != null ? ride.getRequest().getDepartureLocation().getAddress() : "Unknown"));
+        Label driverLabel = new Label("Driver: " + (ride.getDriver() != null ? ride.getDriver().getUser().getName() : "Unknown"));
         Label distanceLabel = new Label("Distance: " + ride.getDistance() + " km");
         Label durationLabel = new Label("Duration: " + ride.getDuration() + " min");
         Label priceLabel = new Label("Price: " + ride.getPrice() + " TND");
         Label statusLabel = new Label("Status: " + ride.getStatus());
         Label dateLabel = new Label("Date: " + ride.getRideDate().toString());
 
+        // Style the labels
         arrivalLabel.getStyleClass().add("modal-detail-label");
         departureLabel.getStyleClass().add("modal-detail-label");
         driverLabel.getStyleClass().add("modal-detail-label");
@@ -308,6 +316,8 @@ public class RideController {
         selectButton.setOnAction(e -> openRideDetails(ride));  // You will need to implement the openRideDetails method
         return selectButton;
     }
+
+
     private Button createCancelButton(Ride ride, VBox rideCard) {
         Button deleteButton = new Button("Delete");
         deleteButton.getStyleClass().add("ride-button-delete");
@@ -325,6 +335,8 @@ public class RideController {
 
         return deleteButton;
     }
+
+
 
 
 

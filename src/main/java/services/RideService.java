@@ -280,6 +280,11 @@ public class RideService implements IService<Ride> {
     }
 
 
+    
+
+
+
+
     public List<Ride> sortRidesByDate(boolean ascending) throws SQLException {
         // Build the SQL query to fetch rides, joined with the request and driver tables
         String sqlQuery = "SELECT * FROM ride r " +
@@ -406,6 +411,8 @@ public class RideService implements IService<Ride> {
         Font font = FontFactory.getFont(FontFactory.HELVETICA, size, style, color);
         return font;
     }
+
+
 
 
 }
