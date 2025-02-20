@@ -65,19 +65,18 @@ public class RideController {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/ride.css").toExternalForm());
 
         try {
-            // Retrieve the logged-in user. (For testing, using a hard-coded ID)
-            User loggedInUser = userService.getById(2);
 
-            // Assign the driver to the class-level field.
+            User loggedInUser = SessionManager.getInstance().getUser();
+
+
             currentDriver = driverService.getById(loggedInUser.getId());
-
             if (currentDriver != null) {
                 System.out.println("User is also a driver. Initializing driver-specific logic.");
                 loadRidesIntoFlowPane();
                 setupNavigation();
             } else {
                 System.out.println("User is not a driver.");
-                // Optionally handle non-driver users.
+
             }
         } catch (SQLException e) {
             System.err.println("SQL error while retrieving the driver: " + e.getMessage());
@@ -135,8 +134,12 @@ public class RideController {
                 Driver driver = driverService.getById(user.getId());
 
                 if (driver != null) {
-                    // Fetch rides for the logged-in driver
+                    User loggedInUser = SessionManager.getInstance().getUser();
+
+
+                    currentDriver = driverService.getById(loggedInUser.getId());
                     List<Ride> rides = rideService.getRidesByDriver(driver);  // Passing Driver
+                    System.out.println("Nombre de rides récupérés pour le driver " + driver.getIdDriver() + " : " + rides.size());
 
                     // Clear any existing content from the FlowPane
                     rideFlowPane.getChildren().clear();
@@ -219,6 +222,7 @@ public class RideController {
 
         return rideCard;
     }
+
     private HBox createImageAndTextBoxForRide(Ride ride) {
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);
@@ -293,7 +297,7 @@ public class RideController {
         stackPane.getChildren().add(modalLayout);
 
         Scene modalScene = new Scene(stackPane, 400, 350);
-        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/ride.css").toExternalForm());
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/ride.css").toExternalForm());
         modalStage.setScene(modalScene);
         modalStage.show();
     }

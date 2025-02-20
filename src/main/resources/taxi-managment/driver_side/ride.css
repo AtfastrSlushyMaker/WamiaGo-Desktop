@@ -1,21 +1,13 @@
-
-#requestFlowPane {
+#rideFlowPane {
     -fx-padding: 0 0 0 0;  /* Adds space on top */
     -fx-hgap: 20px;
     -fx-vgap: 20px;
     -fx-alignment: center;
 }
-/* Style for each station card */
-#available_stations_label
-{
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: Black;
-    -fx-font-family: Inter;
-    -fx-padding: 10px;
-    -fx-alignment: center;}
-.request-card {
-    -fx-background-color: #FFC107; /* Yellow */
+
+/* Style for each ride card */
+.ride-card {
+    -fx-background-color: #E57373; /* Yellow */
     -fx-background-radius: 12px; /* Rounded corners */
     -fx-padding: 30px; /* Increase padding for more space inside the card */
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 5); /* Floating shadow */
@@ -26,17 +18,17 @@
     -fx-transition: transform 0.2s ease-in-out;
     -fx-height: 400px; /* Increased height */
 }
-.request-card Label {
+.ride-card Label {
     -fx-font-size: 10px; /* Larger font size */
     -fx-text-fill: white; /* White text color for contrast */
     -fx-alignment: center; /* Center the text */
 }
-.request-card:hover {
-    -fx-background-color: #FFA000
+.ride-card:hover {
+    -fx-background-color: #D32F2F
 }
 
-/* Style for the station name */
-.request-name {
+/* Style for the ride name */
+.ride-name {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
@@ -45,9 +37,10 @@
     -fx-max-width: 200px;
     -fx-text-alignment: center;
     -fx-ellipsize: middle;
-    -fx-font-family: Inter;
 }
-.request-details-box {
+
+/* Style for the ride details box */
+.ride-details-box {
     -fx-background-color: white;
     -fx-spacing: 10px;
     -fx-alignment: center;
@@ -56,17 +49,16 @@
     -fx-border-radius: 10px;
 }
 
-
-/* Style for the bike count label */
-.station-bike-count {
-    -fx-font-size: 14px;
-    -fx-text-fill: white;
-    -fx-font-family: Inter;
-    -fx-font-weight: bold;
+/* Style for the ride image */
+.ride-image {
+    -fx-fit-width: 100px;
+    -fx-fit-height: 100px;
+    -fx-preserve-ratio: true;
+    -fx-margin-bottom: 10px;
 }
 
 /* Style for the select button */
-.request-button {
+.ride-button {
     -fx-background-color: #FFC10793; /* Fresh green */
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -75,7 +67,7 @@
     -fx-border-color: white;
     -fx-border-width: 2px;
 }
-.request-button-delete{
+.ride-button-delete{
     -fx-background-color: #E57373;
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -84,27 +76,14 @@
     -fx-border-color: white;
     -fx-border-width: 2px;
 }
-.request-button-delete:hover {
+.ride-button-delete:hover {
     -fx-background-color: #D32F2F;
-
-    /* Lighter green on hover */
 }
 
-.request-button:hover {
+.ride-button:hover {
     -fx-background-color: #FFC107;
-
-    /* Lighter green on hover */
 }
 
-/* Add some margin to the ImageView */
-.request-image {
-    -fx-fit-width: 100px;
-    -fx-fit-height: 100px;
-    -fx-preserve-ratio: true;
-    -fx-margin-bottom: 10px;
-}
-
-/* Modal Styling */
 /* Modal Styling */
 .modal {
     -fx-background-color: white; /* Green background color */
@@ -112,7 +91,6 @@
     -fx-border-radius: 30px; /* Fully rounded corners */
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 2, 4); /* Subtle shadow */
 }
-
 
 /* Title Label in Modal */
 .modal-label {
@@ -139,15 +117,12 @@
 /* Hover Effect for Close Button */
 .modal-close-button:hover {
     -fx-background-color: #D32F2F; /* Darker green on hover */
-
 }
-
 
 /* Active/Pressed State */
 .modal-close-button:pressed {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 4); /* Subtle shadow on click */
     -fx-transform: scale(0.98); /* Slight shrink effect when pressed */
-
 }
 
 /* Style for the request taxi button */
@@ -165,7 +140,6 @@
 #request_taxi_button:hover {
     -fx-background-color: #6FBF66; /* Lighter green on hover */
 }
-
 
 /* Bicycle Rectangle and Label */
 /* Bicycle Icon */
@@ -192,12 +166,6 @@
     -fx-background-color: #5A6BE5; /* Darker blue on hover */
 }
 
-
-
-
-
-
-
 /* Bicycle Label */
 .bicycle-label {
     -fx-font-size: 10px; /* Smaller font for the label */
@@ -213,12 +181,7 @@
     -fx-padding: 5px;
 }
 
-.station-bike-close-button :hover
-{
+/* Close button hover effect */
+.station-bike-close-button:hover {
     -fx-background-color: #ff4444;
 }
-
-
-
-
-

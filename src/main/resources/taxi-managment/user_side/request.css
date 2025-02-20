@@ -257,16 +257,6 @@
     -fx-text-fill: #721c24; /* Dark red text color */
 }
 
-/* Style for the buttons */
-.button {
-    -fx-background-color: #28a745; /* Green background for buttons */
-    -fx-text-fill: white;
-}
-
-.button:hover {
-    -fx-background-color: #218838; /* Darker green on hover */
-}
-
 .button.default {
     -fx-background-color: #007bff; /* Blue for the default button (OK) */
 }

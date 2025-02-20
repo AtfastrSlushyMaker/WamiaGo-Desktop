@@ -65,26 +65,27 @@ public class RequestController {
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/request.css").toExternalForm());
 
-
         try {
-            // Retrieve the logged-in user. (For testing, using a hard-coded ID)
-            User loggedInUser = userService.getById(2);
+            // Récupérer l'utilisateur connecté. (Pour les tests, utiliser un ID codé en dur)
+            User loggedInUser = SessionManager.getInstance().getUser();
 
-            // Assign the driver to the class-level field.
+            // Récupérer le chauffeur en utilisant l'ID de l'utilisateur connecté.
             currentDriver = driverService.getById(loggedInUser.getId());
 
+            // Ajouter un test pour afficher l'ID du chauffeur connecté
             if (currentDriver != null) {
-                System.out.println("User is also a driver. Initializing driver-specific logic.");
+                System.out.println("User is also a driver. Driver ID: " + currentDriver.getIdDriver());  // Afficher l'ID du chauffeur
                 loadRequestsIntoFlowPane();
                 setupNavigation();
             } else {
                 System.out.println("User is not a driver.");
-                // Optionally handle non-driver users.
+                // Optionnellement gérer les utilisateurs non chauffeurs.
             }
         } catch (SQLException e) {
             System.err.println("SQL error while retrieving the driver: " + e.getMessage());
             e.printStackTrace();
         }
+
         See_you_Rides_button.setOnAction(event -> loadScene("/taxi-managment/driver_side/ride.fxml"));
     }
 

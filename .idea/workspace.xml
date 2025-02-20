@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/taxi/driverside/request/RequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/taxi/driverside/request/RequestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/taxi/driverside/ride/RideController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/taxi/driverside/ride/RideController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RideService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/driver_side/ride.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/driver_side/ride.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/driver_side/ride.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/driver_side/ride.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/user_side/request.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/user_side/request.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/user_side/request.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/user_side/request.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/user_side/ride.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/user_side/ride.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -201,7 +202,9 @@
       <workItem from="1739968605818" duration="2627000" />
       <workItem from="1739975318411" duration="5978000" />
       <workItem from="1739997824282" duration="631000" />
-      <workItem from="1739998496988" duration="15755000" />
+      <workItem from="1739998496988" duration="16041000" />
+      <workItem from="1740061206908" duration="1459000" />
+      <workItem from="1740062919285" duration="10962000" />
     </task>
     <servers />
   </component>

@@ -264,6 +264,7 @@ taxi_request_button.setOnAction(event -> openRequestForm());
     private void setupUserDropdownMenu() {
         ContextMenu userMenu = new ContextMenu();
         MenuItem profileItem = new MenuItem("Profile");
+
         userMenu.getItems().addAll(profileItem);
 
         profileItem.setOnAction(event -> {
