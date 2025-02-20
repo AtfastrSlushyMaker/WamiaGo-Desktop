@@ -10,7 +10,6 @@
     -fx-background-color: #2D2F33; /* Dark Gray for a modern look */
     -fx-padding: 20px;
     -fx-pref-width: 250px;
-    -fx-min-height: 100vh;
     -fx-border-width: 1px;
     -fx-border-radius: 20px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 12, 0, 4, 4);
@@ -96,9 +95,9 @@
 /* Carpooling Card Fix */
 .carpool-quick {
     -fx-background-color: #85A9FF; /* Soft Blue */
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-color: white;
+
+
+
     -fx-border-width: 2px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
 }
@@ -115,23 +114,25 @@
 
 /* Quick Action Cards */
 .card-quick {
-    -fx-background-radius: 16px;
-    -fx-border-radius: 16px;
-    -fx-border-width: 2px;
-    -fx-border-color: white;
+
+
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
 }
 
 .card-quick:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);
+    -fx-scale-x: 1.02; /* Subtle zoom */
+    -fx-scale-y: 1.02;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 4);
 }
+
+
 
 /* Quick Action Buttons */
 .taxi_quick, .Relocation_quick, .E-Bicycle_quick {
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-color: #ffffff;
+
+
+
+
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
 }
 
@@ -146,7 +147,7 @@
 
 /* Action Buttons */
 .action-button {
-
+    -fx-font-size: 40px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-padding: 10px 20px;
@@ -170,7 +171,6 @@
 }
 
 .carpooling-action-button {
-    -fx-font-size: 16px;
     -fx-background-color: #85A9FF ;
     -fx-border-color: white;
 }
@@ -226,91 +226,5 @@
 #navbar {
     -fx-background-color: #2D2F33; /* Keep same dark gray */
     -fx-background-radius: 0 40px 0 0; /* Smooth rounded top-right */
-}
-#profile_button {
-    -fx-background-color: transparent;
-    -fx-border-color: #6BBF59FF;
-    -fx-padding: 0;
-    -fx-min-width: 51px;
-    -fx-min-height: 51px;
-    -fx-max-width: 51px;
-    -fx-max-height: 51px;
-    -fx-shape: "M 25,0 A 25,25 0 1,0 25,50 A 25,25 0 1,0 25,0 Z";
-}
-
-#profile_button .graphic {
-    -fx-alignment: center;
-    -fx-padding: 5px;
-}
-
-#profile_button:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.1);  /* Hover effect */
-}
-
-.context-menu {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1px;
-    -fx-padding: 5px;
-}
-
-.menu-item {
-    -fx-text-fill: #333333;
-    -fx-font-size: 14px;
-    -fx-padding: 5px 10px;
-}
-
-.menu-item:hover {
-    -fx-background-color: #f0f0f0;
-}
-
-/* Sidebar expanded state */
-.navbar {
-    -fx-background-color: #2f2f2f;
-    -fx-pref-width: 250px;
-    -fx-transition: 0.3s ease;
-}
-
-/* Sidebar collapsed state */
-.navbar.collapsed {
-    -fx-pref-width: 60px;
-}
-
-/* Button styles for toggle */
-.toggle-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-size: 20px;
-}
-
-/* Style pour les sections (Pending, Ongoing, Completed) */
-.vbox-section {
-    -fx-background-color: #ffffff;
-    -fx-border-radius: 10;
-    -fx-padding: 15;
-    -fx-pref-width: 600px;
-    -fx-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Style de l'en-tête des sections */
-.vbox-section > .label {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #333;
-    -fx-padding: 5 0;
-}
-
-/* Style des cartes (demande/course) */
-.card {
-    -fx-background-color: #ffffff;
-    -fx-border-radius: 8;
-    -fx-padding: 15;
-    -fx-pref-width: 250;
-    -fx-min-width: 250;
-    -fx-max-width: 250;
-    -fx-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    -fx-cursor: hand;
-    -fx-margin: 10 0;
-    -fx-alignment: center-left;
 }
 

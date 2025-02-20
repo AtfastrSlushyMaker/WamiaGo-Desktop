@@ -6,15 +6,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URL;
+
 public class Home extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/user.front/loginSignup.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/user.front/login.fxml"));
+       //Parent root = FXMLLoader.load(getClass().getResource("/dashboard/dashboard.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Wamia Go - Welcome!");
         primaryStage.setResizable(false);
         primaryStage.show();
+
 
     }
 
