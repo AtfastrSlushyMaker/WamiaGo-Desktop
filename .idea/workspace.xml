@@ -9,8 +9,6 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/booking/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/booking/BookingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/trip/TripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/trip/TripController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/booking/booking.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/booking/booking.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/trips/trip.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/trips/trip.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/trips/trip.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/trips/trip.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +23,7 @@
       <list>
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -83,7 +82,8 @@
     "git-widget-placeholder": "covoiturage-management-",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/islem/OneDrive/Bureau/mes etudes/3/sem2/pidev/WamiaGo-Desktop/src/main/resources/trips",
+    "last_opened_file_path": "C:/Users/islem/SceneBuilder/SceneBuilder.exe",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -208,6 +208,7 @@
       <workItem from="1739992321782" duration="1756000" />
       <workItem from="1740045267310" duration="2385000" />
       <workItem from="1740057965950" duration="11924000" />
+      <workItem from="1740071912131" duration="4265000" />
     </task>
     <servers />
   </component>

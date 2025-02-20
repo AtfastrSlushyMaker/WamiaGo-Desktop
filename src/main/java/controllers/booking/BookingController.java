@@ -2,6 +2,7 @@ package controllers.booking;
 
 import entities.Booking;
 import entities.Trip;
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -19,10 +20,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.BookingService;
 import services.TripService;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookingController {
     @FXML
@@ -63,16 +66,36 @@ public class BookingController {
 
     private void loadBookingsIntoFlowPane() {
         try {
+            User currentUser = SessionManager.getInstance().getUser(); // Get the current user from the session
             List<Booking> bookings = bookingService.read();
-            for (Booking booking : bookings) {
+            List<Booking> userBookings = bookings.stream()
+                    .filter(booking -> booking.getPassenger().getId() == currentUser.getId()) // Filter bookings by current user's ID
+                    .collect(Collectors.toList());
+
+            for (Booking booking : userBookings) {
                 Trip trip = tripService.getById(booking.getTrip().getIdTrip());
                 VBox bookingCard = createBookingCard(trip, booking);
+
+                // Apply inline styles for the booking card
+                bookingCard.setStyle(
+                        "-fx-background-color: #1E90FF;" +
+                                "-fx-border-color: #4682B4;" +
+                                "-fx-border-radius: 10px;" +
+                                "-fx-background-radius: 10px;" +
+                                "-fx-padding: 20px;" +
+                                "-fx-spacing: 15px;" +
+                                "-fx-alignment: center;" +
+                                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0, 0, 5);"
+                );
+
                 BookingFlowPane.getChildren().add(bookingCard);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
 
     private VBox createBookingCard(Trip trip, Booking booking) {
         VBox bookingCard = new VBox(10);

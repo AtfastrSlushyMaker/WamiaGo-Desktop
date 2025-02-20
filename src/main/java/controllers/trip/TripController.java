@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.BookingService;
 import services.TripService;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -153,23 +154,22 @@ public class TripController {
         modalStage.show();
     }
 
-    private void handleBookingCreation(Trip trip) {
-        try {
-            Booking booking = new Booking();
-            booking.setTrip(trip);
-            User dummyUser = new User();
-            dummyUser.setId(1); // Set a dummy passenger ID
-            booking.setPassenger(dummyUser);
-            booking.setReservedSeats(1); // Assuming 1 seat is reserved
-            booking.setStatus(Booking.Status.Pending); // Assuming the initial status is Pending
+private void handleBookingCreation(Trip trip) {
+    try {
+        Booking booking = new Booking();
+        booking.setTrip(trip);
+        User currentUser = SessionManager.getInstance().getUser(); // Get the current user from the session
+        booking.setPassenger(currentUser); // Set the current user as the passenger
+        booking.setReservedSeats(1); // Assuming 1 seat is reserved
+        booking.setStatus(Booking.Status.Pending); // Assuming the initial status is Pending
 
-            bookingService.create(booking);
-            showSuccessAlert("Booking Created", "Booking created successfully for trip ID: " + trip.getIdTrip());
-        } catch (SQLException e) {
-            showErrorAlert("Booking Error", "Failed to create booking for trip ID: " + trip.getIdTrip());
-            e.printStackTrace();
-        }
+        bookingService.create(booking);
+        showSuccessAlert("Booking Created", "Booking created successfully for trip ID: " + trip.getIdTrip());
+    } catch (SQLException e) {
+        showErrorAlert("Booking Error", "Failed to create booking for trip ID: " + trip.getIdTrip());
+        e.printStackTrace();
     }
+}
 
     private void showSuccessAlert(String title, String content) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);

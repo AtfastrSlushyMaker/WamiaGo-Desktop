@@ -1,0 +1,123 @@
+/* Base Styles */
+.root {
+    -fx-background-color: #F5F7FA;
+    -fx-font-family: "Arial", sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    -fx-background-color: #2D2F33; /* Dark Gray for a modern look */
+    -fx-padding: 20px;
+    -fx-pref-width: 250px;
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 12, 0, 4, 4);
+}
+
+.logo-pane {
+    -fx-background-radius: 20px;
+    -fx-padding: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 12, 0.3, 4, 4);
+}
+
+/* Logo - Modern & Clean */
+#logo {
+    -fx-background-color: transparent;
+    -fx-padding: 15px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.15), 8, 0, 2, 2);
+}
+
+/* Logo Hover - Soft Glow (Not Overpowering) */
+#logo:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 12, 0.3, 0, 0);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* Modern Navbar Buttons */
+.navbar_buttons {
+    -fx-background-color: #3A3D42; /* Soft dark tone */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 20;
+    -fx-background-radius: 12px;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 4, 4);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* Modern Hover Effect */
+.navbar_buttons:hover {
+    -fx-background-color: #4A4E54; /* Slightly lighter gray */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0, 4, 4);
+    -fx-border-color: #FFC107;
+}
+
+#logout-button {
+    -fx-background-color: #E57373; /* Red */
+    -fx-border-color: #E57373;
+}
+
+#logout-button:hover {
+    -fx-background-color: #D32F2F; /* Darker Red */
+    -fx-border-color: #D32F2F;
+}
+
+/* Click Effect */
+.navbar_buttons:pressed {
+    -fx-background-color: #5A5F66; /* Lightest shade on click */
+}
+
+/* Labels */
+#available_stations_label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #323131;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
+/* Upper Navbar - Sleek, Modern & Premium */
+#upper_nav {
+    -fx-background-color: #D3D3D3; /* Keep your color */
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+/* ImageView Styles */
+.home, .rides, .bookings, .history {
+    -fx-fit-height: 36px;
+    -fx-fit-width: 44px;
+    -fx-preserve-ratio: true;
+}
+
+/* FlowPane Styling */
+#BookingFlowPane {
+    -fx-hgap: 20px;
+    -fx-vgap: 20px;
+    -fx-alignment: center;
+    -fx-padding: 20px;
+    -fx-background-color: #D3D3D3; /* Light modern grey background */
+    -fx-border-color: #A9A9A9; /* Slightly darker grey border */
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 4, 4);
+}
+
+/* VBox Styling */
+#Vbox {
+    -fx-background-color: #ADD8E6; /* Light blue background */
+    -fx-padding: 10px;
+    -fx-border-color: #87CEEB; /* Sky blue border */
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 4, 4);
+}

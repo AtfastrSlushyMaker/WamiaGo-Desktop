@@ -14,7 +14,7 @@
 
 <HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@../station/front/style.css,@../station/front/station.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.booking.BookingController">
    <children>
-      <VBox prefHeight="781.0" prefWidth="280.0">
+      <VBox id="VBox" prefHeight="781.0" prefWidth="280.0" stylesheets="@booking.css">
          <children>
             <AnchorPane fx:id="side_ankerpane" prefHeight="827.0" prefWidth="254.0" styleClass="navbar" stylesheets="@../station/front/style.css">
                <children>
@@ -89,7 +89,7 @@
                   <Font name="Century Gothic Bold" size="20.0" />
                </font>
             </Label>
-            <FlowPane fx:id="BookingFlowPane" hgap="20" layoutX="4.0" layoutY="185.0" prefHeight="638.0" prefWidth="1087.0" vgap="20" />
+            <FlowPane id="BookingFlowPane" fx:id="BookingFlowPane" hgap="20" layoutX="4.0" layoutY="185.0" prefHeight="638.0" prefWidth="1087.0" stylesheets="@booking.css" vgap="20" />
          </children>
       </Pane>
    </children>
