@@ -1,16 +1,22 @@
 package controllers.station.front;
 
 import entities.Bicycle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import entities.BicycleRental;
 import entities.Station;
 import entities.User;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -22,10 +28,12 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import services.UserService;
+import utils.SessionManager;
 
 import java.io.IOException;
-import java.sql.Time;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StationController {
@@ -46,9 +54,13 @@ public class StationController {
     @FXML
     private AnchorPane side_ankerpane;
     @FXML
-    private FlowPane stationFlowPane;  // Using FlowPane for flexibility
+    private FlowPane stationFlowPane;
+    @FXML
+    private Label bikeCount;
 
-    private final StationService stationService = new StationService(); // Fetch stations
+    private final StationService stationService = new StationService();
+    private final List<Stage> openModals = new ArrayList<>();
+    private Timeline reservationTimeline;
 
     @FXML
     public void initialize() {
@@ -68,20 +80,32 @@ public class StationController {
             Parent root = loader.load();
             Stage stage = (Stage) home_button.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void loadStationsIntoFlowPane() {
-        try {
-            for (Station station : stationService.read()) {
-                VBox stationCard = createStationCard(station);
-                stationFlowPane.getChildren().add(stationCard); // Add cards to FlowPane
+        ProgressIndicator loadingSpinner = new ProgressIndicator();
+        loadingSpinner.getStyleClass().add("loading-spinner");
+        stationFlowPane.getChildren().add(loadingSpinner);
+
+        new Thread(() -> {
+            try {
+                List<Station> stations = stationService.read();
+                Platform.runLater(() -> {
+                    stationFlowPane.getChildren().clear();
+                    for (Station station : stations) {
+                        VBox stationCard = createStationCard(station);
+                        stationFlowPane.getChildren().add(stationCard);
+                    }
+                });
+            } catch (SQLException e) {
+                Platform.runLater(() -> showErrorDialog("Database Error", "Failed to load stations."));
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 
     private VBox createStationCard(Station station) {
@@ -90,54 +114,46 @@ public class StationController {
         stationCard.getStyleClass().add("station-card");
         stationCard.setAlignment(Pos.CENTER);
 
-        // Create HBox for image and name
         HBox imageAndTextBox = createImageAndTextBox(station);
-
-        // Station bike count
-        Label bikeCount = new Label("Bikes Available: " + station.getAvailable_bikes());
+        bikeCount = new Label("Bikes Available: " + stationService.getAvailableBikes(station).size());
         bikeCount.getStyleClass().add("station-bike-count");
 
-        // Select button
         Button selectButton = createSelectButton(station);
 
-        // Assemble the card components
         stationCard.getChildren().addAll(imageAndTextBox, bikeCount, selectButton);
 
-        // Hover effect (zoom out)
         stationCard.setOnMouseExited(event -> {
-            stationCard.setScaleX(1);  // Scale down the card to 95% of its original size (zoom out)
-            stationCard.setScaleY(1);  // Scale down the card to 95% of its original size (zoom out)
+            stationCard.setScaleX(1);
+            stationCard.setScaleY(1);
         });
 
-        // Revert to original size when hover is removed
         stationCard.setOnMouseEntered(event -> {
-            stationCard.setScaleX(1.05);  // Reset to original size
-            stationCard.setScaleY(1.05);  // Reset to original size
+            stationCard.setScaleX(1.05);
+            stationCard.setScaleY(1.05);
         });
 
+        if (station.getStatus() == Station.STATUS.disabled || station.getAvailable_bikes() == 0 || station.getAvailable_docks() == 0) {
+            stationCard.setDisable(true);
+            stationCard.setStyle("-fx-opacity: 0.5;");
+        }
         return stationCard;
     }
 
-
     private HBox createImageAndTextBox(Station station) {
         HBox hbox = new HBox(10);
-        hbox.setAlignment(Pos.CENTER_LEFT);  // Center align the elements
-        hbox.setFillHeight(true);  // Allow the HBox to take up all vertical space if needed
+        hbox.setAlignment(Pos.CENTER_LEFT);
+        hbox.setFillHeight(true);
 
         ImageView stationImage = new ImageView(new Image(getClass().getResource("/images/station/icons/bicycle_station_white.png").toExternalForm()));
         stationImage.setFitWidth(50);
         stationImage.setFitHeight(50);
         stationImage.setPreserveRatio(true);
 
-        // Adjust text wrapping for the station name using Text instead of Label
         Text nameText = new Text(station.getName());
-        nameText.setWrappingWidth(180);  // Set the wrapping width for the text
+        nameText.setWrappingWidth(180);
         nameText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #FFFFFF;");
 
-
-        // Allow text to grow and fill space
         HBox.setHgrow(nameText, Priority.ALWAYS);
-
         hbox.getChildren().addAll(stationImage, nameText);
         return hbox;
     }
@@ -150,177 +166,331 @@ public class StationController {
     }
 
     private void openStationDetails(Station station) {
+        Stage modalStage = new Stage();
         System.out.println("Opening details for: " + station.getName());
 
-        // Create a new Stage (popup/modal)
-        Stage modalStage = new Stage();
+        openModals.add(modalStage);
         modalStage.setTitle("Available Bicycles at " + station.getName());
 
-        // Dark overlay with some transparency
         StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);"); // Semi-transparent black overlay
+        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
 
         VBox modalLayout = new VBox(10);
         modalLayout.setPadding(new Insets(20));
-        modalLayout.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, black, 20, 0.5, 0, 0);"); // Dark background and shadow for modal
+        modalLayout.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, black, 20, 0.5, 0, 0);");
 
-        // Title for the modal
         Label titleLabel = new Label("Available Bicycles");
         titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;-fx-text-alignment: center;-fx-font-family: Inter");
 
-        // FlowPane for available bicycles
         FlowPane bicycleFlowPane = new FlowPane();
         bicycleFlowPane.setHgap(10);
         bicycleFlowPane.setVgap(10);
 
-        // Add bicycles to the FlowPane (and make them clickable)
         addAvailableBicycles(bicycleFlowPane, station);
 
-        // Close button for the modal
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> modalStage.close());
         closeButton.getStyleClass().add("station-bike-close-button");
-        // Create an HBox to center the button at the bottom
+
         HBox closeButtonContainer = new HBox();
-        closeButtonContainer.setAlignment(Pos.CENTER);  // Center the button in the HBox
+        closeButtonContainer.setAlignment(Pos.CENTER);
         closeButtonContainer.getChildren().add(closeButton);
 
-        // Add components to the VBox
         modalLayout.getChildren().addAll(titleLabel, bicycleFlowPane, closeButtonContainer);
+        stackPane.getChildren().add(modalLayout);
 
-        stackPane.getChildren().add(modalLayout);  // Add the modal layout to the stack pane
-
-        // Set up the Scene and Stage
         Scene modalScene = new Scene(stackPane, 400, 300);
         modalStage.setScene(modalScene);
         modalStage.show();
+        openModals.add(modalStage);
     }
 
+    private void showErrorDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     private void addAvailableBicycles(FlowPane bicycleFlowPane, Station station) {
-        StationService stationService = new StationService();
         for (Bicycle bicycle : stationService.getAvailableBikes(station)) {
             Button bikeButton = new Button();
 
-            // Load the bicycle icon image
-            Image bikeIcon = new Image(getClass().getResource("/images/station/icons/bicycle_top_view.png").toExternalForm()); // Replace with correct path
+            Image bikeIcon = new Image(getClass().getResource("/images/station/icons/bicycle_top_view.png").toExternalForm());
             ImageView bikeIconView = new ImageView(bikeIcon);
+            bikeIconView.setFitHeight(40);
+            bikeIconView.setFitWidth(40);
 
-            // Make the icon larger
-            bikeIconView.setFitHeight(40);  // Increase the height
-            bikeIconView.setFitWidth(40);   // Increase the width
-
-            // Set the button text alongside the icon
             bikeButton.setGraphic(bikeIconView);
-            bikeButton.setText(" Bike " + bicycle.getStatus());  // Add ID or type as text next to the icon
+            bikeButton.setText(" Bike " + bicycle.getStatus());
             bikeButton.setStyle("-fx-background-color: #444444; -fx-text-fill: white; -fx-padding: 10px; -fx-border-radius: 5px; -fx-font-family: Inter; -fx-font-size: 14px;");
-            // Add hover effect to zoom in on the bike button
+
             bikeButton.setOnMouseEntered(event -> {
-                bikeButton.setScaleX(1.1);  // Zoom in the button
-                bikeButton.setScaleY(1.1);  // Zoom in the button
+                bikeButton.setScaleX(1.1);
+                bikeButton.setScaleY(1.1);
             });
 
-            // Revert to original size when hover is removed
             bikeButton.setOnMouseExited(event -> {
-                bikeButton.setScaleX(1);  // Reset to original size
-                bikeButton.setScaleY(1);  // Reset to original size
+                bikeButton.setScaleX(1);
+                bikeButton.setScaleY(1);
             });
 
-            // Make the bike button clickable
             bikeButton.setOnAction(e -> showBikeDetails(bicycle, station));
-
-            bicycleFlowPane.getChildren().add(bikeButton);  // Add bike button to the FlowPane
+            bicycleFlowPane.getChildren().add(bikeButton);
         }
     }
 
-
     private void showBikeDetails(Bicycle bicycle, Station station) {
-        // Create a new Stage (popup/modal)
         Stage modalStage = new Stage();
         modalStage.setTitle("Bike Details: " + bicycle.getId());
 
-        // Dark overlay with some transparency
         StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);"); // Semi-transparent black overlay
+        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
 
-        // Main layout with HBox to arrange content horizontally
-        HBox modalLayout = new HBox(20);  // Horizontal layout with some space between elements
+        HBox modalLayout = new HBox(20);
         modalLayout.setPadding(new Insets(20));
         modalLayout.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, black, 20, 0.5, 0, 0);");
 
-        // Left side content: VBox for text information
         VBox textLayout = new VBox(10);
         textLayout.setStyle("-fx-text-fill: white;");
 
-        // Title for the modal
         Label titleLabel = new Label("Bike Details");
         titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        // Bike ID label
         Label bikeIdLabel = new Label("Bike ID: " + bicycle.getId());
         bikeIdLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
 
-        // Battery level label
         Label batteryLabel = new Label("Battery Level: " + bicycle.getBattery_level() + "%");
         batteryLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
 
-        // Range label
         Label rangeLabel = new Label("Range: " + bicycle.getRange_km() + " km");
         rangeLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
 
-        // Last updated label
         Label lastUpdatedLabel = new Label("Last Updated: " + bicycle.getLast_updated());
         lastUpdatedLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
 
-        // Reserve button
         Button reserveButton = new Button("Reserve Bike");
         reserveButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10px; -fx-border-radius: 5px;");
         reserveButton.setOnAction(e -> {
             reserveBike(bicycle, station);
-            modalStage.close(); // Close modal after reserving
+            BicycleRental rental = new BicycleRental(
+                    0, SessionManager.getInstance().getUser(), bicycle, station,
+                    null, new Timestamp(System.currentTimeMillis()), null, 0, 0, 0
+            );
+            showReservationConfirmation(bicycle, rental);
+            modalStage.close();
         });
 
-        // Close button for the modal
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> modalStage.close());
         closeButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
 
-        // Add all text components to the VBox
         textLayout.getChildren().addAll(titleLabel, bikeIdLabel, batteryLabel, rangeLabel, lastUpdatedLabel, reserveButton, closeButton);
 
-        // Right side content: Image of the bicycle
-        ImageView bikeImageView = new ImageView(new Image(getClass().getResource("/images/station/icons/bicycle_top_view.png").toExternalForm())); // Replace with your bike image path
-        bikeImageView.setFitHeight(200);  // Set height for the image
-        bikeImageView.setPreserveRatio(true);  // Maintain aspect ratio of the image
+        Image bikeIcon = new Image(getClass().getResource("/images/station/icons/bicycle_top_view.png").toExternalForm());
+        ImageView bikeIconView = new ImageView(bikeIcon);
+        bikeIconView.setFitHeight(100);
+        bikeIconView.setFitWidth(100);
+        bikeIconView.setPreserveRatio(true);
 
-        // Add VBox and ImageView to the HBox
-        modalLayout.getChildren().addAll(textLayout, bikeImageView);
+        modalLayout.getChildren().addAll(textLayout, bikeIconView);
+        stackPane.getChildren().add(modalLayout);
 
-        stackPane.getChildren().add(modalLayout);  // Add the modal layout to the stack pane
-
-        // Set up the Scene and Stage
-        Scene modalScene = new Scene(stackPane, 600, 400);  // Adjust width and height as needed
+        Scene modalScene = new Scene(stackPane, 400, 300);
         modalStage.setScene(modalScene);
         modalStage.show();
+        openModals.add(modalStage);
+    }
+
+    private void showReservationConfirmation(Bicycle bicycle, BicycleRental rental) {
+        Stage modalStage = new Stage();
+        modalStage.setTitle("Reservation Confirmation");
+
+        StackPane stackPane = new StackPane();
+        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
+
+        VBox modalLayout = new VBox(10);
+        modalLayout.setPadding(new Insets(20));
+        modalLayout.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, black, 20, 0.5, 0, 0);");
+
+        Label titleLabel = new Label("Reservation Confirmation");
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        Label bikeIdLabel = new Label("Bike ID: " + bicycle.getId());
+        bikeIdLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+
+        Label timerLabel = new Label("Time remaining: 10:00");
+        timerLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+
+        Button pickUpButton = new Button("Pick Up");
+        pickUpButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10px; -fx-border-radius: 5px;");
+        pickUpButton.setOnAction(e -> {
+            stopTimerAndPickUpBike(bicycle, rental, modalStage);
+        });
+
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(e -> modalStage.close());
+        closeButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
+
+        modalLayout.getChildren().addAll(titleLabel, bikeIdLabel, timerLabel, pickUpButton, closeButton);
+        stackPane.getChildren().add(modalLayout);
+
+        Scene modalScene = new Scene(stackPane, 300, 200);
+        modalStage.setScene(modalScene);
+        modalStage.show();
+        openModals.add(modalStage);
+
+        startTimerDisplay(timerLabel, modalStage, bicycle, rental);
     }
 
 
     private void reserveBike(Bicycle bicycle, Station station) {
-        // Logic to reserve the bike (e.g., mark the bike as reserved, update status in the database)
-        BicycleRentalService bicycleRentalService = new BicycleRentalService();
-        StationService stationService = new StationService();
-        BicycleService bicycleService = new BicycleService();
         try {
             bicycle.setStatus(Bicycle.STATUS.reserved);
 
-            bicycleRentalService.create(new BicycleRental(0,new UserService().getById(1), bicycle, station,null,new Timestamp(System.currentTimeMillis()), null, 0, 0, 0));
+            BicycleRentalService bicycleRentalService = new BicycleRentalService();
+            BicycleRental rental = new BicycleRental(
+                    0, SessionManager.getInstance().getUser(), bicycle, station,
+                    null, new Timestamp(System.currentTimeMillis()), null, 0, 0, 0
+            );
+            bicycleRentalService.create(rental);
+
+            BicycleService bicycleService = new BicycleService();
             bicycleService.update(bicycle);
-            stationService.updateAvailableBikes(station,station.getAvailable_bikes()-1);
+
+            stationService.updateAvailableBikes(station, station.getAvailable_bikes() - 1);
+
             System.out.println("Bike " + bicycle.getId() + " reserved successfully.");
 
+            showReservationConfirmation(bicycle, rental);
+            startReservationTimer(bicycle, station, rental);
 
         } catch (Exception e) {
             e.printStackTrace();
+            showErrorDialog("Reservation Failed", "An error occurred while reserving the bike. Please try again.");
+        }
+    }
+
+    private void reloadCurrentScene() {
+        try {
+            // Close all open modals
+            for (Stage modal : openModals) {
+                if (modal != null && modal.isShowing()) {
+                    modal.close();
+                }
+            }
+            openModals.clear(); // Clear the list of open modals
+
+            // Reload the current scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/station/front/station.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) home_button.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Reload Failed", "An error occurred while reloading the page. Please try again.");
+        }
+    }
+
+    private void startReservationTimer(Bicycle bicycle, Station station, BicycleRental rental) {
+        int[] reservationDurationSeconds = {1* 60}; // 10 minutes
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    reservationDurationSeconds[0]--;
+
+                    if (reservationDurationSeconds[0] <= 0) {
+                        cancelReservation(bicycle, station, rental);
+                    } else {
+                        System.out.println("Time remaining: " + reservationDurationSeconds[0] + " seconds");
+                    }
+                })
+        );
+
+        timeline.setCycleCount(reservationDurationSeconds[0]);
+        timeline.play();
+    }
+    private void startTimerDisplay(Label timerLabel, Stage modalStage, Bicycle bicycle, BicycleRental rental) {
+        // Stop any existing timeline
+        if (reservationTimeline != null) {
+            reservationTimeline.stop();
+            reservationTimeline = null;
+        }
+
+        int[] reservationDurationSeconds = {1 * 60}; // 10 minutes
+
+        reservationTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    reservationDurationSeconds[0]--;
+
+                    if (reservationDurationSeconds[0] <= 0) {
+                        modalStage.close();
+                        cancelReservation(bicycle, rental.getStart_station(), rental);
+                    } else {
+                        int minutes = reservationDurationSeconds[0] / 60;
+                        int seconds = reservationDurationSeconds[0] % 60;
+                        timerLabel.setText(String.format("Time remaining: %02d:%02d", minutes, seconds));
+                    }
+                })
+        );
+
+        reservationTimeline.setCycleCount(Timeline.INDEFINITE); // Run indefinitely until stopped
+        reservationTimeline.play();
+
+        // Ensure the timeline is stopped when the modal is closed
+        modalStage.setOnCloseRequest(event -> {
+            if (reservationTimeline != null) {
+                reservationTimeline.stop();
+                reservationTimeline = null;
+            }
+        });
+    }
+
+    private void cancelReservation(Bicycle bicycle, Station station, BicycleRental rental) {
+        try {
+            bicycle.setStatus(Bicycle.STATUS.available);
+
+            BicycleService bicycleService = new BicycleService();
+            bicycleService.update(bicycle);
+
+            stationService.updateAvailableBikes(station, station.getAvailable_bikes() + 1);
+
+            BicycleRentalService bicycleRentalService = new BicycleRentalService();
+            bicycleRentalService.delete(rental.getId()); // Assuming delete method takes an ID
+
+            System.out.println("Reservation for bike " + bicycle.getId() + " has been canceled.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorDialog("Cancellation Failed", "An error occurred while canceling the reservation. Please try again.");
+        }
+    }
+    private void stopTimerAndPickUpBike(Bicycle bicycle, BicycleRental rental, Stage modalStage) {
+        // Stop the reservation timeline
+        if (reservationTimeline != null) {
+            reservationTimeline.stop();
+            reservationTimeline = null; // Clear the reference to avoid memory leaks
+            System.out.println("Timer stopped."); // Debug statement
+        }
+
+        // Close the modal
+        modalStage.close();
+
+        // Update the bike status to "in use"
+        try {
+            bicycle.setStatus(Bicycle.STATUS.in_use);
+
+            BicycleService bicycleService = new BicycleService();
+            bicycleService.update(bicycle);
+
+            System.out.println("Bike " + bicycle.getId() + " picked up successfully.");
+
+            // Reload the current scene to reflect changes
+            reloadCurrentScene();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorDialog("Pick Up Failed", "An error occurred while picking up the bike. Please try again.");
         }
     }
 

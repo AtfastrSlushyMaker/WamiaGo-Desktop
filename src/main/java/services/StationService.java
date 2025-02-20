@@ -362,4 +362,10 @@ public class StationService implements IService<Station> {
         }
         return bicycles;
     }
-}
+    public void fixDataBaseBicycles(Station station) {
+        List<Bicycle> bicycles = getAvailableBikes(station);
+        try {
+            updateAvailableBikes(station, bicycles.size());
+        } catch (SQLException e) {
+            e.printStackTrace();}
+}}
