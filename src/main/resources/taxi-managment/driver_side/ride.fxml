@@ -2,8 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,11 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@station.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.front.StationController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@ride.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.taxi.driverside.ride.RideController">
 
     <children>
 
-        <VBox prefHeight="781.0" prefWidth="280.0">
+        <VBox prefHeight="781.0" prefWidth="280.0" stylesheets="@style.css">
 
             <children>
 
@@ -35,7 +33,7 @@
 
                         </Button>
 
-                        <Button fx:id="rides_button" layoutX="19.0" layoutY="361.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Rides " textFill="#c6b6b6">
+                        <Button fx:id="rides_button" layoutX="18.0" layoutY="361.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Rides " textFill="#c6b6b6">
 
                             <font>
 
@@ -45,7 +43,7 @@
 
                         </Button>
 
-                        <Button fx:id="bookings_button" layoutX="19.0" layoutY="471.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Bookings " textFill="#c6b6b6">
+                        <Button fx:id="booking_button" layoutX="18.0" layoutY="471.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Bookings " textFill="#c6b6b6">
 
                             <font>
 
@@ -82,11 +80,11 @@
                                 <Image url="@../../images/icons/home.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="49.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="48.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../images/icons/rides.png" />
                             </image></ImageView>
-                        <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="52.0" layoutY="479.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="47.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../images/icons/delivery-truck.png" />
                             </image>
@@ -107,27 +105,24 @@
         <Pane prefHeight="827.0" prefWidth="1143.0">
             <children>
                 <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
-                <Label id="available_stations_label" fx:id="available_stations_label" layoutX="411.0" layoutY="115.0" prefHeight="50.0" prefWidth="272.0" stylesheets="@station.css" text="Available Stations" textFill="#323131">
-                    <font>
-                        <Font name="Century Gothic Bold" size="20.0" />
-                    </font>
-                </Label>
-            <ScrollPane id="scrollPane" fx:id="scrollPane" layoutX="512.0" layoutY="212.0" prefHeight="583.0" prefWidth="557.0" stylesheets="@station.css">
-               <content>
-      
-                                                                <!-- FlowPane to display stations -->
-                      <FlowPane id="scrollPane" fx:id="stationFlowPane" columnHalignment="CENTER" hgap="20" prefHeight="621.0" prefWidth="644.0" stylesheets="@station.css" vgap="20">
+
+
+                <!-- FlowPane to display rides -->
+                <FlowPane fx:id="rideFlowPane" hgap="20" layoutX="4.0" layoutY="185.0" prefHeight="638.0" prefWidth="1087.0" vgap="20">
                     <!-- Dynamically populated station cards will go here -->
                 </FlowPane>
-               </content>
-            </ScrollPane>
-          <AnchorPane layoutX="42.0" layoutY="521.0" minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="438.0" />
-            <ImageView fitHeight="583.0" fitWidth="352.0" layoutX="121.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
+                <Button id="request_taxi_button" fx:id="back_to_request" alignment="BASELINE_LEFT" layoutX="46.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="138.0" stylesheets="@ride.css" text="See Requests" />
+                <Button id="See_you_Rides_buuton" fx:id="See_you_Rides_buuton" alignment="BASELINE_LEFT" layoutX="201.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="128.0" stylesheets="@ride.css" text="See Rides" />
+            <ImageView fitHeight="37.0" fitWidth="36.0" layoutX="141.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/station/images/sygic-satellite-maps.png" />
+                  <Image url="@../../images/icons/see.png" />
                </image>
             </ImageView>
-            <Button id="my_bikes_button" fx:id="my_bikes_button" layoutX="919.0" layoutY="122.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" text="My Bikes" />
+            <ImageView fitHeight="37.0" fitWidth="36.0" layoutX="276.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons/see.png" />
+               </image>
+            </ImageView>
 
             </children>
         </Pane>

@@ -88,7 +88,7 @@
     <Pane fx:id="slidingPanel" layoutX="0.0" prefHeight="694.0" prefWidth="478.0" styleClass="sliding-panel">
         <ImageView fitHeight="350.0" fitWidth="420.0" layoutX="37.0" layoutY="31.0">
             <image>
-                <Image url="@../Images/wamiaGO.png" />
+                <Image url="@../images/wamiaGO.png" />
             </image>
             <effect>
                 <DropShadow color="rgba(70, 70, 70, 0.8)" offsetX="5.0" offsetY="5.0" radius="2.0" spread="0.5" />
