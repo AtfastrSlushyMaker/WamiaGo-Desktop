@@ -2,45 +2,31 @@ package controllers.booking;
 
 import entities.Booking;
 import entities.Trip;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import services.BookingService;
 import services.TripService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class BookingController {
     @FXML
-    private TableView<Booking> bookigtable;
-
-    @FXML
-    private TableColumn<Booking, Integer> seats;
-
-    @FXML
-    private TableColumn<Booking, String> status;
-
-    @FXML
-    private TableColumn<Booking, Void> minus;
-
-    @FXML
-    private TableColumn<Booking, Void> add;
-
-    @FXML
-    private TableColumn<Booking, Void> delete;
-
-    @FXML
-    private TableColumn<Booking, Void> call;
+    private FlowPane BookingFlowPane;
 
     @FXML
     private Button home_button;
@@ -50,15 +36,12 @@ public class BookingController {
 
     private BookingService bookingService;
     private TripService tripService;
-    private ObservableList<Booking> bookingsData = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
         bookingService = new BookingService();
         tripService = new TripService();
-
-        initializeTableColumns();
-        loadBookings();
+        loadBookingsIntoFlowPane();
         setupNavigation();
     }
 
@@ -78,71 +61,87 @@ public class BookingController {
         }
     }
 
-    private void initializeTableColumns() {
-        seats.setCellValueFactory(new PropertyValueFactory<>("reservedSeats"));
-        status.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        configureButtonColumn(minus, "Minus", "/images/icons/minus.png", this::handleMinusButton);
-        configureButtonColumn(add, "Add", "/images/icons/add.png", this::handleAddButton);
-        configureButtonColumn(delete, "Abort", "/images/icons/delete.png", booking -> {
-            handleDeleteBooking(booking);
-            return null;
-        });
-        configureButtonColumn(call, "Call", "/images/icons/call.png", booking -> {
-            // Implement the call action here
-            return null;
-        });
-    }
-
-    private void configureButtonColumn(TableColumn<Booking, Void> column, String tooltipText, String iconPath, Callback<Booking, Void> action) {
-        column.setCellFactory(param -> new TableCell<>() {
-            private final Button button = new Button();
-            private final ImageView icon = new ImageView();
-
-            {
-                try {
-                    Image iconImage = new Image(getClass().getResourceAsStream(iconPath));
-                    icon.setImage(iconImage);
-                    icon.setFitHeight(40);
-                    icon.setFitWidth(40);
-
-                    button.setGraphic(icon);
-                    button.getStyleClass().add("icon-button");
-                    button.setOnAction(event -> {
-                        Booking booking = getTableView().getItems().get(getIndex());
-                        if (action != null) {
-                            action.call(booking);
-                        }
-                    });
-
-                    Tooltip.install(button, new Tooltip(tooltipText));
-                } catch (NullPointerException e) {
-                    System.err.println(tooltipText + " icon image not found!");
-                    button.setText(tooltipText);
-                }
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : button);
-            }
-        });
-    }
-
-    private void loadBookings() {
+    private void loadBookingsIntoFlowPane() {
         try {
-            bookingsData.setAll(bookingService.read());
-            bookigtable.setItems(bookingsData);
+            List<Booking> bookings = bookingService.read();
+            for (Booking booking : bookings) {
+                Trip trip = tripService.getById(booking.getTrip().getIdTrip());
+                VBox bookingCard = createBookingCard(trip, booking);
+                BookingFlowPane.getChildren().add(bookingCard);
+            }
         } catch (SQLException e) {
-            showErrorAlert("Database Error", "Could not load bookings: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    private Void handleMinusButton(Booking booking) {
+    private VBox createBookingCard(Trip trip, Booking booking) {
+        VBox bookingCard = new VBox(10);
+        bookingCard.setPadding(new Insets(10));
+        bookingCard.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #ccc; -fx-border-radius: 5px;");
+        bookingCard.setAlignment(javafx.geometry.Pos.CENTER);
+
+        Label routeLabel = new Label(trip.getDepartureCity() + " to " + trip.getArrivalCity());
+        routeLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+        Label dateLabel = new Label("Departure Date: " + trip.getDepartureDate());
+        dateLabel.setStyle("-fx-font-size: 14px;");
+
+        Button moreDetailsButton = new Button("More Details");
+        moreDetailsButton.setOnAction(e -> showBookingDetails(booking));
+
+        Button abortButton = new Button("Abort");
+        abortButton.setOnAction(e -> handleDeleteBooking(booking, bookingCard));
+
+        HBox buttonBox = new HBox(10, moreDetailsButton, abortButton);
+        buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+        bookingCard.getChildren().addAll(routeLabel, dateLabel, buttonBox);
+        return bookingCard;
+    }
+
+    private void showBookingDetails(Booking booking) {
+        Stage modalStage = new Stage();
+        modalStage.setTitle("Booking Details");
+
+        VBox detailsBox = new VBox(10);
+        detailsBox.setPadding(new Insets(20));
+        detailsBox.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px;");
+
+        Label statusLabel = new Label("Status: " + booking.getStatus());
+        statusLabel.setStyle("-fx-text-fill: white;");
+
+        Label seatsLabel = new Label("Reserved Seats: " + booking.getReservedSeats());
+        seatsLabel.setStyle("-fx-text-fill: white;");
+
+        Button minusButton = new Button();
+        ImageView minusIcon = new ImageView(new Image(getClass().getResource("/images/icons/minus.png").toExternalForm()));
+        minusIcon.setFitHeight(20);
+        minusIcon.setFitWidth(20);
+        minusButton.setGraphic(minusIcon);
+        minusButton.setOnAction(e -> handleMinusButton(booking, seatsLabel));
+
+        Button addButton = new Button();
+        ImageView addIcon = new ImageView(new Image(getClass().getResource("/images/icons/add.png").toExternalForm()));
+        addIcon.setFitHeight(20);
+        addIcon.setFitWidth(20);
+        addButton.setGraphic(addIcon);
+        addButton.setOnAction(e -> handleAddButton(booking, seatsLabel));
+
+        HBox seatsBox = new HBox(10, minusButton, seatsLabel, addButton);
+        seatsBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+        detailsBox.getChildren().addAll(statusLabel, seatsBox);
+
+        Scene modalScene = new Scene(detailsBox, 300, 200);
+        modalStage.setScene(modalScene);
+        modalStage.show();
+    }
+
+    private void handleMinusButton(Booking booking, Label seatsLabel) {
         if (booking.getReservedSeats() > 1) {
             booking.setReservedSeats(booking.getReservedSeats() - 1);
             updateBooking(booking);
+            seatsLabel.setText("Reserved Seats: " + booking.getReservedSeats());
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm Deletion");
@@ -150,38 +149,36 @@ public class BookingController {
             alert.setContentText("You're going to abort. Do you want to proceed?");
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
-                    handleDeleteBooking(booking);
+                    handleDeleteBooking(booking, null);
                 }
             });
         }
-        return null;
     }
 
-    private Void handleAddButton(Booking booking) {
+    private void handleAddButton(Booking booking, Label seatsLabel) {
         try {
             Trip trip = tripService.getById(booking.getTrip().getIdTrip());
             if (booking.getReservedSeats() < trip.getAvailableSeats()) {
                 booking.setReservedSeats(booking.getReservedSeats() + 1);
                 updateBooking(booking);
+                seatsLabel.setText("Reserved Seats: " + booking.getReservedSeats());
             } else {
-                showErrorAlert("Limit Reached", "You have reached the maximum reserved seats for this trip.");
+                showErrorAlert("Limit Reached", "Cannot reserve more seats than available.");
             }
         } catch (SQLException e) {
             showErrorAlert("Database Error", "Could not load trip details: " + e.getMessage());
         }
-        return null;
     }
 
     private void updateBooking(Booking booking) {
         try {
             bookingService.update(booking);
-            bookigtable.refresh();
         } catch (SQLException e) {
             showErrorAlert("Update Error", "Failed to update booking: " + e.getMessage());
         }
     }
 
-    private void handleDeleteBooking(Booking booking) {
+    private void handleDeleteBooking(Booking booking, VBox bookingCard) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Deletion");
         alert.setHeaderText(null);
@@ -190,7 +187,9 @@ public class BookingController {
             if (response == ButtonType.OK) {
                 try {
                     bookingService.delete(booking.getIdBooking());
-                    bookingsData.remove(booking);
+                    if (bookingCard != null) {
+                        BookingFlowPane.getChildren().remove(bookingCard);
+                    }
                     showSuccessAlert("Booking Deleted", "Booking aborted successfully.");
                 } catch (SQLException e) {
                     showErrorAlert("Deletion Error", "Failed to abort booking: " + e.getMessage());
