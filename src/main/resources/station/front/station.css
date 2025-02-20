@@ -1,6 +1,5 @@
 
-#stationFlowPane {
-    -fx-padding: 0 0 0 0;  /* Adds space on top */
+#stationFlowPane { /* Adds space on top */
     -fx-hgap: 20px;
     -fx-vgap: 20px;
     -fx-alignment: center;
@@ -157,6 +156,29 @@
 }
 
 
+#scrollPane{
+    -fx-background-color: none;
+    -fx-border-color: none;
+    -fx-border-width: 0;
+    -fx-padding: 0;
 
+}
+#my_bikes_button
+{
+    -fx-background-color: #5A6BE5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-font-family: Inter;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
+}
+#my_bikes_button:hover {
+    -fx-background-color: #3F51B5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 10, 0, 0, 2);
+}
 
 

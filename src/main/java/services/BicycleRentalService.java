@@ -197,5 +197,30 @@ public class BicycleRentalService implements IService<BicycleRental> {
         }
         return bicycleRentals;
     }
+    public List<BicycleRental>getActiveRentalsForUser(User user) throws SQLException
+    {
+        List<BicycleRental> bicycleRentals = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle_rental WHERE id_user=? AND end_time IS NULL";
+        PreparedStatement preparedStatement=connection.prepareStatement(sql);
+        preparedStatement.setInt(1,user.getId());
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            BicycleRental bicycleRental = new BicycleRental(
+                    rs.getInt("id_user_rental"),
+                    new UserService().getById(rs.getInt("id_user")),
+                    new BicycleService().getById(rs.getInt("id_bike")),
+                    new StationService().getById(rs.getInt("id_start_station")),
+                    new StationService().getById(rs.getInt("id_end_station")),
+                    rs.getTimestamp("start_time"),
+                    rs.getTimestamp("end_time"),
+                    rs.getFloat("distance_km"),
+                    rs.getFloat("battery_used"),
+                    rs.getFloat("cost")
+            );
+            bicycleRentals.add(bicycleRental);
+        }
+        return bicycleRentals;
+    }
+
 
 }

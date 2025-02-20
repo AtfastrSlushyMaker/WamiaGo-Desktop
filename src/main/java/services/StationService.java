@@ -18,7 +18,7 @@ public class StationService implements IService<Station> {
 
     @Override
     public boolean create(Station station) throws SQLException {
-        String sql ="INSERT INTO bicycle_station (name,id_location,total_docks," +
+        String sql = "INSERT INTO bicycle_station (name,id_location,total_docks," +
                 "available_docks,available_bikes,charging_bikes,status) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, station.getName());
@@ -102,6 +102,7 @@ public class StationService implements IService<Station> {
         }
         return null;
     }
+
     public Station getByName(String name) throws SQLException {
         String sql = "SELECT * FROM bicycle_station WHERE name = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -121,6 +122,7 @@ public class StationService implements IService<Station> {
         }
         return null;
     }
+
     public List<Station> getByLocation(Location location) throws SQLException {
         List<Station> stations = new ArrayList<>();
         String sql = "SELECT * FROM bicycle_station WHERE id_location = ?";
@@ -149,6 +151,7 @@ public class StationService implements IService<Station> {
         preparedStatement.setInt(2, station.getId());
         preparedStatement.executeUpdate();
     }
+
     public void updateAvailableDocks(Station station, int available_docks) throws SQLException {
         String sql = "UPDATE bicycle_station SET available_docks=? WHERE id_station=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -156,6 +159,7 @@ public class StationService implements IService<Station> {
         preparedStatement.setInt(2, station.getId());
         preparedStatement.executeUpdate();
     }
+
     public void updateChargingBikes(Station station, int charging_bikes) throws SQLException {
         String sql = "UPDATE bicycle_station SET charging_bikes=? WHERE id_station=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -163,6 +167,7 @@ public class StationService implements IService<Station> {
         preparedStatement.setInt(2, station.getId());
         preparedStatement.executeUpdate();
     }
+
     public void updateTotalDocks(Station station, int total_docks) throws SQLException {
         String sql = "UPDATE bicycle_station SET total_docks=? WHERE id_station=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -170,6 +175,7 @@ public class StationService implements IService<Station> {
         preparedStatement.setInt(2, station.getId());
         preparedStatement.executeUpdate();
     }
+
     public void updateStatus(Station station, Station.STATUS status) throws SQLException {
         String sql = "UPDATE bicycle_station SET status=? WHERE id_station=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -177,6 +183,7 @@ public class StationService implements IService<Station> {
         preparedStatement.setInt(2, station.getId());
         preparedStatement.executeUpdate();
     }
+
     public void updateLocation(Station station, Location location) throws SQLException {
         String sql = "UPDATE bicycle_station SET id_location=? WHERE id_station=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -184,26 +191,31 @@ public class StationService implements IService<Station> {
         preparedStatement.setInt(2, station.getId());
         preparedStatement.executeUpdate();
     }
+
     public List<Station> sortById() throws SQLException {
         List<Station> stations = read();
-        stations.sort((s1, s2) -> (s1.getId()-s2.getId()));
+        stations.sort((s1, s2) -> (s1.getId() - s2.getId()));
         return stations;
     }
+
     public List<Station> sortByName() throws SQLException {
         List<Station> stations = read();
         stations.sort((s1, s2) -> s1.getName().compareTo(s2.getName()));
         return stations;
     }
+
     public List<Station> sortByAvailableBikes() throws SQLException {
         List<Station> stations = read();
         stations.sort((s1, s2) -> s2.getAvailable_bikes() - s1.getAvailable_bikes());
         return stations;
     }
+
     public List<Station> sortByAvailableDocks() throws SQLException {
         List<Station> stations = read();
         stations.sort((s1, s2) -> s2.getAvailable_docks() - s1.getAvailable_docks());
         return stations;
     }
+
     public List<Station> sortByChargingBikes() throws SQLException {
         List<Station> stations = read();
         stations.sort((s1, s2) -> s2.getCharging_bikes() - s1.getCharging_bikes());
@@ -215,9 +227,10 @@ public class StationService implements IService<Station> {
         stations.sort((s1, s2) -> s2.getTotal_docks() - s1.getTotal_docks());
         return stations;
     }
-    public List<Station> search(String By,String value) throws SQLException {
+
+    public List<Station> search(String By, String value) throws SQLException {
         List<Station> stations = new ArrayList<>();
-        String sql = "SELECT * FROM bicycle_station WHERE "+By+"= ?";
+        String sql = "SELECT * FROM bicycle_station WHERE " + By + "= ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, value);
         ResultSet rs = preparedStatement.executeQuery();
@@ -235,6 +248,7 @@ public class StationService implements IService<Station> {
         }
         return stations;
     }
+
     public List<Station> searchByName(String name) throws SQLException {
         List<Station> stations = new ArrayList<>();
         String sql = "SELECT * FROM bicycle_station WHERE name LIKE ?";
@@ -276,6 +290,7 @@ public class StationService implements IService<Station> {
         }
         return stations;
     }
+
     public List<Station> searchByLocation(Location location) throws SQLException {
         List<Station> stations = new ArrayList<>();
         String sql = "SELECT * FROM bicycle_station WHERE id_location = ?";
@@ -338,10 +353,11 @@ public class StationService implements IService<Station> {
         }
         return stations;
     }
+
     public List<Bicycle> getAvailableBikes(Station station) {
         List<Bicycle> bicycles = new ArrayList<>();
         String sql = "SELECT * FROM bicycle WHERE id_station = ? AND status = ?";
-        try{
+        try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, station.getId());
             ps.setString(2, Bicycle.STATUS.available.toString());
@@ -362,10 +378,24 @@ public class StationService implements IService<Station> {
         }
         return bicycles;
     }
+
     public void fixDataBaseBicycles(Station station) {
         List<Bicycle> bicycles = getAvailableBikes(station);
         try {
             updateAvailableBikes(station, bicycles.size());
         } catch (SQLException e) {
-            e.printStackTrace();}
-}}
+            e.printStackTrace();
+        }
+    }
+
+    public List<String> getAllStationNames() throws SQLException {
+        List<String> stationNames = new ArrayList<>();
+        String sql = "SELECT name FROM station";
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+        while (rs.next()) {
+            stationNames.add(rs.getString("name"));
+        }
+        return stationNames;
+    }
+}
