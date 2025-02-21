@@ -108,7 +108,6 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </Button>
-
                         <Button fx:id="dashboard" graphicTextGap="5.0" mnemonicParsing="false" onAction="#DashboardBtn" prefHeight="25.0" prefWidth="186.0" text="Dashboard" textAlignment="CENTER" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" translateX="-22.0">
@@ -166,27 +165,40 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button id="taxi" fx:id="enquiries1" graphicTextGap="0.0" mnemonicParsing="false" onAction="#QueriesBtn" prefHeight="25.0" prefWidth="186.0" text="Taxi">
-                            <graphic>
-                                <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" translateX="-27.0">
-                                    <image>
-                                        <Image url="@/images/icons/Queries.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                            <font>
-                                <Font size="10.0" />
-                            </font>
-                            <styleClass>
-                                <String fx:value="navButtons" />
-                                <String fx:value="text" />
-                            </styleClass>
-                        </Button>
+                  <Button fx:id="stations" graphicTextGap="0.0" mnemonicParsing="false" onAction="#stationsBtn" prefHeight="25.0" prefWidth="186.0" text="Stations">
+
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="bicycles" graphicTextGap="0.0" mnemonicParsing="false" onAction="#bicyclesBtn" prefHeight="25.0" prefWidth="186.0" text="Bicycles">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="rentals" graphicTextGap="0.0" mnemonicParsing="false" onAction="#rentalsBtn" prefHeight="25.0" prefWidth="186.0" text="Bicycles Rentals">
+
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
                     </children>
                 </VBox>
                 <Rectangle arcHeight="5.0" arcWidth="1.0" fill="#ecf1f5" height="1.0" layoutX="30.0" layoutY="169.0" stroke="WHITE" strokeType="INSIDE" width="130.0" AnchorPane.bottomAnchor="375.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="210.0" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="contentPane" layoutX="185.0" layoutY="35.0" prefHeight="587.0" prefWidth="846.0" />
+      <AnchorPane fx:id="contentPane" layoutX="185.0" layoutY="35.0" prefHeight="587.0" prefWidth="846.0" />
     </children>
 </AnchorPane>

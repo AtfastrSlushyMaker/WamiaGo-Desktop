@@ -36,15 +36,19 @@
 
         private void loadPanels() {
             try {
+                //0
                 AnchorPane usersPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.back/users.fxml")));
-                AnchorPane requestPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
-                panels.addAll(Arrays.asList(
-                        usersPanel
-                ));
-
+                //1
+                AnchorPane bikesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bicycle.back/bicycle.fxml")));
+               //2
+                AnchorPane stationsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/station/back/stations.fxml")));
+               //3
+                AnchorPane rentalsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/rentals.back/rentals.fxml")));
                 panels.addAll(Arrays.asList(
                         usersPanel,
-                        requestPanel
+                        bikesPanel,
+                        stationsPanel,
+                        rentalsPanel
                 ));
 
                 for(AnchorPane panel : panels) {
@@ -113,6 +117,16 @@
         }
 
         @FXML
+        public void bicyclesBtn() {showPanel(1);}
+
+        @FXML
+        public void stationsBtn() {showPanel(2);}
+
+        @FXML
+        public void rentalsBtn() {showPanel(3);}
+
+
+        @FXML
         private void AccountSettingsBtn() {
             showPanel(1);
         }
@@ -126,7 +140,6 @@
         private void QueriesBtn() {
             showPanel(6);
         }
-
 
 
 
@@ -151,5 +164,6 @@
             // Stage stage = (Stage) navPanel.getScene().getWindow();
             // stage.setMaximized(false);
         }
+
 
     }
