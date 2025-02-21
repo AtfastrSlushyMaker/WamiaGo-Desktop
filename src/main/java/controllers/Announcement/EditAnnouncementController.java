@@ -1,4 +1,3 @@
-
 package controllers.Announcement;
 
 import entities.Announcement;
@@ -7,8 +6,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import services.AnnouncementService;
+import services.DriverService;
 import org.controlsfx.control.Notifications;
+import utils.SessionManager;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -32,7 +34,7 @@ public class EditAnnouncementController {
     @FXML
     private Button cancelButton;
 
-    private AnnouncementService announcementService;
+    private final AnnouncementService announcementService;
     private Announcement announcementToEdit;
 
     public EditAnnouncementController() {
@@ -46,58 +48,110 @@ public class EditAnnouncementController {
         }
     }
 
+    /**
+     * Initialise l'édition avec les données de l'annonce sélectionnée.
+     * @param announcement L'annonce à modifier
+     */
     public void setAnnouncementToEdit(Announcement announcement) {
+        if (announcement == null) {
+            Notifications.create()
+                    .title("Erreur")
+                    .text("Impossible de modifier cette annonce. Données invalides.")
+                    .showError();
+            return;
+        }
+
         this.announcementToEdit = announcement;
-        // Remplir les champs avec les données de l'annonce à modifier
+
+        // Remplir les champs avec les données actuelles
         titleField.setText(announcement.getTitle());
         contentField.setText(announcement.getContent());
         zoneComboBox.setValue(announcement.getZone());
         statusCheckBox.setSelected(announcement.getStatus());
     }
 
+    /**
+     * Ferme la fenêtre sans enregistrer les modifications.
+     */
     @FXML
     public void handleCancelButtonAction() {
-        // Fermer la fenêtre actuelle
         ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
+    /**
+     * Enregistre les modifications apportées à l'annonce.
+     */
     @FXML
     public void handleSubmitButtonAction() {
         try {
+            if (announcementToEdit == null) {
+                Notifications.create()
+                        .title("Erreur")
+                        .text("Aucune annonce sélectionnée pour la modification.")
+                        .showError();
+                return;
+            }
+
             // Récupérer les valeurs des champs
-            String title = titleField.getText();
-            String content = contentField.getText();
+            String title = titleField.getText().trim();
+            String content = contentField.getText().trim();
             Announcement.Zone zone = zoneComboBox.getValue();
             boolean status = statusCheckBox.isSelected();
 
-            // Mettre à jour l'objet Announcement
+            // Vérifier si les champs obligatoires sont remplis
+            if (title.isEmpty() || content.isEmpty() || zone == null) {
+                Notifications.create()
+                        .title("Erreur")
+                        .text("Veuillez remplir tous les champs obligatoires.")
+                        .showError();
+                return;
+            }
+
+            // Mettre à jour les propriétés de l'annonce
             announcementToEdit.setTitle(title);
             announcementToEdit.setContent(content);
             announcementToEdit.setZone(zone);
             announcementToEdit.setStatus(status);
             announcementToEdit.setDate(Timestamp.valueOf(LocalDateTime.now()));
 
-            Driver transporter = new Driver();
-            transporter.setIdDriver(7);  // ID du transporteur
-            announcementToEdit.setTransporter(transporter);
+            // Récupérer dynamiquement le transporteur
+            DriverService driverService = new DriverService();
+            Driver currentDriver = driverService.getDriverByUserId(SessionManager.getInstance().getUser());
+
+            if (currentDriver == null) {
+                Notifications.create()
+                        .title("Erreur")
+                        .text("Impossible de récupérer les informations du conducteur.")
+                        .showError();
+                return;
+            }
+
+            announcementToEdit.setTransporter(currentDriver);
+
             // Mettre à jour l'annonce via le service
             announcementService.update(announcementToEdit);
 
-            // Afficher une notification de type "toast"
+            // Afficher une notification de succès
             Notifications.create()
-                    .title("Success")
-                    .text("The announcement has been updated successfully.")
+                    .title("Succès")
+                    .text("L'annonce a été mise à jour avec succès.")
                     .showInformation();
 
             // Fermer la fenêtre
             ((Stage) submitButton.getScene().getWindow()).close();
 
-        } catch (Exception e) {
-            // Afficher une notification d'erreur
+        } catch (SQLException e) {
             Notifications.create()
-                    .title("Error")
-                    .text("An error occurred while updating the announcement: " + e.getMessage())
+                    .title("Erreur")
+                    .text("Une erreur SQL s'est produite : " + e.getMessage())
                     .showError();
+            e.printStackTrace();
+        } catch (Exception e) {
+            Notifications.create()
+                    .title("Erreur")
+                    .text("Une erreur inattendue est survenue : " + e.getMessage())
+                    .showError();
+            e.printStackTrace();
         }
     }
 }

@@ -2,6 +2,7 @@ package controllers.Announcement;
 
 import entities.Announcement;
 import entities.Driver;
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import services.AnnouncementService;
@@ -9,6 +10,8 @@ import services.AnnouncementService;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import org.controlsfx.control.Notifications;
+import services.DriverService;
+import utils.SessionManager;
 
 public class AddAnnouncementController {
 
@@ -37,6 +40,8 @@ public class AddAnnouncementController {
     public AddAnnouncementController() {
         this.announcementService = new AnnouncementService();
     }
+
+    private Driver currentDriver;
 
     @FXML
     public void initialize() {
@@ -78,9 +83,10 @@ public class AddAnnouncementController {
             announcement.setDate(Timestamp.valueOf(LocalDateTime.now()));
 
             // Attribuer l'ID du transporteur (ici, on utilise l'ID 7 pour tester)
-            Driver transporter = new Driver();
-            transporter.setIdDriver(7);  // ID du transporteur
-            announcement.setTransporter(transporter);
+            DriverService driverService = new DriverService();
+         User loogedinuser = SessionManager.getInstance().getUser();
+            currentDriver = driverService.getById(loogedinuser.getId());
+            announcement.setTransporter(currentDriver);
 
             // Ajouter l'annonce via le service
             announcementService.create(announcement);

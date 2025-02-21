@@ -5,128 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/user/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controllers/user/ProfileController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/utils/SessionManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/BrittanySignature.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-Black.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-BlackItalic.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-Bold.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-BoldItalic.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-ExtraBold.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-ExtraBoldItalic.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-ExtraLight-BETA.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-ExtraLightItalic-BETA.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-Italic.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-Light-BETA.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-LightItalic-BETA.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-Medium.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-MediumItalic.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-Regular.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-SemiBold.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-SemiBoldItalic.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-Thin-BETA.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Inter/Inter-ThinItalic-BETA.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Images/wamiaGO.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/user.back/profile.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/user.back/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/user.front/login.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/user.front/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnoucementClientController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/EditAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/EditAnnouncementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/viewAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/viewAnnouncementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationTransporterController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationControllerTransporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationControllerTransporter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationTransporterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationTransporterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationclientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationclientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/entities/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Reservation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/AnnouncementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/AnnouncementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/BicycleRentalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/BicycleRentalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/BicycleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/BicycleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/BookingService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/DriverService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/DriverService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/IService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/IService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/LocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RatingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RatingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/ReclamationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ReclamationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RelocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RelocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RequestService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/ResponseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ResponseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RideService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/StationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/StationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/TripService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/TripService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/VehicleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/VehicleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Reservation/Front/reservation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/reservation.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/Inter-VariableFont_opsz,wght.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/OFL.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/README.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-Black.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-BlackItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-Bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-BoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-ExtraBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-ExtraBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-ExtraLight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-ExtraLightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-Italic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-LightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-Medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-MediumItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-SemiBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-SemiBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-Thin.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_18pt-ThinItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-Black.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-BlackItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-Bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-BoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-ExtraBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-ExtraBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-ExtraLight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-ExtraLightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-Italic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-LightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-Medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-MediumItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-SemiBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-SemiBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-Thin.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_24pt-ThinItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-Black.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-BlackItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-Bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-BoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-ExtraBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-ExtraBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-ExtraLight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-ExtraLightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-Italic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-LightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-Medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-MediumItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-SemiBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-SemiBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-Thin.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fonts/Inter/static/Inter_28pt-ThinItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/icons/user.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/icons/user.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dataBase/wamia_go.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementsStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementsStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements_client.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements_client.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +39,7 @@
       <list>
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -184,41 +83,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Home.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainRequest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainRide.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging Relocation-management&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/farah/Downloads/Fruits-Market-master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Home.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MainRequest.executor": "Run",
+    "Application.MainRide.executor": "Run",
+    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
+    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor": "Run",
+    "Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Relocation-management",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop/src/main/resources/Relocation/Front",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\resources\Relocation\Front" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.Home">
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="23" />
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
       <module name="WamiaGo" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\lib\openjfx-23.0.2_windows-x64_bin-sdk\javafx-sdk-23.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml  " />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml  " />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.*" />
@@ -312,6 +217,8 @@
       <workItem from="1739898136784" duration="3265000" />
       <workItem from="1739903249076" duration="1548000" />
       <workItem from="1740043366096" duration="159000" />
+      <workItem from="1740046568323" duration="21713000" />
+      <workItem from="1740078813861" duration="21871000" />
     </task>
     <servers />
   </component>

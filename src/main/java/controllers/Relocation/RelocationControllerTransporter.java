@@ -1,9 +1,6 @@
 package controllers.Relocation;
 
-import entities.Relocation;
-import entities.Reservation;
-import entities.Station;
-import entities.User;
+import entities.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -14,12 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import services.RelocationService;
-import services.ReservationService;
-import services.StationService;
+import services.*;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
-import services.UserService;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -34,15 +29,21 @@ public class RelocationControllerTransporter {
     private HBox root;
     @FXML
     private FlowPane stationFlowPane;
+    private Driver currentDriver;
+    private User loggedInUser = SessionManager.getInstance().getUser(); // Utilisateur connecté
 
     private final RelocationService relocationService = new RelocationService();
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         root.getStylesheets().add(getClass().getResource("/Relocation/front/relocation.css").toExternalForm());
         loadStationsIntoFlowPane();
         setupNavigation();
+            // Récupérer le conducteur actuel en fonction de l'utilisateur connecté
+            DriverService driverService = new DriverService();
+            currentDriver = driverService.getById(loggedInUser.getId());
+
     }
 
     private void setupNavigation() {

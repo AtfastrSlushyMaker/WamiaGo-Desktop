@@ -10,13 +10,13 @@ public class Home extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("/announcements.fxml"));
-//        primaryStage.setTitle("Gestion des Annonces");
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Reservation/Front/ReservationsTransporter.fxml"));
-        Parent root = loader.load();
-
-        primaryStage.setScene(new Scene(root, 1000, 800));
+        Parent root = FXMLLoader.load(getClass().getResource("/user.front/login.fxml"));
+        // Parent root = FXMLLoader.load(getClass().getResource("/dashboard/dashboard.fxml"));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setTitle("Wamia Go - Welcome!");
+        primaryStage.setResizable(false);
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {

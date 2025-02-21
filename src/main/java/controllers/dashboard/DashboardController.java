@@ -99,7 +99,6 @@ public class DashboardController {
 
     @FXML
     void initialize() throws SQLException {
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         date_label.setText(dateFormat.format(new Date()));
 
@@ -117,7 +116,6 @@ public class DashboardController {
 
         if (user != null) {
             user_name_label.setText(user.getName());
-            //manageDashboardByRole(user);
         } else {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.front/login.fxml"));
@@ -137,51 +135,33 @@ public class DashboardController {
     }
 
     protected void pageNavigation() {
-        home_button.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
-                Parent homeRoot = loader.load();
-                Scene homeScene = new Scene(homeRoot);
-                Stage stage = (Stage) home_button.getScene().getWindow();
-                stage.setScene(homeScene);
-                pageNavigation();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        rides_button.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/rides/rides.fxml"));
-                Parent ridesRoot = loader.load();
-                Scene ridesScene = new Scene(ridesRoot);
-                Stage stage = (Stage) rides_button.getScene().getWindow();
-                stage.setScene(ridesScene);
-                pageNavigation();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
+        home_button.setOnAction(event -> navigateTo("/dashboard/dashboard.fxml"));
+        rides_button.setOnAction(event -> navigateTo("/rides/rides.fxml"));
+        booking_button.setOnAction(event -> navigateTo("/Relocation/Front/RelocationClient.fxml"));
         logout_button.setOnAction(event -> {
             SessionManager.getInstance().logout();
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.front/login.fxml"));
-                Parent loginRoot = loader.load();
-                Scene loginScene = new Scene(loginRoot);
-                Stage stage = (Stage) logout_button.getScene().getWindow();
-                stage.setTitle("Wamia Go - Welcome!");
-                stage.setScene(loginScene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navigateTo("/user.front/login.fxml");
         });
+    }
+
+    private void navigateTo(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) rides_button.getScene().getWindow();
+            stage.setScene(scene);
+            pageNavigation(); // Réactiver les événements des boutons après le changement de scène
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupUserDropdownMenu() {
         ContextMenu userMenu = new ContextMenu();
         MenuItem profileItem = new MenuItem("Profile");
-        userMenu.getItems().addAll(profileItem);
+        MenuItem announcementsItem = new MenuItem("My announcements");
+        userMenu.getItems().addAll(profileItem, announcementsItem);
 
         profileItem.setOnAction(event -> {
             try {
@@ -194,7 +174,6 @@ public class DashboardController {
 
                 Stage stage = (Stage) profile_button.getScene().getWindow();
                 stage.setScene(profileScene);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -219,20 +198,15 @@ public class DashboardController {
                 break;
         }
 
-       if(userService.isDriver(user)){
-           switch (userService.getDriver(user).getDriverRole()){
-               case TAXI_DRIVER:
-
-                   break;
-               case TRANSPORTER:
-
-                   break;
-               case CARPOOL_DRIVER:
-
-                   break;
-           }
-
-       }
+        if (userService.isDriver(user)) {
+            switch (userService.getDriver(user).getDriverRole()) {
+                case TAXI_DRIVER:
+                    break;
+                case TRANSPORTER:
+                    break;
+                case CARPOOL_DRIVER:
+                    break;
+            }
+        }
     }
 }
-

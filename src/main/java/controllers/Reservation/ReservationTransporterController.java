@@ -1,6 +1,8 @@
 package controllers.Reservation;
 
+import entities.Driver;
 import entities.Reservation;
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -14,6 +16,7 @@ import javafx.stage.Stage;
 import services.ReservationService;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -29,6 +32,9 @@ public class ReservationTransporterController {
     @FXML
     private FlowPane stationFlowPane;
 
+    private Driver currentDriver;
+    private User loggedInUser = SessionManager.getInstance().getUser();
+
     private final ReservationService reservationService = new ReservationService();
 
     @FXML
@@ -36,6 +42,7 @@ public class ReservationTransporterController {
         root.getStylesheets().add(getClass().getResource("/Reservation/front/reservation.css").toExternalForm());
         loadStationsIntoFlowPane();
         setupNavigation();
+
     }
 
     private void setupNavigation() {
@@ -183,6 +190,7 @@ public class ReservationTransporterController {
     }
 
     private void handleAccept(Reservation reservation) {
+
         // Création du formulaire pour l'ajout d'une relocalisation
         Dialog<Reservation> dialog = new Dialog<>();
         dialog.setTitle("Accept Reservation");

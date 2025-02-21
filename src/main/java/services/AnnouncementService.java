@@ -37,7 +37,7 @@ public class AnnouncementService implements IService<Announcement> {
             preparedStatement.setString(3, announcement.getContent());
             preparedStatement.setObject(4, announcement.getDate());
             preparedStatement.setString(5, announcement.getZone().toString());
-            preparedStatement.setBoolean(6, announcement.getStatus());
+            preparedStatement.setBoolean(6, true);
             preparedStatement.executeUpdate();
 
             System.out.println("Annonce ajoutée avec succès.");
@@ -66,6 +66,30 @@ public class AnnouncementService implements IService<Announcement> {
             System.err.println("Erreur lors de la mise à jour de l'annonce : " + e.getMessage());
             throw e;
         }
+    }
+
+    public List<Announcement> getAnnouncementsByDriverId(int driverId) throws SQLException {
+        List<Announcement> announcements = new ArrayList<>();
+        String query = "SELECT * FROM announcement WHERE id_transporter = ?";  // Assurez-vous que la colonne est correcte
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, driverId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Announcement announcement = new Announcement();
+                announcement.setIdAnnouncement(resultSet.getInt("id_announcement"));
+                announcement.setTitle(resultSet.getString("title"));
+                announcement.setContent(resultSet.getString("content"));
+                announcement.setZone(Announcement.Zone.valueOf(resultSet.getString("zone")));
+                announcement.setStatus(resultSet.getBoolean("status"));
+                announcement.setDate(resultSet.getTimestamp("date"));
+                // Récupérer le conducteur associé à l'annonce
+                DriverService driverService = new DriverService();
+                Driver driver = driverService.getById(resultSet.getInt("id_transporter"));  // Assurez-vous que la colonne est correcte
+                announcement.setTransporter(driver);
+                announcements.add(announcement);
+            }
+        }
+        return announcements;
     }
 
 
@@ -101,6 +125,8 @@ public class AnnouncementService implements IService<Announcement> {
         }
         return announcements;
     }
+
+
 
     public Announcement getById(int id) throws SQLException {
         String sql = "SELECT * FROM announcement WHERE id_announcement = ?";

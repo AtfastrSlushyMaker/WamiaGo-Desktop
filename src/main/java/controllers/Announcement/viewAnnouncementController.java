@@ -1,6 +1,7 @@
 package controllers.Announcement;
 
 import entities.Announcement;
+import entities.Driver;
 import entities.Location;
 import entities.Reservation;
 import javafx.fxml.FXML;
@@ -13,11 +14,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import services.AnnouncementService;
-import services.LocationService;
-import services.ReservationService;
+import services.*;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -85,7 +85,6 @@ public class viewAnnouncementController {
         Label contentLabel = new Label("Content: " + announcement.getContent());
         Label dateLabel = new Label("Date: " + announcement.getDate());
         Label zoneLabel = new Label("Zone: " + announcement.getZone());
-        Label statusLabel = new Label("Status: " + (announcement.getStatus() ? "Active" : "Inactive"));
 
         Button selectButton = createSelectButton(announcement);
         Button reserveButton = createReserveButton(announcement);
@@ -93,7 +92,7 @@ public class viewAnnouncementController {
         HBox buttonBox = new HBox(10, selectButton, reserveButton);
         buttonBox.setAlignment(Pos.CENTER);
 
-        announcementCard.getChildren().addAll(imageAndTextBox, titleLabel, contentLabel, dateLabel, zoneLabel, statusLabel, buttonBox);
+        announcementCard.getChildren().addAll(imageAndTextBox, titleLabel, contentLabel, dateLabel, zoneLabel, buttonBox);
 
         announcementCard.setOnMouseEntered(event -> {
             announcementCard.setScaleX(1.05);
@@ -226,16 +225,37 @@ public class viewAnnouncementController {
         // Conversion des résultats en objet Reservation
         dialog.setResultConverter(buttonType -> {
             if (buttonType == saveButtonType) {
+                // Vérifier que tous les champs sont remplis
+                if (datePicker.getValue() == null || descriptionField.getText().isEmpty() ||
+                        startLocationComboBox.getValue() == null || endLocationComboBox.getValue() == null) {
+                    // Afficher un message d'erreur si un champ est vide
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Invalid Input");
+                    alert.setContentText("Please fill in all fields.");
+                    alert.showAndWait();
+                    return null;
+                }
+
+                // Créer la réservation
                 Reservation reservation = new Reservation();
                 reservation.setDate(Timestamp.valueOf(datePicker.getValue().atStartOfDay()));
                 reservation.setDescription(descriptionField.getText());
 
                 try {
+                    // Récupérer les objets Location à partir des adresses sélectionnées
                     Location startLocation = locationService.getByAddress(startLocationComboBox.getValue());
                     Location endLocation = locationService.getByAddress(endLocationComboBox.getValue());
                     reservation.setStartLocation(startLocation);
                     reservation.setEndLocation(endLocation);
+
+                    // Associer l'annonce à la réservation
                     reservation.setAnnouncement(announcement);
+
+
+//                    Driver transporter=new DriverService().getById(announcement.getTransporter().getIdDriver());
+//
+//                    reservation.
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -249,6 +269,7 @@ public class viewAnnouncementController {
         Optional<Reservation> result = dialog.showAndWait();
         result.ifPresent(reservation -> {
             try {
+                // Enregistrer la réservation dans la base de données
                 reservationService.create(reservation);
                 refreshAnnouncements();
             } catch (SQLException e) {

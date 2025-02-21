@@ -41,7 +41,7 @@
     -fx-spacing: 10px;
     -fx-margin: 10px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
-    -fx-graphic: url("truck_icon.png"); /* Icône de camion */
+   // -fx-graphic: url("truck_icon.png"); /* Icône de camion */
     -fx-graphic-text-gap: 15px;
 }
 
@@ -228,7 +228,39 @@
 }
 
 
+/* Style pour le label des annonces disponibles */
+#available_announcements_label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: Black;
+    -fx-font-family: Inter;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
 
+/* Style pour la ListView des annonces */
+.announcements-list {
+    -fx-background-color: #F5F7FA;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 5);
+}
+
+/* Style pour chaque élément de la ListView */
+.announcement-item {
+    -fx-background-color: #6BBF59; /* Fresh green */
+    -fx-background-radius: 12px; /* Rounded corners */
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 5); /* Floating shadow for card */
+    -fx-pref-width: 250px; /* Fixed card width */
+    -fx-min-width: 250px;
+    -fx-max-width: 250px;
+    -fx-alignment: center;
+    -fx-transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+
+.announcement-item:hover {
+    -fx-background-color: #4E9D3A;
+}
 
 
 

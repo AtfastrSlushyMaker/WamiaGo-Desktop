@@ -1,6 +1,7 @@
 package controllers.Reservation;
 
 import entities.Reservation;
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -15,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.ReservationService;
 import services.StationService;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,6 +39,8 @@ public class ReservationclientController {
         root.getStylesheets().add(getClass().getResource("/Reservation/front/reservation.css").toExternalForm());
         loadStationsIntoFlowPane();
         setupNavigation();
+        User user = SessionManager.getInstance().getUser();
+
     }
 
     private void setupNavigation() {
@@ -179,6 +183,11 @@ public class ReservationclientController {
 
     private void editReservation(Reservation reservation) {
         // Création du Dialog personnalisé
+
+        SessionManager sessionManager = SessionManager.getInstance();
+        User user = sessionManager.getUser();
+        int loggedInUserId = user.getId();
+
         Dialog<Reservation> dialog = new Dialog<>();
         dialog.setTitle("Edit Reservation");
         dialog.setHeaderText("Modify reservation details");
