@@ -246,13 +246,36 @@ public class RequestService implements IService<Request> {
         return 0; // Return 0 if something goes wrong or no rows are found
     }
 
-    public int countRequestsByStatus(Request.RequestStatus status) throws SQLException {
+    public int countAcceptedRequests() throws SQLException {
         String query = "SELECT COUNT(*) FROM requests WHERE status = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, status.name());  // Set the enum as a string
+            stmt.setString(1, "ACCEPTED");
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1);  // Return the count
+                return rs.getInt(1);  // Return the count from the first column
+            }
+        }
+        return 0;  // Return 0 if no records
+    }
+    public int countRejectedRequests() throws SQLException {
+        String query = "SELECT COUNT(*) FROM requests WHERE status = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, "REJECTED");
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int countCanceledRequests() throws SQLException {
+        String query = "SELECT COUNT(*) FROM requests WHERE status = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, "CANCELED");
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
             }
         }
         return 0;

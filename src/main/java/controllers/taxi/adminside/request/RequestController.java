@@ -38,6 +38,12 @@ public class RequestController {
 
     @FXML
     private Label totalRequestsLabel;
+    @FXML
+    private Label acceptedRequestsLabel;
+    @FXML
+    private Label  rejectedRequestsLabel;
+    @FXML
+    private Label canceledRequestsLabel;
 
     private final RequestService requestService = new RequestService();
 
@@ -46,6 +52,7 @@ public class RequestController {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/admin_side/request.css").toExternalForm());
         loadRequestsIntoFlowPane();
         updateTotalRequests(); // Call the method to update the total request count
+
     }
     public void updateTotalRequests() {
         try {
@@ -58,6 +65,8 @@ public class RequestController {
             e.printStackTrace();
         }
     }
+
+
 
     private void loadRequestsIntoFlowPane() {
         try {
