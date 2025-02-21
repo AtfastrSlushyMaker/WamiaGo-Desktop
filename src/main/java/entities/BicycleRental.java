@@ -1,7 +1,6 @@
 package entities;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class BicycleRental {
@@ -149,5 +148,18 @@ public class BicycleRental {
                 ", battery_used=" + battery_used +
                 ", cost=" + cost +
                 '}';
+    }
+    public float calculateCost(int durationMinutes) {
+        float baseRate = 2f; // Base rate for the first 30 minutes
+        float additionalRate = 0.5f; // Additional rate per minute after 30 minutes
+
+        if (durationMinutes <= 30) {
+            return baseRate;
+        } else {
+            return baseRate + (durationMinutes - 30) * additionalRate;
+        }
+    }
+    public int  getDuration_minutes(){
+        return (int) (getStart_time().getTime()-getEnd_time().getTime()) / 60000;
     }
 }

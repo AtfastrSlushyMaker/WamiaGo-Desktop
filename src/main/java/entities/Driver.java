@@ -1,8 +1,7 @@
 package entities;
 
-import java.time.LocalDate;
-
-public class Driver extends User {
+public class Driver{
+    User user;
     private int idDriver;
     private String permitNumber;
     private DriverRole driverRole;
@@ -17,10 +16,8 @@ public class Driver extends User {
         CARPOOL_DRIVER
     }
 
-    public Driver(int idDriver, int id, String name, String email, String phone, String password, DriverRole driverRole,
-                  Location location, String permitNumber, int driverStatus, Gender gender, String profilePicture,
-                  boolean isVerified, AccountStatus accountStatus, LocalDate dateOfBirth, Status userStatus) {
-        super(id, name, email, phone, password, Role.CLIENT, location, gender, profilePicture, isVerified, accountStatus, dateOfBirth, userStatus);
+    public Driver(User user,int idDriver,String permitNumber, DriverRole driverRole,int driverStatus) {
+        this.user= user;
         this.idDriver = idDriver;
         this.permitNumber = permitNumber;
         this.driverRole = driverRole;
@@ -28,11 +25,19 @@ public class Driver extends User {
     }
 
     public Driver() {
-        super(0, "", "", "", "", Role.CLIENT, new Location(), Gender.MALE, "", false, AccountStatus.ACTIVE, null, Status.OFFLINE);
+        this.user = new User();
         this.idDriver = 0;
         this.permitNumber = "";
         this.driverRole = null;
         this.driverStatus = DRIVER_INACTIVE;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getIdDriver() {
@@ -77,18 +82,6 @@ public class Driver extends User {
                 ", permitNumber='" + permitNumber + '\'' +
                 ", driverRole=" + driverRole +
                 ", driverStatus=" + driverStatus +
-                ", id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", email='" + getEmail() + '\'' +
-                ", phone='" + getPhone() + '\'' +
-                ", role=" + getRole() +
-                ", location=" + getLocation() +
-                ", gender=" + getGender() +
-                ", profilePicture='" + getProfilePicture() + '\'' +
-                ", isVerified=" + isVerified() +
-                ", accountStatus=" + getAccountStatus() +
-                ", dateOfBirth=" + getDateOfBirth() +
-                ", userStatus=" + getStatus() +
                 '}';
     }
 }

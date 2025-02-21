@@ -112,6 +112,31 @@ public class LoginController {
     }
 
     private void loadDashboard() {
+        switch (SessionManager.getInstance().getUser().getRole()) {
+            case ADMIN:
+                loadAdminDashboard();
+                break;
+            case CLIENT:
+                loadClientDashboard();
+                break;
+        }
+
+    }
+    private void loadAdminDashboard(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboardTemplate.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.setTitle("Dashboards");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Error", "Failed to load the dashboard.");
+        }
+    }
+
+    private void loadClientDashboard(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
             Parent root = loader.load();
