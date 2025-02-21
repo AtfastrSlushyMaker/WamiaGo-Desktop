@@ -8,11 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/dashboard.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/dashboard.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/dashboardTemplate.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/user.back/users.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +23,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="FxmlFile" />
         <option value="CSS File" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>

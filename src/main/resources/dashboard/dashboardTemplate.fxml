@@ -194,6 +194,24 @@
                         <String fx:value="text" />
                      </styleClass>
                   </Button>
+                  <Button fx:id="taxiRides" graphicTextGap="0.0" mnemonicParsing="false" onAction="#taxiRides" prefHeight="25.0" prefWidth="186.0" text="Taxi rides">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="taxiRequests" graphicTextGap="0.0" mnemonicParsing="false" onAction="#taxiRequests" prefHeight="25.0" prefWidth="186.0" text="Taxi requests">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
                     </children>
                 </VBox>
                 <Rectangle arcHeight="5.0" arcWidth="1.0" fill="#ecf1f5" height="1.0" layoutX="30.0" layoutY="169.0" stroke="WHITE" strokeType="INSIDE" width="130.0" AnchorPane.bottomAnchor="375.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="210.0" />
