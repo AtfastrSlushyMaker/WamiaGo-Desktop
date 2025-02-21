@@ -15,6 +15,8 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import java.io.FileOutputStream;
 
+import static entities.Location.calculateDistance;
+
 
 public class RideService implements IService<Ride> {
     private final Connection connection;
@@ -280,6 +282,30 @@ public class RideService implements IService<Ride> {
     }
 
 
+   public static double calculatePrice(Request request) {
+        // Exemple de calcul simple basé sur la distance
+        // Supposez que vous avez accès aux coordonnées de départ et d'arrivée
+        double distance = calculateDistance(request.getDepartureLocation(), request.getArrivalLocation());
+
+        // Tarif de base : 0.900 DT, plus 1 DT par km
+        double basePrice = 0.900;
+        double pricePerKm = 1.0;
+        double price = basePrice + (distance * pricePerKm);
+        return price;
+    }
+
+    public void updateRideStatus(int rideId, Ride.Status newStatus) throws SQLException {
+        String query = "UPDATE ride SET status = ? WHERE id_ride = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, newStatus.toString());  // Assuming Status is stored as a String
+            preparedStatement.setInt(2, rideId);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+
+
+
     public List<Ride> sortRidesByDate(boolean ascending) throws SQLException {
         // Build the SQL query to fetch rides, joined with the request and driver tables
         String sqlQuery = "SELECT * FROM ride r " +
@@ -406,6 +432,8 @@ public class RideService implements IService<Ride> {
         Font font = FontFactory.getFont(FontFactory.HELVETICA, size, style, color);
         return font;
     }
+
+
 
 
 }

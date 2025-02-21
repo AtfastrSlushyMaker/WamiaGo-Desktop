@@ -249,18 +249,6 @@ taxi_request_button.setOnAction(event -> openRequestForm());
             }
         });
 
-        carpool_join_button.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/trips/trip.fxml"));
-                Parent tripRoot = loader.load();
-                Scene tripScene = new Scene(tripRoot);
-                Stage stage = (Stage) carpool_join_button.getScene().getWindow();
-                stage.setScene(tripScene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
         logout_button.setOnAction(event -> {
             SessionManager.getInstance().logout();
             try {
@@ -274,7 +262,17 @@ taxi_request_button.setOnAction(event -> openRequestForm());
                 e.printStackTrace();
             }
         });
-
+        reclamation_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ListReclamation.fxml"));
+                Parent homeRoot = loader.load();
+                Scene homeScene = new Scene(homeRoot);
+                Stage stage = (Stage) home_button.getScene().getWindow();
+                stage.setScene(homeScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void setupUserDropdownMenu() {
@@ -351,3 +349,4 @@ taxi_request_button.setOnAction(event -> openRequestForm());
        }
     }
 }
+

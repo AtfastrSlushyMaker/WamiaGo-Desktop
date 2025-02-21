@@ -88,14 +88,19 @@ public class RequestController {
             User user = sessionManager.getUser();
             int loggedInUserId = user.getId();
 
+            // Retrieve all requests for the logged-in user
             List<Request> requests = requestService.getRequestsByUserId(loggedInUserId);
+
+            // Clear the FlowPane before adding new requests
+            requestFlowPane.getChildren().clear();
+
+            // Loop through the requests and filter out those with status "ACCEPTED"
             for (Request request : requests) {
-                System.out.println("Request ID: " + request.getIdRequest());
-                System.out.println("Arrival Location: " + request.getArrivalLocation().getAddress());
-                System.out.println("Departure Location: " + request.getDepartureLocation().getAddress());
-                System.out.println("Status: " + request.getStatus());
-                VBox requestCard = createRequestCard(request);
-                requestFlowPane.getChildren().add(requestCard);
+                if (request.getStatus() != Request.RequestStatus.ACCEPTED) {
+                    // Only add requests that are not ACCEPTED
+                    VBox requestCard = createRequestCard(request);
+                    requestFlowPane.getChildren().add(requestCard);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -338,7 +343,7 @@ public class RequestController {
 
         // Set up the Scene and Stage
         Scene modalScene = new Scene(stackPane, 350, 300);
-        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/request.css").toExternalForm());
+
         modalStage.setScene(modalScene);
         modalStage.show();
     }

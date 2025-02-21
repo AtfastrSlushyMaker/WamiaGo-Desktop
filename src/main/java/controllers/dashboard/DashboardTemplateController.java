@@ -36,10 +36,28 @@
 
         private void loadPanels() {
             try {
+                //0
                 AnchorPane usersPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.back/users.fxml")));
-
+                //1
+                AnchorPane bikesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bicycle.back/bicycle.fxml")));
+               //2
+                AnchorPane stationsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/station/back/stations.fxml")));
+               //3
+                AnchorPane rentalsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/rentals.back/rentals.fxml")));
+                //4
+                AnchorPane requestsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
+                //5
+                AnchorPane ridesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")));
+                //6
+                AnchorPane responsesPanel= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Response/back/responses.fxml")));
                 panels.addAll(Arrays.asList(
-                        usersPanel
+                        usersPanel,
+                        bikesPanel,
+                        stationsPanel,
+                        rentalsPanel,
+                        requestsPanel,
+                        ridesPanel,
+                        responsesPanel
                 ));
 
                 for(AnchorPane panel : panels) {
@@ -108,6 +126,22 @@
         }
 
         @FXML
+        public void bicyclesBtn() {showPanel(1);}
+
+        @FXML
+        public void stationsBtn() {showPanel(2);}
+
+        @FXML
+        public void rentalsBtn() {showPanel(3);}
+
+        @FXML
+        public void taxiRequests() {showPanel(4);}
+    
+        @FXML
+        public void taxiRides() {showPanel(5);}
+        @FXML
+        public  void responsesBtn() {showPanel(6);}
+        @FXML
         private void AccountSettingsBtn() {
             showPanel(1);
         }
@@ -144,5 +178,6 @@
             // Stage stage = (Stage) navPanel.getScene().getWindow();
             // stage.setMaximized(false);
         }
+
 
     }

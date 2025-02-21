@@ -38,7 +38,7 @@
                     <graphic>
                         <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@/images/icons/minus1.png" />
+                                <Image url="@/images/icons/minus.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -146,7 +146,7 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="enquiries" graphicTextGap="0.0" mnemonicParsing="false" onAction="#QueriesBtn" prefHeight="25.0" prefWidth="186.0" text="Feedbacks">
+                        <Button fx:id="responses" graphicTextGap="0.0" mnemonicParsing="false" onAction="#responsesBtn" prefHeight="25.0" prefWidth="186.0" text="Feedbacks">
                             <graphic>
                                 <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" translateX="-27.0">
                                     <image>
@@ -165,14 +165,45 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </Button>
-                  <Button id="carpoolingBtn" fx:id="carpooling" graphicTextGap="0.0" layoutX="10.0" layoutY="159.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="186.0" text="Carpooling">
-                     <graphic>
-                        <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" translateX="-27.0">
-                           <image>
-                              <Image url="@/images/icons/users.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                  <Button fx:id="stations" graphicTextGap="0.0" mnemonicParsing="false" onAction="#stationsBtn" prefHeight="25.0" prefWidth="186.0" text="Stations">
+
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="bicycles" graphicTextGap="0.0" mnemonicParsing="false" onAction="#bicyclesBtn" prefHeight="25.0" prefWidth="186.0" text="Bicycles">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="rentals" graphicTextGap="0.0" mnemonicParsing="false" onAction="#rentalsBtn" prefHeight="25.0" prefWidth="186.0" text="Bicycles Rentals">
+
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="taxiRides" graphicTextGap="0.0" mnemonicParsing="false" onAction="#taxiRides" prefHeight="25.0" prefWidth="186.0" text="Taxi rides">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="taxiRequests" graphicTextGap="0.0" mnemonicParsing="false" onAction="#taxiRequests" prefHeight="25.0" prefWidth="186.0" text="Taxi requests">
                      <font>
                         <Font size="10.0" />
                      </font>
