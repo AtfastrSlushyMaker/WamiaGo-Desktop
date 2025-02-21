@@ -4,9 +4,7 @@ import entities.Request;
 import entities.User;
 import entities.Ride;  // Ensure your Ride entity is imported
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -16,6 +14,7 @@ import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import services.DriverService;
 import services.RequestService;
@@ -202,11 +201,12 @@ public class RideController {
         // Create buttons
         Button selectButton = createSelectButtonForRide(ride);
         Button cancelButton = createCancelButton(ride, rideCard);
+        Button updateButton = createUpdateButton(ride);  // Create update button
 
         // Place buttons in an HBox to align them horizontally
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, cancelButton);
+        buttonContainer.getChildren().addAll(selectButton, cancelButton, updateButton);  // Add updateButton here
 
         rideCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
 
@@ -222,7 +222,6 @@ public class RideController {
 
         return rideCard;
     }
-
     private HBox createImageAndTextBoxForRide(Ride ride) {
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);
@@ -247,6 +246,12 @@ public class RideController {
     private void openRideDetails(Ride ride) {
         System.out.println("Opening details for Ride ID: " + ride.getIdRide());
 
+        // Null checks for ride attributes
+        if (ride == null || ride.getRequest() == null) {
+            System.out.println("Invalid ride data.");
+            return;  // Handle the case where ride data is not valid
+        }
+
         Stage modalStage = new Stage();
         modalStage.setTitle("Ride Details - " + ride.getIdRide());
 
@@ -263,16 +268,17 @@ public class RideController {
         VBox rideDetailsBox = new VBox(8);
         rideDetailsBox.getStyleClass().add("ride-details-box");
 
-        // Displaying the details from the Ride object
-        Label arrivalLabel = new Label("Arrival Location: " + ride.getRequest().getArrivalLocation().getAddress());
-        Label departureLabel = new Label("Departure Location: " + ride.getRequest().getDepartureLocation().getAddress());
-        Label driverLabel = new Label("Driver: " + ride.getDriver().getUser().getName());  // Assuming Driver class has a getName() method
+        // Safely display ride details
+        Label arrivalLabel = new Label("Arrival Location: " + (ride.getRequest().getArrivalLocation() != null ? ride.getRequest().getArrivalLocation().getAddress() : "Unknown"));
+        Label departureLabel = new Label("Departure Location: " + (ride.getRequest().getDepartureLocation() != null ? ride.getRequest().getDepartureLocation().getAddress() : "Unknown"));
+        Label driverLabel = new Label("Driver: " + (ride.getDriver() != null ? ride.getDriver().getUser().getName() : "Unknown"));
         Label distanceLabel = new Label("Distance: " + ride.getDistance() + " km");
         Label durationLabel = new Label("Duration: " + ride.getDuration() + " min");
         Label priceLabel = new Label("Price: " + ride.getPrice() + " TND");
         Label statusLabel = new Label("Status: " + ride.getStatus());
         Label dateLabel = new Label("Date: " + ride.getRideDate().toString());
 
+        // Style the labels
         arrivalLabel.getStyleClass().add("modal-detail-label");
         departureLabel.getStyleClass().add("modal-detail-label");
         driverLabel.getStyleClass().add("modal-detail-label");
@@ -308,6 +314,8 @@ public class RideController {
         selectButton.setOnAction(e -> openRideDetails(ride));  // You will need to implement the openRideDetails method
         return selectButton;
     }
+
+
     private Button createCancelButton(Ride ride, VBox rideCard) {
         Button deleteButton = new Button("Delete");
         deleteButton.getStyleClass().add("ride-button-delete");
@@ -325,6 +333,78 @@ public class RideController {
 
         return deleteButton;
     }
+
+    private Button createUpdateButton(Ride ride) {
+        Button updateButton = new Button("Update");
+        updateButton.getStyleClass().add("ride-button-update");
+
+        updateButton.setOnAction(event -> openUpdateStatusDialog(ride));
+
+        return updateButton;
+    }
+
+    private void openUpdateStatusDialog(Ride ride) {
+        RideService rideService1 = new RideService();
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Update Ride Status");
+
+        VBox dialogVBox = new VBox(10);
+        dialogVBox.setPadding(new Insets(20));
+        dialogVBox.setAlignment(Pos.CENTER);
+
+        // Status dropdown
+        ComboBox<Ride.Status> statusComboBox = new ComboBox<>();
+        statusComboBox.getItems().addAll(Ride.Status.values());
+        statusComboBox.setValue(ride.getStatus()); // Preselect current status
+
+        // Save button
+        Button saveButton = new Button("Save");
+        saveButton.getStyleClass().add("save-button");
+
+        saveButton.setOnAction(event -> {
+            Ride.Status newStatus = statusComboBox.getValue();
+
+            if (newStatus != null) {
+                try {
+                    // Mise à jour du statut dans la base de données
+                    rideService1.updateRideStatus(ride.getIdRide(), newStatus);
+
+                    // Affichage d'un message de succès
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION, "Status updated successfully.");
+                    successAlert.showAndWait();
+
+                    // Recharger les rides pour refléter le changement
+                    loadRidesIntoFlowPane();
+
+                    // Fermeture de la fenêtre après mise à jour
+                    dialogStage.close();
+                } catch (SQLException e) {
+                    // Affichage de l'erreur
+                    e.printStackTrace();
+
+                    // Alerte d'erreur
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "An error occurred while updating the status: " + e.getMessage());
+                    errorAlert.showAndWait();
+                }
+            } else {
+                // Alerte si aucun statut n'est sélectionné
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a status.");
+                alert.showAndWait();
+            }
+        });
+
+        // Layout
+        dialogVBox.getChildren().addAll(new Label("Select New Status:"), statusComboBox, saveButton);
+
+        // Set up scene
+        Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        dialogStage.setScene(dialogScene);
+        dialogStage.initModality(Modality.APPLICATION_MODAL); // Block interaction with the main window
+        dialogStage.showAndWait();
+    }
+
+
+
 
 
 

@@ -122,6 +122,7 @@ public class LoginController {
         }
 
     }
+
     private void loadAdminDashboard(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboardTemplate.fxml"));

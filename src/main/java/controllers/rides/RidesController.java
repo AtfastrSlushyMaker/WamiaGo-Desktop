@@ -94,6 +94,18 @@ public class RidesController {
             }
         });
 
+        rent_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/station/front/station.fxml"));
+                Parent ridesRoot = loader.load();
+                Scene ridesScene = new Scene(ridesRoot);
+                Stage stage = (Stage) rent_button.getScene().getWindow();
+                stage.setScene(ridesScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
 
 
 
