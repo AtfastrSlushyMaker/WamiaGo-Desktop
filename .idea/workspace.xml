@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/request/RequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/request/RequestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/ride/RideController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/ride/RideController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RequestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RideService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -212,7 +202,7 @@
       <workItem from="1740085307059" duration="2968000" />
       <workItem from="1740089106752" duration="4253000" />
       <workItem from="1740093483291" duration="109000" />
-      <workItem from="1740100961946" duration="1935000" />
+      <workItem from="1740100961946" duration="2269000" />
     </task>
     <servers />
   </component>
