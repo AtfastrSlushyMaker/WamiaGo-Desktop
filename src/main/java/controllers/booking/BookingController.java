@@ -18,8 +18,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.wamiago.wamiago.services.TripService;
 import services.BookingService;
-import services.TripService;
 import utils.SessionManager;
 
 import java.io.IOException;

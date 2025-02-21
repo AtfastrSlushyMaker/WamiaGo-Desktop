@@ -18,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.BookingService;
-import services.TripService;
 import services.UserService;
 
 import java.sql.SQLException;
