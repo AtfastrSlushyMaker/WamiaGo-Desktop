@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.bicycle.back.bicycleController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.bicycle.back.bicycleController">
    <children>
-      <Text layoutX="231.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="test bike" />
+      <ListView fx:id="bicycle_listView" layoutX="58.0" layoutY="26.0" prefHeight="333.0" prefWidth="629.0" />
+      <Button fx:id="add_button" layoutX="186.0" layoutY="400.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="121.0" text="Add Bicycle" />
+      <Button fx:id="delete_button" layoutX="411.0" layoutY="400.0" mnemonicParsing="false" text="Delete" />
    </children>
 </AnchorPane>

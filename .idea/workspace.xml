@@ -7,7 +7,11 @@
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/bicycle/back/bicycleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/bicycle/back/bicycleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/rentals/back/rentalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/rentals/back/rentalController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/back/staionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/back/staionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bicycle.back/bicycle.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bicycle.back/bicycle.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/rentals.back/rentals.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/rentals.back/rentals.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/station/back/stations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/back/stations.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +47,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git&quot;,
-    &quot;accountId&quot;: &quot;c7700c4a-cb60-426d-bf24-1bfa91d9bb97&quot;
+    &quot;accountId&quot;: &quot;46535ebf-73b9-42d2-ba27-6b0d2fe2271e&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -69,36 +73,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Home.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainRequest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainRide.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;bicycle-station-management&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Rzouga.RZOUGALAPTOP/Desktop/School/3A/Sem 2/Pidev/WamiaGo-Desktop/src/main/resources/user.back&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Home.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MainRequest.executor": "Run",
+    "Application.MainRide.executor": "Run",
+    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
+    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor": "Run",
+    "Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "bicycle-station-management",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Projects/WamiaGo_desktop/src/main/resources/rentals.back",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\rentals.back" />
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\station\icons" />
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\bicycle.back" />
       <recent name="C:\Users\Rzouga.RZOUGALAPTOP\Desktop\School\3A\Sem 2\Pidev\WamiaGo-Desktop\src\main\resources\user.back" />
     </key>
   </component>
@@ -109,8 +116,10 @@
   </component>
   <component name="RunManager" selected="Application.Home">
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="Pidev3a11" />
+      <module name="WamiaGo" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
@@ -173,8 +182,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.24807.4" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.24807.4" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19416.15" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19416.15" />
       </set>
     </attachedChunks>
   </component>
@@ -208,6 +217,10 @@
       <workItem from="1740069854152" duration="3459000" />
       <workItem from="1740074536299" duration="7625000" />
       <workItem from="1740092395198" duration="2967000" />
+      <workItem from="1740101806454" duration="1037000" />
+      <workItem from="1740102854971" duration="39000" />
+      <workItem from="1740102903017" duration="354000" />
+      <workItem from="1740103269112" duration="3845000" />
     </task>
     <servers />
   </component>
