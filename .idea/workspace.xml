@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/back/staionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/back/staionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/back/stations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/back/stations.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +110,7 @@
   <component name="RunManager" selected="Application.Home">
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="WamiaGo" />
+      <module name="Pidev3a11" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
