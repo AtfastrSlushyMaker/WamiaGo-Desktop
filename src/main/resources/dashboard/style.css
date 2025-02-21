@@ -41,7 +41,9 @@
     -fx-transition: all 0.3s ease-in-out;
 }
 
+#UserLabel {
 
+}
 
 
 
@@ -227,24 +229,9 @@
     -fx-background-color: #2D2F33; /* Keep same dark gray */
     -fx-background-radius: 0 40px 0 0; /* Smooth rounded top-right */
 }
-#profile_button {
-    -fx-background-color: transparent;
-    -fx-border-color: #6BBF59FF;
-    -fx-padding: 0;
-    -fx-min-width: 51px;
-    -fx-min-height: 51px;
-    -fx-max-width: 51px;
-    -fx-max-height: 51px;
-    -fx-shape: "M 25,0 A 25,25 0 1,0 25,50 A 25,25 0 1,0 25,0 Z";
-}
-
-#profile_button .graphic {
-    -fx-alignment: center;
-    -fx-padding: 5px;
-}
-
-#profile_button:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.1);  /* Hover effect */
+#StatusAdd{
+    -fx-text-fill: black;  /* Black font color */
+    -fx-font-weight: bold; /* Bold text */
 }
 
 .context-menu {
@@ -262,24 +249,5 @@
 
 .menu-item:hover {
     -fx-background-color: #f0f0f0;
-}
-
-/* Sidebar expanded state */
-.navbar {
-    -fx-background-color: #2f2f2f;
-    -fx-pref-width: 250px;
-    -fx-transition: 0.3s ease;
-}
-
-/* Sidebar collapsed state */
-.navbar.collapsed {
-    -fx-pref-width: 60px;
-}
-
-/* Button styles for toggle */
-.toggle-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-size: 20px;
 }
 

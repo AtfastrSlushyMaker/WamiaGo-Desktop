@@ -8,7 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Pidev3a11" />
         <module name="WamiaGo" />
+        <module name="Pidev3a10" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Pidev3a11" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
