@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root"  xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Announcement.viewAnnouncementAdminController">
+
+    <children>
+
+        <Pane prefHeight="827.0" prefWidth="1143.0">
+            <children>
+                <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
+                <Label id="available_stations_label" fx:id="available_stations_label" layoutX="411.0" layoutY="115.0" prefHeight="50.0" prefWidth="272.0"  text="Available Announcements" textFill="#323131">
+                    <font>
+                        <Font name="Century Gothic Bold" size="20.0" />
+                    </font>
+                </Label>
+
+                <!-- FlowPane to display stations -->
+                <FlowPane fx:id="stationFlowPane" hgap="20" layoutX="4.0" layoutY="185.0" prefHeight="638.0" prefWidth="1087.0" vgap="20">
+                    <!-- Dynamically populated station cards will go here -->
+                </FlowPane>
+
+            </children>
+        </Pane>
+
+    </children>
+
+</AnchorPane>

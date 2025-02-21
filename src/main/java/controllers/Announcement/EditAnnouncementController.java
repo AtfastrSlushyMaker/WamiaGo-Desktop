@@ -3,6 +3,9 @@ package controllers.Announcement;
 import entities.Announcement;
 import entities.Driver;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import services.AnnouncementService;
@@ -10,12 +13,14 @@ import services.DriverService;
 import org.controlsfx.control.Notifications;
 import utils.SessionManager;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class EditAnnouncementController {
 
+    public Button btn_workbench1;
     @FXML
     private TextField titleField;
 
@@ -46,6 +51,19 @@ public class EditAnnouncementController {
         if (zoneComboBox != null) {
             zoneComboBox.getItems().setAll(Announcement.Zone.values());
         }
+
+        btn_workbench1.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
+                Parent homeRoot = loader.load();
+                Scene homeScene = new Scene(homeRoot);
+                Stage stage = (Stage) btn_workbench1.getScene().getWindow();
+                stage.setScene(homeScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
     /**

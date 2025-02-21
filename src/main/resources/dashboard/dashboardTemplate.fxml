@@ -212,6 +212,33 @@
                         <String fx:value="text" />
                      </styleClass>
                   </Button>
+                  <Button fx:id="announcementsBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#announcementsBtn" prefHeight="25.0" prefWidth="186.0" text="Annoucements">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="reservationsBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#reservationsBtn" prefHeight="25.0" prefWidth="186.0" text="Reservations">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="relocationsBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#relocationsBtn" prefHeight="25.0" prefWidth="186.0" text="Relocations">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="navButtons" />
+                        <String fx:value="text" />
+                     </styleClass>
+                  </Button>
                     </children>
                 </VBox>
                 <Rectangle arcHeight="5.0" arcWidth="1.0" fill="#ecf1f5" height="1.0" layoutX="30.0" layoutY="169.0" stroke="WHITE" strokeType="INSIDE" width="130.0" AnchorPane.bottomAnchor="375.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="210.0" />

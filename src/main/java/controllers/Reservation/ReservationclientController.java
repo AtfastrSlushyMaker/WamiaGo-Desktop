@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public class ReservationclientController {
     @FXML
-    private Button bookings_button, history_button, home_button, logout_button, rides_button;
+    private Button bookings_button, history_button, home_button, logout_button, rides_button,btn_workbench12;
     @FXML
     private HBox root;
     @FXML
@@ -46,6 +46,7 @@ public class ReservationclientController {
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
+        btn_workbench12.setOnAction(event -> loadScene("/Annoucement/Front/announcements_client.fxml"));
     }
 
     private void loadScene(String fxmlPath) {

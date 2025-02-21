@@ -48,3 +48,31 @@
 .view-relocations-button:hover {
     -fx-background-color: #0077a3; /* Bleu plus foncé au survol */
 }
+
+/* Style pour les boîtes de dialogue d'alerte */
+.custom-alert {
+    -fx-background-color: #f8d7da; /* Couleur de fond pour les erreurs */
+    -fx-border-color: #f5c6cb; /* Couleur de bordure */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+.custom-alert .label {
+    -fx-text-fill: #721c24; /* Couleur du texte */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.custom-alert .button {
+    -fx-background-color: #dc3545; /* Couleur du bouton */
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 3px;
+}
+
+.custom-alert .button:hover {
+    -fx-background-color: #c82333; /* Couleur du bouton au survol */
+}

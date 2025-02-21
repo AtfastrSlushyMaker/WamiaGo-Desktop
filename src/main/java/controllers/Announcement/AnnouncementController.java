@@ -3,6 +3,7 @@ package controllers.Announcement;
 import entities.Announcement;
 import entities.Driver;
 import entities.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,6 +42,9 @@ public class AnnouncementController implements Initializable {
     @FXML
     private Button btnAdd1;
 
+    @FXML
+    private Button btnAdd11;
+
     private Driver currentDriver;
     private User loggedInUser = SessionManager.getInstance().getUser(); // Utilisateur connecté
 
@@ -48,16 +52,10 @@ public class AnnouncementController implements Initializable {
 
     @FXML
     public void initialize() {
-
-        setupNavigation();
-    }
-    private void setupNavigation() {
         btn_workbench1.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         btn_workbench11.setOnAction(event -> loadScene("/rides/rides.fxml"));
-        btnAdd1.setOnAction(event -> loadScene("/Reservation/Reservations.fxml"));
-        //btnAdd11.setOnAction(event -> loadScene("/Reservation/Reservations.fxml"));
-
     }
+
 
     private void loadScene(String fxmlPath) {
         try {
@@ -273,6 +271,32 @@ public class AnnouncementController implements Initializable {
             }
         } catch (SQLException e) {
             System.err.println("Erreur lors de la suppression de l'annonce : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void btnAdd1(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reservation/Front/ReservationsTransporter.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) btnAdd1.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void btnAdd11(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Relocation/Front/RelocationsTransporter.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) btnAdd11.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

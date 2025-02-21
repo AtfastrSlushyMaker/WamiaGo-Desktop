@@ -4,9 +4,14 @@ import entities.Announcement;
 import entities.Driver;
 import entities.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import services.AnnouncementService;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import org.controlsfx.control.Notifications;
@@ -15,6 +20,7 @@ import utils.SessionManager;
 
 public class AddAnnouncementController {
 
+    public Button btn_workbench1;
     @FXML
     private TextField titleField;
 
@@ -48,8 +54,21 @@ public class AddAnnouncementController {
         if (zoneComboBox != null) {
             zoneComboBox.getItems().setAll(Announcement.Zone.values());
         }
-    }
 
+
+        btn_workbench1.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
+                Parent homeRoot = loader.load();
+                Scene homeScene = new Scene(homeRoot);
+                Stage stage = (Stage) btn_workbench1.getScene().getWindow();
+                stage.setScene(homeScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+    }
 
 
 
@@ -74,7 +93,7 @@ public class AddAnnouncementController {
             Announcement.Zone zone = zoneComboBox.getValue();
             boolean status = statusCheckBox.isSelected();
 
-            // Créer un objet Announcement
+
             Announcement announcement = new Announcement();
             announcement.setTitle(title);
             announcement.setContent(content);
@@ -82,23 +101,21 @@ public class AddAnnouncementController {
             announcement.setStatus(status);
             announcement.setDate(Timestamp.valueOf(LocalDateTime.now()));
 
-            // Attribuer l'ID du transporteur (ici, on utilise l'ID 7 pour tester)
+
             DriverService driverService = new DriverService();
          User loogedinuser = SessionManager.getInstance().getUser();
             currentDriver = driverService.getById(loogedinuser.getId());
             announcement.setTransporter(currentDriver);
 
-            // Ajouter l'annonce via le service
             announcementService.create(announcement);
 
-            // Afficher une notification de type "toast"
             Notifications.create()
                     .title("Success")
                     .text("The announcement has been added successfully.")
                     .showInformation();
 
 
-            // Réinitialiser les champs
+
             titleField.clear();
             contentField.clear();
             zoneComboBox.getSelectionModel().clearSelection();

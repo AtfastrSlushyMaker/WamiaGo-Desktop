@@ -10,6 +10,7 @@
     import javafx.util.Duration;
     import utils.GeneralFunctions;
 
+    import javax.xml.xpath.XPath;
     import java.io.IOException;
     import java.net.URL;
     import java.util.*;
@@ -40,16 +41,23 @@
                 AnchorPane usersPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.back/users.fxml")));
                 //1
                 AnchorPane bikesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bicycle.back/bicycle.fxml")));
-               //2
+                //2
                 AnchorPane stationsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/station/back/stations.fxml")));
-               //3
+                //3
                 AnchorPane rentalsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/rentals.back/rentals.fxml")));
                 //4
                 AnchorPane requestsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
                 //5
                 AnchorPane ridesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")));
                 //6
-                AnchorPane responsesPanel= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Response/back/responses.fxml")));
+                AnchorPane responsesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Response/back/responses.fxml")));
+                //7
+                AnchorPane announcementsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Relocation/Front/Relocations.fxml")));    ;
+                //8
+               AnchorPane reservationsPanel=FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Reservation/Front/Reservations.fxml")));;
+                //9
+                AnchorPane relocationsPanel= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Relocation/Front/Relocations.fxml")));
+
                 panels.addAll(Arrays.asList(
                         usersPanel,
                         bikesPanel,
@@ -57,10 +65,13 @@
                         rentalsPanel,
                         requestsPanel,
                         ridesPanel,
-                        responsesPanel
+                        responsesPanel,
+                        announcementsPanel,
+                        reservationsPanel,
+                        relocationsPanel
                 ));
 
-                for(AnchorPane panel : panels) {
+                for (AnchorPane panel : panels) {
                     contentPane.getChildren().add(panel);
                     AnchorPane.setTopAnchor(panel, 0.0);
                     AnchorPane.setBottomAnchor(panel, 0.0);
@@ -78,10 +89,11 @@
 
         @FXML
         private void showPanel(int panelIndex) {
-            for(int i = 0; i < panels.size(); i++) {
+            for (int i = 0; i < panels.size(); i++) {
                 panels.get(i).setVisible(i == panelIndex);
             }
         }
+
         private void setupInitialVisibility() {
             if (!panels.isEmpty() && panels.size() > 0) {
                 panels.get(0).setVisible(true);
@@ -126,21 +138,42 @@
         }
 
         @FXML
-        public void bicyclesBtn() {showPanel(1);}
+        public void bicyclesBtn() {
+            showPanel(1);
+        }
 
         @FXML
-        public void stationsBtn() {showPanel(2);}
+        public void stationsBtn() {
+            showPanel(2);
+        }
 
         @FXML
-        public void rentalsBtn() {showPanel(3);}
+        public void rentalsBtn() {
+            showPanel(3);
+        }
 
         @FXML
-        public void taxiRequests() {showPanel(4);}
-    
+        public void taxiRequests() {
+            showPanel(4);
+        }
+
         @FXML
-        public void taxiRides() {showPanel(5);}
+        public void taxiRides() {
+            showPanel(5);
+        }
+
         @FXML
-        public  void responsesBtn() {showPanel(6);}
+        public void responsesBtn() {
+            showPanel(6);
+        }
+        @FXML
+        public void announcementsBtn( ) {showPanel(7);}
+
+        @FXML
+        public void reservationsBtn( ) {showPanel(8);}
+        @FXML
+        public void relocationsBtn( ){showPanel(9);}
+
         @FXML
         private void AccountSettingsBtn() {
             showPanel(1);
@@ -178,6 +211,7 @@
             // Stage stage = (Stage) navPanel.getScene().getWindow();
             // stage.setMaximized(false);
         }
+
 
 
     }

@@ -29,7 +29,7 @@ public class ReservationController {
     @FXML
     private Button bookings_button, history_button, home_button, logout_button, rides_button;
     @FXML
-    private HBox root;
+    private AnchorPane root;
     @FXML
     private FlowPane stationFlowPane;
 
@@ -40,13 +40,8 @@ public class ReservationController {
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/Reservation/front/reservation.css").toExternalForm());
         loadStationsIntoFlowPane();
-        setupNavigation();
     }
 
-    private void setupNavigation() {
-        home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
-        rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
-    }
 
     private void loadScene(String fxmlPath) {
         try {

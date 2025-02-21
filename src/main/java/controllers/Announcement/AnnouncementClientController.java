@@ -1,9 +1,12 @@
 package controllers.Announcement;
 
 import entities.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -12,6 +15,7 @@ import javafx.util.Callback;
 import services.*;
 import utils.SessionManager;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -21,6 +25,7 @@ import java.util.Optional;
 
 
 public class AnnouncementClientController {
+    public Button btn_workbench1;
     @FXML
     private ListView<Announcement> announcementListView;
 
@@ -28,6 +33,11 @@ public class AnnouncementClientController {
     private final ReservationService reservationService = new ReservationService();
     private final StationService stationService = new StationService();
     private final UserService userService = new UserService();
+    @FXML
+    private Button btnAdd10;
+
+    @FXML
+    private Button btnAdd110;
 
     private User loggedInUser; // Utilisateur connecté
 
@@ -36,9 +46,22 @@ public class AnnouncementClientController {
         // Récupérer l'utilisateur connecté
         loggedInUser = SessionManager.getInstance().getUser();
 
-        // Charger les annonces
+
         announcementListView.getStylesheets().add(getClass().getResource("/Annoucement/front/announcement.css").toExternalForm());
         loadAnnouncements();
+
+        btn_workbench1.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
+                Parent homeRoot = loader.load();
+                Scene homeScene = new Scene(homeRoot);
+                Stage stage = (Stage) btn_workbench1.getScene().getWindow();
+                stage.setScene(homeScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
     private void loadAnnouncements() {
@@ -46,7 +69,7 @@ public class AnnouncementClientController {
             List<Announcement> announcements = announcementService.read();
             announcementListView.getItems().setAll(announcements);
 
-            // Personnaliser l'affichage des annonces
+
             announcementListView.setCellFactory(new Callback<>() {
                 @Override
                 public ListCell<Announcement> call(ListView<Announcement> listView) {
@@ -245,5 +268,31 @@ public class AnnouncementClientController {
     private void refreshAnnouncements() {
         announcementListView.getItems().clear();
         loadAnnouncements();
+    }
+
+    public void btnAdd10(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reservation/Front/Reservations.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) btnAdd10.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void btnAdd110(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Relocation/Front/RelocationClient.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) btnAdd110.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
