@@ -93,7 +93,24 @@ public class AddAnnouncementController {
             Announcement.Zone zone = zoneComboBox.getValue();
             boolean status = statusCheckBox.isSelected();
 
+            // Vérifier que tous les champs sont remplis
+            if (title.isEmpty() || content.isEmpty() || zone == null) {
+                // Afficher un message d'erreur si les champs ne sont pas remplis
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid Input");
+                alert.setContentText("Please fill in all fields.");
 
+                // Appliquer un style CSS personnalisé pour le message d'erreur
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("/Reservation/Front/reservation.css").toExternalForm());
+                dialogPane.getStyleClass().add("error-alert");
+
+                alert.showAndWait();
+                return; // Ne pas créer l'annonce si les champs ne sont pas remplis
+            }
+
+            // Créer l'annonce
             Announcement announcement = new Announcement();
             announcement.setTitle(title);
             announcement.setContent(content);
@@ -101,33 +118,46 @@ public class AddAnnouncementController {
             announcement.setStatus(status);
             announcement.setDate(Timestamp.valueOf(LocalDateTime.now()));
 
-
             DriverService driverService = new DriverService();
-         User loogedinuser = SessionManager.getInstance().getUser();
+            User loogedinuser = SessionManager.getInstance().getUser();
             currentDriver = driverService.getById(loogedinuser.getId());
             announcement.setTransporter(currentDriver);
 
             announcementService.create(announcement);
 
+            // Afficher une notification de succès
             Notifications.create()
                     .title("Success")
                     .text("The announcement has been added successfully.")
                     .showInformation();
 
-
-
+            // Effacer les champs après l'ajout
             titleField.clear();
             contentField.clear();
             zoneComboBox.getSelectionModel().clearSelection();
             statusCheckBox.setSelected(false);
 
+            // Redirection vers annoucements.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements.fxml"));
+            Parent announcementView = loader.load();
+            Scene announcementScene = new Scene(announcementView);
+
+            // Obtenir la fenêtre actuelle et la mettre à jour avec la nouvelle scène
+            Stage stage = (Stage) submitButton.getScene().getWindow();
+            stage.setScene(announcementScene);
+            stage.show();
+
+        } catch (IOException e) {
+            Notifications.create()
+                    .title("Error")
+                    .text("Failed to load the announcement view: " + e.getMessage())
+                    .showError();
+            e.printStackTrace();
         } catch (Exception e) {
-            // Afficher une notification d'erreur
             Notifications.create()
                     .title("Error")
                     .text("An error occurred while adding the announcement: " + e.getMessage())
                     .showError();
-
         }
     }
 

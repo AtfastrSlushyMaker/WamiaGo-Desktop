@@ -8,7 +8,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -108,43 +107,56 @@
 
         </VBox>
 
-        <Pane prefHeight="827.0" prefWidth="1143.0">
+        <Pane fx:id="mainPane" prefHeight="827.0" prefWidth="1143.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+            <!-- Barre de navigation supérieure -->
             <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
-            <!-- Contenu principal -->
-            <VBox>
-                <FlowPane fx:id="announcementFlowPane" hgap="10" vgap="10" />
 
-                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Réservations" />
-                <FlowPane fx:id="reservationFlowPane" hgap="10" vgap="10" />
+            <!-- Conteneur principal -->
+            <VBox layoutX="50.0" layoutY="175.0" prefHeight="492.0" prefWidth="1000" spacing="20">
+
+                <!-- Section des annonces -->
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="View and manage your posted announcements easily in one place." />
+
+                <ListView fx:id="announcementListView" prefHeight="500.0" prefWidth="1000.0" style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10px;" />
+
+                <!-- Boutons Modifier/Supprimer avec alignement -->
+                <HBox spacing="20" />
             </VBox>
-<!--             <Button fx:id="btnAdd" layoutX="703.0" layoutY="99.0" styleClass="add-button" text="Add a new announcement" />-->
-            <Button fx:id="btnAdd" layoutX="366.0" layoutY="102.0" onAction="#handleAddButton" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="Add a new announcement" textFill="#c6b6b6">
 
-                <font>
+                        <!-- Bouton Ajouter une annonce (placé en haut au centre) -->
+            <Button fx:id="btnAdd" layoutX="791.0" layoutY="695.0" prefHeight="53.0" prefWidth="248.0" style="-fx-background-color: #768272; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-border-radius: 10px;" text="Add a new announcement" textFill="#ffffff" />
 
-                    <Font name="Century Gothic Bold" size="13.0" />
+            <!-- Icône Transport Public -->
+            <ImageView fitHeight="88.0" fitWidth="108.0" layoutX="32.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../../images/icons/public-transport_3061677.png" />
+                </image>
+            </ImageView>
 
-                </font>
+            <!-- Boutons de navigation à gauche -->
+            <VBox layoutX="20.0" layoutY="200.0" spacing="15" />
+             <Button fx:id="btnAddReservation" layoutX="144.0" layoutY="104.0" onAction="#btnAddReservation" prefHeight="41.0" prefWidth="228.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-border-radius: 10px;" text="See Reservations" />
 
-            </Button>
-         <ImageView fitHeight="88.0" fitWidth="108.0" layoutX="14.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
+                      <Button fx:id="btnAddRelocation" layoutX="426.0" layoutY="104.0" onAction="#btnAddRelocation" prefHeight="41.0" prefWidth="218.0" style="-fx-background-color: #5A6BE5; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px; -fx-border-radius: 10px;" text="See Relocations" />
+         <ImageView fitHeight="36.0" fitWidth="56.0" layoutX="331.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../../images/icons/public-transport_3061677.png" />
+               <Image url="@../../images/icons/see.png" />
             </image>
          </ImageView>
-             <ListView fx:id="announcementListView" layoutX="268.0" layoutY="245.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
-         <Button fx:id="btnAdd1" layoutX="26.0" layoutY="245.0" onAction="#btnAdd1" prefHeight="53.0" prefWidth="183.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="Reservations" textFill="#c6b6b6">
-            <font>
-               <Font name="Century Gothic Bold" size="13.0" />
-            </font>
-         </Button>
-         <Button fx:id="btnAdd11" layoutX="26.0" layoutY="317.0" onAction="#btnAdd11" prefHeight="53.0" prefWidth="183.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="Relocations" textFill="#c6b6b6">
-            <font>
-               <Font name="Century Gothic Bold" size="13.0" />
-            </font>
-         </Button>
+         <ImageView fitHeight="36.0" fitWidth="56.0" layoutX="601.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/icons/see.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="36.0" fitWidth="56.0" layoutX="1003.0" layoutY="704.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/icons/add.png" />
+            </image>
+         </ImageView>
 
         </Pane>
+
 
     </children>
 

@@ -5,27 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/EditAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/EditAnnouncementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/viewAnnouncementAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/viewAnnouncementAdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationclientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationclientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/rides/RidesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/rides/RidesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcement.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcement.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementclient.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementAdmin.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementsStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementsStyle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements_client.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements_client.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Relocation/Front/Relocations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Relocation/Front/Relocations.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Reservation/Front/Reservations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/Reservations.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +29,7 @@
       <list>
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -99,6 +89,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop/src/main/resources/Annoucement/Front",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -189,8 +180,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
       </set>
     </attachedChunks>
   </component>
@@ -221,6 +212,13 @@
       <workItem from="1739898136784" duration="3265000" />
       <workItem from="1739903249076" duration="1548000" />
       <workItem from="1739982982365" duration="9338000" />
+      <workItem from="1740125826165" duration="3097000" />
+      <workItem from="1740227282353" duration="1206000" />
+      <workItem from="1740238074436" duration="3291000" />
+      <workItem from="1740263543626" duration="2000" />
+      <workItem from="1740308248060" duration="5975000" />
+      <workItem from="1740314907879" duration="50000" />
+      <workItem from="1740325626449" duration="20063000" />
     </task>
     <servers />
   </component>
@@ -231,6 +229,17 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java</url>
+          <line>252</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

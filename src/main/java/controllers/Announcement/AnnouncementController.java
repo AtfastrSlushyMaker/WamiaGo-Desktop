@@ -40,10 +40,10 @@ public class AnnouncementController implements Initializable {
     private Button btn_workbench11;
 
     @FXML
-    private Button btnAdd1;
+    private Button btnAddReservation;
 
     @FXML
-    private Button btnAdd11;
+    private Button btnAddRelocation;
 
     private Driver currentDriver;
     private User loggedInUser = SessionManager.getInstance().getUser(); // Utilisateur connecté
@@ -141,17 +141,20 @@ public class AnnouncementController implements Initializable {
                         Label dateLabel = new Label(announcement.getDate().toString());
                         dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #7f8c8d;");
 
+                        Label zone = new Label(announcement.getZone().toString());
+                        dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #7f8c8d;");
+
                         HBox actionsBox = new HBox(5);
-                        Button editButton = new Button("Modifier");
+                        Button editButton = new Button("Update");
                         editButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
                         editButton.setOnAction(event -> handleEditButtonAction(announcement));
 
-                        Button deleteButton = new Button("Supprimer");
+                        Button deleteButton = new Button("Delete");
                         deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
                         deleteButton.setOnAction(event -> handleDeleteButton(announcement));
 
                         actionsBox.getChildren().addAll(editButton, deleteButton);
-                        vbox.getChildren().addAll(titleLabel, contentLabel, dateLabel, actionsBox);
+                        vbox.getChildren().addAll(titleLabel, contentLabel, dateLabel,zone, actionsBox);
                         setGraphic(vbox);
                     }
                 }
@@ -173,17 +176,17 @@ public class AnnouncementController implements Initializable {
      */
     public void handleEditButtonAction(Announcement announcement) {
         try {
-            // Vérifier si l'annonce a un transporteur
-            if (announcement.getTransporter() == null) {
-                Notifications.create()
-                        .title("Erreur")
-                        .text("Cette annonce n'a pas de transporteur associé.")
-                        .showError();
-                return;
-            }
+//            // Vérifier si l'annonce a un transporteur
+//            if (announcement.getTransporter() == null) {
+//                Notifications.create()
+//                        .title("Erreur")
+//                        .text("Cette annonce n'a pas de transporteur associé.")
+//                        .showError();
+//                return;
+//            }
 
-            // Vérifier si l'utilisateur connecté est le propriétaire de l'annonce
-            if (announcement.getTransporter().getIdDriver() == currentDriver.getIdDriver()) {
+//            // Vérifier si l'utilisateur connecté est le propriétaire de l'annonce
+//            if (announcement.getTransporter().getIdDriver() == currentDriver.getIdDriver()) {
                 // Créer un Dialog pour l'édition
                 Dialog<Announcement> dialog = new Dialog<>();
                 dialog.setTitle("Modifier l'annonce");
@@ -229,12 +232,12 @@ public class AnnouncementController implements Initializable {
                         alert.showAndWait();
                     }
                 });
-            } else {
-                Notifications.create()
-                        .title("Erreur")
-                        .text("Vous n'êtes pas autorisé à modifier cette annonce.")
-                        .showError();
-            }
+//            } else {
+//                Notifications.create()
+//                        .title("Erreur")
+//                        .text("Vous n'êtes pas autorisé à modifier cette annonce.")
+//                        .showError();
+//            }
         } catch (IOException e) {
             System.err.println("Erreur lors du chargement de l'interface d'édition : " + e.getMessage());
             e.printStackTrace();
@@ -249,7 +252,7 @@ public class AnnouncementController implements Initializable {
     public void handleDeleteButton(Announcement announcement) {
         try {
             // Vérifier si l'utilisateur connecté est le propriétaire de l'annonce
-            if (announcement.getTransporter().getIdDriver() == currentDriver.getIdDriver()) {
+//            if (announcement.getTransporter().getIdDriver() == currentDriver.getIdDriver()) {
                 // Afficher une boîte de dialogue de confirmation
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation de suppression");
@@ -263,24 +266,24 @@ public class AnnouncementController implements Initializable {
                     // Recharger la liste des annonces
                     loadAnnouncements();
                 }
-            } else {
-                Notifications.create()
-                        .title("Erreur")
-                        .text("Vous n'êtes pas autorisé à supprimer cette annonce.")
-                        .showError();
-            }
+//            } else {
+//                Notifications.create()
+//                        .title("Erreur")
+//                        .text("Vous n'êtes pas autorisé à supprimer cette annonce.")
+//                        .showError();
+//            }
         } catch (SQLException e) {
             System.err.println("Erreur lors de la suppression de l'annonce : " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void btnAdd1(ActionEvent actionEvent) {
+    public void btnAddReservation(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reservation/Front/ReservationsTransporter.fxml"));
             Parent root = loader.load();
 
-            Stage stage = (Stage) btnAdd1.getScene().getWindow();
+            Stage stage = (Stage) btnAddReservation.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -288,12 +291,12 @@ public class AnnouncementController implements Initializable {
         }
     }
 
-    public void btnAdd11(ActionEvent actionEvent) {
+    public void btnAddRelocation(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Relocation/Front/RelocationsTransporter.fxml"));
             Parent root = loader.load();
 
-            Stage stage = (Stage) btnAdd11.getScene().getWindow();
+            Stage stage = (Stage) btnAddRelocation.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {

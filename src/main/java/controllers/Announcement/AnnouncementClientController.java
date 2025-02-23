@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+//import static sun.security.x509.OIDMap.getClass;
 
 
 public class AnnouncementClientController {
@@ -34,10 +35,10 @@ public class AnnouncementClientController {
     private final StationService stationService = new StationService();
     private final UserService userService = new UserService();
     @FXML
-    private Button btnAdd10;
+    private Button btnclient;
 
     @FXML
-    private Button btnAdd110;
+    private Button btnAddRelocationClient;
 
     private User loggedInUser; // Utilisateur connecté
 
@@ -47,7 +48,7 @@ public class AnnouncementClientController {
         loggedInUser = SessionManager.getInstance().getUser();
 
 
-        announcementListView.getStylesheets().add(getClass().getResource("/Annoucement/front/announcement.css").toExternalForm());
+        announcementListView.getStylesheets().add(getClass().getResource("/Annoucement/Front/announcement.css").toExternalForm());
         loadAnnouncements();
 
         btn_workbench1.setOnAction(event -> {
@@ -270,12 +271,12 @@ public class AnnouncementClientController {
         loadAnnouncements();
     }
 
-    public void btnAdd10(ActionEvent actionEvent) {
+    public void btnclient(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reservation/Front/Reservations.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reservation/Front/Reservationsclient.fxml"));
             Parent root = loader.load();
 
-            Stage stage = (Stage) btnAdd10.getScene().getWindow();
+            Stage stage = (Stage) btnclient.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -283,12 +284,12 @@ public class AnnouncementClientController {
         }
     }
 
-    public void btnAdd110(ActionEvent actionEvent) {
+    public void btnAddRelocationClient(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Relocation/Front/RelocationClient.fxml"));
             Parent root = loader.load();
 
-            Stage stage = (Stage) btnAdd110.getScene().getWindow();
+            Stage stage = (Stage) btnAddRelocationClient.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {

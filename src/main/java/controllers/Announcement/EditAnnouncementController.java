@@ -2,6 +2,7 @@ package controllers.Announcement;
 
 import entities.Announcement;
 import entities.Driver;
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,6 +42,8 @@ public class EditAnnouncementController {
 
     private final AnnouncementService announcementService;
     private Announcement announcementToEdit;
+
+    private Driver currentDriver;
 
     public EditAnnouncementController() {
         this.announcementService = new AnnouncementService();
@@ -132,17 +135,22 @@ public class EditAnnouncementController {
             announcementToEdit.setStatus(status);
             announcementToEdit.setDate(Timestamp.valueOf(LocalDateTime.now()));
 
-            // Récupérer dynamiquement le transporteur
-            DriverService driverService = new DriverService();
-            Driver currentDriver = driverService.getDriverByUserId(SessionManager.getInstance().getUser());
+//            // Récupérer dynamiquement le transporteur
+//            DriverService driverService = new DriverService();
+//            Driver currentDriver = driverService.getDriverByUserId(SessionManager.getInstance().getUser());
+//
+//            if (currentDriver == null) {
+//                Notifications.create()
+//                        .title("Erreur")
+//                        .text("Impossible de récupérer les informations du conducteur.")
+//                        .showError();
+//                return;
+//            }
 
-            if (currentDriver == null) {
-                Notifications.create()
-                        .title("Erreur")
-                        .text("Impossible de récupérer les informations du conducteur.")
-                        .showError();
-                return;
-            }
+            DriverService driverService = new DriverService();
+            User loogedinuser = SessionManager.getInstance().getUser();
+            currentDriver = driverService.getById(loogedinuser.getId());
+
 
             announcementToEdit.setTransporter(currentDriver);
 

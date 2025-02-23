@@ -46,7 +46,7 @@ public class ReservationclientController {
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
-        btn_workbench12.setOnAction(event -> loadScene("/Annoucement/Front/announcements_client.fxml"));
+        //btn_workbench12.setOnAction(event -> loadScene("/Annoucement/Front/announcements_client.fxml"));
     }
 
     private void loadScene(String fxmlPath) {

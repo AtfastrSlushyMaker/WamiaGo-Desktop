@@ -42,6 +42,9 @@ public class viewAnnouncementAdminController {
         this.root = root;
     }
 
+
+
+
     @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("Annoucement/Front/announcementclient.css").toExternalForm());
