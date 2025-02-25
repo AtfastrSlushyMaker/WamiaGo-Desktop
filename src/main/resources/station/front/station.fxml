@@ -10,10 +10,12 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@station.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.front.StationController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@station.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.front.StationController">
 
     <children>
 
@@ -112,22 +114,21 @@
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
                 </Label>
-            <ScrollPane id="scrollPane" fx:id="scrollPane" layoutX="512.0" layoutY="212.0" prefHeight="583.0" prefWidth="557.0" stylesheets="@station.css">
+            <ScrollPane id="scrollPane" fx:id="scrollPane" layoutX="512.0" layoutY="185.0" prefHeight="610.0" prefWidth="557.0" stylesheets="@station.css">
                <content>
       
                                                                 <!-- FlowPane to display stations -->
-                      <FlowPane id="scrollPane" fx:id="stationFlowPane" columnHalignment="CENTER" hgap="20" prefHeight="621.0" prefWidth="644.0" stylesheets="@station.css" vgap="20">
+                      <FlowPane id="scrollPane" fx:id="stationFlowPane" columnHalignment="CENTER" hgap="20" prefHeight="585.0" prefWidth="644.0" stylesheets="@station.css" vgap="20">
                     <!-- Dynamically populated station cards will go here -->
                 </FlowPane>
                </content>
             </ScrollPane>
-          <AnchorPane layoutX="42.0" layoutY="521.0" minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="438.0" />
-            <ImageView fitHeight="583.0" fitWidth="352.0" layoutX="121.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/station/images/sygic-satellite-maps.png" />
-               </image>
-            </ImageView>
             <Button id="my_bikes_button" fx:id="my_bikes_button" layoutX="919.0" layoutY="122.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" text="My Bikes" />
+            <StackPane layoutX="21.0" layoutY="181.0" prefHeight="610.0" prefWidth="452.0" styleClass="web-view" stylesheets="@station.css">
+               <children>
+                  <WebView fx:id="map" prefHeight="555.0" prefWidth="379.0" stylesheets="@station.css" />
+               </children>
+            </StackPane>
 
             </children>
         </Pane>

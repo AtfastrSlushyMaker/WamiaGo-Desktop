@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/bicycle/back/bicycleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/bicycle/back/bicycleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/rentals/back/rentalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/rentals/back/rentalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/back/staionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/back/staionsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bicycle.back/bicycle.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bicycle.back/bicycle.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/rentals.back/rentals.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/rentals.back/rentals.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/back/stations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/back/stations.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/LocationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +24,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="CSS File" />
         <option value="FxmlFile" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -50,9 +51,6 @@
     &quot;accountId&quot;: &quot;46535ebf-73b9-42d2-ba27-6b0d2fe2271e&quot;
   }
 }</component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/resources/user.back/style.css" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -75,10 +73,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.GeocodingService.executor": "Run",
     "Application.Home.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MainRequest.executor": "Run",
     "Application.MainRide.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
     "Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
     "Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor": "Run",
     "Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
@@ -88,24 +88,24 @@
     "git-widget-placeholder": "bicycle-station-management",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/WamiaGo_desktop/src/main/resources/rentals.back",
+    "last_opened_file_path": "D:/Projects/WamiaGo_desktop/src/main/resources/images/station/icons",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\rentals.back" />
       <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\station\icons" />
-      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\bicycle.back" />
+      <recent name="C:\Users\islem\OneDrive\Bureau\mes etudes\3\sem2\pidev\WamiaGo-Desktop\src\main\resources\trips" />
       <recent name="C:\Users\Rzouga.RZOUGALAPTOP\Desktop\School\3A\Sem 2\Pidev\WamiaGo-Desktop\src\main\resources\user.back" />
     </key>
   </component>
@@ -115,12 +115,23 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Home">
+    <configuration name="GeocodingService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="services.GeocodingService" />
+      <module name="WamiaGo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="17" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
       <module name="WamiaGo" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.*" />
@@ -167,12 +178,14 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.GeocodingService" />
       <item itemvalue="Application.Home" />
       <item itemvalue="Application.MainRequest" />
       <item itemvalue="Application.MainRide" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GeocodingService" />
         <item itemvalue="Application.Home" />
         <item itemvalue="Application.MainRide" />
         <item itemvalue="Application.MainRequest" />
@@ -213,19 +226,30 @@
       <workItem from="1739895110015" duration="2640000" />
       <workItem from="1739898136784" duration="3265000" />
       <workItem from="1739903249076" duration="1548000" />
-      <workItem from="1740067512979" duration="1416000" />
-      <workItem from="1740069854152" duration="3459000" />
-      <workItem from="1740074536299" duration="7625000" />
-      <workItem from="1740092395198" duration="2967000" />
-      <workItem from="1740101806454" duration="1037000" />
-      <workItem from="1740102854971" duration="39000" />
-      <workItem from="1740102903017" duration="354000" />
-      <workItem from="1740103269112" duration="3845000" />
+      <workItem from="1739989989824" duration="685000" />
+      <workItem from="1739992321782" duration="1756000" />
+      <workItem from="1740045267310" duration="2385000" />
+      <workItem from="1740057965950" duration="11924000" />
+      <workItem from="1740071912131" duration="4265000" />
+      <workItem from="1740107393256" duration="245000" />
+      <workItem from="1740519859692" duration="1950000" />
+      <workItem from="1740521822252" duration="3493000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
