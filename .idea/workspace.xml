@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Location.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/LocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/maps/map.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/maps/map.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,8 +179,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GeocodingService" />
         <item itemvalue="Application.Home" />
+        <item itemvalue="Application.GeocodingService" />
         <item itemvalue="Application.MainRide" />
         <item itemvalue="Application.MainRequest" />
       </list>
@@ -233,7 +227,7 @@
       <workItem from="1740071912131" duration="4265000" />
       <workItem from="1740107393256" duration="245000" />
       <workItem from="1740519859692" duration="1950000" />
-      <workItem from="1740521822252" duration="3493000" />
+      <workItem from="1740521822252" duration="4355000" />
     </task>
     <servers />
   </component>
