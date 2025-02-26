@@ -119,6 +119,7 @@ public class RideController {
                 System.out.println("Price: " + ride.getPrice() + " TND");
                 System.out.println("Status: " + ride.getStatus());
 
+
                 // Create a ride card UI component
                 VBox rideCard = createRideCard(ride);
                 rideFlowPane.getChildren().add(rideCard);  // Add the card to the FlowPane
@@ -167,7 +168,7 @@ public class RideController {
         // Place buttons in an HBox to align them horizontally
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, cancelButton);
+        buttonContainer.getChildren().addAll(selectButton, cancelButton,chatButton);
 
         rideCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
 
@@ -207,7 +208,7 @@ public class RideController {
         return hbox;
     }
     private void openRideDetails(Ride ride) {
-        System.out.println("Opening details for Ride ID: " + ride.getIdRide());
+
 
         Stage modalStage = new Stage();
         modalStage.setTitle("Ride Details - " + ride.getIdRide());
@@ -228,7 +229,16 @@ public class RideController {
         // Displaying the details from the Ride object
         Label arrivalLabel = new Label("Arrival Location: " + ride.getRequest().getArrivalLocation().getAddress());
         Label departureLabel = new Label("Departure Location: " + ride.getRequest().getDepartureLocation().getAddress());
-        Label driverLabel = new Label("Driver: " + ride.getDriver().getUser().getName());  // Assuming Driver class has a getName() method
+
+        // Check if driver is null before trying to access its properties
+        Label driverLabel;
+        if (ride.getDriver() != null && ride.getDriver().getUser() != null) {
+            driverLabel = new Label("Driver: " + ride.getDriver().getUser().getName());
+
+        } else {
+            driverLabel = new Label("Driver");
+        }
+
         Label distanceLabel = new Label("Distance: " + ride.getDistance() + " km");
         Label durationLabel = new Label("Duration: " + ride.getDuration() + " min");
         Label priceLabel = new Label("Price: " + ride.getPrice() + " TND");
@@ -263,6 +273,7 @@ public class RideController {
         modalStage.setScene(modalScene);
         modalStage.show();
     }
+
 
     private Button createSelectButtonForRide(Ride ride) {
         Button selectButton = new Button("Details");
