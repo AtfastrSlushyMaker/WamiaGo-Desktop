@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -106,7 +107,7 @@
 
         </VBox>
 
-        <Pane prefHeight="827.0" prefWidth="1143.0">
+        <Pane focusTraversable="true" prefHeight="827.0" prefWidth="1143.0">
             <children>
                 <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
                 <Label id="available_stations_label" fx:id="available_stations_label" layoutX="411.0" layoutY="115.0" prefHeight="50.0" prefWidth="272.0" stylesheets="@station.css" text="Available Stations" textFill="#323131">
@@ -114,21 +115,33 @@
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
                 </Label>
-            <ScrollPane id="scrollPane" fx:id="scrollPane" layoutX="512.0" layoutY="185.0" prefHeight="610.0" prefWidth="557.0" stylesheets="@station.css">
+            <ScrollPane id="scrollPane" fx:id="scrollPane" layoutX="512.0" layoutY="240.0" prefHeight="555.0" prefWidth="545.0" stylesheets="@station.css">
                <content>
       
                                                                 <!-- FlowPane to display stations -->
-                      <FlowPane id="scrollPane" fx:id="stationFlowPane" columnHalignment="CENTER" hgap="20" prefHeight="585.0" prefWidth="644.0" stylesheets="@station.css" vgap="20">
+                      <FlowPane id="scrollPane" fx:id="stationFlowPane" columnHalignment="CENTER" focusTraversable="true" hgap="20" prefHeight="555.0" prefWidth="545.0" stylesheets="@station.css" vgap="20">
                     <!-- Dynamically populated station cards will go here -->
                 </FlowPane>
                </content>
             </ScrollPane>
-            <Button id="my_bikes_button" fx:id="my_bikes_button" layoutX="919.0" layoutY="122.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" text="My Bikes" />
-            <StackPane layoutX="21.0" layoutY="181.0" prefHeight="610.0" prefWidth="452.0" styleClass="web-view" stylesheets="@station.css">
+            <Button id="my_bikes_button" fx:id="my_bikes_button" layoutX="947.0" layoutY="121.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" text="My Bikes" />
+            <StackPane layoutX="21.0" layoutY="200.0" prefHeight="591.0" prefWidth="452.0" styleClass="web-view" stylesheets="@station.css">
                <children>
-                  <WebView fx:id="map" prefHeight="555.0" prefWidth="379.0" stylesheets="@station.css" />
+                  <WebView fx:id="map" prefHeight="558.0" prefWidth="452.0" stylesheets="@station.css" />
                </children>
             </StackPane>
+            <Button fx:id="sortButton" layoutX="947.0" layoutY="193.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" stylesheets="@station.css" text="Sort" />
+            <TextField fx:id="searchField" layoutX="512.0" layoutY="199.0" prefHeight="23.0" prefWidth="248.0" promptText=" Where do you want to go? " stylesheets="@station.css" />
+            <ImageView id="search-icon" fitHeight="23.0" fitWidth="27.0" layoutX="737.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons/search_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="963.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons/sort_icon.png" />
+               </image>
+            </ImageView>
 
             </children>
         </Pane>

@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/maps/map.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/maps/map.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/StationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/StationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +86,7 @@
     "git-widget-placeholder": "bicycle-station-management",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/WamiaGo_desktop/src/main/resources/images/station/icons",
+    "last_opened_file_path": "D:/Projects/WamiaGo_desktop/src/main/resources/images/icons",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -98,6 +102,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\icons" />
       <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\station\icons" />
       <recent name="C:\Users\islem\OneDrive\Bureau\mes etudes\3\sem2\pidev\WamiaGo-Desktop\src\main\resources\trips" />
       <recent name="C:\Users\Rzouga.RZOUGALAPTOP\Desktop\School\3A\Sem 2\Pidev\WamiaGo-Desktop\src\main\resources\user.back" />
@@ -227,7 +232,9 @@
       <workItem from="1740071912131" duration="4265000" />
       <workItem from="1740107393256" duration="245000" />
       <workItem from="1740519859692" duration="1950000" />
-      <workItem from="1740521822252" duration="4355000" />
+      <workItem from="1740521822252" duration="4655000" />
+      <workItem from="1740565542998" duration="284000" />
+      <workItem from="1740593153296" duration="3702000" />
     </task>
     <servers />
   </component>

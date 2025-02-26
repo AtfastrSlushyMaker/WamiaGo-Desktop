@@ -63,6 +63,12 @@
         @FXML
         private WebView map;
 
+        @FXML
+        private Button sortButton;
+
+        @FXML
+        private TextField searchField;
+
         private WebEngine webEngine;
 
         private final StationService stationService = new StationService();
@@ -124,7 +130,7 @@
 
             new Thread(() -> {
                 try {
-                    List<Station> stations = stationService.read();
+                    List<Station> stations = stationService.getSortedStationsByUserDistance(SessionManager.getInstance().getUser());
                     Platform.runLater(() -> {
                         stationFlowPane.getChildren().clear();
                         for (Station station : stations) {
@@ -546,6 +552,7 @@
 
             }
         }
+
 
 
     }
