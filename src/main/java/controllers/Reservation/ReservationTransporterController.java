@@ -238,7 +238,7 @@ public class ReservationTransporterController {
                 // Mettre à jour les champs de la réservation
                 reservation.setDate(Timestamp.valueOf(datePicker.getValue().atStartOfDay()));
                 //reservation.setCost(Float.parseFloat(costField.getText()));
-                reservation.setStatus(Reservation.Status.COMPLETED);
+                reservation.setStatus(Reservation.Status.CONFIRMED);
                 return reservation;
             }
             return null;

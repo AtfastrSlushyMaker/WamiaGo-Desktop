@@ -5,6 +5,7 @@ import entities.Driver;
 import utils.DataBase;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -191,6 +192,86 @@ public class AnnouncementService implements IService<Announcement> {
             announcements.add(announcement);
         }
         return announcements;
+
+
     }
+
+    public List<Announcement> findByZone(Announcement.Zone zone) throws SQLException {
+        List<Announcement> announcements = new ArrayList<>();
+        String sql = "SELECT * FROM announcement WHERE zone = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, zone.toString());
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Announcement announcement = new Announcement();
+                announcement.setIdAnnouncement(rs.getInt("id_announcement"));
+
+                DriverService driverService = new DriverService();
+                Driver transporter = driverService.getById(rs.getInt("id_transporter"));
+                announcement.setTransporter(transporter);
+
+                announcement.setTitle(rs.getString("title"));
+                announcement.setContent(rs.getString("content"));
+                announcement.setDate(rs.getTimestamp("date"));
+                announcement.setZone(Announcement.Zone.valueOf(rs.getString("zone")));
+                announcement.setStatus(rs.getBoolean("status"));
+
+                announcements.add(announcement);
+            }
+        }
+        return announcements;
+    }
+
+        public List<Announcement> findByDate(LocalDate date) throws SQLException {
+            List<Announcement> announcements = new ArrayList<>();
+            String sql = "SELECT * FROM announcement WHERE DATE(date) = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setDate(1, Date.valueOf(date));
+                ResultSet rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    Announcement announcement = new Announcement();
+                    announcement.setIdAnnouncement(rs.getInt("id_announcement"));
+
+                    DriverService driverService = new DriverService();
+                    Driver transporter = driverService.getById(rs.getInt("id_transporter"));
+                    announcement.setTransporter(transporter);
+
+                    announcement.setTitle(rs.getString("title"));
+                    announcement.setContent(rs.getString("content"));
+                    announcement.setDate(rs.getTimestamp("date"));
+                    announcement.setZone(Announcement.Zone.valueOf(rs.getString("zone")));
+                    announcement.setStatus(rs.getBoolean("status"));
+
+                    announcements.add(announcement);
+                }
+            }
+            return announcements;
+        }
+        public List<Announcement> findByKeyword(String keyword) throws SQLException {
+            List<Announcement> announcements = new ArrayList<>();
+            String sql = "SELECT * FROM announcement WHERE title LIKE ? OR content LIKE ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, "%" + keyword + "%");
+                preparedStatement.setString(2, "%" + keyword + "%");
+                ResultSet rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    Announcement announcement = new Announcement();
+                    announcement.setIdAnnouncement(rs.getInt("id_announcement"));
+
+                    DriverService driverService = new DriverService();
+                    Driver transporter = driverService.getById(rs.getInt("id_transporter"));
+                    announcement.setTransporter(transporter);
+
+                    announcement.setTitle(rs.getString("title"));
+                    announcement.setContent(rs.getString("content"));
+                    announcement.setDate(rs.getTimestamp("date"));
+                    announcement.setZone(Announcement.Zone.valueOf(rs.getString("zone")));
+                    announcement.setStatus(rs.getBoolean("status"));
+
+                    announcements.add(announcement);
+                }
+            }
+            return announcements;
+        }
 
 }

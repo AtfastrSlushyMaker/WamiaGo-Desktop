@@ -13,6 +13,9 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
 <HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Announcement.AnnouncementClientController">
     <stylesheets>
         <URL value="@styles.css" />
@@ -118,6 +121,25 @@
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
                 </Label>
+
+                <!-- ComboBox pour sélectionner la zone -->
+                <ComboBox fx:id="zoneComboBox" layoutX="73.0" layoutY="90.0" prefWidth="200.0" promptText="Select Zone" />
+
+                <!-- Bouton pour lancer la recherche -->
+                <Button fx:id="searchButton" layoutX="283.0" layoutY="90.0" text="Search" onAction="#handleSearchButtonAction" />
+
+                <!-- DatePicker pour filtrer par date -->
+                <DatePicker fx:id="datePicker" layoutX="73.0" layoutY="60.0" prefWidth="200.0" promptText="Select Date" />
+
+                <!-- Bouton pour appliquer le filtre par date -->
+                <Button fx:id="filterByDateButton" layoutX="283.0" layoutY="60.0" text="Filter by Date" onAction="#handleFilterByDateButtonAction" />
+
+                <!-- Champ de texte pour la recherche par mot-clé -->
+                <TextField fx:id="keywordTextField" layoutX="73.0" layoutY="30.0" prefWidth="200.0" promptText="Enter keyword" />
+
+                <!-- Bouton pour lancer la recherche -->
+                <Button fx:id="searchByKeywordButton" layoutX="283.0" layoutY="30.0" text="Search by Keyword" onAction="#handleSearchByKeywordButtonAction" />
+
 
                 <!-- ListView pour afficher les annonces -->
                 <ListView fx:id="announcementListView" layoutX="73.0" layoutY="131.0" prefHeight="635.0" prefWidth="540.0" styleClass="announcements-list" />

@@ -18,9 +18,12 @@ import utils.SessionManager;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+
 
 //import static sun.security.x509.OIDMap.getClass;
 
@@ -42,11 +45,25 @@ public class AnnouncementClientController {
 
     private User loggedInUser; // Utilisateur connecté
 
+
+    @FXML
+    private ComboBox<Announcement.Zone> zoneComboBox;
+
+    @FXML
+    private DatePicker datePicker;
+
+    @FXML
+    private TextField keywordTextField;
+
+    @FXML
+    private Button searchButton;
     @FXML
     public void initialize() {
         // Récupérer l'utilisateur connecté
         loggedInUser = SessionManager.getInstance().getUser();
 
+        // Peupler le ComboBox avec les zones disponibles
+        zoneComboBox.getItems().setAll(Announcement.Zone.values());
 
         announcementListView.getStylesheets().add(getClass().getResource("/Annoucement/Front/announcement.css").toExternalForm());
         loadAnnouncements();
@@ -62,7 +79,54 @@ public class AnnouncementClientController {
                 e.printStackTrace();
             }
         });
+    }
 
+    @FXML
+    private void handleFilterByDateButtonAction(ActionEvent event) {
+        LocalDate selectedDate = datePicker.getValue();
+        if (selectedDate != null) {
+            try {
+                List<Announcement> announcements = announcementService.findByDate(selectedDate);
+                announcementListView.getItems().setAll(announcements);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Si aucune date n'est sélectionnée, charger toutes les annonces
+            loadAnnouncements();
+        }
+    }
+
+    @FXML
+    private void handleSearchByKeywordButtonAction(ActionEvent event) {
+        String keyword = keywordTextField.getText();
+        if (keyword != null && !keyword.isEmpty()) {
+            try {
+                List<Announcement> announcements = announcementService.findByKeyword(keyword);
+                announcementListView.getItems().setAll(announcements);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Si aucun mot-clé n'est saisi, charger toutes les annonces
+            loadAnnouncements();
+        }
+    }
+
+    @FXML
+    private void handleSearchButtonAction(ActionEvent event) {
+        Announcement.Zone selectedZone = zoneComboBox.getValue();
+        if (selectedZone != null) {
+            try {
+                List<Announcement> announcements = announcementService.findByZone(selectedZone);
+                announcementListView.getItems().setAll(announcements);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Si aucune zone n'est sélectionnée, charger toutes les annonces
+            loadAnnouncements();
+        }
     }
 
     private void loadAnnouncements() {

@@ -91,6 +91,33 @@ public class RelocationService implements IService<Relocation> {
         return relocations;
     }
 
+    public List<Relocation> readFiltered() throws SQLException {
+        List<Relocation> relocations = new ArrayList<>();
+        String sql = "SELECT * FROM relocation r JOIN reservation res ON r.id_reservation = res.id_reservation WHERE res.status IN ('CONFIRMED', 'COMPLETED')";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet rs = preparedStatement.executeQuery();
+
+        while (rs.next()) {
+            Relocation relocation = new Relocation();
+            relocation.setIdRelocation(rs.getInt("id_relocation"));
+
+            // Récupérer la réservation associée
+            Reservation reservation = new Reservation();
+            reservation.setIdReservation(rs.getInt("id_reservation"));
+            reservation.setDescription(rs.getString("description"));
+            //reservation.setStatus(rs.getStatus("status"));
+
+            relocation.setReservation(reservation);
+            relocation.setDate(rs.getTimestamp("date"));
+            relocation.setStatus(rs.getBoolean("status"));
+            relocation.setCost(rs.getFloat("cost"));
+
+            relocations.add(relocation);
+        }
+        return relocations;
+    }
+
+
     public List<Relocation> findByFilters(Map<String, Object> filters) throws SQLException {
         List<Relocation> relocations = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM relocation WHERE 1=1 ");
