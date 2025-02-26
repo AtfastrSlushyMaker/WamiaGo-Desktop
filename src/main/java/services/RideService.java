@@ -304,18 +304,6 @@ public class RideService implements IService<Ride> {
     }
 
 
-    public int countRides() throws SQLException {
-        String query = "SELECT COUNT(*) FROM ride";
-        try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {  // Assurer la fermeture de ResultSet
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        }
-        return 0;
-    }
-
-
 
 
     public List<Ride> sortRidesByDate(boolean ascending) throws SQLException {

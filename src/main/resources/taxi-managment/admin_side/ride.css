@@ -185,18 +185,3 @@
 .station-bike-close-button:hover {
     -fx-background-color: #ff4444;
 }
-
-.total-ride-label{
-    -fx-background-color: #5593db;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
-
-}
-.total-ride-label:hover{
-    -fx-background-color: rgb(27, 46, 68) ;
-
-}
