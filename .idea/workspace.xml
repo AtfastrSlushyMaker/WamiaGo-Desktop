@@ -5,22 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/booking/BookingController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/taxi/userside/ride/RideController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/taxi/userside/ride/RideController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Server.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/entities/Booking.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/entities/Trip.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/BookingService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/TripService.java" beforeDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/request/RequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/request/RequestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RequestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.fxml" afterDir="false" />
->>>>>>> parent of 3236e17 (kamalt)
+      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/chat/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/chat/chat.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,14 +205,8 @@
       <workItem from="1740085307059" duration="2968000" />
       <workItem from="1740089106752" duration="4253000" />
       <workItem from="1740093483291" duration="109000" />
-<<<<<<< HEAD
-<<<<<<< HEAD
       <workItem from="1740100961946" duration="2269000" />
       <workItem from="1740600635654" duration="3301000" />
-=======
->>>>>>> parent of 3236e17 (kamalt)
-=======
->>>>>>> parent of 3236e17 (kamalt)
     </task>
     <servers />
   </component>
@@ -237,6 +217,7 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
