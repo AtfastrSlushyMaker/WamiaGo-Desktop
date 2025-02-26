@@ -1,4 +1,5 @@
 package controllers.taxi.userside.ride;
+import controllers.taxi.chat.ChatController;
 import entities.Ride;
 import entities.User;
 import javafx.fxml.FXML;
@@ -161,6 +162,7 @@ public class RideController {
         // Create buttons
         Button selectButton = createSelectButtonForRide(ride);
         Button cancelButton = createCancelButton(ride, rideCard);
+        Button chatButton = createChatButton(ride);
 
         // Place buttons in an HBox to align them horizontally
         HBox buttonContainer = new HBox(10);
@@ -285,6 +287,30 @@ public class RideController {
 
         return deleteButton;
     }
+    private Button createChatButton(Ride ride) {
+        Button chatButton = new Button("Chat");
+        chatButton.getStyleClass().add("ride-button-chat");
+        chatButton.setOnAction(event -> openChatWindow(ride));
+        return chatButton;
+    }
+    private void openChatWindow(Ride ride) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/chat/chat.fxml"));
+            Parent chatRoot = loader.load();
+
+            ChatController chatController = loader.getController();
+            chatController.initChat(ride, SessionManager.getInstance().getUser()); // Get user from session manager
+
+            Stage chatStage = new Stage();
+            chatStage.setTitle("Chat - Ride ID: " + ride.getIdRide());
+            chatStage.setScene(new Scene(chatRoot));
+            chatStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 
