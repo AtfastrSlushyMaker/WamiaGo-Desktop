@@ -308,15 +308,15 @@
 }
 /* Style for the total requests label */
 .total-requests-label {
-    -fx-background-color: #5593db;
-    -fx-text-fill: white;
+    -fx-background-color: white;
+    -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-padding: 10px;
     -fx-border-radius: 5px;
-    -fx-border-color: black;
+    -fx-border-color: white;
     -fx-border-width: 2px;
 }
 .total-requests-label:hover{
-    -fx-background-color: rgb(27, 46, 68) ;
+    -fx-background-color: #e9cacd ;
 }
 
