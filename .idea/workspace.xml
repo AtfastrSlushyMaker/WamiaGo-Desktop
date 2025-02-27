@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +20,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="CSS File" />
+        <option value="FxmlFile" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -43,7 +44,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git&quot;,
-    &quot;accountId&quot;: &quot;1f6687d3-54c2-4756-9e4a-372c3b9f3f90&quot;
+    &quot;accountId&quot;: &quot;46535ebf-73b9-42d2-ba27-6b0d2fe2271e&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -68,52 +69,66 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.GeocodingService.executor&quot;: &quot;Run&quot;,
     &quot;Application.Home.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.MainRequest.executor&quot;: &quot;Run&quot;,
     &quot;Application.MainRide.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-jar-plugin:3.4.1:jar].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor&quot;: &quot;Run&quot;,
     &quot;Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
     &quot;Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Relocation-management&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;bicycle-station-management&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/javax.mail-1.6.2.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/WamiaGo_desktop/src/main/resources/images/icons&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\BAZINFO\Desktop\3A\S2\PIDEV\WamiaGo-Desktop\src\main\resources\Annoucement\Front" />
-      <recent name="C:\Pidev\src\main\resources\Response" />
-      <recent name="C:\Pidev\src\main\resources\dashboard" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Pidev\src\main\resources\Response" />
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\icons" />
+      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\station\icons" />
+      <recent name="C:\Users\islem\OneDrive\Bureau\mes etudes\3\sem2\pidev\WamiaGo-Desktop\src\main\resources\trips" />
+      <recent name="C:\Users\Rzouga.RZOUGALAPTOP\Desktop\School\3A\Sem 2\Pidev\WamiaGo-Desktop\src\main\resources\user.back" />
     </key>
   </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value=" " />
+    </option>
+  </component>
   <component name="RunManager" selected="Application.Home">
-    <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="17" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="controllers.Home" />
+    <configuration name="GeocodingService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="services.GeocodingService" />
       <module name="WamiaGo" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="controllers.Home" />
+      <module name="Pidev3a11" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.*" />
@@ -160,6 +175,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.GeocodingService" />
       <item itemvalue="Application.Home" />
       <item itemvalue="Application.MainRequest" />
       <item itemvalue="Application.MainRide" />
@@ -167,6 +183,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Home" />
+        <item itemvalue="Application.GeocodingService" />
         <item itemvalue="Application.MainRide" />
         <item itemvalue="Application.MainRequest" />
       </list>
@@ -175,8 +192,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
       </set>
     </attachedChunks>
   </component>
@@ -206,44 +223,38 @@
       <workItem from="1739895110015" duration="2640000" />
       <workItem from="1739898136784" duration="3265000" />
       <workItem from="1739903249076" duration="1548000" />
-      <workItem from="1739982982365" duration="9338000" />
-      <workItem from="1740125826165" duration="3097000" />
-      <workItem from="1740227282353" duration="1206000" />
-      <workItem from="1740238074436" duration="3291000" />
-      <workItem from="1740263543626" duration="2000" />
-      <workItem from="1740308248060" duration="5975000" />
-      <workItem from="1740314907879" duration="50000" />
-      <workItem from="1740325626449" duration="20218000" />
-      <workItem from="1740413952073" duration="7979000" />
-      <workItem from="1740488527953" duration="1792000" />
-      <workItem from="1740513694184" duration="1041000" />
-      <workItem from="1740514875665" duration="5528000" />
-      <workItem from="1740566579926" duration="15734000" />
-      <workItem from="1740601605389" duration="22095000" />
-      <workItem from="1740624698993" duration="2000" />
-      <workItem from="1740645592622" duration="6563000" />
-      <workItem from="1740672725721" duration="331000" />
+      <workItem from="1739989989824" duration="685000" />
+      <workItem from="1739992321782" duration="1756000" />
+      <workItem from="1740045267310" duration="2385000" />
+      <workItem from="1740057965950" duration="11924000" />
+      <workItem from="1740071912131" duration="4265000" />
+      <workItem from="1740107393256" duration="245000" />
+      <workItem from="1740519859692" duration="1950000" />
+      <workItem from="1740521822252" duration="4655000" />
+      <workItem from="1740565542998" duration="284000" />
+      <workItem from="1740593153296" duration="3702000" />
+      <workItem from="1740671974983" duration="674000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationControllerTransporter.java</url>
-          <line>191</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

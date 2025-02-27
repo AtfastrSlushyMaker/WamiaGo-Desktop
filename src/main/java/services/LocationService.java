@@ -19,8 +19,8 @@ public class LocationService implements IService<Location> {
         String sql = "INSERT INTO location (address,latitude,longitude) VALUES (?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, location.getAddress());
-        preparedStatement.setFloat(2, location.getLatitude());
-        preparedStatement.setFloat(3, location.getLongitude());
+        preparedStatement.setDouble(2, location.getLatitude());
+        preparedStatement.setDouble(3, location.getLongitude());
         preparedStatement.executeUpdate();
         return false;
     }
@@ -30,8 +30,8 @@ public class LocationService implements IService<Location> {
         String sql = "UPDATE location SET address=?,latitude=?,longitude=? WHERE id_location=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, location.getAddress());
-        preparedStatement.setFloat(2, location.getLatitude());
-        preparedStatement.setFloat(3, location.getLongitude());
+        preparedStatement.setDouble(2, location.getLatitude());
+        preparedStatement.setDouble(3, location.getLongitude());
         preparedStatement.setInt(4, location.getId());
         preparedStatement.executeUpdate();
     }
