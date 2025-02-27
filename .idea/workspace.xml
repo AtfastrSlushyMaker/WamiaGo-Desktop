@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/ListReclamation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reclamation/ListReclamation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Response/AddResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Response/AddResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Response/ListResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Response/ListResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Response/UpdateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Response/UpdateResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Response/back/ResponsesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Response/back/ResponsesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Reclamation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Reclamation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ResponseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ResponseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reclamation/UpdateReclamation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/UpdateReclamation.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Response/AddResponse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Response/AddResponse.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Response/ListResponse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Response/ListResponse.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Response/UpdateResponse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Response/UpdateResponse.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Response/back/responses.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Response/back/responses.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +32,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="CSS File" />
         <option value="FxmlFile" />
         <option value="Class" />
       </list>
@@ -83,6 +94,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Pidev/src/main/resources/Response&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -202,6 +214,9 @@
       <workItem from="1739898136784" duration="3265000" />
       <workItem from="1739903249076" duration="1548000" />
       <workItem from="1739982982365" duration="9338000" />
+      <workItem from="1740591230452" duration="7707000" />
+      <workItem from="1740653723605" duration="1942000" />
+      <workItem from="1740671697216" duration="1535000" />
     </task>
     <servers />
   </component>

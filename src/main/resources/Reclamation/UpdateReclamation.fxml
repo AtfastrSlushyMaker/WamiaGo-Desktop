@@ -162,12 +162,12 @@
                <font>
                   <Font size="18.0" />
                </font></Label>
-                <Button fx:id="updateButton" layoutX="281.0" layoutY="728.0" mnemonicParsing="false" onAction="#handleUpdate" text="UPDATE" textFill="#1e0101">
+                <Button fx:id="updateButton" layoutX="295.0" layoutY="715.0" mnemonicParsing="false" onAction="#handleUpdate" styleClass="carpooling-action-button" text="UPDATE" textFill="#1e0101">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Button>
-                <Button fx:id="cancelButton" layoutX="702.0" layoutY="716.0" mnemonicParsing="false" text="CANCEL">
+                <Button fx:id="cancelButton" layoutX="702.0" layoutY="716.0" mnemonicParsing="false" styleClass="Relocation_quick" text="CANCEL">
                     <font>
                         <Font size="18.0" />
                     </font>
