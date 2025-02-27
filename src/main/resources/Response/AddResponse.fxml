@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Response.AddResponse">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Response.AddResponse">
     <VBox spacing="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
         <HBox alignment="CENTER_LEFT" spacing="10.0">
-            <Button fx:id="home_button" mnemonicParsing="false" styleClass="ebike-action-button" stylesheets="@AddReclamation.css" text="Home" />
-            <Label styleClass="title-label" text="Add Response">
+            <Button fx:id="home_button" mnemonicParsing="false" text="Home" />
+            <Label text="Add Response" styleClass="title-label">
                 <font>
                     <Font size="24.0" />
                 </font>
@@ -20,19 +17,19 @@
         </HBox>
 
         <VBox spacing="10.0" styleClass="reclamation-details">
-            <Label styleClass="section-label" text="Reclamation Details:">
+            <Label text="Reclamation Details:" styleClass="section-label">
                 <font>
                     <Font size="18.0" />
                 </font>
             </Label>
-            <Label styleClass="field-label" text="Title:" />
+            <Label text="Title:" styleClass="field-label" />
             <Label fx:id="reclamationTitleLabel" styleClass="content-label" wrapText="true" />
-            <Label styleClass="field-label" text="Content:" />
+            <Label text="Content:" styleClass="field-label" />
             <Label fx:id="reclamationContentLabel" styleClass="content-label" wrapText="true" />
         </VBox>
 
         <VBox spacing="10.0">
-            <Label styleClass="section-label" text="Your Response:">
+            <Label text="Your Response:" styleClass="section-label">
                 <font>
                     <Font size="18.0" />
                 </font>
@@ -40,9 +37,9 @@
             <TextArea fx:id="responseContentArea" prefHeight="150.0" promptText="Enter your response here..." wrapText="true" />
         </VBox>
 
-        <HBox alignment="CENTER_RIGHT" spacing="10.0">
-            <Button fx:id="cancelButton" mnemonicParsing="false" styleClass="Relocation_quick" stylesheets="@AddReclamation.css" text="Cancel" />
-            <Button fx:id="submitButton" defaultButton="true" mnemonicParsing="false" styleClass="carpooling-action-button" stylesheets="@AddReclamation.css" text="Submit" />
+        <HBox spacing="10.0" alignment="CENTER_RIGHT">
+            <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="submitButton" mnemonicParsing="false" text="Submit" defaultButton="true" />
         </HBox>
     </VBox>
-</AnchorPane>
+</AnchorPane> 

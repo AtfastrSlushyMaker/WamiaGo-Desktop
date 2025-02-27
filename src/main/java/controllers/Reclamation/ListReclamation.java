@@ -101,7 +101,8 @@ public class ListReclamation {
                     setText(null);
                 } else {
                     String status = reclamation.getStatus() == 0 ? "Pending" : "Resolved";
-                    setText(String.format("Title: %s\nContent: %s\nDate: %s\nStatus: %s\nUser: %s\n",
+                    setText(String.format("ID: %d\nTitle: %s\nContent: %s\nDate: %s\nStatus: %s\nUser: %s\n",
+                            reclamation.getIdReclamation(),
                             reclamation.getTitle(),
                             reclamation.getContent(),
                             dateFormat.format(reclamation.getDate()),

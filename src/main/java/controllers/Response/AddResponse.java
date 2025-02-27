@@ -90,7 +90,7 @@ public class AddResponse {
 
     private void navigateToList(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Response/ListResponse.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/Reclamation/ListReclamation.fxml"));
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
