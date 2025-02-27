@@ -120,7 +120,7 @@
             <Button id="See_you_Rides_buuton" fx:id="See_you_Rides_button" alignment="BASELINE_LEFT" layoutX="201.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="146.0" stylesheets="@request.css" text="See Your Rides" />
             <ImageView fitHeight="36.0" fitWidth="35.0" layoutX="148.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/icons/add1.png" />
+                  <Image url="@../../images/icons/add.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="304.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">

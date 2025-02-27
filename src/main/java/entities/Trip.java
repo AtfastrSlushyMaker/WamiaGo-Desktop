@@ -26,7 +26,6 @@ public class Trip {
         this.vehicle = vehicle;
     }
 
-
     // Getters and Setters
     public int getIdTrip() {
         return idTrip;
