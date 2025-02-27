@@ -4,8 +4,16 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.taxi.adminside.request.RequestController">
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Label?>
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.taxi.adminside.request.RequestController">
    <children>
-      <Text layoutX="269.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="test request" />
+      <Text layoutX="269.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0"  />
+      <Label fx:id="totalRequestsLabel" text="Total Requests: 0" />
+
+      <FlowPane fx:id="requestFlowPane" hgap="20" vgap="20" prefHeight="638.0" prefWidth="1087.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="185.0">
+         <!-- Dynamically populated station cards will go here -->
+      </FlowPane>
+
    </children>
 </AnchorPane>

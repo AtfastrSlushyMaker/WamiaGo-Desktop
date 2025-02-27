@@ -262,17 +262,6 @@ public class DashboardController {
                 e.printStackTrace();
             }
         });
-        reclamation_button.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ListReclamation.fxml"));
-                Parent homeRoot = loader.load();
-                Scene homeScene = new Scene(homeRoot);
-                Stage stage = (Stage) home_button.getScene().getWindow();
-                stage.setScene(homeScene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     private void setupUserDropdownMenu() {

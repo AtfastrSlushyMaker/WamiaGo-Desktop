@@ -1,0 +1,202 @@
+#rideFlowPane {
+    -fx-padding: 0 0 0 0;  /* Adds space on top */
+    -fx-hgap: 20px;
+    -fx-vgap: 20px;
+    -fx-alignment: center;
+}
+
+/* Style for each ride card */
+.ride-card {
+    -fx-background-color: #E57373; /* Yellow */
+    -fx-background-radius: 12px; /* Rounded corners */
+    -fx-padding: 30px; /* Increase padding for more space inside the card */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 5); /* Floating shadow */
+    -fx-pref-width: 350px; /* Increased width */
+    -fx-min-width: 350px; /* Minimum width */
+    -fx-max-width: 350px; /* Maximum width */
+    -fx-alignment: center;
+    -fx-transition: transform 0.2s ease-in-out;
+    -fx-height: 400px; /* Increased height */
+}
+.ride-card Label {
+    -fx-font-size: 10px; /* Larger font size */
+    -fx-text-fill: white; /* White text color for contrast */
+    -fx-alignment: center; /* Center the text */
+}
+.ride-card:hover {
+    -fx-background-color: #D32F2F
+}
+
+/* Style for the ride name */
+.ride-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 200px;
+    -fx-text-alignment: center;
+    -fx-ellipsize: middle;
+}
+
+/* Style for the ride details box */
+.ride-details-box {
+    -fx-background-color: white;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+    -fx-padding: 10px;
+    -fx-background-color: #FFC107;
+    -fx-border-radius: 10px;
+}
+
+/* Style for the ride image */
+.ride-image {
+    -fx-fit-width: 100px;
+    -fx-fit-height: 100px;
+    -fx-preserve-ratio: true;
+    -fx-margin-bottom: 10px;
+}
+
+/* Style for the select button */
+.ride-button {
+    -fx-background-color: #FFC10793; /* Fresh green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+.ride-button-delete{
+    -fx-background-color: #E57373;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+.ride-button-delete:hover {
+    -fx-background-color: #D32F2F;
+}
+
+.ride-button:hover {
+    -fx-background-color: #FFC107;
+}
+
+/* Modal Styling */
+.modal {
+    -fx-background-color: white; /* Green background color */
+    -fx-padding: 20px;
+    -fx-border-radius: 30px; /* Fully rounded corners */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 2, 4); /* Subtle shadow */
+}
+
+/* Title Label in Modal */
+.modal-label {
+    -fx-font-size: 20px; /* Larger title font size for better visibility */
+    -fx-font-weight: bold;
+    -fx-text-fill: #444444; /* Darker gray for better contrast */
+    -fx-text-alignment: center; /* Centered title */
+    -fx-font-family: "Helvetica Neue", sans-serif; /* Modern font */
+}
+
+/* Close Button Styling */
+.modal-close-button {
+    -fx-background-color: #E57373; /* Green button */
+    -fx-text-fill: white;
+    -fx-padding: 12px 25px; /* Slightly bigger padding for a cleaner look */
+    -fx-border-radius: 10px;
+    -fx-border-color: #E57373; /* Slightly darker green for the border */
+    -fx-border-width: 2px;
+    -fx-font-size: 14px; /* Adjust font size for balance */
+    -fx-font-weight: bold;
+    -fx-transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
+}
+
+/* Hover Effect for Close Button */
+.modal-close-button:hover {
+    -fx-background-color: #D32F2F; /* Darker green on hover */
+}
+
+/* Active/Pressed State */
+.modal-close-button:pressed {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 4); /* Subtle shadow on click */
+    -fx-transform: scale(0.98); /* Slight shrink effect when pressed */
+}
+
+/* Style for the request taxi button */
+#back_to_request {
+    -fx-background-color: #4E9D3A; /* Primary color */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+
+    -fx-border-width: 2px;
+}
+
+/* Hover effect */
+#back_to_request:hover {
+    -fx-background-color: #6FBF66; /* Lighter green on hover */
+}
+
+/* Bicycle Rectangle and Label */
+/* Bicycle Icon */
+.bicycle-icon {
+    -fx-width: 40px;  /* Icon width */
+    -fx-height: 40px; /* Icon height */
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+/* Style for the See You Rides button */
+#See_you_Rides_buuton {
+    -fx-background-color: #85A9FF; /* Light blue color */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+
+    -fx-border-width: 2px;
+}
+
+/* Hover effect for the See You Rides button */
+#See_you_Rides_buuton:hover {
+    -fx-background-color: #5A6BE5; /* Darker blue on hover */
+}
+
+/* Bicycle Label */
+.bicycle-label {
+    -fx-font-size: 10px; /* Smaller font for the label */
+    -fx-text-fill: black;
+    -fx-alignment: center;
+}
+
+/* FlowPane Styling */
+.flow-pane {
+    -fx-hgap: 5px;
+    -fx-vgap: 5px;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+/* Close button hover effect */
+.station-bike-close-button:hover {
+    -fx-background-color: #ff4444;
+}
+
+.total-ride-label{
+    -fx-background-color: #5593db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+
+}
+.total-ride-label:hover{
+    -fx-background-color: rgb(27, 46, 68) ;
+
+}
