@@ -80,7 +80,6 @@ public class RidesController {
                 e.printStackTrace();
             }
         });
-
         request_button.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/user_side/request.fxml"));

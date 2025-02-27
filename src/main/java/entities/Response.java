@@ -1,7 +1,6 @@
 package entities;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
 public class Response {
     private int id_response;
@@ -18,15 +17,15 @@ public class Response {
 
     public Response(int id_response, Reclamation reclamation, String content, Timestamp date) {
         this.id_response = id_response;
+        this.reclamation = reclamation;
         this.content = content;
         this.date = date;
-        setReclamation(reclamation);
     }
 
     public Response(Reclamation reclamation, String content, Timestamp date) {
+        this.reclamation = reclamation;
         this.content = content;
         this.date = date;
-        setReclamation(reclamation);
     }
 
     public int getId_response() {
@@ -43,9 +42,6 @@ public class Response {
 
     public void setReclamation(Reclamation reclamation) {
         this.reclamation = reclamation;
-        if (reclamation != null && reclamation.getResponse() != this) {
-            reclamation.setResponse(this);
-        }
     }
 
     public String getContent() {
@@ -65,24 +61,10 @@ public class Response {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Response response)) return false;
-        return id_response == response.id_response &&
-               Objects.equals(content, response.content) &&
-               Objects.equals(date, response.date);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id_response, content, date);
-    }
-
-    @Override
     public String toString() {
         return "Response{" +
                 "id_response=" + id_response +
-                ", reclamation_id=" + (reclamation != null ? reclamation.getIdReclamation() : "null") +
+                ", reclamation=" + (reclamation != null ? reclamation.getIdReclamation() : "null") +
                 ", content='" + content + '\'' +
                 ", date=" + date +
                 '}';

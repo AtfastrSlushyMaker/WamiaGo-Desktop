@@ -1,0 +1,60 @@
+/* General styles */
+.root {
+    -fx-font-family: "Arial";
+    -fx-base: #dfe6e9;
+}
+
+/* ListView styles */
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b2bec3;
+    -fx-border-width: 1px;
+}
+
+.list-cell {
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b2bec3;
+    -fx-border-width: 0 0 1 0;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #74b9ff;
+    -fx-text-fill: white;
+}
+
+/* Button styles */
+.button {
+    -fx-background-color: #0984e3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+}
+
+.button:hover {
+    -fx-background-color: #74b9ff;
+}
+
+/* Dialog styles */
+.dialog-pane {
+    -fx-background-color: #ffffff;
+}
+
+.dialog-pane .label {
+    -fx-text-fill: #2d3436;
+}
+
+.dialog-pane .text-field, .dialog-pane .combo-box {
+    -fx-background-color: #dfe6e9;
+    -fx-border-color: #b2bec3;
+    -fx-border-width: 1px;
+}
+
+/* Alert styles */
+.alert {
+    -fx-background-color: #ffffff;
+}
+
+.alert .label {
+    -fx-text-fill: #2d3436;
+}

@@ -235,7 +235,7 @@ public class DashboardController {
                 e.printStackTrace();
             }
         });
-taxi_request_button.setOnAction(event -> openRequestForm());
+        taxi_request_button.setOnAction(event -> openRequestForm());
         rides_button.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/rides/rides.fxml"));
@@ -248,6 +248,8 @@ taxi_request_button.setOnAction(event -> openRequestForm());
                 e.printStackTrace();
             }
         });
+
+        booking_button.setOnAction(event -> navigateTo("/Annoucement/Front/announcements_client.fxml"));
 
         logout_button.setOnAction(event -> {
             SessionManager.getInstance().logout();
@@ -262,27 +264,27 @@ taxi_request_button.setOnAction(event -> openRequestForm());
                 e.printStackTrace();
             }
         });
-        reclamation_button.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ListReclamation.fxml"));
-                Parent homeRoot = loader.load();
-                Scene homeScene = new Scene(homeRoot);
-                Stage stage = (Stage) home_button.getScene().getWindow();
-                stage.setScene(homeScene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
-
+    private void navigateTo(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) rides_button.getScene().getWindow();
+            stage.setScene(scene);
+            pageNavigation(); // Réactiver les événements des boutons après le changement de scène
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void setupUserDropdownMenu() {
         ContextMenu userMenu = new ContextMenu();
         MenuItem profileItem = new MenuItem("Profile");
+        MenuItem announcementsItem = new MenuItem("My announcements");
         MenuItem driverSpaceItem = new MenuItem("Driver Space"); // Ajout du bouton
 
-        userMenu.getItems().addAll(profileItem, driverSpaceItem);
+        userMenu.getItems().addAll(profileItem, driverSpaceItem,announcementsItem);
 
-        // Action pour le profil
         profileItem.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.back/profile.fxml"));
@@ -303,6 +305,19 @@ taxi_request_button.setOnAction(event -> openRequestForm());
         driverSpaceItem.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/driver_side/request.fxml"));
+                Parent ridesRoot = loader.load();
+                Scene ridesScene = new Scene(ridesRoot);
+
+                Stage stage = (Stage) profile_button.getScene().getWindow();
+                stage.setScene(ridesScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        announcementsItem.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements.fxml"));
                 Parent ridesRoot = loader.load();
                 Scene ridesScene = new Scene(ridesRoot);
 

@@ -1,0 +1,78 @@
+.announcement-card {
+    -fx-background-color: #444;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #555;
+    -fx-border-width: 1px;
+}
+
+.select-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.reserve-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.close-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.view-reservations-button {
+    -fx-background-color: #4CAF50; /* Vert */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+}
+
+.view-reservations-button:hover {
+    -fx-background-color: #45a049; /* Vert plus foncé au survol */
+}
+
+.view-relocations-button {
+    -fx-background-color: #008CBA; /* Bleu */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+}
+
+.view-relocations-button:hover {
+    -fx-background-color: #0077a3; /* Bleu plus foncé au survol */
+}
+
+/* Style pour les boîtes de dialogue d'alerte */
+.custom-alert {
+    -fx-background-color: #f8d7da; /* Couleur de fond pour les erreurs */
+    -fx-border-color: #f5c6cb; /* Couleur de bordure */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+.custom-alert .label {
+    -fx-text-fill: #721c24; /* Couleur du texte */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.custom-alert .button {
+    -fx-background-color: #dc3545; /* Couleur du bouton */
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 3px;
+}
+
+.custom-alert .button:hover {
+    -fx-background-color: #c82333; /* Couleur du bouton au survol */
+}

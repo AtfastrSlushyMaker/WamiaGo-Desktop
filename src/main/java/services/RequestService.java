@@ -235,8 +235,28 @@ public class RequestService implements IService<Request> {
         return requests;
     }
 
+    public int countRequests() throws SQLException {
+        String query = "SELECT COUNT(*) FROM request"; // Replace 'requests' with your actual table name
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                return resultSet.getInt(1); // Get the count from the result set
+            }
+        }
+        return 0; // Return 0 if something goes wrong or no rows are found
+    }
 
-
+    public int countRequestsByStatus(Request.RequestStatus status) throws SQLException {
+        String query = "SELECT COUNT(*) FROM requests WHERE status = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, status.name());  // Set the enum as a string
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);  // Return the count
+            }
+        }
+        return 0;
+    }
 
 
 

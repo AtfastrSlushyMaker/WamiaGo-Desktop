@@ -1,7 +1,7 @@
 package entities;
 
 public class Driver{
-    User user;
+    private User user;
     private int idDriver;
     private String permitNumber;
     private DriverRole driverRole;
