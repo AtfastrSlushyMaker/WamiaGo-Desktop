@@ -169,7 +169,7 @@
                             </VBox>
                         </graphic>
                     </Button>
-                    <Button fx:id="btnAdd" style="-fx-background-color: transparent;">
+                    <Button fx:id="btnAdd" onAction="#handleAddButton"  style="-fx-background-color: transparent;">
                         <graphic>
                             <VBox alignment="CENTER">
                                 <ImageView fitHeight="35.0" fitWidth="35.0">
