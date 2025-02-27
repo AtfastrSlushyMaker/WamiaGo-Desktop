@@ -235,7 +235,7 @@ public class DashboardController {
                 e.printStackTrace();
             }
         });
-taxi_request_button.setOnAction(event -> openRequestForm());
+        taxi_request_button.setOnAction(event -> openRequestForm());
         rides_button.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/rides/rides.fxml"));
