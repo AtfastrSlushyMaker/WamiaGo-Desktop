@@ -1,10 +1,22 @@
 package controllers.taxi.userside.ride;
-import controllers.taxi.chat.ChatController;
-import entities.Ride;
-import entities.User;
+
+
+
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentCreateParams;
+
+import controllers.Home;
+import entities.*;
+import javafx.application.HostServices;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -17,12 +29,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import services.PaymentService;
 import services.RideService;
 import utils.SessionManager;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 
+
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class RideController {
     @FXML
@@ -49,6 +70,9 @@ public class RideController {
     private Button See_you_Rides_button;
 
     private final RideService rideService = new RideService();
+
+    private final PaymentService paymentService = new PaymentService("67c0e6eedeff4671bb44d983:I2Cgjpot0lmfhlhMehyxRNd5u8RsZm");
+
 
     @FXML
     public void initialize() {
@@ -163,12 +187,13 @@ public class RideController {
         // Create buttons
         Button selectButton = createSelectButtonForRide(ride);
         Button cancelButton = createCancelButton(ride, rideCard);
-        Button chatButton = createChatButton(ride);
+        Button payButton = createPayButton(ride);
+
 
         // Place buttons in an HBox to align them horizontally
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, cancelButton,chatButton);
+        buttonContainer.getChildren().addAll(selectButton, cancelButton,payButton);
 
         rideCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
 
@@ -298,36 +323,87 @@ public class RideController {
 
         return deleteButton;
     }
-    private Button createChatButton(Ride ride) {
-        Button chatButton = new Button("Chat");
-        chatButton.getStyleClass().add("ride-button-chat");
-        chatButton.setOnAction(event -> openChatWindow(ride));
-        return chatButton;
+
+    private Button createPayButton(Ride ride) {
+        Button payButton = new Button("Payer");
+        payButton.getStyleClass().add("ride-button-pay");
+
+        payButton.setOnAction(event -> {
+            // Appeler la méthode pour lancer le paiement en passant l'objet Ride
+            handleConfirmride(ride);
+        });
+
+        return payButton;
     }
-    private void openChatWindow(Ride ride) {
+
+    private void handleConfirmride(Ride ride) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/chat/chat.fxml"));
-            Parent chatRoot = loader.load();
+            // 1. Créer une demande de paiement
+            InitiatePaymentRequest paymentRequest = new InitiatePaymentRequest(
+                    "67c0e6eedeff4671bb44d98b", // Remplacer par l'ID de ton wallet
+                    ride.getPrice() * 1000 // Conversion de DT en millimes
+            );
 
-            ChatController chatController = loader.getController();
-            chatController.initChat(ride, SessionManager.getInstance().getUser()); // Get user from session manager
+            // 2. Initialiser le paiement
+            InitiatePaymentResponse paymentResponse = paymentService.initiatePayment(paymentRequest);
 
-            Stage chatStage = new Stage();
-            chatStage.setTitle("Chat - Ride ID: " + ride.getIdRide());
-            chatStage.setScene(new Scene(chatRoot));
-            chatStage.show();
+            // 3. Ouvrir la passerelle de paiement
+            if (paymentResponse != null && paymentResponse.getPayUrl() != null) {
+                openUrlInBrowser(paymentResponse.getPayUrl());
+            } else {
+                showErrorAlert("Erreur", "L'URL de paiement est invalide.");
+            }
+
         } catch (IOException e) {
-            e.printStackTrace();
+            showErrorAlert("Erreur", "Erreur réseau lors de l'ouverture du lien de paiement : " + e.getMessage());
+        } catch (Exception e) {
+            showErrorAlert("Erreur", "Erreur inconnue : " + e.getMessage());
+        }
+    }
+
+    // Méthode pour obtenir les services de l'hôte (utilisé pour ouvrir le lien dans le navigateur)
+    private HostServices getHostServices() {
+        return Home.getAppHostServices();
+    }
+
+    // Méthode pour afficher une alerte d'erreur
+    public void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    // Méthode pour afficher une alerte d'information
+    public void showInfoAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    // Méthode pour ouvrir une URL dans le navigateur
+    private void openUrlInBrowser(String url) {
+        try {
+            URI uri = new URI(url);
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                desktop.browse(uri);  // Ouvre l'URL dans le navigateur par défaut
+            } else {
+                showErrorAlert("Erreur", "L'ouverture du lien dans le navigateur n'est pas supportée sur ce système.");
+            }
+        } catch (Exception e) {
+            showErrorAlert("Erreur", "Impossible d'ouvrir le lien : " + e.getMessage());
         }
     }
 
 
 
-
-
-
-
-
-
-
 }
+
+
+
+
+

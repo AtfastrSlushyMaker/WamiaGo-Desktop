@@ -1,6 +1,7 @@
 package controllers;
 
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,7 +10,8 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 public class Home extends Application {
-
+    private static HostServices appHostServices;
+    public static HostServices getAppHostServices(){return appHostServices;}
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/user.front/loginSignup.fxml"));

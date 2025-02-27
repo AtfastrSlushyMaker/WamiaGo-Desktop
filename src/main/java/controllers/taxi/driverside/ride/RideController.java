@@ -1,5 +1,5 @@
 package controllers.taxi.driverside.ride;
-import controllers.taxi.chat.ChatController;
+
 import entities.Driver;
 import entities.Request;
 import entities.User;
@@ -203,12 +203,12 @@ public class RideController {
         Button selectButton = createSelectButtonForRide(ride);
         Button cancelButton = createCancelButton(ride, rideCard);
         Button updateButton = createUpdateButton(ride);
-        Button chatButton = createChatButton(ride);
+
 
         // Place buttons in an HBox to align them horizontally
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, cancelButton, updateButton,chatButton);  // Add updateButton here
+        buttonContainer.getChildren().addAll(selectButton, cancelButton, updateButton);  // Add updateButton here
 
         rideCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
 
@@ -408,28 +408,6 @@ public class RideController {
         dialogStage.showAndWait();
     }
 
-    private Button createChatButton(Ride ride) {
-        Button chatButton = new Button("Chat");
-        chatButton.getStyleClass().add("ride-button-chat");
-        chatButton.setOnAction(event -> openChatWindow(ride));
-        return chatButton;
-    }
-    private void openChatWindow(Ride ride) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/chat/chat.fxml"));
-            Parent chatRoot = loader.load();
-
-            ChatController chatController = loader.getController();
-            chatController.initChat(ride, SessionManager.getInstance().getUser()); // Get user from session manager
-
-            Stage chatStage = new Stage();
-            chatStage.setTitle("Chat - Ride ID: " + ride.getIdRide());
-            chatStage.setScene(new Scene(chatRoot));
-            chatStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 
