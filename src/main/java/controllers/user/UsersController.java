@@ -98,8 +98,8 @@ public class UsersController implements Initializable {
         HBox actionButtons = new HBox(5);
         actionButtons.setAlignment(Pos.TOP_RIGHT);
 
-        Button editButton = createIconButton("../images/icons/edit.png", "#4CAF50", event -> openEditModal(user));
-        Button deleteButton = createIconButton("../images/icons/delete.png", "#f44336", event -> deleteUser(user));
+        Button editButton = createIconButton("/images/icons/edit.png", "#4CAF50", event -> openEditModal(user));
+        Button deleteButton = createIconButton("/images/icons/delete.png", "#f44336", event -> deleteUser(user));
 
         actionButtons.getChildren().addAll(editButton, deleteButton);
 
