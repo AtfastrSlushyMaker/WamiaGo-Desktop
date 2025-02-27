@@ -7,7 +7,10 @@
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/bicycle/back/bicycleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/bicycle/back/bicycleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/back/staionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/back/staionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bicycle.back/bicycle.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bicycle.back/bicycle.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/back/stations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/back/stations.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
     "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Relocation-management",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Projects/WamiaGo_desktop/src/main/resources/images/icons",
@@ -127,7 +130,7 @@
     </configuration>
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="WamiaGo" />
+      <module name="Pidev3a11" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <extension name="coverage">
         <pattern>
