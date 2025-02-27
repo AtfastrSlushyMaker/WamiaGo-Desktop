@@ -28,14 +28,14 @@ public class RelocationService implements IService<Relocation> {
         String sql = "INSERT INTO relocation (id_reservation, date, status, cost) VALUES (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, relocation.getReservation().getIdReservation());
-            preparedStatement.setTimestamp(2, relocation.getDate());
+            preparedStatement.setObject(2, relocation.getDate());
             preparedStatement.setBoolean(3, relocation.isStatus());
             preparedStatement.setFloat(4, relocation.getCost());
 
             preparedStatement.executeUpdate();
             System.out.println("Relocation ajoutée avec succès.");
-            return true;
         }
+        return false;
     }
 
     @Override
@@ -87,49 +87,6 @@ public class RelocationService implements IService<Relocation> {
             relocation.setStatus(rs.getBoolean("status"));
             relocation.setCost(rs.getFloat("cost"));
             relocations.add(relocation);
-        }
-        return relocations;
-    }
-
-    public List<Relocation> getRelocationsByDriverId(int driverId) throws SQLException {
-        List<Relocation> relocations = new ArrayList<>();
-        String sql = "SELECT r.* FROM relocation r " +
-                "JOIN reservation res ON r.id_reservation = res.id_reservation " +
-                "JOIN announcement a ON res.id_announcement = a.id_announcement " +
-                "WHERE a.id_transporter = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, driverId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                Relocation relocation = new Relocation();
-                relocation.setIdRelocation(rs.getInt("id_relocation"));
-                relocation.setReservation(reservationService.getById(rs.getInt("id_reservation")));
-                relocation.setDate(rs.getTimestamp("date"));
-                relocation.setStatus(rs.getBoolean("status"));
-                relocation.setCost(rs.getFloat("cost"));
-                relocations.add(relocation);
-            }
-        }
-        return relocations;
-    }
-
-    public List<Relocation> getRelocationsByClientId(int clientId) throws SQLException {
-        List<Relocation> relocations = new ArrayList<>();
-        String sql = "SELECT r.* FROM relocation r " +
-                "JOIN reservation res ON r.id_reservation = res.id_reservation " +
-                "WHERE res.id_user = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, clientId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                Relocation relocation = new Relocation();
-                relocation.setIdRelocation(rs.getInt("id_relocation"));
-                relocation.setReservation(reservationService.getById(rs.getInt("id_reservation")));
-                relocation.setDate(rs.getTimestamp("date"));
-                relocation.setStatus(rs.getBoolean("status"));
-                relocation.setCost(rs.getFloat("cost"));
-                relocations.add(relocation);
-            }
         }
         return relocations;
     }

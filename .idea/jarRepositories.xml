@@ -27,11 +27,6 @@
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="cmusphinx-repo" />
-      <option name="name" value="cmusphinx-repo" />
-      <option name="url" value="https://oss.sonatype.org/content/repositories/snapshots" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="jcenter" />
       <option name="name" value="jcenter" />
       <option name="url" value="https://jcenter.bintray.com/" />

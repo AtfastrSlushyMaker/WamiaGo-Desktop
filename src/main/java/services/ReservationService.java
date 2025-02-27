@@ -97,34 +97,6 @@ public class ReservationService implements IService<Reservation> {
         }
         return reservations;
     }
-    public List<Reservation> getReservationsByDriverId(int driverId) throws SQLException {
-        List<Reservation> reservations = new ArrayList<>();
-        String sql = "SELECT r.* FROM reservation r " +
-                "JOIN announcement a ON r.id_announcement = a.id_announcement " +
-                "WHERE a.id_transporter = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, driverId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                reservations.add(mapResultSetToReservation(rs));
-            }
-        }
-        return reservations;
-    }
-
-    public List<Reservation> getReservationsByClientId(int clientId) throws SQLException {
-        List<Reservation> reservations = new ArrayList<>();
-        String sql = "SELECT * FROM reservation WHERE id_user = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, clientId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                reservations.add(mapResultSetToReservation(rs));
-            }
-        }
-        return reservations;
-    }
-
 
     public Reservation getById(int id) throws SQLException {
         String sql = "SELECT * FROM reservation WHERE id_reservation = ?";

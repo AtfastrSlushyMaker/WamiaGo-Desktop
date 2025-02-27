@@ -26,11 +26,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class viewAnnouncementAdminController {
+public class viewAnnouncementController {
     @FXML
     private Button bookings_button, history_button, home_button, logout_button, rides_button;
     @FXML
-    private AnchorPane root;
+    private HBox root;
     @FXML
     private FlowPane announcementFlowPane;
 
@@ -38,20 +38,17 @@ public class viewAnnouncementAdminController {
     private final LocationService locationService = new LocationService();
     private final ReservationService reservationService = new ReservationService();
 
-    public viewAnnouncementAdminController(AnchorPane root) {
-        this.root = root;
-    }
-
-
-
-
     @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("Annoucement/Front/announcementclient.css").toExternalForm());
         loadAnnouncementsIntoFlowPane();
-
+        setupNavigation();
     }
 
+    private void setupNavigation() {
+        home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
+        rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
+    }
 
     private void loadScene(String fxmlPath) {
         try {

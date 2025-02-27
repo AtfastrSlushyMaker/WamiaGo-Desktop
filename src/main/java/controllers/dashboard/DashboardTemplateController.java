@@ -48,6 +48,15 @@
                 AnchorPane requestsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
                 //5
                 AnchorPane ridesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")));
+                //6
+                AnchorPane responsesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Response/back/responses.fxml")));
+                //7
+                AnchorPane announcementsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Annoucement/Front/announcements.fxml")));    ;
+                //8
+               AnchorPane reservationsPanel=FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Reservation/Front/Reservations.fxml")));;
+                //9
+                AnchorPane relocationsPanel= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Relocation/Front/Relocations.fxml")));
+
                 panels.addAll(Arrays.asList(
                         usersPanel,
                         bikesPanel,

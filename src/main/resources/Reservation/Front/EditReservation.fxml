@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Announcement.AddAnnouncementController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@../../Annoucement/Front/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Reservation.EditReservationController">
 
     <children>
 
@@ -27,11 +27,11 @@
 
             <children>
 
-                <AnchorPane fx:id="side_ankerpane" prefHeight="827.0" prefWidth="254.0" styleClass="navbar" stylesheets="@styles.css">
+                <AnchorPane fx:id="side_ankerpane" prefHeight="827.0" prefWidth="254.0" styleClass="navbar" stylesheets="@../../Annoucement/Front/styles.css">
 
                     <children>
 
-                        <Button fx:id="btn_workbench1" layoutX="18.0" layoutY="258.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="Home" textFill="#c6b6b6">
+                        <Button fx:id="btn_workbench1" layoutX="18.0" layoutY="258.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@../../Annoucement/Front/styles.css" text="Home" textFill="#c6b6b6">
 
                             <font>
 
@@ -41,7 +41,7 @@
 
                         </Button>
 
-                        <Button fx:id="btn_workbench11" layoutX="18.0" layoutY="361.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="Rides " textFill="#c6b6b6">
+                        <Button fx:id="btn_workbench11" layoutX="18.0" layoutY="361.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@../../Annoucement/Front/styles.css" text="Rides " textFill="#c6b6b6">
 
                             <font>
 
@@ -51,7 +51,7 @@
 
                         </Button>
 
-                        <Button fx:id="btn_workbench12" layoutX="18.0" layoutY="471.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="Bookings " textFill="#c6b6b6">
+                        <Button fx:id="btn_workbench12" layoutX="18.0" layoutY="471.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@../../Annoucement/Front/styles.css" text="Bookings " textFill="#c6b6b6">
 
                             <font>
 
@@ -60,12 +60,12 @@
                             </font>
 
                         </Button>
-                        <Button fx:id="btn_workbench121" layoutX="18.0" layoutY="572.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="History" textFill="#c6b6b6">
+                        <Button fx:id="btn_workbench121" layoutX="18.0" layoutY="572.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@../../Annoucement/Front/styles.css" text="History" textFill="#c6b6b6">
                             <font>
                                 <Font name="Century Gothic Bold" size="13.0" />
                             </font>
                         </Button>
-                        <Button id="logout-button" fx:id="btn_workbench1211" layoutX="73.0" layoutY="711.0" prefHeight="56.0" prefWidth="160.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="Logout" textFill="#c6b6b6">
+                        <Button id="logout-button" fx:id="btn_workbench1211" layoutX="73.0" layoutY="711.0" prefHeight="56.0" prefWidth="160.0" styleClass="navbar_buttons" stylesheets="@../../Annoucement/Front/styles.css" text="Logout" textFill="#c6b6b6">
                             <font>
                                 <Font name="Century Gothic Bold" size="13.0" />
                             </font>
@@ -74,7 +74,7 @@
                             <image>
                                 <Image url="@../../images/icons/logout.png" />
                             </image></ImageView>
-                        <Pane fx:id="pane_1121" layoutX="19.0" layoutY="47.0" prefHeight="140.0" prefWidth="248.0" styleClass="logo-pane" stylesheets="@styles.css">
+                        <Pane fx:id="pane_1121" layoutX="19.0" layoutY="47.0" prefHeight="140.0" prefWidth="248.0" styleClass="logo-pane" stylesheets="@../../Annoucement/Front/styles.css">
                             <children>
                                 <ImageView id="logo" fitHeight="118.0" fitWidth="176.0" layoutX="40.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -110,40 +110,45 @@
 
         </VBox>
 
-        <Pane prefHeight="827.0" prefWidth="1120.0">
+        <Pane prefHeight="827.0" prefWidth="1143.0">
             <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
-            <!-- Partie droite : Formulaire d'ajout d'annonce -->
-
-            <VBox fx:id="contentBox" alignment="TOP_CENTER" layoutY="89.0" prefHeight="671.0" prefWidth="1093.0" spacing="20" styleClass="content-box">
+            <!-- Partie droite : Formulaire de modification de réservation -->
+            <VBox fx:id="contentBox" alignment="TOP_CENTER" layoutY="89.0" prefHeight="738.0" prefWidth="1093.0" spacing="20" styleClass="content-box">
                 <!-- En-tête avec image -->
-                <HBox alignment="CENTER" prefHeight="74.0" prefWidth="944.0" spacing="10" styleClass="header">
-                    <Text styleClass="title-label" text="Announcement Details" />
+                <HBox alignment="CENTER" prefHeight="82.0" prefWidth="1102.0" spacing="10" styleClass="header">
+                    <ImageView fitHeight="50" fitWidth="50">
+                        <Image url="@../../images/icons/reservation_icon.png" />
+                    </ImageView>
+                    <Text styleClass="title-label" text="Modifier la Réservation" />
                 </HBox>
-                <Text fontSmoothingType="LCD" styleClass="subtitle-label" text="Customize the announcement to ensure clarity and engagement across platforms." wrappingWidth="697.1683225631714">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-                <ImageView fitHeight="188.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../images/icons/déménagement.png" />
-                    </image>
-                </ImageView>
-
 
                 <!-- Conteneur principal -->
-                <GridPane alignment="CENTER" hgap="15.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="281.0" prefWidth="821.0" vgap="15">
-                    <Label styleClass="form-label" text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <TextField fx:id="titleField" prefHeight="37.0" prefWidth="532.0" promptText="Enter the title here..." styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <GridPane alignment="CENTER" hgap="15" vgap="15">
+                    <!-- Champ pour la date -->
+                    <Label styleClass="form-label" text="Date :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <DatePicker fx:id="datePicker" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                    <Label styleClass="form-label" text="Content:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <TextArea fx:id="contentField" prefWidth="299.0" promptText="Write your announcement here..." styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <!-- Champ pour le statut -->
+                    <Label styleClass="form-label" text="Statut :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="statusComboBox" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                    <Label styleClass="form-label" text="Zone:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                    <ComboBox fx:id="zoneComboBox" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <!-- Champ pour la description -->
+                    <Label styleClass="form-label" text="Description :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <TextArea fx:id="descriptionField" promptText="Entrez la description ici..." styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                    <Label styleClass="form-label" text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                    <CheckBox fx:id="statusCheckBox" styleClass="form-field" text="Active" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <!-- Champ pour le lieu de départ -->
+                    <Label styleClass="form-label" text="Lieu de départ :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <TextField fx:id="startLocationField" editable="false" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                    <!-- Champ pour le lieu d'arrivée -->
+                    <Label styleClass="form-label" text="Lieu d'arrivée :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <TextField fx:id="endLocationField" editable="false" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                    <!-- Champ pour l'annonce associée -->
+                    <Label styleClass="form-label" text="Annonce associée :" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                    <TextField fx:id="announcementField" editable="false" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                    <!-- Contraintes de colonnes et de lignes -->
                     <columnConstraints>
                         <ColumnConstraints />
                         <ColumnConstraints />
@@ -153,12 +158,14 @@
                         <RowConstraints />
                         <RowConstraints />
                         <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
                     </rowConstraints>
                 </GridPane>
 
                 <!-- Boutons avec icônes -->
                 <HBox alignment="CENTER" prefHeight="80.0" prefWidth="424.0" spacing="20">
-                    <Button fx:id="submitButton" onAction="#handleSubmitButtonAction" styleClass="submit-button" text="Submit">
+                    <Button fx:id="submitButton" onAction="#handleSubmitButtonAction" styleClass="submit-button" text="Enregistrer">
                         <graphic>
                             <ImageView fitHeight="20" fitWidth="20">
                                 <Image url="@../../images/icons/check_icon.png" />
@@ -166,16 +173,15 @@
                         </graphic>
                     </Button>
 
-                    <Button fx:id="cancelButton" onAction="#handleCancelButtonAction" styleClass="cancel-button" text="Cancel">
+                    <Button fx:id="cancelButton" onAction="#handleCancelButtonAction" styleClass="cancel-button" text="Annuler">
                         <graphic>
                             <ImageView fitHeight="20" fitWidth="20">
-                                <Image url="@../../images/icons/square_14034319.png" />
+                                <Image url="@../../images/icons/cancel_icon.png" />
                             </ImageView>
                         </graphic>
                     </Button>
                 </HBox>
             </VBox>
-
         </Pane>
 
     </children>

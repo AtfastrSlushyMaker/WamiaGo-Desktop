@@ -14,11 +14,8 @@ import services.AnnouncementService;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Set;
-
 import org.controlsfx.control.Notifications;
 import services.DriverService;
-import utils.BadWordFilter;
 import utils.SessionManager;
 
 public class AddAnnouncementController {
@@ -95,11 +92,6 @@ public class AddAnnouncementController {
             String content = contentField.getText();
             Announcement.Zone zone = zoneComboBox.getValue();
             boolean status = statusCheckBox.isSelected();
-
-            Set<String> badWords = BadWordFilter.loadBadWords("C:\\Users\\BAZINFO\\Desktop\\3A\\S2\\PIDEV\\WamiaGo-Desktop\\src\\main\\resources\\bad_words.csv");
-            // Filter bad words from the title and content
-            title = BadWordFilter.filterBadWords(title, badWords);
-            content = BadWordFilter.filterBadWords(content, badWords);
 
             // Vérifier que tous les champs sont remplis
             if (title.isEmpty() || content.isEmpty() || zone == null) {
