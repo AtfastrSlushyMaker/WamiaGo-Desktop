@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,13 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.TextField?>
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Announcement.AnnouncementClientController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Announcement.AnnouncementClientController">
     <stylesheets>
         <URL value="@styles.css" />
         <URL value="@announcementsStyle.css" />
@@ -116,45 +114,54 @@
                 <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
 
                 <!-- Label pour les annonces disponibles -->
-                <Label id="available_announcements_label" fx:id="available_announcements_label" layoutX="411.0" layoutY="115.0" prefHeight="50.0" prefWidth="272.0" stylesheets="@announcement.css" text="Available Announcements" textFill="#323131">
+                <Label id="available_announcements_label" fx:id="available_announcements_label" layoutX="444.0" layoutY="115.0" prefHeight="50.0" prefWidth="272.0" stylesheets="@announcement.css" text="Available Announcements" textFill="#323131">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
                 </Label>
 
-                <!-- ComboBox pour sélectionner la zone -->
-                <ComboBox fx:id="zoneComboBox" layoutX="73.0" layoutY="90.0" prefWidth="200.0" promptText="Select Zone" />
-
-                <!-- Bouton pour lancer la recherche -->
-                <Button fx:id="searchButton" layoutX="283.0" layoutY="90.0" text="Search" onAction="#handleSearchButtonAction" />
-
-                <!-- DatePicker pour filtrer par date -->
-                <DatePicker fx:id="datePicker" layoutX="73.0" layoutY="60.0" prefWidth="200.0" promptText="Select Date" />
-
-                <!-- Bouton pour appliquer le filtre par date -->
-                <Button fx:id="filterByDateButton" layoutX="283.0" layoutY="60.0" text="Filter by Date" onAction="#handleFilterByDateButtonAction" />
-
-                <!-- Champ de texte pour la recherche par mot-clé -->
-                <TextField fx:id="keywordTextField" layoutX="73.0" layoutY="30.0" prefWidth="200.0" promptText="Enter keyword" />
-
-                <!-- Bouton pour lancer la recherche -->
-                <Button fx:id="searchByKeywordButton" layoutX="283.0" layoutY="30.0" text="Search by Keyword" onAction="#handleSearchByKeywordButtonAction" />
-
-
                 <!-- ListView pour afficher les annonces -->
-                <ListView fx:id="announcementListView" layoutX="73.0" layoutY="131.0" prefHeight="635.0" prefWidth="540.0" styleClass="announcements-list" />
+                <ListView fx:id="announcementListView" layoutX="73.0" layoutY="245.0" prefHeight="562.0" prefWidth="997.0">
+                    <styleClass>
+                        <String fx:value="announcements-list" />
+                        <String fx:value="scroll-pane" />
+                    </styleClass></ListView>
+                <Button fx:id="btnclient" layoutX="101.0" layoutY="161.0" onAction="#btnclient" style="-fx-background-color: F5F7FB;">
+                    <graphic>
+                        <VBox alignment="CENTER">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="35.0">
+                                    <image>
+                                        <Image url="@../../images/icons/reservation.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-text-fill: #2d3436;" text="See Reservations" />
+                            </children>
+                        </VBox>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnAddRelocationClient" layoutX="862.0" layoutY="156.0" onAction="#btnAddRelocationClient" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <VBox alignment="CENTER">
+                            <children>
+                                <ImageView fitHeight="45.0" fitWidth="45.0">
+                                    <image>
+                                        <Image url="@../../images/icons/relocation.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-text-fill: #2d3436;" text="See Relocations" />
+                            </children>
+                        </VBox>
+                    </graphic>
+                </Button>
+                <ImageView fitHeight="32" fitWidth="32" layoutX="399.0" layoutY="124.0">
+                    <image>
+                        <Image url="@../../images/icons/annonce.png" />
+                    </image>
+                </ImageView>
             </children>
-            <Button fx:id="btnclient" layoutX="855.0" layoutY="178.0" onAction="#btnclient" prefHeight="53.0" prefWidth="183.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="Reservations" textFill="#c6b6b6">
-                <font>
-                    <Font name="Century Gothic Bold" size="13.0" />
-                </font>
-            </Button>
-            <Button fx:id="btnAddRelocationClient" layoutX="855.0" layoutY="251.0" onAction="#btnAddRelocationClient" prefHeight="53.0" prefWidth="183.0" styleClass="navbar_buttons" stylesheets="@styles.css" text="Relocations" textFill="#c6b6b6">
-                <font>
-                    <Font name="Century Gothic Bold" size="13.0" />
-                </font>
-            </Button>
         </Pane>
+
 
     </children>
 

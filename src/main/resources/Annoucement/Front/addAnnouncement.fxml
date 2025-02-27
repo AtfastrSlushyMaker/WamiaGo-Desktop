@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Announcement.AddAnnouncementController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Announcement.AddAnnouncementController">
 
     <children>
 
@@ -120,10 +120,10 @@
                     <Text styleClass="title-label" text="Announcement Details" />
                 </HBox>
                 <Text fontSmoothingType="LCD" styleClass="subtitle-label" text="Customize the announcement to ensure clarity and engagement across platforms." wrappingWidth="697.1683225631714">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Text>
                 <ImageView fitHeight="188.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../images/icons/déménagement.png" />

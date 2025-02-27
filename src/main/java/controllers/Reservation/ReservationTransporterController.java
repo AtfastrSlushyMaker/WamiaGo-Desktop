@@ -2,7 +2,10 @@ package controllers.Reservation;
 
 import entities.Driver;
 import entities.Reservation;
+import entities.Relocation;
 import entities.User;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -12,7 +15,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import services.DriverService;
+import services.RelocationService;
 import services.ReservationService;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -22,6 +28,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class ReservationTransporterController {
@@ -30,7 +37,7 @@ public class ReservationTransporterController {
     @FXML
     private HBox root;
     @FXML
-    private FlowPane stationFlowPane;
+    private GridPane stationGridPane;
 
     private Driver currentDriver;
     private User loggedInUser = SessionManager.getInstance().getUser();
@@ -40,9 +47,18 @@ public class ReservationTransporterController {
     @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/Reservation/front/reservation.css").toExternalForm());
-        loadStationsIntoFlowPane();
         setupNavigation();
 
+        // Récupérer le conducteur actuel en fonction de l'utilisateur connecté
+        DriverService driverService = new DriverService();
+        try {
+            currentDriver = driverService.getById(loggedInUser.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Charger les réservations du conducteur connecté
+        loadStationsIntoGridPane();
     }
 
     private void setupNavigation() {
@@ -61,11 +77,26 @@ public class ReservationTransporterController {
         }
     }
 
-    private void loadStationsIntoFlowPane() {
+    private void loadStationsIntoGridPane() {
+        stationGridPane.getChildren().clear();
+
+        int column = 0;
+        int row = 0;
+
         try {
-            for (Reservation reservation : reservationService.read()) {
+            // Récupérer les réservations du conducteur connecté
+            List<Reservation> reservations = reservationService.getReservationsByDriverId(currentDriver.getIdDriver());
+
+            // Ajouter chaque réservation à l'interface utilisateur
+            for (Reservation reservation : reservations) {
                 VBox stationCard = createStationCard(reservation);
-                stationFlowPane.getChildren().add(stationCard);
+                stationGridPane.add(stationCard, column, row);
+
+                column++;
+                if (column == 3) { // Adjust to 3 cards per row
+                    column = 0;
+                    row++;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,30 +105,33 @@ public class ReservationTransporterController {
 
     private VBox createStationCard(Reservation reservation) {
         VBox stationCard = new VBox(10);
-        stationCard.setPadding(new Insets(10));
+        stationCard.setPadding(new Insets(15));
         stationCard.getStyleClass().add("station-card");
         stationCard.setAlignment(Pos.CENTER);
+        stationCard.setSpacing(8);
 
+        // Image and title
         HBox imageAndTextBox = createImageAndTextBox(reservation);
 
-        Label localDate = new Label("Date: " + reservation.getDate());
-        Label status = new Label("Status: " + reservation.getStatus());
-        Label description = new Label("Description: " + reservation.getDescription());
-        Label startLocation = new Label("Start: " + reservation.getStartLocation().getAddress());
-        Label endLocation = new Label("End: " + reservation.getEndLocation().getAddress());
+        // Labels for details
+        Label dateLabel = new Label("Date: " + reservation.getDate());
+        Label statusLabel = new Label("Status: " + reservation.getStatus());
+        Label descriptionLabel = new Label("Description: " + reservation.getDescription());
+        Label startLocationLabel = new Label("Start: " + reservation.getStartLocation().getAddress());
+        Label endLocationLabel = new Label("End: " + reservation.getEndLocation().getAddress());
 
-        Button selectButton = createSelectButton(reservation);
+        // Buttons with icons
+        Button selectButton = createIconButton("/images/icons/eye.png", event -> openStationDetails(reservation));
+        Button acceptButton = createIconButton("/images/icons/check.png", event -> handleAccept(reservation));
+        Button refuseButton = createIconButton("/images/icons/refuse.png", event -> handleRefuse(reservation));
 
-        Button acceptButton = new Button("Accept");
-        acceptButton.setOnAction(e -> handleAccept(reservation));
-
-        Button refuseButton = new Button("Refuse");
-        refuseButton.setOnAction(e -> handleRefuse(reservation));
-
-        HBox buttonBox = new HBox(10, acceptButton, refuseButton);
+        // Button container: Select next to Edit, Delete aligned
+        HBox buttonBox = new HBox(10, selectButton, acceptButton, refuseButton);
         buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.setSpacing(10);
 
-        stationCard.getChildren().addAll(imageAndTextBox, localDate, status, description, startLocation, endLocation, selectButton, buttonBox);
+        // Add elements to card
+        stationCard.getChildren().addAll(imageAndTextBox, dateLabel, statusLabel, descriptionLabel, startLocationLabel, endLocationLabel, buttonBox);
 
         // Désactiver les boutons si la réservation est déjà traitée
         if (reservation.getStatus() == Reservation.Status.CANCELLED || reservation.getStatus() == Reservation.Status.COMPLETED) {
@@ -120,68 +154,80 @@ public class ReservationTransporterController {
         return stationCard;
     }
 
+    private Button createIconButton(String imagePath, EventHandler<ActionEvent> eventHandler) {
+        ImageView icon = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
+        icon.setFitWidth(20); // Adjust icon size
+        icon.setFitHeight(20);
+
+        Button button = new Button();
+        button.setGraphic(icon);
+        button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent; -fx-cursor: hand;");
+
+        button.setOnAction(eventHandler);
+        return button;
+    }
+
     private HBox createImageAndTextBox(Reservation reservation) {
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);
 
-        ImageView stationImage = new ImageView(new Image(getClass().getResource("/images/icons/public-transport_3061677.png").toExternalForm()));
+        ImageView stationImage = new ImageView(new Image(getClass().getResource("/images/icons/date.png").toExternalForm()));
         stationImage.setFitWidth(50);
         stationImage.setFitHeight(50);
 
         Text nameText = new Text(reservation.getAnnouncement().getTitle());
         nameText.setWrappingWidth(180);
-        nameText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #FFFFFF;");
+        nameText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #2e2e2e;");
 
         HBox.setHgrow(nameText, Priority.ALWAYS);
         hbox.getChildren().addAll(stationImage, nameText);
         return hbox;
     }
 
-    private Button createSelectButton(Reservation reservation) {
-        Button selectButton = new Button("Select");
-        selectButton.getStyleClass().add("station-button");
-        selectButton.setOnAction(e -> openStationDetails(reservation));
-        return selectButton;
-    }
-
     private void openStationDetails(Reservation reservation) {
         Stage modalStage = new Stage();
-        modalStage.setTitle(reservation.getAnnouncement().getTitle());
+        modalStage.setTitle("Détails");
+        modalStage.initModality(Modality.APPLICATION_MODAL);
 
         StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
+        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6);");
 
-        VBox modalLayout = new VBox(10);
+        VBox modalLayout = new VBox(15);
         modalLayout.setPadding(new Insets(20));
-        modalLayout.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px;");
+        modalLayout.setAlignment(Pos.CENTER_LEFT);
+        modalLayout.setStyle("-fx-background-color: white; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);");
 
-        Label titleLabel = new Label("Detail for: " + reservation.getAnnouncement().getTitle());
-        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
+        Label title = new Label(reservation.getAnnouncement().getTitle());
+        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;");
 
-        Label localDate = new Label("Date: " + reservation.getDate());
-        localDate.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
+        // Load icons
+        ImageView dateIcon = createIcon("/images/icons/date.png");
+        ImageView statusIcon = createIcon(reservation.getStatus().equals("Completed") ?
+                "/images/icons/check.png" : "/images/icons/pending.png");
+        ImageView descriptionIcon = createIcon("/images/icons/description.png");
+        ImageView startIcon = createIcon("/images/icons/place.png");
+        ImageView endIcon = createIcon("/images/icons/place.png");
 
-        Label status = new Label("Status: " + reservation.getStatus());
-        status.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        Label description = new Label("Description: " + reservation.getDescription());
-        description.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        Label startLocation = new Label("Start: " + reservation.getStartLocation().getAddress());
-        startLocation.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        Label endLocation = new Label("End: " + reservation.getEndLocation().getAddress());
-        endLocation.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;");
+        // Labels with icons
+        HBox dateBox = createLabeledIconBox(dateIcon, "Date: " + reservation.getDate());
+        HBox statusBox = createLabeledIconBox(statusIcon, "Status: " + reservation.getStatus());
+        HBox descriptionBox = createLabeledIconBox(descriptionIcon, "Description: " + reservation.getDescription());
+        HBox startLocationBox = createLabeledIconBox(startIcon, "Start: " + reservation.getStartLocation().getAddress());
+        HBox endLocationBox = createLabeledIconBox(endIcon, "End: " + reservation.getEndLocation().getAddress());
 
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> modalStage.close());
-        closeButton.getStyleClass().add("station-bike-close-button");
+        closeButton.setStyle("-fx-background-color: #000000; " +
+                "-fx-text-fill: white; " +
+                "-fx-font-weight: bold; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-padding: 8px 16px;");
 
-        HBox closeButtonContainer = new HBox();
+        HBox closeButtonContainer = new HBox(closeButton);
         closeButtonContainer.setAlignment(Pos.CENTER);
-        closeButtonContainer.getChildren().add(closeButton);
 
-        modalLayout.getChildren().addAll(titleLabel, localDate, status, description, startLocation, endLocation, closeButtonContainer);
+        modalLayout.getChildren().addAll(title, dateBox, statusBox, descriptionBox, startLocationBox, endLocationBox, closeButtonContainer);
         stackPane.getChildren().add(modalLayout);
 
         Scene modalScene = new Scene(stackPane, 400, 300);
@@ -189,109 +235,164 @@ public class ReservationTransporterController {
         modalStage.show();
     }
 
+    // Helper method to create an icon
+    private ImageView createIcon(String path) {
+        Image image = new Image(getClass().getResourceAsStream(path));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(20);
+        imageView.setFitHeight(20);
+        return imageView;
+    }
+
+    // Helper method to create a label with an icon
+    private HBox createLabeledIconBox(ImageView icon, String text) {
+        Label label = new Label(text);
+        label.setStyle("-fx-font-size: 13px; -fx-text-fill: #333;");
+        HBox hBox = new HBox(10, icon, label);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        return hBox;
+    }
+
     private void handleAccept(Reservation reservation) {
-
-        // Création du formulaire pour l'ajout d'une relocalisation
-        Dialog<Reservation> dialog = new Dialog<>();
+        // Create Custom Dialog
+        Dialog<Relocation> dialog = new Dialog<>();
         dialog.setTitle("Accept Reservation");
-        dialog.setHeaderText("Enter relocation details");
+        dialog.setHeaderText(null); // Cleaner UI without default header
+        dialog.getDialogPane().setStyle("-fx-background-color: white; -fx-padding: 20px;");
 
-        // Création des champs de saisie
+        // Load CSS for better design
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/styles/dialog.css").toExternalForm());
+
+        // Icon
+        ImageView acceptIcon = new ImageView(new Image(getClass().getResource("/images/icons/check.png").toExternalForm()));
+        acceptIcon.setFitWidth(50);
+        acceptIcon.setFitHeight(50);
+
+        // Title Label
+        Label titleLabel = new Label("Enter Relocation Details");
+        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #303030;");
+
+        // Form Fields
         DatePicker datePicker = new DatePicker(LocalDate.now());
         TextField costField = new TextField();
+        costField.setPromptText("Enter cost...");
 
-        // Ajout des champs au Dialog
+        // Grid Layout
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
+        grid.setAlignment(Pos.CENTER);
         grid.add(new Label("Date:"), 0, 0);
         grid.add(datePicker, 1, 0);
         grid.add(new Label("Cost:"), 0, 1);
         grid.add(costField, 1, 1);
 
-        dialog.getDialogPane().setContent(grid);
+        // Layout
+        VBox layout = new VBox(15);
+        layout.setAlignment(Pos.CENTER);
+        layout.getChildren().addAll(acceptIcon, titleLabel, grid);
+        dialog.getDialogPane().setContent(layout);
 
-        // Ajout des boutons OK et Annuler
+        // Buttons
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
-        // Conversion des résultats en objet Reservation
+        // Input Validation
         dialog.setResultConverter(buttonType -> {
             if (buttonType == saveButtonType) {
-                // Vérifier que les champs sont remplis
-                if (datePicker.getValue() == null || costField.getText().isEmpty()) {
-                    // Afficher un message d'erreur si les champs ne sont pas remplis
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Invalid Input");
-                    alert.setContentText("Please fill in all fields.");
-
-                    // Appliquer un style CSS personnalisé pour le message d'erreur
-                    DialogPane dialogPane = alert.getDialogPane();
-                    dialogPane.getStylesheets().add(getClass().getResource("/Reservation/front/reservation.css").toExternalForm());
-                    dialogPane.getStyleClass().add("error-alert");
-
-                    alert.showAndWait();
-                    return null; // Ne pas retourner de réservation si les champs ne sont pas remplis
+                if (datePicker.getValue() == null || costField.getText().trim().isEmpty()) {
+                    showErrorDialog("Invalid Input", "Please fill in all fields.");
+                    return null;
                 }
 
-                // Mettre à jour les champs de la réservation
-                reservation.setDate(Timestamp.valueOf(datePicker.getValue().atStartOfDay()));
-                //reservation.setCost(Float.parseFloat(costField.getText()));
-                reservation.setStatus(Reservation.Status.CONFIRMED);
-                return reservation;
+                // Create a new Relocation object
+                Relocation relocation = new Relocation();
+                relocation.setReservation(reservation);
+                relocation.setDate(Timestamp.valueOf(datePicker.getValue().atStartOfDay()));
+                relocation.setStatus(true); // Assuming status is true for accepted relocations
+                relocation.setCost(Float.parseFloat(costField.getText()));
+
+                return relocation;
             }
             return null;
         });
 
-        // Affichage du Dialog et gestion de la réponse
-        Optional<Reservation> result = dialog.showAndWait();
-        result.ifPresent(updatedReservation -> {
+        // Show Dialog & Handle Result
+        Optional<Relocation> result = dialog.showAndWait();
+        result.ifPresent(relocation -> {
             try {
-                reservationService.update(updatedReservation);
+                // Update the reservation status to CONFIRMED
+                reservation.setStatus(Reservation.Status.CONFIRMED);
+                reservationService.update(reservation);
+
+                // Save the relocation
+                RelocationService relocationService = new RelocationService();
+                relocationService.create(relocation);
+
+                // Refresh the reservations list
                 refreshReservations();
             } catch (SQLException e) {
-                e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("An error occurred while updating the reservation.");
-                alert.setContentText(e.getMessage());
-
-                // Appliquer un style CSS personnalisé pour le message d'erreur
-                DialogPane dialogPane = alert.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("/styles/alert.css").toExternalForm());
-                dialogPane.getStyleClass().add("error-alert");
-
-                alert.showAndWait();
+                showErrorDialog("Error Updating Reservation", e.getMessage());
             }
         });
     }
 
     private void handleRefuse(Reservation reservation) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Refuse Reservation");
-        alert.setHeaderText("Are you sure you want to refuse this reservation?");
-        alert.setContentText("This action cannot be undone.");
+        // Create Custom Dialog
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Refuse Reservation");
+        dialog.setHeaderText(null);
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
+        // Load CSS
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/styles/dialog.css").toExternalForm());
+
+        // Icon
+        ImageView refuseIcon = new ImageView(new Image(getClass().getResource("/images/icons/refuse.png").toExternalForm()));
+        refuseIcon.setFitWidth(50);
+        refuseIcon.setFitHeight(50);
+
+        // Title Label
+        Label titleLabel = new Label("Are you sure you want to refuse this reservation?");
+        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #D32F2F;");
+
+        // Message Label
+        Label messageLabel = new Label("This action cannot be undone.");
+        messageLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333;");
+
+        // Layout
+        VBox layout = new VBox(15);
+        layout.setAlignment(Pos.CENTER);
+        layout.getChildren().addAll(refuseIcon, titleLabel, messageLabel);
+        dialog.getDialogPane().setContent(layout);
+
+        // Buttons
+        ButtonType refuseButton = new ButtonType("Refuse", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(refuseButton, cancelButton);
+
+        // Show Dialog & Handle Result
+        Optional<ButtonType> result = dialog.showAndWait();
+        if (result.isPresent() && result.get() == refuseButton) {
             try {
                 reservation.setStatus(Reservation.Status.CANCELLED);
                 reservationService.update(reservation);
                 refreshReservations();
             } catch (SQLException e) {
-                e.printStackTrace();
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setTitle("Error");
-                errorAlert.setHeaderText("An error occurred while refusing the reservation.");
-                errorAlert.setContentText(e.getMessage());
-                errorAlert.showAndWait();
+                showErrorDialog("Error Refusing Reservation", e.getMessage());
             }
         }
     }
 
+    private void showErrorDialog(String header, String content) {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setTitle("Error");
+        errorAlert.setHeaderText(header);
+        errorAlert.setContentText(content);
+        errorAlert.showAndWait();
+    }
+
     private void refreshReservations() {
-        stationFlowPane.getChildren().clear();
-        loadStationsIntoFlowPane();
+        stationGridPane.getChildren().clear();
+        loadStationsIntoGridPane();
     }
 }

@@ -52,7 +52,7 @@
                 //6
                 AnchorPane responsesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Response/back/responses.fxml")));
                 //7
-                AnchorPane announcementsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Annoucement/Front/announcements.fxml")));    ;
+                AnchorPane announcementsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Relocation/Front/Relocations.fxml")));    ;
                 //8
                AnchorPane reservationsPanel=FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Reservation/Front/Reservations.fxml")));;
                 //9

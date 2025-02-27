@@ -9,7 +9,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.*;
@@ -18,12 +21,9 @@ import utils.SessionManager;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-
 
 //import static sun.security.x509.OIDMap.getClass;
 
@@ -45,25 +45,11 @@ public class AnnouncementClientController {
 
     private User loggedInUser; // Utilisateur connecté
 
-
-    @FXML
-    private ComboBox<Announcement.Zone> zoneComboBox;
-
-    @FXML
-    private DatePicker datePicker;
-
-    @FXML
-    private TextField keywordTextField;
-
-    @FXML
-    private Button searchButton;
     @FXML
     public void initialize() {
         // Récupérer l'utilisateur connecté
         loggedInUser = SessionManager.getInstance().getUser();
 
-        // Peupler le ComboBox avec les zones disponibles
-        zoneComboBox.getItems().setAll(Announcement.Zone.values());
 
         announcementListView.getStylesheets().add(getClass().getResource("/Annoucement/Front/announcement.css").toExternalForm());
         loadAnnouncements();
@@ -79,61 +65,13 @@ public class AnnouncementClientController {
                 e.printStackTrace();
             }
         });
-    }
 
-    @FXML
-    private void handleFilterByDateButtonAction(ActionEvent event) {
-        LocalDate selectedDate = datePicker.getValue();
-        if (selectedDate != null) {
-            try {
-                List<Announcement> announcements = announcementService.findByDate(selectedDate);
-                announcementListView.getItems().setAll(announcements);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            // Si aucune date n'est sélectionnée, charger toutes les annonces
-            loadAnnouncements();
-        }
-    }
-
-    @FXML
-    private void handleSearchByKeywordButtonAction(ActionEvent event) {
-        String keyword = keywordTextField.getText();
-        if (keyword != null && !keyword.isEmpty()) {
-            try {
-                List<Announcement> announcements = announcementService.findByKeyword(keyword);
-                announcementListView.getItems().setAll(announcements);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            // Si aucun mot-clé n'est saisi, charger toutes les annonces
-            loadAnnouncements();
-        }
-    }
-
-    @FXML
-    private void handleSearchButtonAction(ActionEvent event) {
-        Announcement.Zone selectedZone = zoneComboBox.getValue();
-        if (selectedZone != null) {
-            try {
-                List<Announcement> announcements = announcementService.findByZone(selectedZone);
-                announcementListView.getItems().setAll(announcements);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            // Si aucune zone n'est sélectionnée, charger toutes les annonces
-            loadAnnouncements();
-        }
     }
 
     private void loadAnnouncements() {
         try {
             List<Announcement> announcements = announcementService.read();
             announcementListView.getItems().setAll(announcements);
-
 
             announcementListView.setCellFactory(new Callback<>() {
                 @Override
@@ -147,33 +85,66 @@ public class AnnouncementClientController {
                                 setGraphic(null);
                             } else {
                                 VBox vbox = new VBox(10);
-                                vbox.setPadding(new Insets(10));
+                                vbox.setPadding(new Insets(15));
+                                vbox.setAlignment(Pos.CENTER); // Center all content vertically and horizontally
+                                vbox.setStyle("-fx-background-color: #2c3e50; -fx-border-radius: 10; -fx-background-radius: 10;");
                                 vbox.getStyleClass().add("announcement-card");
 
+                                // Title Label
                                 Label titleLabel = new Label(announcement.getTitle());
-                                titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;");
+                                titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ecf0f1;");
+
+                                // Content with Icon
+                                ImageView contentIcon = new ImageView(new Image(getClass().getResource("/images/icons/description.png").toExternalForm()));
+                                contentIcon.setFitWidth(18);
+                                contentIcon.setFitHeight(18);
 
                                 Label contentLabel = new Label(announcement.getContent());
-                                contentLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #FFFFFF;");
+                                contentLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #bdc3c7;");
+                                contentLabel.setWrapText(true);
+
+                                HBox contentBox = new HBox(8, contentIcon, contentLabel);
+                                contentBox.setAlignment(Pos.CENTER); // Center content horizontally
+
+                                // Date Info
+                                ImageView dateIcon = new ImageView(new Image(getClass().getResource("/images/icons/date.png").toExternalForm()));
+                                dateIcon.setFitWidth(16);
+                                dateIcon.setFitHeight(16);
 
                                 Label dateLabel = new Label("Date: " + announcement.getDate().toString());
-                                dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #7f8c8d;");
+                                dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #95a5a6;");
+
+                                HBox dateBox = new HBox(8, dateIcon, dateLabel);
+                                dateBox.setAlignment(Pos.CENTER); // Center date horizontally
+
+                                // Zone Information
+                                ImageView zoneIcon = new ImageView(new Image(getClass().getResource("/images/icons/place.png").toExternalForm()));
+                                zoneIcon.setFitWidth(16);
+                                zoneIcon.setFitHeight(16);
 
                                 Label zoneLabel = new Label("Zone: " + announcement.getZone().toString());
-                                zoneLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #7f8c8d;");
+                                zoneLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #95a5a6;");
 
-                                Button selectButton = new Button("Select");
+                                HBox zoneBox = new HBox(8, zoneIcon, zoneLabel);
+                                zoneBox.setAlignment(Pos.CENTER); // Center zone horizontally
+
+                                // Buttons
+                                Button selectButton = new Button("Détails");
                                 selectButton.getStyleClass().add("select-button");
                                 selectButton.setOnAction(event -> openAnnouncementDetails(announcement));
+                                styleButton(selectButton);
 
                                 Button reserveButton = new Button("Reserve");
                                 reserveButton.getStyleClass().add("reserve-button");
                                 reserveButton.setOnAction(event -> handleReserveButtonAction(announcement));
+                                styleButton(reserveButton);
 
+                                // Button Box
                                 HBox buttonBox = new HBox(10, selectButton, reserveButton);
-                                buttonBox.setAlignment(Pos.CENTER);
+                                buttonBox.setAlignment(Pos.CENTER); // Center buttons horizontally
 
-                                vbox.getChildren().addAll(titleLabel, contentLabel, dateLabel, zoneLabel, buttonBox);
+                                // Add children to VBox
+                                vbox.getChildren().addAll(titleLabel, contentBox, dateBox, zoneBox, buttonBox);
                                 setGraphic(vbox);
                             }
                         }
@@ -185,38 +156,53 @@ public class AnnouncementClientController {
         }
     }
 
+    // Method to style buttons
+    private void styleButton(Button button) {
+        button.setStyle("-fx-background-color: #2980b9; -fx-text-fill: white; -fx-padding: 10px 15px; -fx-font-size: 14px; -fx-border-radius: 5; -fx-background-radius: 5;");
+        button.setOnMouseEntered(event -> button.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 10px 15px; -fx-font-size: 14px; -fx-border-radius: 5; -fx-background-radius: 5;"));
+        button.setOnMouseExited(event -> button.setStyle("-fx-background-color: #2980b9; -fx-text-fill: white; -fx-padding: 10px 15px; -fx-font-size: 14px; -fx-border-radius: 5; -fx-background-radius: 5;"));
+    }
+
+
     private void openAnnouncementDetails(Announcement announcement) {
         Stage modalStage = new Stage();
-        modalStage.setTitle(announcement.getTitle());
+        modalStage.setTitle("Détails");
+        modalStage.initModality(Modality.APPLICATION_MODAL);
 
         StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
+        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6);");
 
-        VBox modalLayout = new VBox(10);
+        VBox modalLayout = new VBox(15);
         modalLayout.setPadding(new Insets(20));
-        modalLayout.setStyle("-fx-background-color: #333333; -fx-background-radius: 10px;");
+        modalLayout.setAlignment(Pos.CENTER_LEFT);
+        modalLayout.setStyle("-fx-background-color: white; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);");
 
-        Label titleLabel = new Label("Details for: " + announcement.getTitle());
-        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
+        Label titleLabel = new Label(announcement.getTitle());
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;");
 
-        Label contentLabel = new Label("Content: " + announcement.getContent());
-        contentLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+        // Load icons
+        ImageView dateIcon = createIcon("/images/icons/date.png");
+        ImageView zoneIcon = createIcon("/images/icons/place.png"); // Assuming you have an icon for the zone
+        ImageView contentIcon = createIcon("/images/icons/description.png");
 
-        Label dateLabel = new Label("Date: " + announcement.getDate().toString());
-        dateLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: white;");
-
-        Label zoneLabel = new Label("Zone: " + announcement.getZone().toString());
-        zoneLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: white;");
+        // Labels with icons
+        HBox dateBox = createLabeledIconBox(dateIcon, "Date: " + announcement.getDate());
+        HBox zoneBox = createLabeledIconBox(zoneIcon, "Zone: " + announcement.getZone());
+        HBox contentBox = createLabeledIconBox(contentIcon, "Content: " + announcement.getContent());
 
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> modalStage.close());
-        closeButton.getStyleClass().add("close-button");
+        closeButton.setStyle("-fx-background-color: #000000; " +
+                "-fx-text-fill: white; " +
+                "-fx-font-weight: bold; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-padding: 8px 16px;");
 
-        HBox closeButtonContainer = new HBox();
+        HBox closeButtonContainer = new HBox(closeButton);
         closeButtonContainer.setAlignment(Pos.CENTER);
-        closeButtonContainer.getChildren().add(closeButton);
 
-        modalLayout.getChildren().addAll(titleLabel, contentLabel, dateLabel, zoneLabel, closeButtonContainer);
+        modalLayout.getChildren().addAll(titleLabel, dateBox, zoneBox, contentBox, closeButtonContainer);
         stackPane.getChildren().add(modalLayout);
 
         Scene modalScene = new Scene(stackPane, 400, 300);
@@ -224,19 +210,52 @@ public class AnnouncementClientController {
         modalStage.show();
     }
 
+    // Helper method to create labeled icon boxes
+    private HBox createLabeledIconBox(ImageView icon, String label) {
+        Label textLabel = new Label(label);
+        textLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333;");
+
+        HBox box = new HBox(10, icon, textLabel);
+        box.setAlignment(Pos.CENTER_LEFT);
+        return box;
+    }
+
+    // Helper method to load icons
+    private ImageView createIcon(String path) {
+        ImageView icon = new ImageView(new Image(getClass().getResourceAsStream(path)));
+        icon.setFitHeight(16);
+        icon.setFitWidth(16);
+        return icon;
+    }
+
     private void handleReserveButtonAction(Announcement announcement) {
-        // Création du Dialog pour la réservation
+        // Create Custom Dialog
         Dialog<Reservation> dialog = new Dialog<>();
         dialog.setTitle("Reserve Announcement");
-        dialog.setHeaderText("Fill in the reservation details");
+        dialog.setHeaderText(null); // Cleaner UI without default header
+        dialog.getDialogPane().setStyle("-fx-background-color: white; -fx-padding: 20px;");
 
-        // Création des champs de saisie
+        // Load CSS for better design
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/styles/dialog.css").toExternalForm());
+
+        // Icon
+        ImageView reserveIcon = new ImageView(new Image(getClass().getResource("/images/icons/date.png").toExternalForm()));
+        reserveIcon.setFitWidth(50);
+        reserveIcon.setFitHeight(50);
+
+        // Title Label
+        Label titleLabel = new Label("Fill in the Reservation Details");
+        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1976D2;");
+
+        // Form Fields
         DatePicker datePicker = new DatePicker();
         TextField descriptionField = new TextField();
+        descriptionField.setPromptText("Enter description...");
+
         ComboBox<Station> startLocationComboBox = new ComboBox<>();
         ComboBox<Station> endLocationComboBox = new ComboBox<>();
 
-        // Ajouter une CellFactory pour afficher uniquement l'adresse des stations
+        // CellFactory for displaying station addresses
         Callback<ListView<Station>, ListCell<Station>> cellFactory = new Callback<>() {
             @Override
             public ListCell<Station> call(ListView<Station> param) {
@@ -247,20 +266,20 @@ public class AnnouncementClientController {
                         if (empty || station == null) {
                             setText(null);
                         } else {
-                            setText(station.getLocation().getAddress());  // Afficher uniquement l'adresse
+                            setText(station.getLocation().getAddress());  // Show only address
                         }
                     }
                 };
             }
         };
 
-        // Appliquer la CellFactory aux ComboBox
+        // Apply CellFactory to ComboBoxes
         startLocationComboBox.setCellFactory(cellFactory);
         startLocationComboBox.setButtonCell(cellFactory.call(null));
-
         endLocationComboBox.setCellFactory(cellFactory);
         endLocationComboBox.setButtonCell(cellFactory.call(null));
 
+        // Load stations
         try {
             startLocationComboBox.getItems().addAll(stationService.read());
             endLocationComboBox.getItems().addAll(stationService.read());
@@ -268,7 +287,7 @@ public class AnnouncementClientController {
             e.printStackTrace();
         }
 
-        // Ajout des champs au Dialog
+        // Layout
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -281,31 +300,39 @@ public class AnnouncementClientController {
         grid.add(new Label("End Location:"), 0, 3);
         grid.add(endLocationComboBox, 1, 3);
 
-        dialog.getDialogPane().setContent(grid);
+        VBox layout = new VBox(15);
+        layout.setAlignment(Pos.CENTER);
+        layout.getChildren().addAll(reserveIcon, titleLabel, grid);
+        dialog.getDialogPane().setContent(layout);
 
-        // Ajout des boutons OK et Annuler
+        // Buttons
         ButtonType reserveButtonType = new ButtonType("Reserve", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(reserveButtonType, ButtonType.CANCEL);
 
-        // Conversion des résultats en objet Reservation
+        // Result conversion to Reservation object
         dialog.setResultConverter(buttonType -> {
             if (buttonType == reserveButtonType) {
+                if (datePicker.getValue() == null || descriptionField.getText().trim().isEmpty() ||
+                        startLocationComboBox.getValue() == null || endLocationComboBox.getValue() == null) {
+                    showErrorDialog("Invalid Input", "Please fill in all fields.");
+                    return null;
+                }
+
+                // Create new reservation
                 Reservation reservation = new Reservation();
                 reservation.setDate(Timestamp.valueOf(datePicker.getValue().atStartOfDay()));
                 reservation.setDescription(descriptionField.getText());
                 reservation.setStartLocation(startLocationComboBox.getValue().getLocation());
                 reservation.setEndLocation(endLocationComboBox.getValue().getLocation());
                 reservation.setAnnouncement(announcement);
-
-                // Associer l'utilisateur connecté à la réservation
-                reservation.setUser(loggedInUser);
+                reservation.setUser(loggedInUser); // Associate logged-in user
 
                 return reservation;
             }
             return null;
         });
 
-        // Affichage du Dialog et gestion de la réponse
+        // Show Dialog & Handle Response
         Optional<Reservation> result = dialog.showAndWait();
         result.ifPresent(reservation -> {
             Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -319,16 +346,23 @@ public class AnnouncementClientController {
                     reservationService.create(reservation);
                     refreshAnnouncements();
                 } catch (SQLException e) {
-                    e.printStackTrace();
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("An error occurred while reserving the announcement.");
-                    alert.setContentText(e.getMessage());
-                    alert.showAndWait();
+                    showErrorDialog("Error Reserving Announcement", e.getMessage());
                 }
             }
         });
     }
+
+    /**
+     * Show an error dialog with a custom message.
+     */
+    private void showErrorDialog(String header, String content) {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setTitle("Error");
+        errorAlert.setHeaderText(header);
+        errorAlert.setContentText(content);
+        errorAlert.showAndWait();
+    }
+
 
     private void refreshAnnouncements() {
         announcementListView.getItems().clear();

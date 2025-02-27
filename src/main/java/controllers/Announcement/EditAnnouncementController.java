@@ -163,8 +163,18 @@ public class EditAnnouncementController {
                     .text("L'annonce a été mise à jour avec succès.")
                     .showInformation();
 
-            // Fermer la fenêtre
-            ((Stage) submitButton.getScene().getWindow()).close();
+//            // Fermer la fenêtre
+//            ((Stage) submitButton.getScene().getWindow()).close();
+
+            // Redirection vers annoucements.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements.fxml"));
+            Parent announcementView = loader.load();
+            Scene announcementScene = new Scene(announcementView);
+
+            // Obtenir la fenêtre actuelle et la mettre à jour avec la nouvelle scène
+            Stage stage = (Stage) submitButton.getScene().getWindow();
+            stage.setScene(announcementScene);
+            stage.show();
 
         } catch (SQLException e) {
             Notifications.create()
