@@ -553,6 +553,25 @@
             }
         }
 
+//        public void search() {
+//            String query = searchField.getText();
+//            if (query.isEmpty()) {
+//                loadStationsIntoFlowPane();
+//            } else {
+//                try {
+//                    List<Station> stations = stationService.search(query);
+//                    stationFlowPane.getChildren().clear();
+//                    for (Station station : stations) {
+//                        VBox stationCard = createStationCard(station);
+//                        stationFlowPane.getChildren().add(stationCard);
+//                    }
+//                } catch (SQLException e) {
+//                    showErrorDialog("Search Error", "An error occurred while searching for stations.");
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+
 
 
     }
