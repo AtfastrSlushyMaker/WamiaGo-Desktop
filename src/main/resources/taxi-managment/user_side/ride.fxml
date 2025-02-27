@@ -115,7 +115,7 @@
                 <Button id="See_you_Rides_buuton" fx:id="See_you_Rides_buuton" alignment="BASELINE_LEFT" layoutX="201.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="132.0" stylesheets="@request.css" text="See Rides" />
                 <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="139.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../images/icons/add1.png" />
+                        <Image url="@../../images/icons/add.png" />
                     </image>
                 </ImageView>
                 <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="279.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">

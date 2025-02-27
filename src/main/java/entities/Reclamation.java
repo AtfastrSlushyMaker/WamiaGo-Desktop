@@ -6,39 +6,32 @@ import java.util.Objects;
 public class Reclamation {
     private int idReclamation;
     private User user;
-    private String title;
     private String content;
     private Timestamp date;
     private int status;
-    private Response response;
 
-    public Reclamation(int idReclamation, User user, String title, String content, Timestamp date, int status) {
+    public Reclamation(int idReclamation, User user, String content, Timestamp date, int status) {
         this.idReclamation = idReclamation;
         this.user = user;
-        this.title = title;
         this.content = content;
         this.date = date;
         this.status = status;
-        this.response = null;
     }
 
     public Reclamation() {
         this.idReclamation = 0;
         this.user = new User();
-        this.title = "";
         this.content = "";
         this.date = new Timestamp(System.currentTimeMillis());
         this.status = 0;
-        this.response = null;
+
     }
 
-    public Reclamation(User user, String title, String content, Timestamp date, int status) {
+    public Reclamation(User user, String content, Timestamp date, int status) {
         this.user = user;
-        this.title = title;
         this.content = content;
         this.date = date;
         this.status = status;
-        this.response = null;
     }
 
     public int getIdReclamation() {
@@ -47,10 +40,6 @@ public class Reclamation {
 
     public User getUser() {
         return user;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getContent() {
@@ -65,20 +54,12 @@ public class Reclamation {
         return status;
     }
 
-    public Response getResponse() {
-        return response;
-    }
-
     public void setIdReclamation(int idReclamation) {
         this.idReclamation = idReclamation;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public void setContent(String content) {
@@ -93,23 +74,14 @@ public class Reclamation {
         this.status = status;
     }
 
-    public void setResponse(Response response) {
-        this.response = response;
-        if (response != null && response.getReclamation() != this) {
-            response.setReclamation(this);
-        }
-    }
-
     @Override
     public String toString() {
         return "Reclamation{" +
                 "idReclamation=" + idReclamation +
                 ", user=" + user +
-                ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", date=" + date +
                 ", status=" + status +
-                ", hasResponse=" + (response != null) +
                 '}';
     }
 
@@ -117,11 +89,11 @@ public class Reclamation {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Reclamation that)) return false;
-        return idReclamation == that.idReclamation && status == that.status && Objects.equals(user, that.user) && Objects.equals(title, that.title) && Objects.equals(content, that.content) && Objects.equals(date, that.date);
+        return idReclamation == that.idReclamation && status == that.status && Objects.equals(user, that.user) && Objects.equals(content, that.content) && Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idReclamation, user, title, content, date, status);
+        return Objects.hash(idReclamation, user, content, date, status);
     }
 }
