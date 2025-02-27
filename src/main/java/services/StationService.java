@@ -3,10 +3,12 @@ package services;
 import entities.Bicycle;
 import entities.Location;
 import entities.Station;
+import entities.User;
 import utils.DataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class StationService implements IService<Station> {
@@ -398,4 +400,11 @@ public class StationService implements IService<Station> {
         }
         return stationNames;
     }
+
+    public List<Station> getSortedStationsByUserDistance(User user) throws SQLException {
+        List<Station> stations = read();
+        stations.sort(Comparator.comparingDouble(s -> Location.calculateDistance(user.getLocation(), s.getLocation())));
+        return stations;
+    }
+
 }
