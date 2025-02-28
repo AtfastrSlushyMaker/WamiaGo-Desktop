@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/user/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/user/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,6 +215,7 @@
       <workItem from="1740601050675" duration="13353000" />
       <workItem from="1740662234661" duration="1944000" />
       <workItem from="1740671863699" duration="193000" />
+      <workItem from="1740698084294" duration="7938000" />
     </task>
     <servers />
   </component>
