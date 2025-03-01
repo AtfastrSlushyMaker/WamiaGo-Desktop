@@ -25,11 +25,11 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import netscape.javascript.JSObject;
 import services.BicycleRentalService;
 import services.BicycleService;
 import services.StationService;
 import utils.SessionManager;
-import netscape.javascript.JSObject;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,24 +44,42 @@ public class StationController {
     private final List<Stage> openModals = new ArrayList<>();
 
     // FXML Components
-    @FXML private Button bookings_button;
-    @FXML private Button history_button;
-    @FXML private Button home_button;
-    @FXML private Button logout_button;
-    @FXML private StackPane stackPaneMap;
-    @FXML private Pane pane_1121;
-    @FXML private Button rides_button;
-    @FXML private HBox root;
-    @FXML private AnchorPane side_ankerpane;
-    @FXML private FlowPane stationFlowPane;
-    @FXML private Label bikeCount;
-    @FXML private ScrollPane scrollPane;
-    @FXML private Button my_bikes_button;
-    @FXML private Button clear_button;
-    @FXML private WebView map;
-    @FXML private Button sortButton;
-    @FXML private TextField searchField;
-    @FXML private ProgressIndicator loadingSpinner;
+    @FXML
+    private Button bookings_button;
+    @FXML
+    private Button history_button;
+    @FXML
+    private Button home_button;
+    @FXML
+    private Button logout_button;
+    @FXML
+    private StackPane stackPaneMap;
+    @FXML
+    private Pane pane_1121;
+    @FXML
+    private Button rides_button;
+    @FXML
+    private HBox root;
+    @FXML
+    private AnchorPane side_ankerpane;
+    @FXML
+    private FlowPane stationFlowPane;
+    @FXML
+    private Label bikeCount;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private Button my_bikes_button;
+    @FXML
+    private Button clear_button;
+    @FXML
+    private WebView map;
+    @FXML
+    private Button sortButton;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private ProgressIndicator loadingSpinner;
 
     // Map and Web Engine
     private WebEngine webEngine;
@@ -98,9 +116,9 @@ public class StationController {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
-    private void setupButtons()
-    {
-        sortButton.setOnAction(event->sort());
+
+    private void setupButtons() {
+        sortButton.setOnAction(event -> sort());
     }
 
     // Map Setup and Functions
@@ -490,7 +508,6 @@ public class StationController {
 
             System.out.println("Bike at " + rental.getStart_station().getName() + "reserved successfully.");
 
-            showReservationConfirmation(bicycle, rental);
             startReservationTimer(bicycle, station, rental);
 
         } catch (Exception e) {
@@ -504,19 +521,39 @@ public class StationController {
         modalStage.initStyle(StageStyle.TRANSPARENT);
         modalStage.setTitle("Reservation Confirmation");
 
+        // Main layout
         StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
+        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.0001);");
 
-        VBox modalLayout = new VBox(20);
-        modalLayout.setPadding(new Insets(40));
-        modalLayout.setStyle("-fx-background-color: #2c2c2c; -fx-background-radius: 20px;");
+        VBox modalLayout = new VBox(20); // Increased spacing between components
+        modalLayout.setPadding(new Insets(40)); // Increased padding
+        modalLayout.setStyle(
+                "-fx-background-color: #2c2c2c; " +
+                        "-fx-background-radius: 20px; "
+        );
+        modalLayout.setAlignment(Pos.CENTER); // Center alignment
 
+        // Header label
         Label titleLabel = new Label("Reservation Confirmation");
         titleLabel.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;");
 
+        // Label to display the remaining time
         Label timerLabel = new Label("Time remaining: 10:00");
         timerLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
 
+        // ProgressBar to represent the remaining time
+        ProgressBar progressBar = new ProgressBar(1.0); // Starts at 100%
+        progressBar.setStyle(
+                "-fx-accent: #4CAF50; " +
+                        "-fx-pref-width: 400px; " + // Increased width
+                        "-fx-pref-height: 20px; " + // Set preferred height
+                        "-fx-background-color: #444444; " + // Background color
+                        "-fx-border-color: #666666; " + // Border color
+                        "-fx-border-width: 1px; " + // Border width
+                        "-fx-border-radius: 10px;" // Border radius
+        );
+
+        // Buttons
         Button pickUpButton = new Button("Pick Up");
         pickUpButton.setStyle(
                 "-fx-background-color: #4CAF50; " +
@@ -548,17 +585,22 @@ public class StationController {
                 System.out.println("Timer stopped.");
             }
             modalStage.close();
+            cancelReservation(bicycle, rental.getStart_station(), rental);
         });
 
+        // Button layout
         HBox buttonLayout = new HBox(20, pickUpButton, closeButton);
         buttonLayout.setAlignment(Pos.CENTER);
 
-        modalLayout.getChildren().addAll(titleLabel, timerLabel, buttonLayout);
+        // Add all components to the modal layout
+        modalLayout.getChildren().addAll(titleLabel, timerLabel, progressBar, buttonLayout);
         stackPane.getChildren().add(modalLayout);
 
-        Scene modalScene = new Scene(stackPane, 400, 250);
+        // Create the scene
+        Scene modalScene = new Scene(stackPane, 500, 300); // Increased width and height
         modalScene.setFill(Color.TRANSPARENT);
 
+        // Make the modal draggable
         final double[] dragDelta = new double[2];
         modalStage.setOpacity(1.0);
         modalStage.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
@@ -570,11 +612,53 @@ public class StationController {
             modalStage.setY(mouseEvent.getScreenY() - dragDelta[1]);
         });
 
+        // Show the modal
         modalStage.setScene(modalScene);
         modalStage.show();
         openModals.add(modalStage);
 
-        startTimerDisplay(timerLabel, modalStage, bicycle, rental);
+        // Start the timer and update the ProgressBar
+        startTimerAndProgressBar(timerLabel, progressBar, modalStage, bicycle, rental);
+    }
+
+    private void startTimerAndProgressBar(Label timerLabel, ProgressBar progressBar, Stage modalStage, Bicycle bicycle, BicycleRental rental) {
+        if (reservationTimeline != null) {
+            reservationTimeline.stop();
+            reservationTimeline = null;
+        }
+
+        int[] reservationDurationSeconds = {60}; // Total duration in seconds
+        double[] progress = {1.0}; // Initial progress (100%)
+
+        reservationTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    reservationDurationSeconds[0]--;
+                    progress[0] = (double) reservationDurationSeconds[0] / 60; // Update progress
+
+                    if (reservationDurationSeconds[0] <= 0) {
+                        modalStage.close();
+                        cancelReservation(bicycle, rental.getStart_station(), rental);
+                    } else {
+                        // Update the timer label
+                        int minutes = reservationDurationSeconds[0] / 60;
+                        int seconds = reservationDurationSeconds[0] % 60;
+                        timerLabel.setText(String.format("Time remaining: %02d:%02d", minutes, seconds));
+
+                        // Update the progress bar
+                        progressBar.setProgress(progress[0]);
+                    }
+                })
+        );
+
+        reservationTimeline.setCycleCount(Timeline.INDEFINITE);
+        reservationTimeline.play();
+
+        modalStage.setOnCloseRequest(event -> {
+            if (reservationTimeline != null) {
+                reservationTimeline.stop();
+                reservationTimeline = null;
+            }
+        });
     }
 
     private void startReservationTimer(Bicycle bicycle, Station station, BicycleRental rental) {
@@ -756,6 +840,7 @@ public class StationController {
         alert.showAndWait();
     }
 
+    // Sort Functions
     public void sort() {
         Stage modalStage = new Stage();
         modalStage.initStyle(StageStyle.TRANSPARENT); // Transparent background
@@ -782,7 +867,8 @@ public class StationController {
 
         // ComboBox for sorting options
         ComboBox<String> sortOptions = new ComboBox<>();
-        sortOptions.getItems().addAll("Distance", "Available Bikes", "Name");
+        sortOptions.getItems().addAll("Default", "Distance", "Available Bikes", "Name");
+        sortOptions.getSelectionModel().selectFirst(); // Default selection
         sortOptions.setStyle(
                 "-fx-background-color: #3a3a3a; " + // Dark gray background
                         "-fx-text-fill: white; " + // White text
@@ -791,7 +877,6 @@ public class StationController {
                         "-fx-border-radius: 5px; " + // Rounded corners
                         "-fx-padding: 5px 10px;" // Padding
         );
-
         // Fix the dropdown text color for all items
         sortOptions.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -831,6 +916,7 @@ public class StationController {
                 }
             }
         });
+
 
         // Apply button
         Button applyButton = new Button("Apply");
@@ -904,6 +990,9 @@ public class StationController {
         try {
             List<Station> stations = stationService.getSortedStationsByUserDistance(SessionManager.getInstance().getUser());
             switch (criteria) {
+                case "Default":
+                    stations = stationService.read();
+                    break;
                 case "Distance":
                     stations = stationService.getSortedStationsByUserDistance(SessionManager.getInstance().getUser());
                     break;
