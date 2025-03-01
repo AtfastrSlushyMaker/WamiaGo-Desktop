@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@station.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.front.StationController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@station.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.front.StationController">
 
     <children>
 
@@ -125,7 +125,7 @@
                </content>
             </ScrollPane>
             <Button id="my_bikes_button" fx:id="my_bikes_button" layoutX="947.0" layoutY="121.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" text="My Bikes" />
-            <StackPane layoutX="21.0" layoutY="200.0" prefHeight="591.0" prefWidth="452.0" styleClass="web-view" stylesheets="@station.css">
+            <StackPane fx:id="stackPaneMap" layoutX="21.0" layoutY="200.0" prefHeight="591.0" prefWidth="452.0" styleClass="web-view" stylesheets="@station.css">
                <children>
                   <WebView fx:id="map" prefHeight="558.0" prefWidth="452.0" stylesheets="@station.css" />
                </children>

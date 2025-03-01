@@ -12,11 +12,10 @@ import javafx.scene.layout.HBox;
 import services.LocationService;
 import services.StationService;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class staionsController {
+public class StationsController {
     @FXML
     private Button add_button;
     @FXML

@@ -181,18 +181,21 @@
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 10, 0, 0, 2);
 }
-.stack-pane {
-    -fx-background-color: #F5F7FA; /* Match the background color */
-    -fx-background-radius: 20px; /* Rounded corners for the StackPane */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 20, 0, 0, 5); /* Shadow effect */
-    -fx-padding: 25px;
-    -fx-spacing: 15px;
+/* CSS for the StackPane */
+#stackPaneMap {
+    -fx-background-color: transparent;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
 }
 
-.web-view {
-    -fx-background-color: #F5F7FA; /* Match the background color */
-    -fx-background-radius: 20px; /* Ensure rounded corners for the WebView */
+/* CSS for the WebView */
+#map {
+    -fx-border-radius: 10px; /* Match the StackPane's border radius */
 }
+
+
 
 
 

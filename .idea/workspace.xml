@@ -6,8 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/back/staionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/back/StationsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/StationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/StationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/maps/map.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/maps/map.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,8 +132,10 @@
       </method>
     </configuration>
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="Pidev3a11" />
+      <module name="WamiaGo" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <extension name="coverage">
         <pattern>
@@ -192,8 +200,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
-        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19416.15" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19416.15" />
       </set>
     </attachedChunks>
   </component>
@@ -234,6 +242,9 @@
       <workItem from="1740565542998" duration="284000" />
       <workItem from="1740593153296" duration="3702000" />
       <workItem from="1740671974983" duration="674000" />
+      <workItem from="1740693720346" duration="398000" />
+      <workItem from="1740761251211" duration="52000" />
+      <workItem from="1740825097458" duration="7125000" />
     </task>
     <servers />
   </component>

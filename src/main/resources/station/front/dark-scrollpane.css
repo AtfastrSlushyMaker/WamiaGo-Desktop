@@ -1,0 +1,92 @@
+/* dark-scrollpane.css */
+
+/* Style the ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+/* Style the viewport (content area) */
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Style the vertical scrollbar */
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* Style the vertical scrollbar track */
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: #3a3a3a;
+    -fx-background-radius: 0;
+}
+
+/* Style the vertical scrollbar thumb */
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #555555;
+    -fx-background-radius: 5px;
+}
+
+/* Style the vertical scrollbar thumb on hover */
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #666666;
+}
+
+/* Hide the horizontal scrollbar */
+.scroll-pane .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-width: 0;
+    -fx-min-width: 0;
+    -fx-max-width: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+/* dark-scrollpane.css */
+
+/* Style the ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+/* Style the viewport (content area) */
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Style the vertical scrollbar */
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* Style the vertical scrollbar track */
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: #3a3a3a;
+    -fx-background-radius: 0;
+}
+
+/* Style the vertical scrollbar thumb */
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #555555;
+    -fx-background-radius: 5px;
+}
+
+/* Style the vertical scrollbar thumb on hover */
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #666666;
+}
+
+/* Hide the horizontal scrollbar */
+.scroll-pane .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-width: 0;
+    -fx-min-width: 0;
+    -fx-max-width: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
