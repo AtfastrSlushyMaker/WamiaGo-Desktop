@@ -247,7 +247,7 @@ public class MyBikesController {
             }
 
             // Show modal dialog
-            Station selectedStation = showStationSelectionDialog(availableStations);
+            Station selectedStation = showStationSelectionDialog(availableStations,rental);
 
             if (selectedStation == null) {
                 return; // User canceled
@@ -287,10 +287,11 @@ public class MyBikesController {
         }
     }
 
-    private Station showStationSelectionDialog(List<Station> stations) {
+    private Station showStationSelectionDialog(List<Station> stations,BicycleRental rental) {
         Dialog<Station> dialog = new Dialog<>();
         dialog.setTitle("Select Station");
-        dialog.setHeaderText("Select a station to return your Bike to");
+        dialog.setHeaderText("Select a station to return your bike to");
+
 
         // Set up buttons
         ButtonType confirmButton = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
@@ -323,7 +324,7 @@ public class MyBikesController {
             );
 
             // Set the first station as default selection
-            if (i == 0) {
+            if (station.equals(rental.getStart_station())) {
                 radioButton.setSelected(true);
             }
 

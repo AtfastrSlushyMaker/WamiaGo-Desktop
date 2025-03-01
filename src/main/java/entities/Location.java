@@ -7,7 +7,7 @@ public class Location {
     private String address;
     private double latitude;
     private double longitude;
-
+    private static final double EARTH_RADIUS = 6371;
     public Location(int id, String address, float latitude, float longitude) {
         this.id = id;
         this.address = address;
@@ -98,4 +98,25 @@ public class Location {
 
         return R * c;
     }
+    public double distanceTo(Location location) {
+        double lat1Rad = Math.toRadians(this.latitude);
+        double lon1Rad = Math.toRadians(this.longitude);
+        double lat2Rad = Math.toRadians(location.latitude);
+        double lon2Rad = Math.toRadians(location.longitude);
+
+        // Difference in latitude and longitude
+        double dLat = lat2Rad - lat1Rad;
+        double dLon = lon2Rad - lon1Rad;
+
+        // Haversine formula
+        double a = Math.pow(Math.sin(dLat / 2), 2) +
+                Math.cos(lat1Rad) * Math.cos(lat2Rad) *
+                        Math.pow(Math.sin(dLon / 2), 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        // Calculate the distance
+        return EARTH_RADIUS * c;
+    }
+
 }

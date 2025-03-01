@@ -8,10 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/myBikes/MyBikesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/myBikes/MyBikesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/StationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/StationService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,7 +241,7 @@
       <workItem from="1740671974983" duration="674000" />
       <workItem from="1740693720346" duration="398000" />
       <workItem from="1740761251211" duration="52000" />
-      <workItem from="1740825097458" duration="15570000" />
+      <workItem from="1740825097458" duration="18419000" />
     </task>
     <servers />
   </component>

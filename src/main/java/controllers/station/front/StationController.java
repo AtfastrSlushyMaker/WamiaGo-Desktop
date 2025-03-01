@@ -75,6 +75,7 @@ public class StationController {
         setupNavigation();
         loadStationsIntoFlowPane();
         setupSearch();
+        setupButtons();
 
     }
 
@@ -96,6 +97,10 @@ public class StationController {
         scrollPane.setFitToHeight(true);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    }
+    private void setupButtons()
+    {
+        sortButton.setOnAction(event->sort());
     }
 
     // Map Setup and Functions
@@ -177,7 +182,7 @@ public class StationController {
 
         new Thread(() -> {
             try {
-                List<Station> stations = stationService.getSortedStationsByUserDistance(SessionManager.getInstance().getUser());
+                List<Station> stations = stationService.read();
                 Platform.runLater(() -> {
                     stationFlowPane.getChildren().clear();
                     for (Station station : stations) {
@@ -750,4 +755,178 @@ public class StationController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public void sort() {
+        Stage modalStage = new Stage();
+        modalStage.initStyle(StageStyle.TRANSPARENT); // Transparent background
+        modalStage.setTitle("Sort Stations");
+
+        // Main layout
+        VBox layout = new VBox(20); // Increased spacing between elements
+        layout.setPadding(new Insets(30)); // Increased padding
+        layout.setStyle(
+                "-fx-background-color: #2c2c2c; " + // Dark background
+                        "-fx-background-radius: 10px; " + // Rounded corners
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);" // Subtle shadow
+        );
+        layout.setPrefWidth(300); // Set preferred width for the modal
+        layout.setPrefHeight(200); // Set preferred height for the modal
+
+        // Label for "Sort by:"
+        Label label = new Label("Sort by:");
+        label.setStyle(
+                "-fx-font-size: 18px; " + // Larger font size
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-font-family: 'Inter';"
+        );
+
+        // ComboBox for sorting options
+        ComboBox<String> sortOptions = new ComboBox<>();
+        sortOptions.getItems().addAll("Distance", "Available Bikes", "Available Docks", "Name");
+        sortOptions.setStyle(
+                "-fx-background-color: #3a3a3a; " + // Dark gray background
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-font-family: 'Inter'; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 5px 10px;" // Padding
+        );
+
+        // Fix the dropdown text color for all items
+        sortOptions.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(null);
+                } else {
+                    setText(item);
+                    setStyle(
+                            "-fx-text-fill: white; " + // White text
+                                    "-fx-font-family: 'Inter'; " +
+                                    "-fx-font-size: 14px; " +
+                                    "-fx-background-color: #3a3a3a;" // Dark gray background
+                    );
+                }
+            }
+        });
+
+        // Fix the selected item text color in the ComboBox
+        sortOptions.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(null);
+                } else {
+                    setText(item);
+                    setStyle(
+                            "-fx-text-fill: white; " + // White text
+                                    "-fx-font-family: 'Inter'; " +
+                                    "-fx-font-size: 14px; " +
+                                    "-fx-background-color: #3a3a3a;" // Dark gray background
+                    );
+                }
+            }
+        });
+
+        // Apply button
+        Button applyButton = new Button("Apply");
+        applyButton.setStyle(
+                "-fx-background-color: #6BBF59; " + // Green background
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-font-size: 14px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-padding: 10px 20px; " + // Padding
+                        "-fx-background-radius: 5px; " + // Rounded corners
+                        "-fx-cursor: hand; " + // Hand cursor on hover
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);" // Subtle shadow
+        );
+
+        // Hover effect for the Apply button
+        applyButton.setOnMouseEntered(e -> applyButton.setStyle(
+                "-fx-background-color: #4E9D3A; " + // Darker green on hover
+                        "-fx-text-fill: white; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-padding: 10px 20px; " +
+                        "-fx-background-radius: 5px; " +
+                        "-fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 7, 0, 0, 2);" // Stronger shadow on hover
+        ));
+
+        applyButton.setOnMouseExited(e -> applyButton.setStyle(
+                "-fx-background-color: #6BBF59; " + // Green background
+                        "-fx-text-fill: white; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-padding: 10px 20px; " +
+                        "-fx-background-radius: 5px; " +
+                        "-fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);" // Subtle shadow
+        ));
+
+        // Button action
+        applyButton.setOnAction(e -> {
+            String selectedOption = sortOptions.getValue();
+            if (selectedOption != null) {
+                sortStations(selectedOption);
+                modalStage.close();
+            }
+        });
+
+        // Add components to the layout
+        layout.getChildren().addAll(label, sortOptions, applyButton);
+
+        // Create the scene
+        Scene scene = new Scene(layout);
+        scene.setFill(Color.TRANSPARENT); // Transparent scene background
+        modalStage.setScene(scene);
+
+        // Make the modal draggable
+        final double[] dragDelta = new double[2];
+        layout.setOnMousePressed(event -> {
+            dragDelta[0] = event.getScreenX() - modalStage.getX();
+            dragDelta[1] = event.getScreenY() - modalStage.getY();
+        });
+        layout.setOnMouseDragged(event -> {
+            modalStage.setX(event.getScreenX() - dragDelta[0]);
+            modalStage.setY(event.getScreenY() - dragDelta[1]);
+        });
+
+        // Show the modal
+        modalStage.show();
+    }
+
+    private void sortStations(String criteria) {
+        try {
+            List<Station> stations = stationService.getSortedStationsByUserDistance(SessionManager.getInstance().getUser());
+            switch (criteria) {
+                case "Distance":
+                    stations = stationService.getSortedStationsByUserDistance(SessionManager.getInstance().getUser());
+                    break;
+                case "Available Bikes":
+                    stations = stationService.sortByAvailableBikes();
+                    break;
+                case "Available Docks":
+                    stations = stationService.sortByAvailableDocks();
+                    break;
+                case "Name":
+                    stations = stationService.sortByName();
+                    break;
+            }
+
+            stationFlowPane.getChildren().clear();
+            for (Station station : stations) {
+                VBox stationCard = createStationCard(station);
+                stationFlowPane.getChildren().add(stationCard);
+            }
+        } catch (SQLException e) {
+            showErrorDialog("Sort Error", "An error occurred while sorting stations.");
+            e.printStackTrace();
+        }
+    }
+
 }

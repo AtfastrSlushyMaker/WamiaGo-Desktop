@@ -107,12 +107,12 @@ public class Station {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Station station)) return false;
-        return getId() == station.getId() && getTotal_docks() == station.getTotal_docks() && getAvailable_docks() == station.getAvailable_docks() && getAvailable_bikes() == station.getAvailable_bikes() && getCharging_bikes() == station.getCharging_bikes() && Objects.equals(getName(), station.getName()) && Objects.equals(getLocation(), station.getLocation()) && getStatus() == station.getStatus();
+        return  getTotal_docks() == station.getTotal_docks() && getAvailable_docks() == station.getAvailable_docks() && getAvailable_bikes() == station.getAvailable_bikes() && getCharging_bikes() == station.getCharging_bikes() && Objects.equals(getName(), station.getName()) && Objects.equals(getLocation(), station.getLocation()) && getStatus() == station.getStatus();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getLocation(), getTotal_docks(), getAvailable_docks(), getAvailable_bikes(), getCharging_bikes(), getStatus());
+        return Objects.hash(getName(), getLocation(), getTotal_docks(), getAvailable_docks(), getAvailable_bikes(), getCharging_bikes(), getStatus());
     }
 
     @Override
