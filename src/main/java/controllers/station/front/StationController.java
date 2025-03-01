@@ -782,7 +782,7 @@ public class StationController {
 
         // ComboBox for sorting options
         ComboBox<String> sortOptions = new ComboBox<>();
-        sortOptions.getItems().addAll("Distance", "Available Bikes", "Available Docks", "Name");
+        sortOptions.getItems().addAll("Distance", "Available Bikes", "Name");
         sortOptions.setStyle(
                 "-fx-background-color: #3a3a3a; " + // Dark gray background
                         "-fx-text-fill: white; " + // White text
@@ -909,9 +909,6 @@ public class StationController {
                     break;
                 case "Available Bikes":
                     stations = stationService.sortByAvailableBikes();
-                    break;
-                case "Available Docks":
-                    stations = stationService.sortByAvailableDocks();
                     break;
                 case "Name":
                     stations = stationService.sortByName();
