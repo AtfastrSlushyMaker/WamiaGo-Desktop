@@ -552,16 +552,16 @@ public class StationController {
         ProgressBar progressBar = new ProgressBar(1.0);
         progressBar.setStyle(
                 "-fx-accent: #4CAF50; " +
-                        "-fx-pref-width: 400px; " + // Increased width
-                        "-fx-pref-height: 20px; " + // Set preferred height
+                        "-fx-pref-width: 400px; " +
+                        "-fx-pref-height: 20px; " +
                         "-fx-background-color: none; " +
                         "-fx-border-radius: 10px;"
         );
 
         // Generate QR Code
         ImageView qrCodeImageView = new ImageView();
-        qrCodeImageView.setFitWidth(200); // Increased QR code size
-        qrCodeImageView.setFitHeight(200); // Increased QR code size
+        qrCodeImageView.setFitWidth(200);
+        qrCodeImageView.setFitHeight(200);
         qrCodeImageView.setPreserveRatio(true);
 
         try {
@@ -579,11 +579,10 @@ public class StationController {
                             "Start Time: " + rental.getStart_time();
 
             // Generate the QR code image
-            byte[] qrCodeImage = QRCodeGenerator.generateQRCodeImage(reservationDetails, 300, 300); // Increased QR code resolution
+            byte[] qrCodeImage = QRCodeGenerator.generateQRCodeImage(reservationDetails, 300, 300);
             Image qrCode = new Image(new ByteArrayInputStream(qrCodeImage));
             qrCodeImageView.setImage(qrCode);
 
-            // Optional: Add a border or background to the QR code image
             qrCodeImageView.setStyle(
                     "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2); " +
                             "-fx-padding: 10px; " +
@@ -595,9 +594,9 @@ public class StationController {
             showErrorDialog("QR Code Error", "Failed to generate QR code for the reservation.");
 
             // Fallback: Display an error image or message
-            Image errorImage = new Image(getClass().getResourceAsStream("/images/error.png")); // Add an error image to your resources
+            Image errorImage = new Image(getClass().getResourceAsStream("/images/error.png"));
             qrCodeImageView.setImage(errorImage);
-            qrCodeImageView.setFitWidth(100); // Adjust size for the error image
+            qrCodeImageView.setFitWidth(100);
             qrCodeImageView.setFitHeight(100);
         }
 
