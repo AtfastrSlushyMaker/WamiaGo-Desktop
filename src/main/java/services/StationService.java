@@ -311,7 +311,7 @@ public class StationService implements IService<Station> {
 
     public List<Station> getSortedStationsByUserDistance(User user) throws SQLException {
         List<Station> stations = read();
-        stations.sort(Comparator.<Station>comparingDouble(s -> s.getLocation().distanceTo(user.getLocation())).reversed());
+        stations.sort(Comparator.<Station>comparingDouble(s ->Location.calculateDistance(user.getLocation(),s.getLocation())).reversed());
         return stations;
     }
 
