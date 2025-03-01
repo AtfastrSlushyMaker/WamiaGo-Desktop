@@ -1,4 +1,4 @@
-package services;
+package utils.GeoCoding;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;

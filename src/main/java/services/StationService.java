@@ -35,6 +35,7 @@ public class StationService implements IService<Station> {
         return false;
     }
 
+
     @Override
     public void update(Station station) throws SQLException {
         String sql = "UPDATE bicycle_station SET name=?,id_location=?,total_docks=?," +

@@ -1,5 +1,6 @@
 package controllers.station.front;
 
+import com.google.zxing.WriterException;
 import entities.Bicycle;
 import entities.BicycleRental;
 import entities.Station;
@@ -29,8 +30,10 @@ import netscape.javascript.JSObject;
 import services.BicycleRentalService;
 import services.BicycleService;
 import services.StationService;
+import utils.QrCode.QRCodeGenerator;
 import utils.SessionManager;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -434,12 +437,21 @@ public class StationController {
                         "-fx-cursor: hand;"
         );
         reserveButton.setOnAction(e -> {
-            reserveBike(bicycle, station);
+
             BicycleRental rental = new BicycleRental(
                     0, SessionManager.getInstance().getUser(), bicycle, station,
                     null, new Timestamp(System.currentTimeMillis()), null, 0, 0, 0
             );
-            showReservationConfirmation(bicycle, rental);
+            BicycleRentalService bicycleRentalService = new BicycleRentalService();
+            try {
+                rental.setId(bicycleRentalService.create(rental));
+                reserveBike(bicycle, station,rental);
+                showReservationConfirmation(bicycle,rental );
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+
             modalStage.close();
         });
 
@@ -490,16 +502,11 @@ public class StationController {
     }
 
     // Reservation Functions
-    private void reserveBike(Bicycle bicycle, Station station) {
+    private void reserveBike(Bicycle bicycle, Station station, BicycleRental rental) {
         try {
             bicycle.setStatus(Bicycle.STATUS.reserved);
 
             BicycleRentalService bicycleRentalService = new BicycleRentalService();
-            BicycleRental rental = new BicycleRental(
-                    0, SessionManager.getInstance().getUser(), bicycle, station,
-                    null, new Timestamp(System.currentTimeMillis()), null, 0, 0, 0
-            );
-            bicycleRentalService.create(rental);
 
             BicycleService bicycleService = new BicycleService();
             bicycleService.update(bicycle);
@@ -531,7 +538,7 @@ public class StationController {
                 "-fx-background-color: #2c2c2c; " +
                         "-fx-background-radius: 20px; "
         );
-        modalLayout.setAlignment(Pos.CENTER); // Center alignment
+        modalLayout.setAlignment(Pos.CENTER);
 
         // Header label
         Label titleLabel = new Label("Reservation Confirmation");
@@ -542,16 +549,57 @@ public class StationController {
         timerLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
 
         // ProgressBar to represent the remaining time
-        ProgressBar progressBar = new ProgressBar(1.0); // Starts at 100%
+        ProgressBar progressBar = new ProgressBar(1.0);
         progressBar.setStyle(
                 "-fx-accent: #4CAF50; " +
                         "-fx-pref-width: 400px; " + // Increased width
                         "-fx-pref-height: 20px; " + // Set preferred height
-                        "-fx-background-color: #444444; " + // Background color
-                        "-fx-border-color: #666666; " + // Border color
-                        "-fx-border-width: 1px; " + // Border width
-                        "-fx-border-radius: 10px;" // Border radius
+                        "-fx-background-color: none; " +
+                        "-fx-border-radius: 10px;"
         );
+
+        // Generate QR Code
+        ImageView qrCodeImageView = new ImageView();
+        qrCodeImageView.setFitWidth(200); // Increased QR code size
+        qrCodeImageView.setFitHeight(200); // Increased QR code size
+        qrCodeImageView.setPreserveRatio(true);
+
+        try {
+            // Encode reservation details into a QR code
+            String reservationDetails =
+                    "=== Bike Reservation Details ===\n" +
+                            "Reservation N°" + rental.getId() + "\n" +
+                            "***** Bike Details ***** "+"\n" +
+                            "Battery Level: " + bicycle.getBattery_level() + "%" + "\n" +
+                            "Range: " + bicycle.getRange_km() + " km" + "\n" +
+                            "Last Updated: " + bicycle.getLast_updated() + "\n" +
+                            "***** Rental Details ***** " + "\n" +
+                            "Station: " + rental.getStart_station().getName() + "\n" +
+                            "User: " + SessionManager.getInstance().getUser().getName() + "\n" +
+                            "Start Time: " + rental.getStart_time();
+
+            // Generate the QR code image
+            byte[] qrCodeImage = QRCodeGenerator.generateQRCodeImage(reservationDetails, 300, 300); // Increased QR code resolution
+            Image qrCode = new Image(new ByteArrayInputStream(qrCodeImage));
+            qrCodeImageView.setImage(qrCode);
+
+            // Optional: Add a border or background to the QR code image
+            qrCodeImageView.setStyle(
+                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2); " +
+                            "-fx-padding: 10px; " +
+                            "-fx-background-color: white; " +
+                            "-fx-background-radius: 10px;"
+            );
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+            showErrorDialog("QR Code Error", "Failed to generate QR code for the reservation.");
+
+            // Fallback: Display an error image or message
+            Image errorImage = new Image(getClass().getResourceAsStream("/images/error.png")); // Add an error image to your resources
+            qrCodeImageView.setImage(errorImage);
+            qrCodeImageView.setFitWidth(100); // Adjust size for the error image
+            qrCodeImageView.setFitHeight(100);
+        }
 
         // Buttons
         Button pickUpButton = new Button("Pick Up");
@@ -584,8 +632,10 @@ public class StationController {
                 reservationTimeline = null;
                 System.out.println("Timer stopped.");
             }
-            modalStage.close();
+            System.out.println("Canceling reservation for Bike ID: " + bicycle.getId());
             cancelReservation(bicycle, rental.getStart_station(), rental);
+            System.out.println("Reservation canceled. Closing modal.");
+            modalStage.close();
         });
 
         // Button layout
@@ -593,11 +643,11 @@ public class StationController {
         buttonLayout.setAlignment(Pos.CENTER);
 
         // Add all components to the modal layout
-        modalLayout.getChildren().addAll(titleLabel, timerLabel, progressBar, buttonLayout);
+        modalLayout.getChildren().addAll(titleLabel, timerLabel, progressBar, qrCodeImageView, buttonLayout);
         stackPane.getChildren().add(modalLayout);
 
-        // Create the scene
-        Scene modalScene = new Scene(stackPane, 500, 300); // Increased width and height
+        // Create the scene with larger dimensions
+        Scene modalScene = new Scene(stackPane, 600, 500); // Increased width and height
         modalScene.setFill(Color.TRANSPARENT);
 
         // Make the modal draggable
@@ -680,51 +730,25 @@ public class StationController {
         timeline.play();
     }
 
-    private void startTimerDisplay(Label timerLabel, Stage modalStage, Bicycle bicycle, BicycleRental rental) {
-        if (reservationTimeline != null) {
-            reservationTimeline.stop();
-            reservationTimeline = null;
-        }
-
-        int[] reservationDurationSeconds = {60};
-
-        reservationTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(1), event -> {
-                    reservationDurationSeconds[0]--;
-
-                    if (reservationDurationSeconds[0] <= 0) {
-                        modalStage.close();
-                        cancelReservation(bicycle, rental.getStart_station(), rental);
-                    } else {
-                        int minutes = reservationDurationSeconds[0] / 60;
-                        int seconds = reservationDurationSeconds[0] % 60;
-                        timerLabel.setText(String.format("Time remaining: %02d:%02d", minutes, seconds));
-                    }
-                })
-        );
-
-        reservationTimeline.setCycleCount(Timeline.INDEFINITE);
-        reservationTimeline.play();
-
-        modalStage.setOnCloseRequest(event -> {
-            if (reservationTimeline != null) {
-                reservationTimeline.stop();
-                reservationTimeline = null;
-            }
-        });
-    }
-
     private void cancelReservation(Bicycle bicycle, Station station, BicycleRental rental) {
         try {
+            // Update bike status to "available"
             bicycle.setStatus(Bicycle.STATUS.available);
 
+            // Update the bike in the database
             BicycleService bicycleService = new BicycleService();
             bicycleService.update(bicycle);
+            System.out.println("✅ Bicycle updated successfully");
 
+            // Update the station's available bikes count
             stationService.updateAvailableBikes(station, station.getAvailable_bikes() + 1);
+            System.out.println("✅ Station bike count updated");
 
+            // Delete the rental record from the database
             BicycleRentalService bicycleRentalService = new BicycleRentalService();
+            System.out.println("Deleting rental record with ID: " + rental.getId());
             bicycleRentalService.delete(rental.getId());
+
 
             System.out.println("Reservation for Bike at " + rental.getStart_station().getName() + " has been canceled.");
         } catch (Exception e) {
