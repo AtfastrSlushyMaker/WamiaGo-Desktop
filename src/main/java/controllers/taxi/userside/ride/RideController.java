@@ -6,7 +6,8 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
-
+import javafx.concurrent.Worker;
+import javafx.scene.control.ScrollPane;
 import controllers.Home;
 import entities.*;
 import javafx.application.HostServices;
@@ -28,6 +29,8 @@ import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import services.PaymentService;
 import services.RideService;
@@ -72,7 +75,7 @@ public class RideController {
     private final RideService rideService = new RideService();
 
     private final PaymentService paymentService = new PaymentService("67c0e6eedeff4671bb44d983:I2Cgjpot0lmfhlhMehyxRNd5u8RsZm");
-
+    private boolean isPaymentInProgress = false;
 
     @FXML
     public void initialize() {
@@ -329,8 +332,13 @@ public class RideController {
         payButton.getStyleClass().add("ride-button-pay");
 
         payButton.setOnAction(event -> {
-            // Appeler la méthode pour lancer le paiement en passant l'objet Ride
-            handleConfirmride(ride);
+            if (!isPaymentInProgress) {
+                isPaymentInProgress = true; // Start the payment process
+                payButton.setDisable(true); // Disable the button to prevent multiple clicks
+
+                // Call the payment method
+                handleConfirmride(ride);
+            }
         });
 
         return payButton;
@@ -349,7 +357,8 @@ public class RideController {
 
             // 3. Ouvrir la passerelle de paiement
             if (paymentResponse != null && paymentResponse.getPayUrl() != null) {
-                openUrlInBrowser(paymentResponse.getPayUrl());
+                // Open payment URL
+                openPaymentPage(paymentResponse.getPayUrl());
             } else {
                 showErrorAlert("Erreur", "L'URL de paiement est invalide.");
             }
@@ -361,7 +370,6 @@ public class RideController {
         }
     }
 
-    // Méthode pour obtenir les services de l'hôte (utilisé pour ouvrir le lien dans le navigateur)
     private HostServices getHostServices() {
         return Home.getAppHostServices();
     }
@@ -384,20 +392,54 @@ public class RideController {
         alert.showAndWait();
     }
 
-    // Méthode pour ouvrir une URL dans le navigateur
-    private void openUrlInBrowser(String url) {
-        try {
-            URI uri = new URI(url);
-            if (Desktop.isDesktopSupported()) {
-                Desktop desktop = Desktop.getDesktop();
-                desktop.browse(uri);  // Ouvre l'URL dans le navigateur par défaut
-            } else {
-                showErrorAlert("Erreur", "L'ouverture du lien dans le navigateur n'est pas supportée sur ce système.");
+    private void openPaymentPage(String url) {
+        Stage paymentStage = new Stage();
+        paymentStage.setTitle("Paiement");
+
+        // Créer WebView pour charger l'URL
+        WebView webView = new WebView();
+        WebEngine webEngine = webView.getEngine();
+        webEngine.load(url);
+
+        // Créer un ScrollPane pour permettre le défilement du contenu
+        ScrollPane scrollPane = new ScrollPane(webView);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
+        // Make the scrollPane grow vertically
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+
+        // Bouton pour fermer la fenêtre
+        Button closeButton = new Button("Fermer");
+        closeButton.getStyleClass().add("modal-close-button");
+        closeButton.setOnAction(e -> paymentStage.close());
+
+        // Créer le layout avec WebView et le bouton
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(10));
+        layout.getChildren().addAll(scrollPane, closeButton);
+
+        // Créer la scène avec un redimensionnement automatique
+        Scene scene = new Scene(layout, 1200, 800); // Increase height if necessary
+        paymentStage.setScene(scene);
+        paymentStage.setResizable(true);
+
+        // Vérifier que la page est bien chargée
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                System.out.println("Page loaded successfully.");
             }
-        } catch (Exception e) {
-            showErrorAlert("Erreur", "Impossible d'ouvrir le lien : " + e.getMessage());
-        }
+        });
+
+        // Afficher la fenêtre
+        paymentStage.show();
+
+        System.out.println("Payment page opened in WebView.");
     }
+
+
 
 
 

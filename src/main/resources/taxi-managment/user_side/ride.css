@@ -79,7 +79,19 @@
 .ride-button-delete:hover {
     -fx-background-color: #D32F2F;
 }
+.ride-button-pay {
+    -fx-background-color: #4CAF50; /* Vert, complémentaire au rouge */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
 
+.ride-button-pay:hover {
+    -fx-background-color: #388E3C; /* Une teinte plus foncée de vert pour l'effet hover */
+}
 .ride-button:hover {
     -fx-background-color: #FFC107;
 }
