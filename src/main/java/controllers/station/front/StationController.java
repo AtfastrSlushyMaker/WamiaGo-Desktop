@@ -57,6 +57,7 @@ public class StationController {
     @FXML private Label bikeCount;
     @FXML private ScrollPane scrollPane;
     @FXML private Button my_bikes_button;
+    @FXML private Button clear_button;
     @FXML private WebView map;
     @FXML private Button sortButton;
     @FXML private TextField searchField;
@@ -74,6 +75,7 @@ public class StationController {
         setupNavigation();
         loadStationsIntoFlowPane();
         setupSearch();
+
     }
 
     // UI Setup
@@ -708,6 +710,10 @@ public class StationController {
     // Search Functions
     private void setupSearch() {
         searchField.setOnKeyReleased(event -> search());
+        clear_button.setOnAction(event -> {
+            searchField.clear();
+            search();
+        });
     }
 
     public void search() {

@@ -240,3 +240,14 @@
 .station-bike-close-button:hover {
     -fx-background-color: #ff4444;
 }
+.clear_button {
+    -fx-background-color: Transparent;
+    -fx-font-family: Inter;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff4444;
+}
+.clear_button:hover {
+    -fx-background-color: #ff4444;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}

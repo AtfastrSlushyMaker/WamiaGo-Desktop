@@ -7,6 +7,9 @@
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/myBikes/MyBikesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/myBikes/MyBikesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" afterDir="false" />
     </list>
@@ -239,7 +242,7 @@
       <workItem from="1740671974983" duration="674000" />
       <workItem from="1740693720346" duration="398000" />
       <workItem from="1740761251211" duration="52000" />
-      <workItem from="1740825097458" duration="11011000" />
+      <workItem from="1740825097458" duration="15570000" />
     </task>
     <servers />
   </component>

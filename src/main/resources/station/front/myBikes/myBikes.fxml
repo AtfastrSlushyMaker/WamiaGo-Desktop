@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@myBikes.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.front.myBikes.MyBikesController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@myBikes.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.front.myBikes.MyBikesController">
 
     <children>
 
@@ -107,7 +107,7 @@
         <Pane prefHeight="827.0" prefWidth="1143.0">
             <children>
                 <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
-                <Label id="available_stations_label" fx:id="available_stations_label" layoutX="502.0" layoutY="115.0" prefHeight="50.0" prefWidth="98.0" stylesheets="@station.css" text="My Bikes" textFill="#323131">
+                <Label id="available_stations_label" fx:id="available_stations_label" layoutX="435.0" layoutY="116.0" prefHeight="50.0" prefWidth="232.0" stylesheets="@station.css" text="My Bikes" textFill="#323131">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
@@ -118,7 +118,7 @@
                </content>
                 </ScrollPane>
                 <AnchorPane layoutX="42.0" layoutY="521.0" minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="438.0" />
-                <Button id="rent_button" fx:id="rent_button" layoutX="919.0" layoutY="122.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" stylesheets="@myBikes.css" text="Rent a Bike" />
+                <Button id="rent_button" fx:id="rent_button" layoutX="919.0" layoutY="122.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" stylesheets="@myBikes.css" text="Rent" />
 
             </children>
         </Pane>

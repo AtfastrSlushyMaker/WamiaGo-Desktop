@@ -1,107 +1,137 @@
-    package controllers.station.front.myBikes;
-    
-    import entities.Bicycle;
-    import entities.BicycleRental;
-    import entities.Location;
-    import entities.Station;
-    import javafx.fxml.FXML;
-    import javafx.fxml.FXMLLoader;
-    import javafx.geometry.Insets;
-    import javafx.scene.Parent;
-    import javafx.scene.Scene;
-    import javafx.scene.control.*;
-    import javafx.scene.control.Button;
-    import javafx.scene.control.Dialog;
-    import javafx.scene.control.Label;
-    import javafx.scene.control.ScrollPane;
-    import javafx.scene.layout.*;
-    import javafx.stage.Stage;
-    import services.BicycleRentalService;
-    import services.BicycleService;
-    import services.StationService;
-    import utils.SessionManager;
-    
-    import javafx.scene.image.ImageView;
-    import java.awt.*;
-    import java.io.IOException;
-    import java.sql.Timestamp;
-    import java.util.List;
-    import java.util.Optional;
-    
-    import javafx.scene.control.*;
-    import javafx.scene.image.Image;
-    import javafx.scene.layout.GridPane;
-    import javafx.scene.layout.VBox;
-    import javafx.geometry.Pos;
-    import javafx.geometry.Insets;
-    
-    public class MyBikesController {
-        @FXML
-        private Label available_stations_label;
-    
-        @FXML
-        private ListView<BicycleRental> bikes_list;
-    
-        @FXML
-        private Button bookings_button;
-    
-        @FXML
-        private Button history_button;
-    
-        @FXML
-        private Button home_button;
-    
-        @FXML
-        private Button logout_button;
-    
-        @FXML
-        private Pane pane_1121;
-    
-        @FXML
-        private Button rent_button;
-    
-        @FXML
-        private Button rides_button;
-    
-        @FXML
-        private HBox root;
-    
-        @FXML
-        private ScrollPane scrollPane;
-    
-        @FXML
-        private AnchorPane side_ankerpane;
-    
-        private final BicycleRentalService rentalService = new BicycleRentalService();
-    
-        private void setupNavigation() {
-            home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
-            rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
-            rent_button.setOnAction(event -> loadScene("/station/front/station.fxml"));
-            history_button.setOnAction(event -> loadScene("/history/history.fxml"));
-            bookings_button.setOnAction(event -> loadScene("/bookings/bookings.fxml"));
-            logout_button.setOnAction(event -> loadScene("/user/login.fxml"));
+package controllers.station.front.myBikes;
+
+import entities.Bicycle;
+import entities.BicycleRental;
+import entities.Location;
+import entities.Station;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import services.BicycleRentalService;
+import services.BicycleService;
+import services.StationService;
+import utils.SessionManager;
+
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Optional;
+
+public class MyBikesController {
+    private final BicycleRentalService rentalService = new BicycleRentalService();
+    @FXML
+    private Label available_stations_label;
+    @FXML
+    private ListView<BicycleRental> bikes_list;
+    @FXML
+    private Button bookings_button;
+    @FXML
+    private Button history_button;
+    @FXML
+    private Button home_button;
+    @FXML
+    private Button logout_button;
+    @FXML
+    private Pane pane_1121;
+    @FXML
+    private Button rent_button;
+    @FXML
+    private Button rides_button;
+    @FXML
+    private HBox root;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private AnchorPane side_ankerpane;
+
+    private void setupNavigation() {
+        home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
+        rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
+        rent_button.setOnAction(event -> loadScene("/station/front/station.fxml"));
+        history_button.setOnAction(event -> loadScene("/history/history.fxml"));
+        bookings_button.setOnAction(event -> loadScene("/bookings/bookings.fxml"));
+        logout_button.setOnAction(event -> loadScene("/user/login.fxml"));
+    }
+
+
+    private void loadScene(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Stage stage = (Stage) home_button.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    
-    
-        private void loadScene(String fxmlPath) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-                Parent root = loader.load();
-                Stage stage = (Stage) home_button.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+    }
+
+    @FXML
+    public void initialize() {
+        // Load the CSS file
+
+        setupNavigation();
+        refreshBikesList(); // Refresh the ListView on initialization
+        bikes_list.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(BicycleRental rental, boolean empty) {
+                super.updateItem(rental, empty);
+                if (empty || rental == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    // Debug: Print the rental details
+                    System.out.println("Rental: " + rental);
+                    if (rental.getStart_station() == null) {
+                        System.err.println("Start station is null for rental: " + rental);
+                        setText("Invalid rental data");
+                        setGraphic(null);
+                    } else {
+                        setGraphic(createBikeItem(rental));
+                    }
+                }
             }
+        });
+
+        // Populate the list initially
+        fillBikesList();
+    }
+
+    public void refreshBikesList() {
+        fillBikesList(); // Call the method to populate the ListView
+    }
+
+    private void reloadCurrentScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/station/front/myBikes/myBikes.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) home_button.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Reload Failed", "An error occurred while reloading the page. Please try again.");
         }
-    
-        @FXML
-        public void initialize() {
-            // Load the CSS file
-    
-            setupNavigation();
-            refreshBikesList(); // Refresh the ListView on initialization
+    }
+
+    public void fillBikesList() {
+        try {
+            // Fetch active rentals for the current user
+            List<BicycleRental> activeRentals = rentalService.getActiveRentalsForUser(SessionManager.getInstance().getUser());
+
+            // Clear and set the new items
+            bikes_list.getItems().clear();
+            bikes_list.getItems().addAll(activeRentals);
+
+            // Ensure the ListView is using a custom cell factory
             bikes_list.setCellFactory(param -> new ListCell<>() {
                 @Override
                 protected void updateItem(BicycleRental rental, boolean empty) {
@@ -110,240 +140,363 @@
                         setText(null);
                         setGraphic(null);
                     } else {
-                        // Debug: Print the rental details
-                        System.out.println("Rental: " + rental);
-                        if (rental.getStart_station() == null) {
-                            System.err.println("Start station is null for rental: " + rental);
-                            setText("Invalid rental data");
-                            setGraphic(null);
-                        } else {
-                            setGraphic(createBikeItem(rental));
-                        }
+                        // Set a proper graphic instead of relying on toString()
+                        setText(null);
+                        setGraphic(createBikeItem(rental));
                     }
                 }
             });
-    
-            // Populate the list initially
-            fillBikesList();
-        }
-    
-        public void refreshBikesList() {
-            fillBikesList(); // Call the method to populate the ListView
-        }
-    
-        private void reloadCurrentScene() {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/station/front/myBikes/myBikes.fxml"));
-                Parent root = loader.load();
-                Stage stage = (Stage) home_button.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                showErrorDialog("Reload Failed", "An error occurred while reloading the page. Please try again.");
-            }
-        }
-    
-        public void fillBikesList() {
-            try {
-                // Fetch active rentals for the current user
-                List<BicycleRental> activeRentals = rentalService.getActiveRentalsForUser(SessionManager.getInstance().getUser());
-    
-                // Clear and set the new items
-                bikes_list.getItems().clear();
-                bikes_list.getItems().addAll(activeRentals);
-    
-                // Ensure the ListView is using a custom cell factory
-                bikes_list.setCellFactory(param -> new ListCell<>() {
-                    @Override
-                    protected void updateItem(BicycleRental rental, boolean empty) {
-                        super.updateItem(rental, empty);
-                        if (empty || rental == null) {
-                            setText(null);
-                            setGraphic(null);
-                        } else {
-                            // Set a proper graphic instead of relying on toString()
-                            setText(null);
-                            setGraphic(createBikeItem(rental));
-                        }
-                    }
-                });
-    
-            } catch (Exception e) {
-                e.printStackTrace();
-                showErrorDialog("Error", "Failed to load rented bikes.");
-            }
-        }
-        private HBox createBikeItem(BicycleRental rental) {
-            HBox itemBox = new HBox(20); // Horizontal spacing of 20
-            itemBox.setAlignment(Pos.CENTER_LEFT); // Align items to the left
-            itemBox.setPadding(new Insets(10)); // Padding around the item
 
-            // Create an icon for the bike
-            Image image = new Image(getClass().getResourceAsStream("/images/station/icons/Ebike-side.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorDialog("Error", "Failed to load rented bikes.");
+        }
+    }
+
+    private HBox createBikeItem(BicycleRental rental) {
+        HBox itemBox = new HBox(20); // Horizontal spacing of 20
+        itemBox.setAlignment(Pos.CENTER_LEFT); // Align items to the left
+        itemBox.setPadding(new Insets(10)); // Padding around the item
+        itemBox.setStyle(
+                "-fx-background-color: #ffffff; " + // White background
+                        "-fx-border-color: #eeeeee; " + // Light gray border
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 10px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 0, 1);" // Subtle shadow
+        );
+
+        // Create an icon for the bike
+        Image image = new Image(getClass().getResourceAsStream("/images/station/icons/Ebike-side.png"));
+        ImageView icon = new ImageView(image);
+        icon.setFitWidth(50);
+        icon.setFitHeight(50);
+
+        // Create label for the bike info
+        Label bikeLabel = new Label("Bike taken from " + rental.getStart_station().getName());
+        bikeLabel.setStyle(
+                "-fx-font-size: 14px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: #333333;" // Dark gray text
+        );
+
+        // Create return button with style
+        Button returnButton = new Button("Return");
+        returnButton.setStyle(
+                "-fx-background-color: #6BBF59; " + // Green background
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 8px 16px; " + // Padding
+                        "-fx-font-family: 'Inter'; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);" // Subtle shadow
+        );
+
+        // Button action
+        returnButton.setOnAction(event -> returnBike(rental));
+
+        // Add hover effect to the return button
+        returnButton.setOnMouseEntered(e -> returnButton.setStyle(
+                "-fx-background-color: #4E9D3A; " + // Darker green on hover
+                        "-fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 7, 0, 0, 2);" // Stronger shadow
+        ));
+
+        returnButton.setOnMouseExited(e -> returnButton.setStyle(
+                "-fx-background-color: #6BBF59; " + // Green background
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 8px 16px; " + // Padding
+                        "-fx-font-family: 'Inter'; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);" // Subtle shadow
+        ));
+
+        // Add the icon, label, and button into the HBox
+        itemBox.getChildren().addAll(icon, bikeLabel, createFlexibleSpace(), returnButton);
+
+        return itemBox;
+    }
+
+
+    private void showSuccessDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showErrorDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void returnBike(BicycleRental rental) {
+        try {
+            // Fetch available stations
+            StationService stationService = new StationService();
+            List<Station> availableStations = stationService.read();
+
+            if (availableStations.isEmpty()) {
+                showErrorDialog("No Available Stations", "There are no available stations to return the bike.");
+                return;
+            }
+
+            // Show modal dialog
+            Station selectedStation = showStationSelectionDialog(availableStations);
+
+            if (selectedStation == null) {
+                return; // User canceled
+            }
+
+            // Debug: Print the selected station
+            System.out.println("Selected Station: " + selectedStation);
+
+            // Update bike status and rental
+            Bicycle bicycle = rental.getBicycle();
+            bicycle.setStatus(Bicycle.STATUS.available);
+
+
+            rental.setEnd_station(selectedStation);
+            rental.setDistance_km((float) Location.calculateDistance(rental.getStart_station().getLocation(), selectedStation.getLocation()));
+            rental.setBattery_used((float) Math.random() * 100); // Random battery usage
+            rental.setCost((float) (rental.getDistance_km() * 0.1)); // Cost per km
+
+            bicycle.setStation(selectedStation);
+            rental.setEnd_time(new Timestamp(System.currentTimeMillis()));
+
+            // Debug: Print the updated rental details
+            System.out.println("Updated Rental: " + rental);
+
+            // Save changes
+            new BicycleService().update(bicycle);
+            rentalService.update(rental);
+
+            // Refresh UI
+            refreshBikesList();
+
+            // Show success message
+            showSuccessDialog("Bike Returned", "Your Bike has been returned to " + selectedStation.getName() + ".");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorDialog("Return Failed", "An error occurred while returning the bike.");
+        }
+    }
+
+    private Station showStationSelectionDialog(List<Station> stations) {
+        Dialog<Station> dialog = new Dialog<>();
+        dialog.setTitle("Select Station");
+        dialog.setHeaderText("Select a station to return your Bike to");
+
+        // Set up buttons
+        ButtonType confirmButton = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(confirmButton, ButtonType.CANCEL);
+
+        // Create a GridPane to display station icons and names
+        GridPane grid = new GridPane();
+        grid.setHgap(20); // Horizontal gap between items
+        grid.setVgap(20); // Vertical gap between items
+        grid.setPadding(new Insets(20)); // Padding around the grid
+
+        ToggleGroup group = new ToggleGroup(); // To ensure only one station is selected
+
+        for (int i = 0; i < stations.size(); i++) {
+            Station station = stations.get(i);
+
+            // Create an ImageView for the station icon
+            Image image = new Image(getClass().getResourceAsStream("/images/station/icons/bike_station.png"));
             ImageView icon = new ImageView(image);
             icon.setFitWidth(50);
             icon.setFitHeight(50);
 
-            // Create label for the bike info
-            Label bikeLabel = new Label("Bike taken from " + rental.getStart_station().getName());
-            bikeLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+            // Create a radio button for station selection
+            RadioButton radioButton = new RadioButton(station.getName());
+            radioButton.setToggleGroup(group);
+            radioButton.setStyle(
+                    "-fx-font-size: 14px; " +
+                            "-fx-font-family: 'Inter'; " +
+                            "-fx-text-fill: #333333;" // Dark gray text
+            );
 
-            // Create return button with style
-            Button returnButton = new Button("Return");
-            returnButton.setStyle("-fx-background-color: #0078d7; -fx-text-fill: white; -fx-border-radius: 3px;"
-                    + "-fx-pref-height: 50; -fx-pref-width: 100;");
-
-            // Button action
-            returnButton.setOnAction(event -> returnBike(rental));
-
-            // Add the icon, label, and button into the HBox
-            itemBox.getChildren().addAll(icon, bikeLabel, createFlexibleSpace(), returnButton);
-
-            // Add flexible space between label and button for even spacing
-            return itemBox;
-        }
-
-        // Create a Region to act as flexible space between items
-        private Region createFlexibleSpace() {
-            Region region = new Region();
-            HBox.setHgrow(region, Priority.ALWAYS); // Make it grow and take up remaining space
-            return region;
-        }
-
-
-
-
-        private void showSuccessDialog(String title, String message) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(title);
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.showAndWait();
-        }
-    
-        private void showErrorDialog(String title, String message) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(title);
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.showAndWait();
-        }
-    
-        private void returnBike(BicycleRental rental) {
-            try {
-                // Fetch available stations
-                StationService stationService = new StationService();
-                List<Station> availableStations = stationService.read();
-    
-                if (availableStations.isEmpty()) {
-                    showErrorDialog("No Available Stations", "There are no available stations to return the bike.");
-                    return;
-                }
-    
-                // Show modal dialog
-                Station selectedStation = showStationSelectionDialog(availableStations);
-    
-                if (selectedStation == null) {
-                    return; // User canceled
-                }
-    
-                // Debug: Print the selected station
-                System.out.println("Selected Station: " + selectedStation);
-    
-                // Update bike status and rental
-                Bicycle bicycle = rental.getBicycle();
-                bicycle.setStatus(Bicycle.STATUS.available);
-    
-    
-                rental.setEnd_station(selectedStation);
-                rental.setDistance_km((float)Location.calculateDistance(rental.getStart_station().getLocation(), selectedStation.getLocation()));
-                rental.setBattery_used((float) Math.random() * 100); // Random battery usage
-                rental.setCost((float) (rental.getDistance_km() * 0.1)); // Cost per km
-    
-                bicycle.setStation(selectedStation);
-                rental.setEnd_time(new Timestamp(System.currentTimeMillis()));
-    
-                // Debug: Print the updated rental details
-                System.out.println("Updated Rental: " + rental);
-    
-                // Save changes
-                new BicycleService().update(bicycle);
-                rentalService.update(rental);
-    
-                // Refresh UI
-                refreshBikesList();
-    
-                // Show success message
-                showSuccessDialog("Bike Returned", "Your Bike has been returned to " + selectedStation.getName() + ".");
-            } catch (Exception e) {
-                e.printStackTrace();
-                showErrorDialog("Return Failed", "An error occurred while returning the bike.");
+            // Set the first station as default selection
+            if (i == 0) {
+                radioButton.setSelected(true);
             }
+
+            // Arrange items in a VBox
+            VBox stationBox = new VBox(10, icon, radioButton); // Vertical spacing of 10
+            stationBox.setAlignment(Pos.CENTER);
+            stationBox.setStyle(
+                    "-fx-background-color: #ffffff; " + // White background
+                            "-fx-border-color: #cccccc; " + // Light gray border
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 10px; " + // Rounded corners
+                            "-fx-padding: 15px; " + // Padding inside the box
+                            "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);" // Subtle shadow
+            );
+
+            // Add hover effect to the station box
+            stationBox.setOnMouseEntered(e -> stationBox.setStyle(
+                    "-fx-background-color: #f0f0f0; " + // Light gray background on hover
+                            "-fx-border-color: #cccccc; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 10px; " +
+                            "-fx-padding: 15px; " +
+                            "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 7, 0, 0, 3);" // Stronger shadow on hover
+            ));
+
+            stationBox.setOnMouseExited(e -> stationBox.setStyle(
+                    "-fx-background-color: #ffffff; " + // White background
+                            "-fx-border-color: #cccccc; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 10px; " +
+                            "-fx-padding: 15px; " +
+                            "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);" // Subtle shadow
+            ));
+
+            // Add the station box to the grid
+            grid.add(stationBox, i % 3, i / 3); // Arrange in a grid format (3 per row)
         }
-        private Station showStationSelectionDialog(List<Station> stations) {
-            Dialog<Station> dialog = new Dialog<>();
-            dialog.setTitle("Select Station");
-            dialog.setHeaderText("Select a station to return the bike to:");
-    
-            // Set up buttons
-            ButtonType confirmButton = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().addAll(confirmButton, ButtonType.CANCEL);
-    
-            // Create a GridPane to display station icons and names
-            GridPane grid = new GridPane();
-            grid.setHgap(10);
-            grid.setVgap(10);
-            grid.setPadding(new Insets(20, 150, 10, 10));
-    
-            ToggleGroup group = new ToggleGroup(); // To ensure only one station is selected
-    
-            for (int i = 0; i < stations.size(); i++) {
-                Station station = stations.get(i);
-    
-                // Create an ImageView for the station icon
-                Image image = new Image(getClass().getResourceAsStream("/images/station/icons/bike_station.png")); // Ensure the file exists in resources/icons/
-                ImageView icon = new ImageView(image);
-                icon.setFitWidth(50);
-                icon.setFitHeight(50);
-    
-                // Create a radio button for station selection
-                RadioButton radioButton = new RadioButton(station.getName());
-                radioButton.setToggleGroup(group);
-    
-                // Set the first station as default selection
-                if (i == 0) {
-                    radioButton.setSelected(true);
-                }
-    
-                // Arrange items in the grid
-                VBox stationBox = new VBox(5, icon, radioButton);
-                stationBox.setAlignment(Pos.CENTER);
-                grid.add(stationBox, i % 3, i / 3); // Arrange in a grid format (3 per row)
-            }
-    
-            dialog.getDialogPane().setContent(grid);
-    
-            // Handle dialog result
-            dialog.setResultConverter(dialogButton -> {
-                if (dialogButton == confirmButton) {
-                    for (Toggle toggle : group.getToggles()) {
-                        RadioButton selected = (RadioButton) toggle;
-                        if (selected.isSelected()) {
-                            return stations.stream()
-                                    .filter(s -> s.getName().equals(selected.getText()))
-                                    .findFirst()
-                                    .orElse(null);
-                        }
+
+        // Apply inline styling to the dialog pane
+        dialog.getDialogPane().setStyle(
+                "-fx-background-color: #ffffff; " + // White background
+                        "-fx-border-color: #cccccc; " + // Light gray border
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 10px; " + // Rounded corners
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);" // Subtle shadow
+        );
+
+        // Apply inline styling to the header panel
+        dialog.getDialogPane().lookup(".header-panel").setStyle(
+                "-fx-background-color: #6BBF59; " + // Green background
+                        "-fx-border-color: #6BBF59; " + // Green border
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 10px 10px 0 0; " + // Rounded top corners
+                        "-fx-padding: 15px;"
+        );
+
+        // Apply inline styling to the header label
+        dialog.getDialogPane().lookup(".header-panel .label").setStyle(
+                "-fx-font-size: 18px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-font-family: 'Inter';"
+        );
+
+        // Apply inline styling to the content area
+        dialog.getDialogPane().lookup(".content").setStyle(
+                "-fx-background-color: #ffffff; " + // White background
+                        "-fx-padding: 20px; " +
+                        "-fx-spacing: 10px;"
+        );
+
+        // Apply inline styling to the buttons
+        dialog.getDialogPane().lookup(".button-bar").setStyle(
+                "-fx-background-color: #ffffff; " + // White background
+                        "-fx-padding: 10px; " +
+                        "-fx-spacing: 10px;"
+        );
+
+        // Apply inline styling to the confirm button
+        Button confirmBtn = (Button) dialog.getDialogPane().lookupButton(confirmButton);
+        confirmBtn.setStyle(
+                "-fx-background-color: #6BBF59; " + // Green background
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 10px 20px; " + // Padding
+                        "-fx-font-family: 'Inter'; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);" // Subtle shadow
+        );
+
+        // Apply hover effect to the confirm button
+        confirmBtn.setOnMouseEntered(e -> confirmBtn.setStyle(
+                "-fx-background-color: #4E9D3A; " + // Darker green on hover
+                        "-fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 7, 0, 0, 2);" +// Stronger shadow
+                "-fx-text-fill: white; " + // White text
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 10px 20px; " + // Padding
+                        "-fx-font-family: 'Inter'; " +
+                        "-fx-font-size: 14px; "
+        ));
+
+        confirmBtn.setOnMouseExited(e -> confirmBtn.setStyle(
+                "-fx-background-color: #6BBF59; " + // Green background
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 10px 20px; " + // Padding (same as default)
+                        "-fx-font-family: 'Inter'; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);" // Subtle shadow
+        ));
+
+        // Apply inline styling to the cancel button
+        Button cancelBtn = (Button) dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+        cancelBtn.setStyle(
+                "-fx-background-color: #ff4444; " + // Red background
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 10px 20px; " + // Padding
+                        "-fx-font-family: 'Inter'; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);" // Subtle shadow
+        );
+
+        // Apply hover effect to the cancel button
+        cancelBtn.setOnMouseEntered(e -> cancelBtn.setStyle(
+                "-fx-background-color: #e73737; " + // Darker red on hover
+                        "-fx-cursor: hand; " +
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 10px 20px; " + // Padding
+                        "-fx-font-family: 'Inter'; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);" // Subtle shadow
+        ));
+
+        cancelBtn.setOnMouseExited(e -> cancelBtn.setStyle(
+                "-fx-background-color: #ff4444; " + // Red background
+                        "-fx-text-fill: white; " + // White text
+                        "-fx-border-radius: 5px; " + // Rounded corners
+                        "-fx-padding: 10px 20px; " + // Padding (same as default)
+                        "-fx-font-family: 'Inter'; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);" // Subtle shadow
+        ));
+
+        // Set the content of the dialog
+        dialog.getDialogPane().setContent(grid);
+
+        // Handle dialog result
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == confirmButton) {
+                for (Toggle toggle : group.getToggles()) {
+                    RadioButton selected = (RadioButton) toggle;
+                    if (selected.isSelected()) {
+                        return stations.stream()
+                                .filter(s -> s.getName().equals(selected.getText()))
+                                .findFirst()
+                                .orElse(null);
                     }
                 }
-                return null;
-            });
-    
-            Optional<Station> result = dialog.showAndWait();
-            return result.orElse(null);
-        }
-    
-    
-    
+            }
+            return null;
+        });
+
+        Optional<Station> result = dialog.showAndWait();
+        return result.orElse(null);
     }
+
+    private Region createFlexibleSpace() {
+        Region region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS); // Make it grow and take up remaining space
+        return region;
+    }
+
+}
