@@ -1,5 +1,7 @@
 package controllers.taxi.driverside.request;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 import entities.Driver;
 import entities.Request;
 import entities.User;
@@ -58,6 +60,10 @@ public class RequestController {
     private final UserService userService = new UserService();
     private final DriverService driverService = new DriverService();
     private final RideService rideService = new RideService();
+
+    private static final String ACCOUNT_SID = "AC9012091b8b155a0743d30e8f6cbdbe55";
+    private static final String AUTH_TOKEN = "6dafad2d58c6d83e299d629d032aa219";
+    private static final String TWILIO_PHONE_NUMBER = "+12402554395"; // Numéro Twilio
 
     // Class-level field to hold the current driver.
     private Driver currentDriver;
@@ -252,100 +258,122 @@ public class RequestController {
         modalStage.show();
     }
 
+
     private void openDurationModal(Request request) {
         Stage durationStage = new Stage();
         durationStage.setTitle("Enter Ride Duration");
-        RideService rideService1 =new RideService();
+        RideService rideService = new RideService(); // Utilisation de la bonne instance de service
 
-        // Apply the CSS class to the root layout
         VBox layout = new VBox(10);
-        layout.getStyleClass().add("modal-container");  // Apply the custom modal style
+        layout.getStyleClass().add("modal-container");
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.CENTER);
 
         Label label = new Label("Enter ride duration (in minutes):");
-        label.getStyleClass().add("modal-label");  // Apply the label style
+        label.getStyleClass().add("modal-label");
 
         TextField durationField = new TextField();
         durationField.setPromptText("Duration in minutes");
-        durationField.getStyleClass().add("duration-field");  // Apply the duration field style
+        durationField.getStyleClass().add("duration-field");
 
         // Appliquer un filtre pour empêcher la saisie de caractères non numériques
         TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
-            if (newText.matches("\\d*")) {
-                return change; // Accepter seulement les chiffres
-            } else {
-                return null; // Bloquer la modification
-            }
+            return newText.matches("\\d*") ? change : null;
         });
         durationField.setTextFormatter(textFormatter);
 
-        // Label pour afficher les erreurs
         Label warningLabel = new Label();
-        warningLabel.getStyleClass().add("warning-label");  // Apply the warning label style
-        warningLabel.setVisible(false); // Masquer le label par défaut
+        warningLabel.getStyleClass().add("warning-label");
+        warningLabel.setVisible(false);
 
         Button submitButton = new Button("Submit");
-        submitButton.getStyleClass().add("submit-button");  // Apply the submit button style
+        submitButton.getStyleClass().add("submit-button");
+
         submitButton.setOnAction(e -> {
-            String durationText = durationField.getText().trim();
-            if (durationText.isEmpty()) {
-                warningLabel.setText("⚠️ Please enter a duration.");
-                warningLabel.setVisible(true);
-                return;
-            }
-
             try {
-                int duration = Integer.parseInt(durationText);
+                String durationText = durationField.getText().trim();
+                if (durationText.isEmpty()) {
+                    warningLabel.setText("⚠️ Please enter a duration.");
+                    warningLabel.setVisible(true);
+                    return;
+                }
 
-                // Vérifier si la durée est dans une plage acceptable
+                int duration = Integer.parseInt(durationText);
                 if (duration < 1 || duration > 300) {
                     warningLabel.setText("⚠️ Duration must be between 1 and 300 minutes.");
                     warningLabel.setVisible(true);
                     return;
                 }
 
-                // Masquer l'avertissement si la durée est valide
                 warningLabel.setVisible(false);
-
-                // Calculer le prix en fonction de la distance (1 DT par km)
                 double price = RideService.calculatePrice(request);
 
-                // Créer un nouveau Ride
+                // Création de la course
                 Ride newRide = new Ride();
                 newRide.setRequest(request);
                 newRide.setDriver(currentDriver);
                 newRide.setStatus(Ride.Status.ONGOING);
                 newRide.setRideDate(new Timestamp(System.currentTimeMillis()));
                 newRide.setDuration(duration);
-                newRide.setPrice(price);  // Prix calculé
+                newRide.setPrice(price);
 
                 boolean created = rideService.create(newRide);
                 if (created) {
                     System.out.println("✅ Ride created successfully");
                     request.setStatus(Request.RequestStatus.ACCEPTED);
                     requestService.update(request);
+
+                    // Envoi du SMS au client
+                    String clientPhoneNumber = request.getClient().getPhone();
+                    sendSmsToClient(clientPhoneNumber, duration, price);
+
                 } else {
                     System.out.println("❌ Ride creation failed");
                 }
+
                 durationStage.close();
                 loadRequestsIntoFlowPane();
+
             } catch (NumberFormatException ex) {
                 warningLabel.setText("⚠️ Invalid duration. Please enter a valid number.");
                 warningLabel.setVisible(true);
             } catch (SQLException ex) {
                 ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace(); // Pour capturer toute autre exception inattendue
             }
         });
 
         layout.getChildren().addAll(label, durationField, warningLabel, submitButton);
-
-        // Load the CSS file
         Scene scene = new Scene(layout, 300, 200);
-        scene.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/duration-modal.css").toExternalForm());  // Add your CSS file path here
+        scene.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/duration-modal.css").toExternalForm());
         durationStage.setScene(scene);
         durationStage.show();
     }
+
+    private void sendSmsToClient(String clientPhoneNumber, int duration, double price) {
+        try {
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+            // Formater le prix pour afficher 3 chiffres après la virgule
+            String formattedPrice = String.format("%.3f", price);
+
+            String messageBody = "Your ride has been accepted! Estimated duration: "
+                    + duration + " minutes. Price: " + formattedPrice + " DT.";
+
+            Message message = Message.creator(
+                    new com.twilio.type.PhoneNumber(clientPhoneNumber),
+                    new com.twilio.type.PhoneNumber(TWILIO_PHONE_NUMBER),
+                    messageBody
+            ).create();
+
+            System.out.println("✅ SMS sent to client: " + clientPhoneNumber);
+        } catch (Exception e) {
+            System.out.println("❌ Failed to send SMS: " + e.getMessage());
+        }
+    }
+
+
 
 }
