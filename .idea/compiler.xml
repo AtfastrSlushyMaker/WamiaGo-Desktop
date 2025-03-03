@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Pidev3a11" />
         <module name="WamiaGo" />
+        <module name="Pidev3a10" />
       </profile>
     </annotationProcessing>
   </component>

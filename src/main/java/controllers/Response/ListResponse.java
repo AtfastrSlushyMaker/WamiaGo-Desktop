@@ -1,10 +1,6 @@
-//Back
-//ResponsesController
-package controllers.Response.back;
+//ListResponse
+package controllers.Response;
 
-
-
-import controllers.Response.UpdateResponse;
 import entities.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +19,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
-public class ResponsesController {
+public class ListResponse {
     @FXML
     private ListView<Response> responseListView;
 
@@ -36,7 +32,7 @@ public class ResponsesController {
     private final ResponseService responseService;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    public ResponsesController() {
+    public ListResponse() {
         responseService = new ResponseService();
     }
 
@@ -153,4 +149,3 @@ public class ResponsesController {
         alert.showAndWait();
     }
 }
-

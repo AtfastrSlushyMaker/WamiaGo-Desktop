@@ -1,7 +1,6 @@
-//AddResponse
+//UpdateResponse
 package controllers.Response;
 
-import entities.Reclamation;
 import entities.Response;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +19,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class AddResponse {
+public class UpdateResponse {
     @FXML
     private Label reclamationTitleLabel;
 
@@ -31,7 +30,7 @@ public class AddResponse {
     private TextArea responseContentArea;
 
     @FXML
-    private Button submitButton;
+    private Button updateButton;
 
     @FXML
     private Button cancelButton;
@@ -40,28 +39,29 @@ public class AddResponse {
     private Button home_button;
 
     private final ResponseService responseService;
-    private Reclamation reclamation;
+    private Response response;
 
-    public AddResponse() {
+    public UpdateResponse() {
         responseService = new ResponseService();
     }
 
     @FXML
     void initialize() {
-        submitButton.setOnAction(this::handleSubmit);
+        updateButton.setOnAction(this::handleUpdate);
         cancelButton.setOnAction(this::navigateToList);
         home_button.setOnAction(this::navigateToHome);
     }
 
-    public void initData(Reclamation reclamation) {
-        this.reclamation = reclamation;
-        // Display reclamation details
-        reclamationTitleLabel.setText(reclamation.getTitle());
-        reclamationContentLabel.setText(reclamation.getContent());
+    public void initData(Response response) {
+        this.response = response;
+        // Display reclamation and response details
+        reclamationTitleLabel.setText(response.getReclamation().getTitle());
+        reclamationContentLabel.setText(response.getReclamation().getContent());
+        responseContentArea.setText(response.getContent());
     }
 
     @FXML
-    private void handleSubmit(ActionEvent event) {
+    private void handleUpdate(ActionEvent event) {
         String content = responseContentArea.getText().trim();
 
         if (content.isEmpty()) {
@@ -70,21 +70,18 @@ public class AddResponse {
         }
 
         try {
-            Response response = new Response(
-                    reclamation,
-                    content,
-                    new Timestamp(System.currentTimeMillis())
-            );
+            // Update the response content and timestamp
+            response.setContent(content);
+            response.setDate(new Timestamp(System.currentTimeMillis()));
 
-            if (responseService.create(response)) {
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Response added successfully");
-                navigateToList(event);
-            } else {
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Response added successfully");
-                navigateToList(event);            }
+            // Update in database
+            responseService.update(response);
+
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Response updated successfully");
+            navigateToList(event);
 
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add response: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to update response: " + e.getMessage());
             e.printStackTrace();
         }
     }
