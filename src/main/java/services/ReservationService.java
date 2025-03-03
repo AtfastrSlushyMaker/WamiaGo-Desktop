@@ -5,6 +5,7 @@ import entities.Location;
 import entities.Reservation;
 import entities.User;
 import utils.DataBase;
+import utils.EmailSender;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,12 +17,14 @@ public class ReservationService implements IService<Reservation> {
     private final LocationService locationService;
     private final AnnouncementService announcementService;
     private final UserService userService;
+    private final EmailSender emailSender;
 
     public ReservationService() {
         this.connection = DataBase.getInstance().getConnection();
         this.locationService = new LocationService();
         this.announcementService = new AnnouncementService();
         this.userService = new UserService();
+        this.emailSender = new EmailSender();
     }
 
     @Override
@@ -55,6 +58,9 @@ public class ReservationService implements IService<Reservation> {
 
             preparedStatement.executeUpdate();
             System.out.println("Réservation ajoutée avec succès.");
+
+            // Send email to the transporter
+            sendEmailToTransporter(reservation);
             return true;
         }
     }
@@ -75,6 +81,8 @@ public class ReservationService implements IService<Reservation> {
             preparedStatement.executeUpdate();
             System.out.println("Réservation mise à jour avec succès.");
         }
+        sendEmailToUser(reservation);
+
     }
 
     @Override
@@ -138,6 +146,8 @@ public class ReservationService implements IService<Reservation> {
         return null;
     }
 
+
+
     private Reservation mapResultSetToReservation(ResultSet rs) throws SQLException {
         Reservation reservation = new Reservation();
         reservation.setIdReservation(rs.getInt("id_reservation"));
@@ -198,6 +208,137 @@ public class ReservationService implements IService<Reservation> {
             reservations.add(reservation);
         }
         return reservations;
+    }
+
+    private void sendEmailToTransporter(Reservation reservation) throws SQLException {
+        // Query to fetch the transporter's email
+        String sql = "SELECT u.email " +
+                "FROM user u " +
+                "JOIN driver d ON u.id_user = d.id_user " +
+                "JOIN announcement a ON d.id_driver = a.id_transporter " +
+                "WHERE a.id_announcement = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, reservation.getAnnouncement().getIdAnnouncement());
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                String transporterEmail = rs.getString("email");
+
+                String emailContent = "<html>"
+                        + "<head>"
+                        + "<style>"
+                        + "    body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; }"
+                        + "    .container { max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; }"
+                        + "    .header { text-align: center; padding: 20px; background-color: #2C3E50; color: #fff; border-radius: 10px 10px 0 0; }"
+                        + "    .header h2 { margin: 0; font-size: 24px; }"
+                        + "    .content { padding: 20px; }"
+                        + "    .content p { line-height: 1.6; }"
+                        + "    .content ul { list-style-type: none; padding: 0; }"
+                        + "    .content ul li { margin-bottom: 10px; }"
+                        + "    .content ul li strong { color: #2C3E50; }"
+                        + "    .footer { text-align: center; padding: 20px; background-color: #2C3E50; color: #fff; border-radius: 0 0 10px 10px; margin-top: 20px; }"
+                        + "    .footer p { margin: 0; font-size: 14px; }"
+                        + "</style>"
+                        + "</head>"
+                        + "<body>"
+                        + "<div class='container'>"
+                        + "    <div class='header'>"
+                        + "        <img src='cid:logo' alt='Logo' style='width: 100px; height: auto; margin-bottom: 10px;'>" // Reference to the attached image via CID
+                        + "        <h2>New Reservation</h2>"
+                        + "    </div>"
+                        + "    <div class='content'>"
+                        + "        <p>Hello,</p>"
+                        + "        <p>A new reservation has been made. Here are the details:</p>"
+                        + "        <ul>"
+                        + "            <li><strong>Date:</strong> " + reservation.getDate() + "</li>"
+                        + "            <li><strong>Description:</strong> " + reservation.getDescription() + "</li>"
+                        + "            <li><strong>Pickup Location:</strong> " + reservation.getStartLocation().getAddress() + "</li>"
+                        + "            <li><strong>Destination:</strong> " + reservation.getEndLocation().getAddress() + "</li>"
+                        + "        </ul>"
+                        + "        <p>Please make the necessary arrangements for this reservation.</p>"
+                        + "        <p>Best regards,</p>"
+                        + "        <p><strong>The Reservation Team</strong></p>"
+                        + "    </div>"
+                        + "    <div class='footer'>"
+                        + "        <p>&copy; 2023 WamiaGO. All rights reserved.</p>"
+                        + "    </div>"
+                        + "</div>"
+                        + "</body>"
+                        + "</html>";
+
+                // Send email
+                emailSender.sendEmail(transporterEmail, emailContent);
+                System.out.println("Email envoyé au transporteur : " + transporterEmail);
+            }
+        }
+    }
+
+    private void sendEmailToUser(Reservation reservation) throws SQLException {
+        String sql = "SELECT u.email " +
+                "FROM user u " +
+                "WHERE u.id_user = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, reservation.getUser().getId());
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                String userEmail = rs.getString("email");
+
+                // Customize email content
+                String statusMessage;
+                if (reservation.getStatus().toString().equals("CONFIRMED")) {
+                    statusMessage = "Your reservation has been <strong style='color: #27ae60;'>CONFIRMED</strong>. We look forward to serving you!";
+                } else if (reservation.getStatus().toString().equals("CANCELLED")) {
+                    statusMessage = "Your reservation has been <strong style='color: #e74c3c;'>CANCELLED</strong>. Please contact us if you have any questions.";
+                } else {
+                    statusMessage = "Your reservation status is <strong>" + reservation.getStatus().toString() + "</strong>.";
+                }
+
+                String emailContent = "<html>"
+                        + "<head>"
+                        + "<style>"
+                        + "    body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; }"
+                        + "    .container { max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; }"
+                        + "    .header { text-align: center; padding: 20px; background-color: #2C3E50; color: #fff; border-radius: 10px 10px 0 0; }"
+                        + "    .header h2 { margin: 0; font-size: 24px; }"
+                        + "    .content { padding: 20px; }"
+                        + "    .content p { line-height: 1.6; }"
+                        + "    .content ul { list-style-type: none; padding: 0; }"
+                        + "    .content ul li { margin-bottom: 10px; }"
+                        + "    .content ul li strong { color: #2C3E50; }"
+                        + "    .footer { text-align: center; padding: 20px; background-color: #2C3E50; color: #fff; border-radius: 0 0 10px 10px; margin-top: 20px; }"
+                        + "    .footer p { margin: 0; font-size: 14px; }"
+                        + "</style>"
+                        + "</head>"
+                        + "<body>"
+                        + "<div class='container'>"
+                        + "    <div class='header'>"
+                        + "        <img src='cid:logo' alt='Logo' style='width: 100px; height: auto; margin-bottom: 10px;'>" // Référence à l'image jointe via CID
+                        + "        <h2>Reservation Status</h2>"
+                        + "    </div>"
+                        + "    <div class='content'>"
+                        + "        <p>Hello,</p>"
+                        + "        <p>Your reservation has been <strong>" + reservation.getStatus().toString() + "</strong>. Here are the details:</p>"
+                        + "        <ul>"
+                        + "            <li><strong>Reservation ID:</strong> " + reservation.getIdReservation() + "</li>"
+                        + "            <li><strong>Date:</strong> " + reservation.getDate() + "</li>"
+                        + "            <li><strong>Description:</strong> " + reservation.getDescription() + "</li>"
+                        + "            <li><strong>Pickup Location:</strong> " + reservation.getStartLocation().getAddress() + "</li>"
+                        + "            <li><strong>Destination:</strong> " + reservation.getEndLocation().getAddress() + "</li>"
+                        + "        </ul>"
+                        + "        <p>Thank you for using our service.</p>"
+                        + "        <p>Best regards,</p>"
+                        + "        <p><strong>The Reservation Team</strong></p>"
+                        + "    </div>"
+                        + "    <div class='footer'>"
+                        + "        <p>&copy; 2023 WamiaGO. All rights reserved.</p>"
+                        + "    </div>"
+                        + "</div>"
+                        + "</body>"
+                        + "</html>";
+                // Send email
+                emailSender.sendEmail(userEmail, emailContent);
+                System.out.println("Email envoyé à l'utilisateur : " + userEmail);
+            }
+        }
     }
 
 

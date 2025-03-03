@@ -130,14 +130,40 @@
                     </image>
                 </ImageView>
 
-
                 <!-- Conteneur principal -->
                 <GridPane alignment="CENTER" hgap="15.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="281.0" prefWidth="821.0" vgap="15">
                     <Label styleClass="form-label" text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <TextField fx:id="titleField" prefHeight="37.0" prefWidth="532.0" promptText="Enter the title here..." styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                     <Label styleClass="form-label" text="Content:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <TextArea fx:id="contentField" prefWidth="299.0" promptText="Write your announcement here..." styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextArea fx:id="contentField" prefWidth="700.0" prefHeight="300.0" promptText="Write your announcement here..." styleClass="form-field" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextArea>
+                        <Button fx:id="emojiButton" styleClass="emoji-button" text="😊">
+                            <graphic>
+                                <ImageView fitHeight="20" fitWidth="20">
+                                    <Image url="@../../images/icons/emoji_icon.png" />
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="recordButton" styleClass="record-button" text="🎤">
+                            <graphic>
+                                <ImageView fitHeight="20" fitWidth="20">
+                                    <Image url="@../../images/icons/microphone_icon.png" />
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="generateButton" styleClass="generate-button" text="Generate">
+                            <graphic>
+                                <ImageView fitHeight="20" fitWidth="20">
+                                    <Image url="@../../images/icons/ai_icon.png" /> <!-- Ajoutez une icône IA -->
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </HBox>
 
                     <Label styleClass="form-label" text="Zone:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                     <ComboBox fx:id="zoneComboBox" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -175,7 +201,6 @@
                     </Button>
                 </HBox>
             </VBox>
-
         </Pane>
 
     </children>

@@ -17,10 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
@@ -104,11 +101,13 @@ public class AnnouncementController implements Initializable {
             // Peupler le ComboBox avec les zones disponibles
             zoneComboBox.getItems().setAll(Announcement.Zone.values());
 
-            // Charger les annonces
+            // Charger les annonces initiales
             loadAnnouncements();
 
-            // Gestionnaire d'événements pour le bouton "Search"
-            searchButton.setOnAction(event -> handleSearchButtonAction());
+            // Ajouter des listeners pour la recherche en temps réel
+            keywordTextField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
+            datePicker.valueProperty().addListener((observable, oldValue, newValue) -> handleSearch());
+            zoneComboBox.valueProperty().addListener((observable, oldValue, newValue) -> handleSearch());
 
         } catch (SQLException e) {
             System.err.println("Erreur lors de la récupération du conducteur : " + e.getMessage());
@@ -116,6 +115,29 @@ public class AnnouncementController implements Initializable {
         } catch (Exception e) {
             System.err.println("Une erreur inattendue s'est produite lors de l'initialisation : " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Gère la recherche en temps réel.
+     */
+    private void handleSearch() {
+        String keyword = keywordTextField.getText();
+        LocalDate date = datePicker.getValue();
+        Announcement.Zone zone = zoneComboBox.getValue();
+
+        try {
+            // Passer l'ID du conducteur connecté à la méthode findByFilters
+            List<Announcement> announcements = announcementService.findByFilters(keyword, date, zone, currentDriver.getIdDriver());
+            announcementsGrid.getChildren().clear();
+            displayAnnouncements(announcements);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("An error occurred while searching announcements.");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
@@ -226,7 +248,13 @@ public class AnnouncementController implements Initializable {
         contentIcon.setFitWidth(18);
         contentIcon.setFitHeight(18);
 
-        Label contentLabel = new Label(announcement.getContent());
+        // Truncate content if too long
+        String content = announcement.getContent();
+        if (content.length() > 100) {
+            content = content.substring(0, 100) + "...";
+        }
+
+        Label contentLabel = new Label(content);
         contentLabel.getStyleClass().add("card-content");
         contentLabel.setWrapText(true);
         contentLabel.setMaxWidth(Double.MAX_VALUE);
@@ -258,7 +286,12 @@ public class AnnouncementController implements Initializable {
         ImageView editIcon = createActionIcon("/images/icons/edit.png", event -> handleEditButtonAction(announcement));
         ImageView deleteIcon = createActionIcon("/images/icons/delete.png", event -> handleDeleteButton(announcement));
 
-        actionBox.getChildren().addAll(editIcon, deleteIcon);
+        // Add Select Button
+        Button selectButton = new Button("Select");
+        selectButton.setOnAction(event -> openAnnouncementDetails(announcement));
+        selectButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        actionBox.getChildren().addAll(editIcon, deleteIcon, selectButton);
 
         // Make zoneBox expand and push actionBox to the right
         HBox metaRow = new HBox(10, zoneBox, actionBox);
@@ -272,6 +305,90 @@ public class AnnouncementController implements Initializable {
         return card;
     }
 
+    private void openAnnouncementDetails(Announcement announcement) {
+        Stage modalStage = new Stage();
+        modalStage.setTitle("Announcement Details");
+        modalStage.initModality(Modality.APPLICATION_MODAL);
+
+        StackPane stackPane = new StackPane();
+        stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6);");
+
+        VBox modalLayout = new VBox(15);
+        modalLayout.setPadding(new Insets(20));
+        modalLayout.setAlignment(Pos.CENTER_LEFT);
+        modalLayout.setStyle("-fx-background-color: white; "
+                + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);");
+
+        // Titre de l'annonce
+        Label title = new Label(announcement.getTitle());
+        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;");
+
+        // Icônes et détails
+        ImageView dateIcon = createIcon("/images/icons/date.png");
+        ImageView contentIcon = createIcon("/images/icons/description.png");
+        ImageView zoneIcon = createIcon("/images/icons/place.png");
+
+        // Date
+        HBox dateBox = createLabeledIconBox(dateIcon, "Date: " + formatDate(announcement.getDate()));
+
+        // Contenu complet (sans troncature)
+        Label contentLabel = new Label(announcement.getContent());
+        contentLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333; -fx-wrap-text: true;");
+        contentLabel.setMaxWidth(500); // Limiter la largeur pour un meilleur affichage
+
+        HBox contentBox = createLabeledIconBox(contentIcon, "Content: ");
+        contentBox.getChildren().add(contentLabel); // Ajouter le contenu complet
+
+        // Zone
+        HBox zoneBox = createLabeledIconBox(zoneIcon, "Zone: " + announcement.getZone().toString());
+
+        // Bouton "Close"
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(e -> modalStage.close());
+        closeButton.setStyle("-fx-background-color: #000000; "
+                + "-fx-text-fill: white; "
+                + "-fx-font-weight: bold; "
+                + "-fx-background-radius: 5px; "
+                + "-fx-padding: 8px 16px;");
+
+        HBox closeButtonContainer = new HBox(closeButton);
+        closeButtonContainer.setAlignment(Pos.CENTER);
+
+        // Ajouter tous les éléments au layout
+        modalLayout.getChildren().addAll(title, dateBox, contentBox, zoneBox, closeButtonContainer);
+
+        // Ajouter un ScrollPane pour permettre le défilement si le contenu est trop long
+        ScrollPane scrollPane = new ScrollPane(modalLayout);
+        scrollPane.setFitToWidth(true); // Adapter la largeur au contenu
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        stackPane.getChildren().add(scrollPane);
+
+        // Ajuster la taille du dialogue
+        Scene modalScene = new Scene(stackPane, 500, 400); // Taille agrandie
+        modalStage.setScene(modalScene);
+        modalStage.show();
+    }
+
+    // Helper method to create an HBox with an icon and a label
+    private HBox createLabeledIconBox(ImageView icon, String labelText) {
+        Label label = new Label(labelText);
+        label.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #333;");
+
+        HBox box = new HBox(10); // Spacing between icon and label
+        box.getChildren().addAll(icon, label);
+        box.setAlignment(Pos.CENTER_LEFT); // Align to the left
+        return box;
+    }
+
+    // Helper method to create icons
+    private ImageView createIcon(String iconPath) {
+        Image image = new Image(getClass().getResourceAsStream(iconPath));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(20); // Set a consistent height
+        imageView.setFitWidth(20); // Set a consistent width
+        return imageView;
+    }
 
     private HBox createMetaItem(ImageView icon, String text) {
         HBox box = new HBox(8);

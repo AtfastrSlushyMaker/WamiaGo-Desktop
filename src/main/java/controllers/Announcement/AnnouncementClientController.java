@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.*;
+import utils.SMSService;
 import utils.SessionManager;
 
 import java.io.IOException;
@@ -37,6 +38,7 @@ public class AnnouncementClientController {
     private final ReservationService reservationService = new ReservationService();
     private final StationService stationService = new StationService();
     private final UserService userService = new UserService();
+
     @FXML
     private Button btnclient;
 
@@ -344,7 +346,51 @@ public class AnnouncementClientController {
             if (confirmResult.isPresent() && confirmResult.get() == ButtonType.OK) {
                 try {
                     reservationService.create(reservation);
-                    refreshAnnouncements();
+                    // SMSService.sendSMS("99478730", "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
+                    //EmailService.sendEmail("abrouguiazer1920@gmail.com", "Nouvelle Réservation", "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
+
+//                    emailService.sendEmail("abrouguiazer1920@gmail.com");
+//                    refreshAnnouncements();
+
+//                    // Vérifier si le transporteur est null
+//                    Driver transporter = reservation.getAnnouncement().getTransporter();
+//                    System.out.println(reservation.getAnnouncement().getTransporter().getIdDriver());
+//
+//                    //announcement.getTransporter().getIdDriver()
+//                    if (transporter != null) {
+//                        // Instancier le DriverService
+//                        DriverService driverService = new DriverService();
+//
+//                        // Récupérer le transporteur associé à l'annonce
+//                        Driver fullTransporter = driverService.getById(transporter.getIdDriver());
+//
+//                        // Vérifier si le transporteur est null avant d'envoyer SMS/e-mail
+//                        if (fullTransporter != null) {
+//                            // Assurez-vous que getUser() ne retourne pas null
+//                            User transporterUser = fullTransporter.getUser();
+//                            String transporterPhoneNumber = transporterUser.getPhone();
+//                            String transporterEmail = transporterUser.getEmail();
+//
+//                            // Envoyer un SMS et un e-mail au transporteur
+//                            //SMSService.sendSMS(transporterPhoneNumber, "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
+//                            EmailService.sendEmail(transporterEmail, "Nouvelle Réservation", "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
+//                           // if (transporterUser != null) {
+////                                String transporterPhoneNumber = transporterUser.getPhone();
+////                                String transporterEmail = transporterUser.getEmail();
+////
+////                                // Envoyer un SMS et un e-mail au transporteur
+////                                SMSService.sendSMS(transporterPhoneNumber, "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
+////                                EmailService.sendEmail(transporterEmail, "Nouvelle Réservation", "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
+////                            } else {
+////                                System.out.println("L'utilisateur du transporteur est null. Impossible d'envoyer SMS/e-mail.");
+////                            }
+//                        } else {
+//                            System.out.println("Aucun transporteur associé à cette annonce. Impossible d'envoyer SMS/e-mail.");
+//                        }
+//                    } else {
+//                        System.out.println("Le transporteur de l'annonce est null. Impossible d'envoyer SMS/e-mail.");
+//                    }
+
                 } catch (SQLException e) {
                     showErrorDialog("Error Reserving Announcement", e.getMessage());
                 }

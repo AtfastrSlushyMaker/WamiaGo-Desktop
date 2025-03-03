@@ -336,7 +336,6 @@ public class DashboardController {
         });
     }
 
-
     private void manageDashboardByRole(User user) throws SQLException {
         User.Role role = user.getRole();
         UserService userService = new UserService();

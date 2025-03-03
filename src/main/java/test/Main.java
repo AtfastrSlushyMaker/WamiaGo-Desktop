@@ -4,6 +4,7 @@ import entities.*;
 import services.AnnouncementService;
 import services.ReservationService;
 import services.RelocationService;
+import utils.EmailSender;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -18,7 +19,8 @@ public class Main {
         AnnouncementService announcementService = new AnnouncementService();
         ReservationService reservationService = new ReservationService();
         RelocationService relocationService = new RelocationService();
-
+        EmailSender email =new EmailSender();
+        email.sendEmail("abrouguiazer1920@gmail.com","ok");
         try {
             // ===========================
             //  Gestion des Annonces (Announcements)

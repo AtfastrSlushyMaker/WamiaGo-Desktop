@@ -10,7 +10,7 @@
     -fx-background-color: #2D2F33; /* Dark Gray for a modern look */
     -fx-padding: 20px;
     -fx-pref-width: 250px;
-    -fx-min-height: 100vh;
+    -fx-min-height: 100%;
     -fx-border-width: 1px;
     -fx-border-radius: 20px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 12, 0, 4, 4);
@@ -258,15 +258,24 @@
     -fx-text-fill: #34495e;
 }
 
+/*.form-field {*/
+/*    -fx-pref-width: 400px;*/
+/*    -fx-font-size: 16px;*/
+/*    -fx-background-color: #ecf0f1;*/
+/*    -fx-border-color: #5A6BE5;*/
+/*    -fx-border-width: 2;*/
+/*    -fx-border-radius: 6;*/
+/*    -fx-background-radius: 6;*/
+/*    -fx-padding: 12;*/
+/*}*/
+
 .form-field {
-    -fx-pref-width: 400px;
-    -fx-font-size: 16px;
-    -fx-background-color: #ecf0f1;
-    -fx-border-color: #5A6BE5;
-    -fx-border-width: 2;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-padding: 12;
+    -fx-font-size: 14px; /* Adjust font size */
+    -fx-padding: 10px; /* Add padding */
+    -fx-background-color: #f9f9f9; /* Light background color */
+    -fx-border-color: #ccc; /* Light border color */
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-focus-color: transparent; /* Remove focus border */
 }
 
 .text-area {
@@ -302,4 +311,54 @@
 
 .cancel-button:hover {
     -fx-background-color: #c0392b;
+}
+
+.emoji-button {
+    -fx-background-color: #5A6BE5;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 8 12;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.emoji-button:hover {
+    -fx-background-color: #4A5AD5;
+}
+
+.record-button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 8 12;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.record-button:hover {
+    -fx-background-color: #219150;
+}
+
+.text-area {
+    -fx-pref-height: 300px; /* Hauteur du TextArea */
+    -fx-pref-width: 700px;  /* Largeur du TextArea */
+    -fx-wrap-text: true;    /* Retour à la ligne automatique */
+}
+
+
+.form-field:focused {
+    -fx-border-color: #0078d7; /* Highlight border when focused */
+}
+
+.generate-button {
+    -fx-background-color: #5A6BE5;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 8 12;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.generate-button:hover {
+    -fx-background-color: #4A5AD5;
 }
