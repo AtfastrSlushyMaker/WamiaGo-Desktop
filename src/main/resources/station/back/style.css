@@ -1,60 +1,130 @@
-/* General styles */
+/* modern-style.css */
+
+/* Root styles */
 .root {
-    -fx-font-family: "Arial";
-    -fx-base: #dfe6e9;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-background-color: #f5f7fa;
+    -fx-font-size: 14px;
 }
 
-/* ListView styles */
-.list-view {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #b2bec3;
-    -fx-border-width: 1px;
-}
-
-.list-cell {
-    -fx-padding: 10px;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #b2bec3;
-    -fx-border-width: 0 0 1 0;
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #74b9ff;
-    -fx-text-fill: white;
+/* Title styles */
+.title-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
 }
 
 /* Button styles */
 .button {
-    -fx-background-color: #0984e3;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #495057;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-border-color: #ced4da;
+    -fx-border-width: 1px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
 }
 
 .button:hover {
-    -fx-background-color: #74b9ff;
+    -fx-background-color: #e9ecef;
 }
 
-/* Dialog styles */
-.dialog-pane {
-    -fx-background-color: #ffffff;
+.button:pressed {
+    -fx-background-color: #dee2e6;
 }
 
-.dialog-pane .label {
-    -fx-text-fill: #2d3436;
+.primary-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-border-color: #2980b9;
 }
 
-.dialog-pane .text-field, .dialog-pane .combo-box {
-    -fx-background-color: #dfe6e9;
-    -fx-border-color: #b2bec3;
-    -fx-border-width: 1px;
+.primary-button:hover {
+    -fx-background-color: #2980b9;
 }
 
-/* Alert styles */
-.alert {
-    -fx-background-color: #ffffff;
+.primary-button:pressed {
+    -fx-background-color: #2471a3;
 }
 
-.alert .label {
-    -fx-text-fill: #2d3436;
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-border-color: #c0392b;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+.delete-button:pressed {
+    -fx-background-color: #a93226;
+}
+
+.refresh-button {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 6px 10px;
+}
+
+.table-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 4px;
+}
+
+.edit-button:hover {
+    -fx-background-color: rgba(52, 152, 219, 0.2);
+}
+
+.delete-button.table-button:hover {
+    -fx-background-color: rgba(231, 76, 60, 0.2);
+}
+
+/* Status bar */
+.progress-indicator {
+    -fx-progress-color: #3498db;
+}
+
+/* PDF Export Dialog Styling */
+.pdf-export-dialog {
+    -fx-background-color: white;
+}
+
+.pdf-export-dialog .dialog-pane {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+}
+
+.pdf-export-dialog .dialog-pane .header-panel {
+    -fx-background-color: #27ae60;
+    -fx-padding: 10px;
+}
+
+.pdf-export-dialog .dialog-pane .header-panel .label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.pdf-export-dialog .button-bar .button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+}
+
+.pdf-export-dialog .button-bar .button:hover {
+    -fx-background-color: #219653;
+}
+
+.pdf-export-dialog .button-bar .button:pressed {
+    -fx-background-color: #1e874b;
+}
+
+/* PDF Export Progress Dialog */
+.pdf-progress-dialog .progress-bar > .bar {
+    -fx-background-color: #27ae60;
+}
+
+.pdf-progress-dialog .progress-bar > .track {
+    -fx-background-color: #e0e0e0;
 }
