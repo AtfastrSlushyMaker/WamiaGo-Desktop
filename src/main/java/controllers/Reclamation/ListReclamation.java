@@ -4,6 +4,7 @@ import controllers.Response.AddResponse;
 import entities.Reclamation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.ReclamationService;
 import javafx.scene.input.KeyCode;
@@ -21,6 +24,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.function.Predicate;
 
 public class ListReclamation {
     @FXML
@@ -41,8 +46,31 @@ public class ListReclamation {
     @FXML
     private Button responseButton;
 
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private ComboBox<String> statusFilter;
+
+    @FXML
+    private Button refreshButton;
+
+    @FXML
+    private Label totalReclamationsLabel;
+
+    @FXML
+    private Label pendingReclamationsLabel;
+
+    @FXML
+    private Label resolvedReclamationsLabel;
+
+    @FXML
+    private Label date;
+
     private final ReclamationService reclamationService;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private ObservableList<Reclamation> allReclamations;
+    private FilteredList<Reclamation> filteredReclamations;
 
     public ListReclamation() {
         reclamationService = new ReclamationService();
@@ -50,14 +78,29 @@ public class ListReclamation {
 
     @FXML
     void initialize() {
+        // Setup date display
+        // Setup date display
+        if (date != null) {
+            date.setText(new SimpleDateFormat("EEEE, dd MMMM yyyy").format(new Date()));
+        } else {
+            System.err.println("Warning: date Label is null in initialize method");
+        }
+
+        // Setup status filter
+        statusFilter.setItems(FXCollections.observableArrayList("All", "Pending", "Resolved"));
+        statusFilter.getSelectionModel().selectFirst();
+
         setupListView();
         loadReclamations();
+        setupSearch();
+        updateStatistics();
 
         addButton.setOnAction(this::navigateToAddReclamation);
         deleteButton.setOnAction(e -> handleDelete());
         home_button.setOnAction(this::navigateToHome);
         btn_workbench11.setOnAction(this::navigateToRide);
         responseButton.setOnAction(this::handleResponse);
+        refreshButton.setOnAction(e -> loadReclamations());
 
         // Add double-click handler for update
         reclamationListView.setOnMouseClicked(event -> {
@@ -77,18 +120,55 @@ public class ListReclamation {
         });
     }
 
-    private void pageNavigation() {
-        home_button.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
-                Parent homeRoot = loader.load();
-                Scene homeScene = new Scene(homeRoot);
-                Stage stage = (Stage) home_button.getScene().getWindow();
-                stage.setScene(homeScene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void setupSearch() {
+        // Setup initial filtered list
+        filteredReclamations = new FilteredList<>(allReclamations);
+        reclamationListView.setItems(filteredReclamations);
+
+        // Add listeners for search field
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            applyFilters();
         });
+
+        // Add listeners for status filter
+        statusFilter.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            applyFilters();
+        });
+    }
+
+    private void applyFilters() {
+        String searchText = searchField.getText().toLowerCase();
+        String statusValue = statusFilter.getValue();
+
+        Predicate<Reclamation> searchPredicate = reclamation ->
+                searchText.isEmpty() ||
+                        reclamation.getTitle().toLowerCase().contains(searchText) ||
+                        reclamation.getContent().toLowerCase().contains(searchText) ||
+                        reclamation.getUser().getName().toLowerCase().contains(searchText);
+
+        Predicate<Reclamation> statusPredicate = reclamation -> {
+            if ("All".equals(statusValue)) {
+                return true;
+            } else if ("Pending".equals(statusValue)) {
+                return reclamation.getStatus() == 0;
+            } else if ("Resolved".equals(statusValue)) {
+                return reclamation.getStatus() == 1;
+            }
+            return true;
+        };
+
+        filteredReclamations.setPredicate(searchPredicate.and(statusPredicate));
+        updateStatistics();
+    }
+
+    private void updateStatistics() {
+        int total = allReclamations.size();
+        int pending = (int) allReclamations.stream().filter(r -> r.getStatus() == 0).count();
+        int resolved = total - pending;
+
+        totalReclamationsLabel.setText("Total: " + total);
+        pendingReclamationsLabel.setText("Pending: " + pending);
+        resolvedReclamationsLabel.setText("Resolved: " + resolved);
     }
 
     private void setupListView() {
@@ -99,15 +179,32 @@ public class ListReclamation {
 
                 if (empty || reclamation == null) {
                     setText(null);
+                    setGraphic(null);
                 } else {
                     String status = reclamation.getStatus() == 0 ? "Pending" : "Resolved";
-                    setText(String.format("ID: %d\nTitle: %s\nContent: %s\nDate: %s\nStatus: %s\nUser: %s\n",
-                            reclamation.getIdReclamation(),
-                            reclamation.getTitle(),
-                            reclamation.getContent(),
-                            dateFormat.format(reclamation.getDate()),
-                            status,
-                            reclamation.getUser().getName()));
+
+                    // Create a better formatted cell
+                    VBox content = new VBox(5);
+
+                    Label titleLabel = new Label(reclamation.getTitle());
+                    titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+                    Label contentLabel = new Label(reclamation.getContent());
+                    contentLabel.setWrapText(true);
+
+                    HBox metaData = new HBox(10);
+                    Label dateLabel = new Label("Date: " + dateFormat.format(reclamation.getDate()));
+                    Label statusLabel = new Label("Status: " + status);
+                    statusLabel.setStyle(reclamation.getStatus() == 0 ?
+                            "-fx-text-fill: #D32F2F; -fx-font-weight: bold;" :
+                            "-fx-text-fill: #388E3C; -fx-font-weight: bold;");
+                    Label userLabel = new Label("User: " + reclamation.getUser().getName());
+
+                    metaData.getChildren().addAll(dateLabel, statusLabel, userLabel);
+                    content.getChildren().addAll(titleLabel, contentLabel, metaData);
+
+                    setGraphic(content);
+                    setText(null);
                 }
             }
         });
@@ -115,20 +212,29 @@ public class ListReclamation {
 
     private void loadReclamations() {
         try {
-            ObservableList<Reclamation> reclamations = FXCollections.observableArrayList(
-                reclamationService.read()
+            allReclamations = FXCollections.observableArrayList(
+                    reclamationService.read()
             );
-            reclamationListView.setItems(reclamations);
+
+            if (filteredReclamations == null) {
+                filteredReclamations = new FilteredList<>(allReclamations);
+            } else {
+                filteredReclamations = new FilteredList<>(allReclamations, filteredReclamations.getPredicate());
+            }
+
+            reclamationListView.setItems(filteredReclamations);
+            updateStatistics();
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load reclamations: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+    // Navigation methods remain the same...
     private void navigateToAddReclamation(ActionEvent event) {
         try {
             URL resource = getClass().getResource("/Reclamation/AddReclamation.fxml");
-            System.out.println("Dashboard FXML Path: " + resource);
+            System.out.println("AddReclamation FXML Path: " + resource);
 
             if (resource == null) {
                 throw new IOException("AddReclamation.fxml file not found!");
@@ -139,10 +245,10 @@ public class ListReclamation {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Home - Dashboard");
+            stage.setTitle("Add Reclamation");
             stage.show();
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to navigate to Home: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to navigate to Add Reclamation: " + e.getMessage());
             e.printStackTrace();
         }
     }
