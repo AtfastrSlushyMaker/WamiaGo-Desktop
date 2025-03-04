@@ -50,12 +50,15 @@ public class AddAnnouncementController {
     private WhisperTranscriptionService transcriptionService;
     private AnnouncementService announcementService;
     private SpeechRecognitionService speechRecognitionService;
+    private AzureSpeechService azureSpeechService;
     private Driver currentDriver;
 
 
     public AddAnnouncementController() {
         this.announcementService = new AnnouncementService();
-        this.transcriptionService = new WhisperTranscriptionService();
+       // this.transcriptionService = new WhisperTranscriptionService();
+        this.azureSpeechService = new AzureSpeechService();
+
     }
 
     @FXML
@@ -67,22 +70,26 @@ public class AddAnnouncementController {
         // Ajouter un emoji au TextArea
         emojiButton.setOnAction(event -> contentField.appendText("😊"));
 
-
-        // Initialiser le service de reconnaissance vocale
-        try {
-            String modelPath = "C:\\Users\\BAZINFO\\Desktop\\3A\\S2\\PIDEV\\WamiaGo-Desktop\\src\\main\\resources\\models\\vosk-model-small-en-us-0.15";
-            Set<String> badWords = BadWordFilter.loadBadWords("C:\\Users\\BAZINFO\\Desktop\\3A\\S2\\PIDEV\\WamiaGo-Desktop\\src\\main\\resources\\bad_words.csv");
-            speechRecognitionService = new SpeechRecognitionService(modelPath, badWords);
-        } catch (IOException e) {
-            showAlert("Error", "Failed to load speech recognition model: " + e.getMessage(), Alert.AlertType.ERROR);
-            recordButton.setDisable(true);
-        }
-
-        // Gérer l'enregistrement vocal
         recordButton.setOnAction(event -> {
             if (isRecording) stopRecording();
             else startRecording();
         });
+
+//        // Initialiser le service de reconnaissance vocale
+//        try {
+//            String modelPath = "C:\\Users\\BAZINFO\\Desktop\\3A\\S2\\PIDEV\\WamiaGo-Desktop\\src\\main\\resources\\models\\vosk-model-small-en-us-0.15";
+//            Set<String> badWords = BadWordFilter.loadBadWords("C:\\Users\\BAZINFO\\Desktop\\3A\\S2\\PIDEV\\WamiaGo-Desktop\\src\\main\\resources\\bad_words.csv");
+//            speechRecognitionService = new SpeechRecognitionService(modelPath, badWords);
+//        } catch (IOException e) {
+//            showAlert("Error", "Failed to load speech recognition model: " + e.getMessage(), Alert.AlertType.ERROR);
+//            recordButton.setDisable(true);
+//        }
+//
+//        // Gérer l'enregistrement vocal
+//        recordButton.setOnAction(event -> {
+//            if (isRecording) stopRecording();
+//            else startRecording();
+//        });
 
 
 
@@ -207,12 +214,36 @@ public class AddAnnouncementController {
 //        recordButton.setText("Start Recording");
 //    }
 
+//    private void startRecording() {
+//        if (!isRecording) {
+//            isRecording = true;
+//            recordButton.setText("Stop Recording");
+//
+//            Task<String> task = speechRecognitionService.startRecording();
+//            task.valueProperty().addListener((obs, oldValue, newValue) -> {
+//                if (newValue != null) {
+//                    contentField.appendText(newValue + " ");
+//                }
+//            });
+//
+//            new Thread(task).start();
+//        }
+//    }
+//
+//    private void stopRecording() {
+//        if (isRecording) {
+//            isRecording = false;
+//            recordButton.setText("Start Recording");
+//            speechRecognitionService.stopRecording();
+//        }
+//    }
+
     private void startRecording() {
         if (!isRecording) {
             isRecording = true;
             recordButton.setText("Stop Recording");
 
-            Task<String> task = speechRecognitionService.startRecording();
+            Task<String> task = azureSpeechService.startRecording();
             task.valueProperty().addListener((obs, oldValue, newValue) -> {
                 if (newValue != null) {
                     contentField.appendText(newValue + " ");
@@ -227,7 +258,7 @@ public class AddAnnouncementController {
         if (isRecording) {
             isRecording = false;
             recordButton.setText("Start Recording");
-            speechRecognitionService.stopRecording();
+            azureSpeechService.stopRecording();
         }
     }
 

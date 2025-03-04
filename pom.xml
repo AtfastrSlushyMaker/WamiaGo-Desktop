@@ -227,6 +227,14 @@
                 <version>0.12.0</version>
             </dependency>
 
+        <dependency>
+            <groupId>com.microsoft.cognitiveservices.speech</groupId>
+            <artifactId>client-sdk</artifactId>
+            <version>1.25.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/client-sdk-1.25.0.jar</systemPath>
+        </dependency>
+
 
 
 
