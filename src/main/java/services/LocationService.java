@@ -4,6 +4,7 @@ import entities.Location;
 import utils.DataBase;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +78,33 @@ public class LocationService implements IService<Location> {
         return null;
     }
 
+    public List<Location> searchLocations(String addressQuery, LocalDate dateQuery) throws SQLException {
+        String sql = "SELECT * FROM locations WHERE address LIKE ?";
+
+        // Si la date est définie, on ajoute la condition pour filtrer par date
+        if (dateQuery != null) {
+            sql += " AND date = ?";
+        }
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, "%" + addressQuery + "%");
+
+        // Si une date est sélectionnée, on ajoute le paramètre pour la date
+        if (dateQuery != null) {
+            preparedStatement.setDate(2, Date.valueOf(dateQuery));
+        }
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Location> locations = new ArrayList<>();
+        while (resultSet.next()) {
+            Location location = new Location();
+            location.setAddress(resultSet.getString("address"));
+            // Ajouter d'autres propriétés si nécessaire
+            locations.add(location);
+        }
+
+        return locations;
+    }
 
 
 

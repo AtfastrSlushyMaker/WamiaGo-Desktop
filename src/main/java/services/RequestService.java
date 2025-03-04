@@ -7,8 +7,10 @@ import entities.Location;
 import utils.DataBase;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RequestService implements IService<Request> {
     private final Connection connection;
@@ -259,7 +261,79 @@ public class RequestService implements IService<Request> {
     }
 
 
+    public List<Request> searchRequests(Map<String, Object> filters) throws SQLException {
+        List<Request> requests = new ArrayList<>();
+
+        // Début de la requête de base
+        StringBuilder sql = new StringBuilder("SELECT r.id_request, r.id_client, r.id_departure_location, r.id_arrival_location, r.status, r.request_date, ");
+        sql.append("u.name AS client_name, ");
+        sql.append("l1.address AS departure_address, l2.address AS arrival_address ");
+        sql.append("FROM request r ");
+        sql.append("JOIN user u ON r.id_client = u.id_user ");
+        sql.append("JOIN location l1 ON r.id_departure_location = l1.id_location ");
+        sql.append("JOIN location l2 ON r.id_arrival_location = l2.id_location ");
+        sql.append("WHERE 1=1 "); // Condition toujours vraie pour faciliter l'ajout des filtres
+
+        // Liste des paramètres
+        List<Object> parameters = new ArrayList<>();
+
+        // Dynamique: ajout des filtres
+        if (filters.containsKey("status")) {
+            sql.append("AND r.status = ? ");
+            parameters.add(filters.get("status").toString()); // Ajout du statut dans les paramètres
+        }
+        if (filters.containsKey("clientId")) {
+            sql.append("AND r.id_client = ? ");
+            parameters.add(filters.get("clientId")); // Ajout du client ID dans les paramètres
+        }
+        if (filters.containsKey("departureLocation")) {
+            sql.append("AND r.id_departure_location = ? ");
+            parameters.add(filters.get("departureLocation")); // Ajout du départ location dans les paramètres
+        }
+        if (filters.containsKey("arrivalLocation")) {
+            sql.append("AND r.id_arrival_location = ? ");
+            parameters.add(filters.get("arrivalLocation")); // Ajout du arrival location dans les paramètres
+        }
+        // Ajouter d'autres filtres si nécessaire
+
+        // Préparation de la requête
+        try (PreparedStatement ps = connection.prepareStatement(sql.toString())) {
+            // Assignation des paramètres dans la requête préparée
+            for (int i = 0; i < parameters.size(); i++) {
+                ps.setObject(i + 1, parameters.get(i));  // Paramètre dynamique
+            }
+
+            // Exécution de la requête
+            try (ResultSet rs = ps.executeQuery()) {
+                UserService userService = new UserService();
+                LocationService locationService = new LocationService();
+
+                while (rs.next()) {
+                    User client = userService.getById(rs.getInt("id_client"));
+                    Location departure = locationService.getById(rs.getInt("id_departure_location"));
+                    Location arrival = locationService.getById(rs.getInt("id_arrival_location"));
+
+                    Request request = new Request(
+                            rs.getInt("id_request"),
+                            client,
+                            departure, arrival,
+                            Request.RequestStatus.valueOf(rs.getString("status")),
+                            rs.getTimestamp("request_date").toLocalDateTime()
+                    );
+                    requests.add(request);
+                }
+            }
+        }
+
+        return requests;
+    }
 
 
 
 }
+
+
+
+
+
+

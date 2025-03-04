@@ -6,6 +6,7 @@ import entities.Driver;
 import entities.Request;
 import entities.User;
 import entities.Ride;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,6 +20,8 @@ import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import services.DriverService;
 import services.RequestService;
@@ -55,6 +58,9 @@ public class RequestController {
 
     @FXML
     private Button See_you_Rides_button;
+    @FXML
+    private WebView webView;
+    private WebEngine webEngine;
 
     private final RequestService requestService = new RequestService();
     private final UserService userService = new UserService();
@@ -146,10 +152,11 @@ public class RequestController {
         // Create buttons: Accept and Details.
         Button acceptButton = createAcceptButton(request);
         Button selectButton = createSelectButton(request);
+        Button mapButton = createMapButton(request);
 
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(acceptButton, selectButton);
+        buttonContainer.getChildren().addAll(acceptButton, selectButton , mapButton);
         requestCard.getChildren().add(buttonContainer);
 
         // Hover effects.
@@ -373,6 +380,58 @@ public class RequestController {
             System.out.println("❌ Failed to send SMS: " + e.getMessage());
         }
     }
+    private Button createMapButton(Request request) {
+        Button mapButton = new Button("Show on Map");
+        mapButton.getStyleClass().add("request-button");
+
+        mapButton.setOnAction(event -> {
+            // Passer l'objet request à la méthode openMapInWebView
+            openMapInWebView(request);
+        });
+
+        return mapButton;
+    }
+
+
+    private void openMapInWebView(Request request) {
+        WebView webView = new WebView();
+        WebEngine webEngine = webView.getEngine();
+
+        // Charger la carte (fichier HTML ou URL)
+        String mapFilePath = getClass().getResource("/taxi-managment/driver_side/map.html").toExternalForm();
+        webEngine.load(mapFilePath);
+
+        // Attendre que la page soit complètement chargée avant d'injecter les données
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                // Récupérer les informations de départ et d'arrivée du request
+                String departureLat = String.valueOf(request.getDepartureLocation().getLatitude());
+                String departureLng = String.valueOf(request.getDepartureLocation().getLongitude());
+                String arrivalLat = String.valueOf(request.getArrivalLocation().getLatitude());
+                String arrivalLng = String.valueOf(request.getArrivalLocation().getLongitude());
+
+                // Passer les coordonnées à JavaScript
+                String script = "showLocationsOnMap(" + departureLat + ", " + departureLng + ", " +
+                        arrivalLat + ", " + arrivalLng + ")";
+                webEngine.executeScript(script);
+            }
+        });
+
+        // Créer une scène pour afficher la carte
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().add(webView);
+
+        // Définir les dimensions de la fenêtre
+        Scene mapScene = new Scene(stackPane, 800, 600); // 800x600 px ou la taille souhaitée
+        Stage mapStage = new Stage();
+        mapStage.setTitle("Map View");
+        mapStage.setScene(mapScene);
+
+        // Afficher la fenêtre
+        mapStage.show();
+    }
+
+
 
 
 

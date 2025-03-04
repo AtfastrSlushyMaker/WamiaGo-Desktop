@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Leaflet Map with Search</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet 1.5.1 CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+
+    <!-- Leaflet Control Geocoder CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .leaflet-control-geocoder {
+            margin-top: 10px;
+        }
+        /* Optional confirm button */
+        #confirmButton {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: #BA9467;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+
+<!-- Leaflet Control Geocoder JS -->
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var map = L.map('map').setView([0, 0], 1);
+        var departureMarker = null;
+        var arrivalMarker = null;
+
+        // 1. Add OSM tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 2. Helper function to add/update markers and call javaConnector
+        function updateMarkers(departureLat, departureLng, arrivalLat, arrivalLng) {
+            console.log("Updating markers...");
+
+            // Remove previous markers
+            if (departureMarker !== null) {
+                map.removeLayer(departureMarker);
+            }
+            if (arrivalMarker !== null) {
+                map.removeLayer(arrivalMarker);
+            }
+
+            // Add the departure marker
+            departureMarker = L.marker([departureLat, departureLng]).addTo(map)
+                .bindPopup("Departure: " + departureLat.toFixed(6) + ", " + departureLng.toFixed(6))
+                .openPopup();
+
+            // Add the arrival marker
+            arrivalMarker = L.marker([arrivalLat, arrivalLng]).addTo(map)
+                .bindPopup("Arrival: " + arrivalLat.toFixed(6) + ", " + arrivalLng.toFixed(6))
+                .openPopup();
+
+            // Adjust the map view to fit the bounds of both markers
+            var bounds = L.latLngBounds(
+                [departureLat, departureLng],
+                [arrivalLat, arrivalLng]
+            );
+            map.fitBounds(bounds);
+        }
+
+        // 3. This function will be called when the coordinates are passed from Java
+        function setCoordinates(departureLat, departureLng, arrivalLat, arrivalLng) {
+            updateMarkers(departureLat, departureLng, arrivalLat, arrivalLng);
+        }
+
+        // Expose the setCoordinates function to be called from Java
+        window.javaConnector = {
+            setCoordinates: setCoordinates
+        };
+
+        // 4. Geocoder control
+        var geocoderControl = L.Control.geocoder({
+            defaultMarkGeocode: false
+        })
+            .on('markgeocode', function(e) {
+                var center = e.geocode.center;
+                console.log("Geocoder => lat: " + center.lat + ", lng: " + center.lng);
+                // Move map to found location
+                map.setView(center, 15);
+                // Update marker + coords
+                updateMarker(center);
+
+                // Clear the geocoder's input and hide results
+                this._geocoder._input.value = ''; // Clear search text
+                this._geocoder._input.blur(); // Remove focus to collapse results
+                this._geocoder._clearResults(); // Clear results list
+            })
+            .addTo(map);
+
+        // 5. Resize => recalc map size
+        window.addEventListener('resize', function() {
+            map.invalidateSize();
+        });
+    });
+</script>
+</body>
+</html>
