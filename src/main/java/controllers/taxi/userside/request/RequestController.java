@@ -39,10 +39,7 @@ public class RequestController {
     @FXML
     private DatePicker searchDatePicker;
 
-    @FXML
-    private ComboBox<Location> departureComboBox; // ComboBox for departure location
-    @FXML
-    private ComboBox<Location> arrivalComboBox;  // ComboBox for arrival location
+
     @FXML
     private Button bookings_button;
     @FXML
@@ -581,16 +578,7 @@ public class RequestController {
         }
     }
 
-    private void loadLocationsIntoComboBoxes() {
-        try {
-            LocationService locationService = new LocationService();
-            List<Location> locations = locationService.read();
-            departureComboBox.getItems().setAll(locations);
-            arrivalComboBox.getItems().setAll(locations);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 
 }

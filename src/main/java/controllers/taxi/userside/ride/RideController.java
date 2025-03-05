@@ -166,26 +166,10 @@ public class RideController {
         HBox imageAndTextBox = createImageAndTextBoxForRide(ride);
         rideCard.getChildren().add(imageAndTextBox);
 
-        // Show ride start and end location
-        Label locationLabel = new Label("From: " + ride.getRequest().getDepartureLocation().getAddress() +
-                " To: " + ride.getRequest().getArrivalLocation().getAddress());
-        locationLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(locationLabel);
-
         // Show ride duration
         Label durationLabel = new Label("Duration: " + ride.getDuration() + " mins");
         durationLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
         rideCard.getChildren().add(durationLabel);
-
-        // Show ride date
-        Label dateLabel = new Label("Date: " + ride.getRideDate().toString());
-        dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(dateLabel);
-
-        // Show ride status (optional)
-        Label statusLabel = new Label("Status: " + ride.getStatus().toString());  // Assuming Status is an enum
-        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(statusLabel);
 
         // Create buttons
         Button selectButton = createSelectButtonForRide(ride);
@@ -370,9 +354,7 @@ public class RideController {
         }
     }
 
-    private HostServices getHostServices() {
-        return Home.getAppHostServices();
-    }
+
 
     // Méthode pour afficher une alerte d'erreur
     public void showErrorAlert(String title, String message) {
@@ -383,14 +365,7 @@ public class RideController {
         alert.showAndWait();
     }
 
-    // Méthode pour afficher une alerte d'information
-    public void showInfoAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 
     private void openPaymentPage(String url) {
         Stage paymentStage = new Stage();

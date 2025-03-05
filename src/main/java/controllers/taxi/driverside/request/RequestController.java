@@ -8,9 +8,7 @@ import entities.User;
 import entities.Ride;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -28,14 +26,22 @@ import services.RequestService;
 import services.UserService;
 import services.RideService;
 import utils.SessionManager;
-import javafx.scene.control.TextFormatter;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RequestController {
+
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private DatePicker searchDatePicker;
 
     @FXML
     private Button bookings_button;
@@ -98,9 +104,63 @@ public class RequestController {
             System.err.println("SQL error while retrieving the driver: " + e.getMessage());
             e.printStackTrace();
         }
-
+        searchDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> filterRequestsByDate(newValue));
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> filterRequests(newValue));
         See_you_Rides_button.setOnAction(event -> loadScene("/taxi-managment/driver_side/ride.fxml"));
     }
+
+    private void filterRequestsByDate(LocalDate selectedDate) {
+        if (selectedDate != null) {
+            try {
+                // Récupérer toutes les demandes disponibles pour les chauffeurs
+                List<Request> requests = requestService.read();
+
+                // Filtrer les demandes en fonction de la date sélectionnée
+                List<Request> filteredRequests = requests.stream()
+                        .filter(request -> request.getRequestDate().toLocalDate().isEqual(selectedDate))
+                        .collect(Collectors.toList());
+
+                // Rafraîchir la vue avec les demandes filtrées
+                updateRequestFlowPane(filteredRequests);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void filterRequests(String searchText) {
+        try {
+            // Récupérer toutes les demandes disponibles pour les chauffeurs
+            List<Request> requests = requestService.read();
+
+            // Filtrer les demandes en fonction du texte de recherche
+            List<Request> filteredRequests = requests.stream()
+                    .filter(request -> request.getDepartureLocation().getAddress().toLowerCase().contains(searchText.toLowerCase()) ||
+                            request.getArrivalLocation().getAddress().toLowerCase().contains(searchText.toLowerCase()) ||
+                            request.getStatus().toString().toLowerCase().contains(searchText.toLowerCase()))
+                    .collect(Collectors.toList());
+
+            // Rafraîchir la vue avec les demandes filtrées
+            updateRequestFlowPane(filteredRequests);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateRequestFlowPane(List<Request> filteredRequests) {
+        // Vider le FlowPane avant d'ajouter les nouvelles demandes
+        requestFlowPane.getChildren().clear();
+
+        // Ajouter les demandes filtrées au FlowPane
+        for (Request request : filteredRequests) {
+            if (request.getStatus() == Request.RequestStatus.PENDING) { // Vérifie que la demande est encore en attente
+                VBox requestCard = createRequestCard(request);
+                requestFlowPane.getChildren().add(requestCard);
+            }
+        }
+    }
+
+
 
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));

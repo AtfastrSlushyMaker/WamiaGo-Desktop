@@ -76,7 +76,7 @@
     -fx-border-width: 2px;
 }
 .request-button-delete{
-    -fx-background-color: #E57373;
+    -fx-background-color: #FFC107;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 10px;
@@ -85,12 +85,12 @@
     -fx-border-width: 2px;
 }
 .request-button-delete:hover {
-    -fx-background-color: #D32F2F;
+    -fx-background-color: #FFA000;
 
     /* Lighter green on hover */
 }
 .request-button-update{
-    -fx-background-color: #85A9FF;
+    -fx-background-color: #FFC107;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 10px;
@@ -100,7 +100,7 @@
 
 }
 .request-button-update:hover{
-    -fx-background-color: #5A6BE5;
+    -fx-background-color:#FFA000;
 
 }
 
@@ -166,18 +166,21 @@
 
 /* Style for the request taxi button */
 #request_taxi_button {
-    -fx-background-color: #4E9D3A; /* Primary color */
-    -fx-text-fill: white;
+    -fx-background-color: #6FBF66; /* Green background */
+    -fx-text-fill: white; /* Text in black */
     -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
+    -fx-padding: 10px 15px;
 
+    -fx-border-color: #6FBF66; /* Optional: Same color as background */
     -fx-border-width: 2px;
+
+    -fx-background-radius: 20px; /* Rounded button */
+    -fx-border-radius: 20px;
 }
 
 /* Hover effect */
 #request_taxi_button:hover {
-    -fx-background-color: #6FBF66; /* Lighter green on hover */
+    -fx-background-color: #5E9F5A;
 }
 
 
@@ -192,18 +195,21 @@
 
 /* Style for the See You Rides button */
 #See_you_Rides_buuton {
-    -fx-background-color: #85A9FF; /* Light blue color */
-    -fx-text-fill: white;
+    -fx-background-color: #85A9FF; /* Fond bleu */
+    -fx-text-fill: white; /* Texte en noir */
     -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
+    -fx-padding: 10px 15px;
+
 
     -fx-border-width: 2px;
+
+    -fx-background-radius: 20px; /* Bouton rond */
+    -fx-border-radius: 20px;
 }
 
 /* Hover effect for the See You Rides button */
 #See_you_Rides_buuton:hover {
-    -fx-background-color: #5A6BE5; /* Darker blue on hover */
+    -fx-background-color: #7499E5;
 }
 
 

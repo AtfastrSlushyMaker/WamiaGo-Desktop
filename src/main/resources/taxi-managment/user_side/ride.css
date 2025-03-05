@@ -59,7 +59,7 @@
 
 /* Style for the select button */
 .ride-button {
-    -fx-background-color: #FFC10793; /* Fresh green */
+    -fx-background-color: #E57373; /* Fresh green */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 10px;
@@ -80,7 +80,7 @@
     -fx-background-color: #D32F2F;
 }
 .ride-button-pay {
-    -fx-background-color: #4CAF50; /* Vert, complémentaire au rouge */
+    -fx-background-color: #E57373; /* Vert, complémentaire au rouge */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 10px;
@@ -90,10 +90,10 @@
 }
 
 .ride-button-pay:hover {
-    -fx-background-color: #388E3C; /* Une teinte plus foncée de vert pour l'effet hover */
+    -fx-background-color: #D32F2F; /* Une teinte plus foncée de vert pour l'effet hover */
 }
 .ride-button:hover {
-    -fx-background-color: #FFC107;
+    -fx-background-color: #D32F2F;
 }
 
 /* Modal Styling */
@@ -139,18 +139,21 @@
 
 /* Style for the request taxi button */
 #back_to_request {
-    -fx-background-color: #4E9D3A; /* Primary color */
-    -fx-text-fill: white;
+    -fx-background-color: #6FBF66; /* Green background */
+    -fx-text-fill: white; /* Text in black */
     -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
+    -fx-padding: 10px 15px;
 
+    -fx-border-color: #6FBF66; /* Optional: Same color as background */
     -fx-border-width: 2px;
+
+    -fx-background-radius: 20px; /* Rounded button */
+    -fx-border-radius: 20px;
 }
 
 /* Hover effect */
 #back_to_request:hover {
-    -fx-background-color: #6FBF66; /* Lighter green on hover */
+    -fx-background-color: #5E9F5A;
 }
 
 /* Bicycle Rectangle and Label */
@@ -162,20 +165,23 @@
     -fx-border-width: 2px;
 }
 
-/* Style for the See You Rides button */
 #See_you_Rides_buuton {
-    -fx-background-color: #85A9FF; /* Light blue color */
-    -fx-text-fill: white;
+    -fx-background-color: #85A9FF; /* Fond bleu */
+    -fx-text-fill: white; /* Texte en noir */
     -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
+    -fx-padding: 10px 15px;
+
 
     -fx-border-width: 2px;
+
+    -fx-background-radius: 20px; /* Bouton rond */
+    -fx-border-radius: 20px;
 }
+
 
 /* Hover effect for the See You Rides button */
 #See_you_Rides_buuton:hover {
-    -fx-background-color: #5A6BE5; /* Darker blue on hover */
+    -fx-background-color: #7499E5; /* Darker blue on hover */
 }
 
 /* Bicycle Label */

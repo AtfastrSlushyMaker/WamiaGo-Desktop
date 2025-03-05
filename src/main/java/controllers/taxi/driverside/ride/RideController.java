@@ -169,61 +169,61 @@ public class RideController {
         }
     }
     private VBox createRideCard(Ride ride) {
-        VBox rideCard = new VBox(10);
-        rideCard.setPadding(new Insets(10));
+        VBox rideCard = new VBox(5); // Réduction de l'espacement
+        rideCard.setPadding(new Insets(5)); // Réduction du padding
         rideCard.getStyleClass().add("ride-card");
         rideCard.setAlignment(Pos.CENTER);
+        rideCard.setPrefWidth(250); // Définition d'une largeur fixe
 
         // Create image and text box for ride status
         HBox imageAndTextBox = createImageAndTextBoxForRide(ride);
         rideCard.getChildren().add(imageAndTextBox);
 
-        // Show ride start and end location
-        Label locationLabel = new Label("From: " + ride.getRequest().getDepartureLocation().getAddress() +
-                " To: " + ride.getRequest().getArrivalLocation().getAddress());
-        locationLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(locationLabel);
+        // Vérification pour éviter les NullPointerException
+        if (ride.getRequest() != null && ride.getRequest().getDepartureLocation() != null
+                && ride.getRequest().getArrivalLocation() != null) {
 
-        // Show ride duration
-        Label durationLabel = new Label("Duration: " + ride.getDuration() + " mins");
-        durationLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(durationLabel);
+            Label locationLabel = new Label("From: " + ride.getRequest().getDepartureLocation().getAddress());
+            locationLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: white;");
+            locationLabel.setWrapText(true);
 
-        // Show ride date
-        Label dateLabel = new Label("Date: " + ride.getRideDate().toString());
-        dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(dateLabel);
+            Label destinationLabel = new Label("To: " + ride.getRequest().getArrivalLocation().getAddress());
+            destinationLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: white;");
+            destinationLabel.setWrapText(true);
 
-        // Show ride status (optional)
-        Label statusLabel = new Label("Status: " + ride.getStatus().toString());  // Assuming Status is an enum
-        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(statusLabel);
+            rideCard.getChildren().addAll(locationLabel, destinationLabel);
+        }
 
         // Create buttons
         Button selectButton = createSelectButtonForRide(ride);
         Button cancelButton = createCancelButton(ride, rideCard);
         Button updateButton = createUpdateButton(ride);
 
+        // Réduire la taille des boutons
+        selectButton.setPrefSize(80, 30);
+        cancelButton.setPrefSize(80, 30);
+        updateButton.setPrefSize(80, 30);
 
         // Place buttons in an HBox to align them horizontally
-        HBox buttonContainer = new HBox(10);
+        HBox buttonContainer = new HBox(5, selectButton, cancelButton, updateButton);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, cancelButton, updateButton);  // Add updateButton here
 
-        rideCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
+        rideCard.getChildren().add(buttonContainer);
 
         // Add hover effect for the ride card
+        rideCard.setOnMouseEntered(event -> {
+            rideCard.setScaleX(1.03);
+            rideCard.setScaleY(1.03);
+        });
         rideCard.setOnMouseExited(event -> {
             rideCard.setScaleX(1);
             rideCard.setScaleY(1);
         });
-        rideCard.setOnMouseEntered(event -> {
-            rideCard.setScaleX(1.05);
-            rideCard.setScaleY(1.05);
-        });
 
         return rideCard;
     }
+
+
     private HBox createImageAndTextBoxForRide(Ride ride) {
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);
