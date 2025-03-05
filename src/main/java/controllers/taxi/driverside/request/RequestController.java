@@ -397,22 +397,23 @@ public class RequestController {
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
 
-        // Charger la carte (fichier HTML ou URL)
+        // Charger la carte (fichier HTML)
         String mapFilePath = getClass().getResource("/taxi-managment/driver_side/map.html").toExternalForm();
         webEngine.load(mapFilePath);
 
         // Attendre que la page soit complètement chargée avant d'injecter les données
         webEngine.getLoadWorker().stateProperty().addListener((observable, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
-                // Récupérer les informations de départ et d'arrivée du request
-                String departureLat = String.valueOf(request.getDepartureLocation().getLatitude());
-                String departureLng = String.valueOf(request.getDepartureLocation().getLongitude());
-                String arrivalLat = String.valueOf(request.getArrivalLocation().getLatitude());
-                String arrivalLng = String.valueOf(request.getArrivalLocation().getLongitude());
+                // Récupérer les coordonnées de départ et d'arrivée
+                double departureLat = request.getDepartureLocation().getLatitude();
+                double departureLng = request.getDepartureLocation().getLongitude();
+                double arrivalLat = request.getArrivalLocation().getLatitude();
+                double arrivalLng = request.getArrivalLocation().getLongitude();
 
-                // Passer les coordonnées à JavaScript
-                String script = "showLocationsOnMap(" + departureLat + ", " + departureLng + ", " +
-                        arrivalLat + ", " + arrivalLng + ")";
+                // Injecter les coordonnées dans la carte
+                String script = "window.javaConnector.setCoordinates("
+                        + departureLat + ", " + departureLng + ", "
+                        + arrivalLat + ", " + arrivalLng + ");";
                 webEngine.executeScript(script);
             }
         });
@@ -421,15 +422,13 @@ public class RequestController {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().add(webView);
 
-        // Définir les dimensions de la fenêtre
-        Scene mapScene = new Scene(stackPane, 800, 600); // 800x600 px ou la taille souhaitée
+        Scene mapScene = new Scene(stackPane, 800, 600);
         Stage mapStage = new Stage();
         mapStage.setTitle("Map View");
         mapStage.setScene(mapScene);
-
-        // Afficher la fenêtre
         mapStage.show();
     }
+
 
 
 
