@@ -1,5 +1,7 @@
 package entities;
 
+import utils.Weather.WeatherService;
+
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -149,15 +151,35 @@ public class BicycleRental {
                 ", cost=" + cost +
                 '}';
     }
-    public float calculateCost(int durationMinutes) {
-        float baseRate = 2f; // Base rate for the first 30 minutes
-        float additionalRate = 0.5f; // Additional rate per minute after 30 minutes
+    public double calculateCost(Station start, Station end, Timestamp startTime, Timestamp endTime) {
+        double baseRate = 0.50; // Base rate per km
+        double distance = Location.calculateDistance(start.getLocation(), end.getLocation());
+        double cost = baseRate * distance;
 
-        if (durationMinutes <= 30) {
-            return baseRate;
-        } else {
-            return baseRate + (durationMinutes - 30) * additionalRate;
+        // Fetch Weather Data
+        WeatherInfo weatherInfo = WeatherService.getWeatherInfo(start.getLocation());
+
+        if (weatherInfo != null) {
+            String description = weatherInfo.getDescription().toLowerCase();
+            double temp = Double.parseDouble(weatherInfo.getDescription().split("°C")[0]); // Extract temp from "25°C, clear sky"
+
+            // 🌧️ Rainy, Snowy, or Stormy → 15% Discount
+            if (description.contains("rain") || description.contains("snow") || description.contains("storm")) {
+                cost *= 0.85;
+            }
+
+            // 🔥 Hot Weather (Above 35°C) or ❄️ Cold Weather (Below 5°C) → 10% Discount
+            if (temp > 35 || temp < 5) {
+                cost *= 0.90;
+            }
+
+            // 🌬️ High Wind Speed (>30km/h) → 20% Discount (Encourage safer rides)
+            if (weatherInfo.getWindSpeed() > 30) {
+                cost *= 0.80;
+            }
         }
+
+        return Math.max(cost, 0.50); // Minimum price safeguard
     }
     public int  getDuration_minutes(){
         return (int) (getStart_time().getTime()-getEnd_time().getTime()) / 60000;

@@ -4,6 +4,7 @@ import com.google.zxing.WriterException;
 import entities.Bicycle;
 import entities.BicycleRental;
 import entities.Station;
+import entities.WeatherInfo;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -32,6 +33,7 @@ import services.BicycleService;
 import services.StationService;
 import utils.QrCode.QRCodeGenerator;
 import utils.SessionManager;
+import utils.Weather.WeatherService;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -228,8 +230,28 @@ public class StationController {
         bikeCount = new Label("Bikes Available: " + stationService.getAvailableBikes(station).size());
         bikeCount.getStyleClass().add("station-bike-count");
 
+        // 🟢 Weather elements (Label + ImageView)
+        Label weatherLabel = new Label("Loading weather...");
+        weatherLabel.getStyleClass().add("weather-label");
+
+        ImageView weatherIcon = new ImageView();
+        weatherIcon.setFitWidth(40); // Adjust icon size
+        weatherIcon.setFitHeight(40);
+
+        HBox weatherBox = new HBox(10, weatherIcon, weatherLabel);
+        weatherBox.setAlignment(Pos.CENTER);
+
         Button selectButton = createSelectButton(station);
-        stationCard.getChildren().addAll(imageAndTextBox, bikeCount, selectButton);
+        stationCard.getChildren().addAll(imageAndTextBox, bikeCount, weatherBox, selectButton);
+
+        // 🟢 Fetch weather data asynchronously
+        new Thread(() -> {
+            WeatherInfo weatherInfo = WeatherService.getWeatherInfo(station.getLocation());
+            javafx.application.Platform.runLater(() -> {
+                weatherLabel.setText(weatherInfo.getDescription());
+                weatherIcon.setImage(weatherInfo.getIcon());
+            });
+        }).start();
 
         stationCard.setOnMouseExited(event -> stationCard.setScaleX(1));
         stationCard.setOnMouseEntered(event -> stationCard.setScaleX(1.05));
@@ -240,6 +262,8 @@ public class StationController {
         }
         return stationCard;
     }
+
+
 
     private HBox createImageAndTextBox(Station station) {
         HBox hbox = new HBox(10);
