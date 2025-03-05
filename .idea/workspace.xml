@@ -5,12 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/ride/RideController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/ride/RideController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/user/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/user/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Changefxml.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardAdmin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/request.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/user.front/loginSignup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/user.front/loginSignup.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,13 +90,13 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;C:/Users/Rzouga.RZOUGALAPTOP/Desktop/School/3A/Sem 2/Pidev/WamiaGo-Desktop/src/main/resources/user.back&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Pidev/src/main/resources/Response&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/Java/javafx-sdk-23.0.2&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
@@ -216,6 +222,11 @@
       <workItem from="1740662234661" duration="1944000" />
       <workItem from="1740671863699" duration="193000" />
       <workItem from="1740698084294" duration="7938000" />
+      <workItem from="1740731875865" duration="1931000" />
+      <workItem from="1740910170859" duration="3235000" />
+      <workItem from="1740916420140" duration="18753000" />
+      <workItem from="1741114323599" duration="15342000" />
+      <workItem from="1741182675909" duration="5789000" />
     </task>
     <servers />
   </component>

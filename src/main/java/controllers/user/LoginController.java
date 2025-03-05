@@ -2,11 +2,13 @@ package controllers.user;
 
 import entities.Location;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -22,28 +24,48 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class LoginController {
-    @FXML private TextField signupEmailField;
-    @FXML private TextField signupFirstNameField;
-    @FXML private TextField signupLastNameField;
-    @FXML private TextField signupPhoneField;
-    @FXML private DatePicker signupDatePicker;
-    @FXML private RadioButton maleRadioButton;
-    @FXML private ComboBox<Location> signupLocationComboBox;
-    @FXML private RadioButton femaleRadioButton;
-    @FXML private PasswordField signupPasswordField;
-    @FXML private PasswordField signupConfirmPasswordField;
-    @FXML private Button signupButton;
+    @FXML
+    public ProgressIndicator loadingIndicator;
+    public TextField signupFirstNameField;
+    @FXML
+    private TextField signupEmailField;
+    @FXML
+    private TextField signupLastNameField;
+    @FXML
+    private TextField signupPhoneField;
+    @FXML
+    private DatePicker signupDatePicker;
+    @FXML
+    private RadioButton maleRadioButton;
+    @FXML
+    private ComboBox<Location> signupLocationComboBox;
+    @FXML
+    private RadioButton femaleRadioButton;
+    @FXML
+    private PasswordField signupPasswordField;
+    @FXML
+    private PasswordField signupConfirmPasswordField;
+    @FXML
+    private Button signupButton;
 
-    @FXML private TextField emailField;
-    @FXML private PasswordField passwordField;
-    @FXML private Button loginButton;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private Button loginButton;
 
-    @FXML private Pane slidingPanel;
-    @FXML private Pane signupPane;
-    @FXML private Pane loginPane;
-    @FXML private Button switchFormButton;
+    @FXML
+    private Pane slidingPanel;
+    @FXML
+    private Pane signupPane;
+    @FXML
+    private Pane loginPane;
+    @FXML
+    private Button switchFormButton;
 
-    @FXML private ToggleGroup genderGroup;
+    @FXML
+    private ToggleGroup genderGroup;
 
     private final UserService userService = new UserService();
     private final LocationService locationService = new LocationService();
@@ -52,8 +74,7 @@ public class LoginController {
     @FXML
     public void initialize() {
         loadLocations();
-    }
-
+}
     private void loadLocations() {
         try {
             List<Location> locations = locationService.read();
@@ -96,61 +117,57 @@ public class LoginController {
             String email = emailField.getText();
             String password = passwordField.getText();
 
-            User authenticatedUser = userService.authenticateUser(email, password);
-            if (authenticatedUser != null) {
-                SessionManager.getInstance().setUser(authenticatedUser);
-                authenticatedUser.setStatus(User.Status.ONLINE);
-                showAlert("Login Successful", "Welcome back, " + authenticatedUser.getName() + "!");
-                clearLoginForm();
-                loadDashboard();
-            } else {
-                showAlert("Login Failed", "Invalid credentials. Try again.");
-            }
+            loadingIndicator.setVisible(true); // Show loading indicator
+
+            new Thread(() -> {
+                try {
+                    User authenticatedUser = userService.authenticateUser(email, password);
+                    Platform.runLater(() -> {
+                        loadingIndicator.setVisible(false); // Hide loading indicator
+                        if (authenticatedUser != null) {
+                            SessionManager.getInstance().setUser(authenticatedUser);
+                            authenticatedUser.setStatus(User.Status.ONLINE);
+                            showAlert("Login Successful", "Welcome back, " + authenticatedUser.getName() + "!");
+                            clearLoginForm();
+                            loadDashboard();
+                        } else {
+                            showAlert("Login Failed", "Invalid credentials. Try again.");
+                        }
+                    });
+                } catch (SQLException e) {
+                    Platform.runLater(() -> {
+                        loadingIndicator.setVisible(false); // Hide loading indicator
+                        showAlert("Database Error", "Could not authenticate user.");
+                    });
+                }
+            }).start();
         } else {
             showAlert("Validation Error", "Please enter a valid email and password.");
         }
     }
 
     private void loadDashboard() {
-        switch (SessionManager.getInstance().getUser().getRole()) {
-            case ADMIN:
-                loadAdminDashboard();
-                break;
-            case CLIENT:
-                loadClientDashboard();
-                break;
-        }
+        String fxmlPath = SessionManager.getInstance().getUser().getRole() == Role.ADMIN ? "/dashboard/dashboardAdmin.fxml" : "/dashboard/dashboard.fxml";
+        loadingIndicator.setVisible(true); // Show loading indicator
 
+        new Thread(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+                Parent root = loader.load();
+                Platform.runLater(() -> {
+                    Stage stage = (Stage) loginButton.getScene().getWindow();
+                    stage.setTitle("Dashboard");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                });
+            } catch (IOException e) {
+                Platform.runLater(() -> showAlert("Error", "Failed to load the dashboard."));
+                e.printStackTrace();
+            } finally {
+                Platform.runLater(() -> loadingIndicator.setVisible(false)); // Hide loading indicator
+            }
+        }).start();
     }
-
-    private void loadAdminDashboard(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboardTemplate.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) loginButton.getScene().getWindow();
-            stage.setTitle("Dashboards");
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            showAlert("Error", "Failed to load the dashboard.");
-        }
-    }
-
-    private void loadClientDashboard(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) loginButton.getScene().getWindow();
-            stage.setTitle("Dashboards");
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            showAlert("Error", "Failed to load the dashboard.");
-        }
-    }
-
     @FXML
     private void handleSwitchFormButtonClick() {
         if (isSignUpVisible) {
@@ -165,7 +182,7 @@ public class LoginController {
 
     private void slidePanelToRight() {
         TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), slidingPanel);
-        transition.setToX(460);
+        transition.setToX(signupPane.getWidth());
         transition.play();
     }
 
@@ -209,10 +226,12 @@ public class LoginController {
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
     }
 }

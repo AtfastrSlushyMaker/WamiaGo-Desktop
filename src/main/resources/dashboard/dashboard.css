@@ -1,291 +1,98 @@
-#WindowBorder
-{
-    -fx-background-color: #d1d1f3;
+/* Top Bar */
+#topBar {
+    -fx-background-color: #2D2F33;
 }
-#sideBar
-{
-    -fx-background-color: linear-gradient(to left, #1b2e44,#354055);
-    -fx-background-radius: 0 25 0 0;
-}
-#navbar{
-    -fx-border:none;
-    -fx-background-color: transparent;
-}
-#profile{
-    -fx-background-radius: 360deg;
-    -fx-background-size: cover;
-    -fx-background-position: center;
-    -fx-background-repeat: no-repeat;
-}
-.navButtons{
-    -fx-background-color: transparent;
-    -fx-text-fill: #eef6ff;
-}
-/*For new Dashboard*/
 
-#closeBtn,#maxBtn,#restoreBtn,#menuBarBtn
-{
+/* Close, Maximize, Minimize Buttons */
+#closeBtn, #maxBtn, #restoreBtn, #menuBarBtn {
     -fx-background-color: transparent;
 }
-#navPanel
-{
-    -fx-background-color:  #1b2e44;
-}
-.text
-{
-}
-#topBar
-{
-    -fx-background-color:  #1b2e44;
-}
-/*---- for hovering -----*/
-#closeBtn:hover
-{
-    -fx-background-radius: 0px;
+
+#closeBtn:hover {
     -fx-background-color: #FF0606;
 }
-#maxBtn:hover
-{
-    -fx-cursor: hand;
-    -fx-background-radius: 0px;
+
+#maxBtn:hover, #restoreBtn:hover, #menuBarBtn:hover {
     -fx-background-color: rgba(187, 184, 184, 0.35);
-}
-#restoreBtn:hover
-{
-    -fx-background-radius: 0px;
-    -fx-background-color: rgba(187, 184, 184, 0.35);
-}
-#menuBarBtn:hover
-{
-    -fx-background-radius: 0px ;
-    -fx-cursor: hand;
-    -fx-background-color: rgba(187, 184, 184, 0.10);
-}
-#accountSettings:hover
-{
-    -fx-background-color: rgba(187, 184, 184, 0.31);
-}
-#logOut:hover
-{
-    -fx-background-color: rgba(187, 184, 184, 0.10);
 }
 
-#accountSettings,#logOut
-{
+/* Navigation Panel */
+#navPanel {
+    -fx-background-color: #2D2F33; /* Dark Gray for a modern look */
+    -fx-padding: 20px;
+    -fx-pref-width: 250px;
+    -fx-min-height: 100vh;
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 12, 0, 4, 4);
+}
+
+/* User Greeting */
+#Username {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* Navigation Buttons */
+.navButtons {
+    -fx-background-color: #3A3D42; /* Soft dark tone */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 20;
+    -fx-background-radius: 12px;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 4, 4);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.navButtons:hover {
+    -fx-background-color: #4A4E54; /* Slightly lighter gray */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0, 4, 4);
+    -fx-border-color: #FFC107;
+}
+
+/* Account Settings and Logout Buttons */
+#logout {
+    -fx-background-color: #E57373; /* Red */
+    -fx-border-color: #E57373;
+}
+#logout:hover {
+    -fx-background-color: #D32F2F; /* Darker Red */
+    -fx-border-color: #D32F2F;
+}
+
+/* Content Pane */
+#contentPane {
+    -fx-background-color: #F5F7FA;
+}
+
+/* Sidebar Buttons */
+#dashboard, #usersBtn, #enquiries, #stations, #bicycles, #rentals, #taxiRides, #taxiRequests {
     -fx-background-color: transparent;
+    -fx-text-fill: white;
     -fx-font-size: 10px;
 }
 
-/*--- end of hovering block ---*/
-
-#logOut
-{
-
-}
-.borderName
-{
-    -fx-background-color: rgba(35, 47, 66, 0.54);
-}
-.scroll-pane
-{
-    -fx-background-color:  F2F2F2;
-}
-.scroll-pane .scroll-bar:horizontal
-{
-    -fx-background-color: transparent;
-
-}
-.scroll-pane .scroll-bar:horizontal .track
-{
-    -fx-background-color: rgba(0, 0, 0, 0.1);
-    -fx-background-radius: 20px ;
-}
-.scroll-pane .scroll-bar:horizontal .thumb
-{
-    -fx-background-color: #232F42;
-    -fx-background-radius: 20px ;
+#dashboard:hover, #usersBtn:hover, #enquiries:hover, #stations:hover, #bicycles:hover, #rentals:hover, #taxiRides:hover, #taxiRequests:hover {
+    -fx-background-color: rgba(187, 184, 184, 0.31);
 }
 
-.scroll-pane .scroll-bar:vertical
-{
-    -fx-background-color: transparent;
-
-}
-.scroll-pane .scroll-bar:vertical .track
-{
-    -fx-background-color: rgba(0, 0, 0, 0.1);
-    -fx-background-radius: 20px ;
-}
-.scroll-pane .scroll-bar:vertical .thumb
-{
-    -fx-background-color: #232F42;
-    -fx-background-radius: 20px ;
-}
-.scroll-pane.scroll-bar.increment-arrow,
-.scroll-pane.scroll-bar.decrement-arrow
-{
-    -fx-padding: -10px;
+/* Sidebar Icons */
+#dashboard .graphic, #usersBtn .graphic, #enquiries .graphic, #stations .graphic, #bicycles .graphic, #rentals .graphic, #taxiRides .graphic, #taxiRequests .graphic {
+    -fx-translate-x: -22.0;
 }
 
-.patches
-{
-    -fx-background-radius: 12px;
-    -fx-effect: dropshadow(Gaussian, rgba(0, 0, 0, 0.15), 30, 0.1, 2, 3);
-}
-.patches_top
-{
-    -fx-background-color: #232F42;
-    -fx-background-radius: 12 12 0 0;
+/* Sidebar Separator */
+#navPanel .separator {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-padding: 0 10px;
 }
 
-.patches_top_button
-{
-    -fx-background-color: #8E9DB5;
-    -fx-background-radius: 12 12 0 0;
-    -fx-border-width: 0 1 0 0;
-    -fx-border-radius: 0 0 1 0;
-    -fx-border-color: #03032c;
-    -fx-text-fill: #ffffff;
-    -fx-font-size: 18px;
-}
-.patches_top_button:hover
-{
-    -fx-background-color: #232F42;
-}
-#Recentbtn:pressed
-{
-    -fx-background-color: black;
-}
-
-.myownbuttons
-{
-    -fx-background-color: #232f42;
-    -fx-background-radius: 12px ;
-    -fx-text-fill: white;
-}
-.myownHBOX:hover
-{
-    -fx-background-color: rgba(115, 115, 115, 0.10);
-}
-/* table view */
-.table-view {
-    -fx-background-radius: 12;
-    -fx-background-insets: 0 0 0 0;
-    -fx-background-color: white;
-
-}
-
-.table-view .column-header {
-    -fx-background-color: transparent;
-    -fx-background-radius: 12 0 0 0 ;
-    -fx-padding: 20 0 0 0;
-}
-.table-view .column-header-background
-{
-    -fx-background-color: transparent ;
-}
-.searchpane
-{
-
-}
-.curve
-{
-    -fx-background-radius: 12;
-}
-.buttoncolor
-{
-    -fx-background-color: #00C2FF;
-}
-.bordersprop
-{
-    -fx-border-width: 3px;
-    -fx-border-radius: 12px;
-    -fx-border-color: #00c2ff;
-}
-.background{
-    -fx-background-color: linear-gradient(to right, #1b2e44,#354055);
-
-}
-#bg{
-    -fx-background-size: 100%;
-    -fx-background-position: center;
-    -fx-background-repeat: no-repeat;
-}
-.card {
-    -fx-background-color: #232528;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
-}
-#exploreBg{
-    -fx-background-color: linear-gradient(to left, #031927, #0F1A20);
-}
-
-
-
-#refreshButton:hover
-{
-    -fx-background-radius: 12px;
-    -fx-background-color: rgba(129, 129, 129, 0.81);
-    -fx-cursor: hand;
-}
-#next,#next1
-{
-    -fx-background-color: #00c2ff;
-}
-#next:hover,next1:hover
-{
-    -fx-cursor: hand;
-    -fx-background-color: #FFA400 ;
-}
-.onhover:hover
-{
-    -fx-background-color: #FFA400; ;
-    -fx-cursor: hand;
-}
-.CustomFields
-{
-    -fx-background-radius: 12px;
-}
-.date-picker .text-field {
-    -fx-background-radius: 10 0 0 10;
-}
-.date-picker .arrow-button {
-    -fx-background-radius: 0 10 10 0;
-}
-
-#employeesView .table-column {
-    -fx-alignment: CENTER;
-}
-
-#membersView .table-column {
-    -fx-alignment: CENTER;
-}
-
-#membersView1 .table-column {
-    -fx-alignment: CENTER;
-}
-#transactionView .table-column
-{
-    -fx-alignment: CENTER;
-}
-#RevenueView .table-column
-{
-    -fx-alignment: CENTER;
-}
-#queriesView .table-column
-{
-    -fx-alignment: CENTER;
-}
-.text-area .scroll-pane {
-    -fx-background-color: transparent;
-}
-.text-area .scroll-pane .viewport{
-    -fx-background-color: transparent;
-}
-.text-area .scroll-pane .content{
-    -fx-background-color: transparent;
-}
-.text-area
-{
-    -fx-background-radius: 10px;
+/* Sidebar User Circle */
+#navPanel .circle {
+    -fx-fill: #c0c0c0;
 }

@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -210,7 +212,11 @@ public class DashboardTemplateController implements Initializable {
 
     // Logout button handler (to be implemented)
     @FXML
-    private void logoutBtn(ActionEvent e) throws IOException {
-        // TODO: Implement logout functionality
+    private void logoutBtn(ActionEvent event) throws IOException {
+        // Perform logout logic here (e.g., clear session, redirect to login page)
+        Stage stage = (Stage) topBar.getScene().getWindow();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.front/loginSignup.fxml")));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

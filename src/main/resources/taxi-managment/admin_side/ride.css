@@ -122,7 +122,6 @@
 /* Active/Pressed State */
 .modal-close-button:pressed {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 4); /* Subtle shadow on click */
-    -fx-transform: scale(0.98); /* Slight shrink effect when pressed */
 }
 
 /* Style for the request taxi button */

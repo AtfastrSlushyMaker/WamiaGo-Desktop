@@ -81,16 +81,6 @@ public class RideController {
                 if (ride == null || ride.getRequest() == null) {
                     continue;  // Skip any ride or request that is null
                 }
-
-                // Print ride details for debugging (remove after testing)
-                System.out.println("Arrival Location: " + ride.getRequest().getArrivalLocation().getAddress());
-                System.out.println("Departure Location: " + ride.getRequest().getDepartureLocation().getAddress());
-                System.out.println("Distance: " + ride.getDistance() + " km");
-                System.out.println("Duration: " + ride.getDuration() + " min");
-                System.out.println("Price: " + ride.getPrice() + " TND");
-                System.out.println("Status: " + ride.getStatus());
-
-                // Create a ride card UI component
                 VBox rideCard = createRideCard(ride);
                 rideFlowPane.getChildren().add(rideCard);  // Add the card to the FlowPane
             }
