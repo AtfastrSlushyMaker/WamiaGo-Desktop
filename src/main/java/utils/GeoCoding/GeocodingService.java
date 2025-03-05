@@ -51,6 +51,9 @@ public class GeocodingService {
                 return null;
             }
 
+            // 6. Delay after the request to prevent too many requests in a short time
+            Thread.sleep(1000); // Delay for 1 second (adjust as necessary)
+
             return new double[]{
                     firstResult.get("lat").getAsDouble(),
                     firstResult.get("lon").getAsDouble()
@@ -61,6 +64,8 @@ public class GeocodingService {
             return null;
         }
     }
+
+
 
     // USAGE EXAMPLE
     public static void main(String[] args) {
