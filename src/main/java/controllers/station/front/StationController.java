@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -93,6 +94,8 @@ public class StationController {
     // Map and Web Engine
     private WebEngine webEngine;
     private Timeline reservationTimeline;
+
+    private Object radiusCircle = null;
 
     // Initialization
     @FXML
@@ -198,6 +201,7 @@ public class StationController {
 
     public void handleMarkerClick(String stationName) {
         Platform.runLater(() -> {
+            searchByComboBox.setValue("Station Name");
             searchField.setText(stationName);
             search();
         });
@@ -851,124 +855,151 @@ public class StationController {
 
     private void setupSearch() {
         String searchBy = (searchByComboBox.getValue() != null) ? (String) searchByComboBox.getValue() : "Station Name"; // Default value if null
+
+        // Listens to the search field text changes
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Clear the radius circle every time the search field changes
+            clearRadiusCircle();
+            search();  // Perform the search when the text changes
+        });
+
         switch (searchBy) {
             case "Address":
-                searchField.setOnKeyPressed(event -> {
-                    if (event.getCode() == KeyCode.ENTER) {
-                        search();  // Trigger search when Enter key is pressed
-                    }
+                // For the "Address" search, handle the action event
+                searchField.setOnAction(event -> {
+                    clearRadiusCircle();  // Clear the radius circle when Enter is pressed
+                    search();  // Perform the search
                 });
-
                 break;
             default:
-                searchField.setOnKeyReleased(event -> search());
+                // For the other cases, trigger the search on every key release
+                searchField.setOnKeyReleased(event -> {
+                    if (event.getCode() == KeyCode.ENTER) {
+                        clearRadiusCircle();  // Clear the radius circle when Enter is pressed
+                        search();  // Perform the search
+                    }
+                });
                 break;
         }
 
-        // Clear button functionality to reset search field and reload stations
+        // Clear button functionality to reset search field, remove radius circle, and reload stations
         clear_button.setOnAction(event -> {
             searchField.clear();
-            search();
+            clearRadiusCircle();  // Clear the radius circle
+            search();  // Reload all stations
         });
     }
 
+    public void clearRadiusCircle() {
+        if (radiusCircle != null) {
+            String script = "map.eachLayer(function(layer) { if(layer instanceof L.Circle) { map.removeLayer(layer); } });";
+            webEngine.executeScript(script);
+            radiusCircle = null;  // Reset the radius circle reference
+        }
+    }
+
     public void search() {
-        String query = searchField.getText().trim();
+        String query = searchField.getText();
         String searchBy = searchByComboBox.getValue().toString();
 
         if (query.isEmpty()) {
             loadStationsIntoFlowPane();
-            return;
-        }
-
-        loadingSpinner.setVisible(true);
-
-        // Handle Address Search in Background
-        if ("Address".equals(searchBy)) {
-            Task<Double[]> geocodingTask = new Task<>() {
-                @Override
-                protected Double[] call() throws Exception {
-                    double[] coords = GeocodingService.getCoordinatesFromAddress(query);
-                    return (coords != null)
-                            ? new Double[]{coords[0], coords[1]}
-                            : null;
-                }
-            };
-
-            geocodingTask.setOnSucceeded(e -> {
-                loadingSpinner.setVisible(false);
-                Double[] coords = geocodingTask.getValue();
-                if (coords != null) {
-                    try {
-                        Location searchLocation = new Location(coords[0], coords[1]);
-                        List<Station> stations = stationService.searchByCoordinates(searchLocation);
-
-                        // Find the closest station
-                        Station closestStation = stationService.findClosestStation(searchLocation, stations);
-                        if (closestStation != null) {
-                            // Zoom to the closest station's location
-                            centerMapOnCoordinates(
-                                    closestStation.getLocation().getLatitude(),
-                                    closestStation.getLocation().getLongitude(),
-                                    18 // Higher zoom level (e.g., 18 for closer view)
-                            );
-                        }
-
-                        updateStationCards(stations);
-                    } catch (SQLException ex) {
-                        showErrorDialog("Search Error", "Failed to load stations.");
-                    }
-                } else {
-                    showErrorDialog("Address Not Found", "Could not locate: " + query);
-                }
-            });
-
-            geocodingTask.setOnFailed(e -> {
-                loadingSpinner.setVisible(false);
-                showErrorDialog("Geocoding Error", "Failed to fetch coordinates.");
-            });
-
-            new Thread(geocodingTask).start();
-
         } else {
-            // Handle Other Searches (Station Name, Available Bikes) Synchronously
             try {
-                List<Station> stations;
-                switch (searchBy) {
-                    case "Station Name":
-                        stations = stationService.search("name", query);
-                        break;
-                    case "Available Bikes":
-                        stations = stationService.searchByAvailableBikes(query);
-                        break;
-                    default:
-                        stations = stationService.read();
-                        break;
-                }
-                updateStationCards(stations);
-                loadingSpinner.setVisible(false);
+                if ("Address".equals(searchBy)) {
+                    // Create a background task for geocoding
+                    Task<double[]> geocodingTask = new Task<>() {
+                        @Override
+                        protected double[] call() throws Exception {
+                            String sanitizedQuery = query.trim().replace(",", ", ");
+                            return GeocodingService.getCoordinatesFromAddress(sanitizedQuery);
+                        }
+                    };
 
-            } catch (SQLException ex) {
-                loadingSpinner.setVisible(false);
-                showErrorDialog("Search Error", "Failed to load stations.");
+                    // Handle the result when it's ready
+                    geocodingTask.setOnSucceeded(event -> {
+                        double[] coordinates = geocodingTask.getValue();
+                        if (coordinates != null) {
+                            Platform.runLater(() -> {
+                                handleAddressSearchResult(coordinates);
+                            });
+                        }
+                    });
+
+                    // Start the background task
+                    new Thread(geocodingTask).start();
+                } else {
+                    // Handle other search types as before
+                    handleNonAddressSearch(searchBy, query);
+                }
+            } catch (Exception e) {
+                showErrorDialog("Search Error", "An error occurred while searching for stations.");
+                e.printStackTrace();
             }
         }
     }
+
+    private void handleAddressSearchResult(double[] coordinates) {
+        clearRadiusCircle();
+
+        double latitude = coordinates[0];
+        double longitude = coordinates[1];
+
+        // Draw circle code...
+        String script = String.format("var circle = L.circle([%s, %s], { radius: 20000 }).addTo(map); " +
+                        "map.setView([%s, %s], 12, {animate: true, duration: 2.0});",
+                latitude, longitude, latitude, longitude);
+        webEngine.executeScript(script);
+
+        radiusCircle = script;
+
+        try {
+            List<Station> stations = stationService.searchByCoordinates(new Location(latitude, longitude));
+            updateStationCards(stations);
+        } catch (SQLException e) {
+            showErrorDialog("Search Error", "An error occurred while searching for stations.");
+            e.printStackTrace();
+        }
+    }
+
+    private void handleNonAddressSearch(String searchBy, String query) throws SQLException {
+        List<Station> stations;
+        switch (searchBy) {
+            case "Station Name":
+                stations = stationService.search("name", query);
+                break;
+            case "Available Bikes":
+                stations = stationService.search("available_bikes", query);
+                break;
+            default:
+                stations = new ArrayList<>();
+        }
+        updateStationCards(stations);
+    }
+
+    private void updateStationCards(List<Station> stations) {
+        stationFlowPane.getChildren().clear();
+        for (Station station : stations) {
+            VBox stationCard = createStationCard(station);
+            stationFlowPane.getChildren().add(stationCard);
+        }
+
+        if (stations.size() == 1) {
+            Station station = stations.get(0);
+            String latitude = String.valueOf(station.getLocation().getLatitude());
+            String longitude = String.valueOf(station.getLocation().getLongitude());
+            String script = String.format("map.setView([%s, %s], 15, {animate: true, duration: 2.0});",
+                    latitude, longitude);
+            webEngine.executeScript(script);
+        }
+    }
+
     private void centerMapOnCoordinates(double lat, double lon, int zoomLevel) {
         String script = String.format(
                 "map.setView([%s, %s], %d, {animate: true, duration: 1.0});",
                 lat, lon, zoomLevel
         );
         webEngine.executeScript(script);
-    }
-
-    public void updateStationCards(List<Station> stations)
-    {
-        stationFlowPane.getChildren().clear();
-        for (Station station : stations) {
-            VBox stationCard = createStationCard(station);
-            stationFlowPane.getChildren().add(stationCard);
-        }
     }
 
     // Utility Functions

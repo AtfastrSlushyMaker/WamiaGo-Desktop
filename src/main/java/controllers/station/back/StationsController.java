@@ -266,7 +266,6 @@ public class StationsController {
                     searchResults = stationService.search("status", searchText);
                 }
 
-                // Note: Location search is not supported by the search method
                 // You might want to add "address" to your allowedColumns and handle it in the search method
 
                 // Update table with search results

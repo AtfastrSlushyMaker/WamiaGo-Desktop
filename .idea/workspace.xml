@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/back/StationsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/back/StationsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utils/GeoCoding/GeocodingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/GeoCoding/GeocodingService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -248,7 +250,8 @@
       <workItem from="1741126142087" duration="9113000" />
       <workItem from="1741175169420" duration="15510000" />
       <workItem from="1741201852115" duration="1380000" />
-      <workItem from="1741203357186" duration="9773000" />
+      <workItem from="1741203357186" duration="10662000" />
+      <workItem from="1741214105825" duration="1738000" />
     </task>
     <servers />
   </component>

@@ -65,8 +65,6 @@ public class GeocodingService {
         }
     }
 
-
-
     // USAGE EXAMPLE
     public static void main(String[] args) {
         String address = "Ariana, Tunisia";
