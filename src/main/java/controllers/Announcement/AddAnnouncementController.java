@@ -56,7 +56,7 @@ public class AddAnnouncementController {
 
     public AddAnnouncementController() {
         this.announcementService = new AnnouncementService();
-       // this.transcriptionService = new WhisperTranscriptionService();
+        // this.transcriptionService = new WhisperTranscriptionService();
         this.azureSpeechService = new AzureSpeechService();
 
     }
@@ -275,7 +275,7 @@ public class AddAnnouncementController {
     public void handleSubmitButtonAction() {
         try {
             String title = titleField.getText();
-            String content = contentField.getText(); // Récupérer le texte transcrit
+            String content = contentField.getText();
             System.out.println("Transcribed content: " + content); // Log pour vérifier le texte transcrit
             Announcement.Zone zone = zoneComboBox.getValue();
             boolean status = statusCheckBox.isSelected();

@@ -198,4 +198,58 @@ public class RelocationService implements IService<Relocation> {
         }
         return relocations;
     }
+
+    public String getEmailUserByRelocation(Relocation relocation) throws SQLException {
+        String sql = "SELECT u.email " +
+                "FROM relocation r " +
+                "JOIN reservation res ON r.id_reservation = res.id_reservation " +
+                "JOIN user u ON res.id_user = u.id_user " +
+                "WHERE r.id_relocation = ?"; // Filtre par l'ID de la relocalisation
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // Définir le paramètre pour l'ID de la relocalisation
+            preparedStatement.setInt(1, relocation.getIdRelocation());
+
+            // Exécuter la requête
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Vérifier si un résultat est retourné
+            if (rs.next()) {
+                String userEmail = rs.getString("email");
+
+                // Afficher l'e-mail de l'utilisateur (ou le retourner)
+                System.out.println("E-mail de l'utilisateur : " + userEmail);
+                return userEmail; // Retourner l'e-mail de l'utilisateur
+            } else {
+                System.out.println("Aucun e-mail trouvé pour cette relocalisation.");
+                return null; // Retourner null si aucun résultat n'est trouvé
+            }
+        }
+    }
+
+    public String getEmailDriverByRelocation(Relocation relocation) throws SQLException {
+        String sql = "SELECT u.email FROM relocation r JOIN reservation res ON r.id_reservation = res.id_reservation JOIN announcement a ON res.id_announcement = a.id_announcement JOIN driver d ON a.id_transporter = d.id_driver JOIN user u ON d.id_user = u.id_user WHERE r.id_relocation = ?";// Filtre par l'ID de la relocalisation
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // Définir le paramètre pour l'ID de la relocalisation
+            preparedStatement.setInt(1, relocation.getIdRelocation());
+
+            // Exécuter la requête
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Vérifier si un résultat est retourné
+            if (rs.next()) {
+                String userEmail = rs.getString("email");
+
+                // Afficher l'e-mail de l'utilisateur (ou le retourner)
+                System.out.println("E-mail de l'utilisateur : " + userEmail);
+                return userEmail; // Retourner l'e-mail de l'utilisateur
+            } else {
+                System.out.println("Aucun e-mail trouvé pour cette relocalisation.");
+                return null; // Retourner null si aucun résultat n'est trouvé
+            }
+        }
+    }
+
+
 }

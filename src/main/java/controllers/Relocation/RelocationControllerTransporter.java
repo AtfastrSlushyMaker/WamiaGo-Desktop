@@ -1,6 +1,9 @@
 package controllers.Relocation;
 
+import controllers.Chat_Relocation.ChatController;
 import entities.*;
+import entities.Driver;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,24 +24,30 @@ import javafx.scene.image.Image;
 import utils.SessionManager;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+
+import utils.DataBase;
 
 public class RelocationControllerTransporter {
     @FXML
     private Button bookings_button, history_button, home_button, logout_button, rides_button;
     @FXML
     private HBox root;
+
     @FXML
     private FlowPane stationFlowPane;
     private Driver currentDriver;
     private User loggedInUser = SessionManager.getInstance().getUser(); // Utilisateur connecté
 
     private final RelocationService relocationService = new RelocationService();
+    //private final ReservationService reservationService = new ReservationService();
+    private final UserService userService = new UserService();
 
+    private String emailtoUser;
 
     @FXML
     public void initialize() throws SQLException {
@@ -103,9 +112,10 @@ public class RelocationControllerTransporter {
         Button selectButton = createIconButton("/images/icons/eye.png", event -> openStationDetails(station));
         Button editButton = createIconButton("/images/icons/edit.png", event -> editRelocation(station));
         Button deleteButton = createIconButton("/images/icons/delete.png", event -> deleteRelocation(station));
+        Button messengerButton = createIconButton("/images/icons/messenger.png", event -> openMessenger(station)); // Nouveau bouton de messagerie
 
         // Button container: Select next to Edit, Delete aligned
-        HBox buttonBox = new HBox(10, selectButton, editButton, deleteButton);
+        HBox buttonBox = new HBox(10, selectButton, editButton, deleteButton, messengerButton); // Ajouter le bouton de messagerie
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setSpacing(10);
 
@@ -114,6 +124,63 @@ public class RelocationControllerTransporter {
 
         return stationCard;
     }
+
+    // Méthode pour gérer l'ouverture de la messagerie
+    private void openMessenger(Relocation station) {
+        // Exécuter la récupération de l'e-mail en arrière-plan pour ne pas bloquer le thread JavaFX
+        Task<String> fetchEmailTask = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                return relocationService.getEmailUserByRelocation(station);
+            }
+        };
+
+        // Gérer la réussite de la tâche
+        fetchEmailTask.setOnSucceeded(event -> {
+            try {
+                emailtoUser = fetchEmailTask.get(); // Récupérer l'e-mail de l'utilisateur
+
+                // Charger l'interface de chat
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Chat_Relocation/chat.fxml"));
+                Parent root = loader.load();
+
+                // Récupérer le contrôleur de l'interface de chat
+                ChatController chatController = loader.getController();
+
+                // Passer les e-mails au contrôleur
+                chatController.setToEmail(emailtoUser); // E-mail de l'utilisateur destinataire
+                chatController.setFromEmail(loggedInUser.getEmail()); // E-mail de l'utilisateur connecté
+                chatController.refreshChatList();
+                chatController.initialize();
+                System.out.println(emailtoUser);
+                System.out.println(loggedInUser.getEmail());
+                // Afficher la fenêtre de chat
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Chat Relocation");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showErrorDialog("Erreur de chargement", "Impossible de charger l'interface de chat.");
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // Gérer les échecs de la tâche
+        fetchEmailTask.setOnFailed(event -> {
+            Throwable exception = fetchEmailTask.getException();
+            exception.printStackTrace();
+            showErrorDialog("Erreur de communication", "Impossible de récupérer l'e-mail de l'utilisateur.");
+        });
+
+        // Démarrer la tâche dans un nouveau thread
+        new Thread(fetchEmailTask).start();
+    }
+
+
 
     private Button createIconButton(String imagePath, EventHandler<ActionEvent> eventHandler) {
         ImageView icon = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));

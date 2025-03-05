@@ -20,9 +20,22 @@ public class BadWordFilter {
     }
 
     public static String filterBadWords(String inputText, Set<String> badWords) {
-        for (String badWord : badWords) {
-            inputText = inputText.replaceAll("(?i)\\b" + badWord + "\\b", "****");
+        if (inputText == null || inputText.isEmpty()) {
+            return inputText;
         }
-        return inputText;
+
+        // Diviser le texte en mots en conservant la ponctuation
+        String[] words = inputText.split("(?<=\\W)|(?=\\W)");
+
+        // Parcourir chaque mot et le remplacer s'il est interdit
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i].replaceAll("\\W", "").toLowerCase(); // Ignorer la ponctuation
+            if (badWords.contains(word)) {
+                words[i] = words[i].replaceAll("\\w+", "****"); // Remplacer uniquement la partie alphabétique
+            }
+        }
+
+        // Reconstruire le texte filtré
+        return String.join("", words);
     }
 }

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class OpenAIService {
-    private static final String API_KEY = ""; // Remplacez par votre clé API
+    private static final String API_KEY = "sk-proj-FzpD3A6aAstkxWjNIk4lT3BlbkFJ9mx3r7F6x1D0FYerR7ZI";
     private static final String API_URL = "https://api.openai.com/v1/completions";
 
     public String generateText(String prompt) throws IOException {
