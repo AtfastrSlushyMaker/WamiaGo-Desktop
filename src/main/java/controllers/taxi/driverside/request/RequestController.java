@@ -329,7 +329,7 @@ public class RequestController {
     private void openDurationModal(Request request) {
         Stage durationStage = new Stage();
         durationStage.setTitle("Enter Ride Duration");
-        RideService rideService = new RideService(); // Utilisation de la bonne instance de service
+        RideService rideService = new RideService();
 
         VBox layout = new VBox(10);
         layout.getStyleClass().add("modal-container");
@@ -343,7 +343,6 @@ public class RequestController {
         durationField.setPromptText("Duration in minutes");
         durationField.getStyleClass().add("duration-field");
 
-        // Appliquer un filtre pour empêcher la saisie de caractères non numériques
         TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             return newText.matches("\\d*") ? change : null;
@@ -376,7 +375,6 @@ public class RequestController {
                 warningLabel.setVisible(false);
                 double price = RideService.calculatePrice(request);
 
-                // Création de la course
                 Ride newRide = new Ride();
                 newRide.setRequest(request);
                 newRide.setDriver(currentDriver);
@@ -391,9 +389,10 @@ public class RequestController {
                     request.setStatus(Request.RequestStatus.ACCEPTED);
                     requestService.update(request);
 
-                    // Envoi du SMS au client
                     String clientPhoneNumber = request.getClient().getPhone();
-                    sendSmsToClient(clientPhoneNumber, duration, price);
+                    String driverName = currentDriver.getUser().getName();
+                    String driverPhone = currentDriver.getUser().getPhone();
+                    sendSmsToClient(clientPhoneNumber, duration, price, driverName, driverPhone);
 
                 } else {
                     System.out.println("❌ Ride creation failed");
@@ -408,7 +407,7 @@ public class RequestController {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } catch (Exception ex) {
-                ex.printStackTrace(); // Pour capturer toute autre exception inattendue
+                ex.printStackTrace();
             }
         });
 
@@ -419,15 +418,18 @@ public class RequestController {
         durationStage.show();
     }
 
-    private void sendSmsToClient(String clientPhoneNumber, int duration, double price) {
+    private void sendSmsToClient(String clientPhoneNumber, int duration, double price, String driverName, String driverPhone) {
         try {
             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
-            // Formater le prix pour afficher 3 chiffres après la virgule
             String formattedPrice = String.format("%.3f", price);
 
-            String messageBody = "Your ride has been accepted! Estimated duration: "
-                    + duration + " minutes. Price: " + formattedPrice + " DT.";
+            String messageBody = "🚖 Hey there! Your ride is confirmed! 🚖\n" +
+                    "⏳ Estimated duration: " + duration + " min\n" +
+                    "💰 Price: " + formattedPrice + " DT\n" +
+                    "👨‍✈️ Driver: " + driverName + "\n" +
+                    "📞 Contact: " + driverPhone + "\n" +
+                    "✨ Safe travels with us!";
 
             Message message = Message.creator(
                     new com.twilio.type.PhoneNumber(clientPhoneNumber),
@@ -440,6 +442,7 @@ public class RequestController {
             System.out.println("❌ Failed to send SMS: " + e.getMessage());
         }
     }
+
     private Button createMapButton(Request request) {
         Button mapButton = new Button("Show on Map");
         mapButton.getStyleClass().add("request-button");
