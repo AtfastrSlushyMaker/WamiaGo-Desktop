@@ -1,4 +1,5 @@
 package controllers.dashboard;
+
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,32 +31,24 @@ public class DashboardTemplateController implements Initializable {
         setupNavigationPanelAnimation();
     }
 
-
     private void loadPanels() {
         try {
-            //0
+            // Existing panels
             AnchorPane usersPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.back/users.fxml")));
-            //1
             AnchorPane bikesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
-            //2
             AnchorPane stationsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
-            //3
             AnchorPane rentalsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
-            //4
             AnchorPane requestsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
-            //5
             AnchorPane ridesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")));
-            //6
             AnchorPane responsesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
-            //7
-            AnchorPane announcementsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));    ;
-            //8
-            AnchorPane reservationsPanel=FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));;
-            //9
-            AnchorPane relocationsPanel= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
-            //10
-            AnchorPane statisticsPanel= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
+            AnchorPane announcementsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
+            AnchorPane reservationsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
+            AnchorPane relocationsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
 
+            // Use the same FXML for Taxi Stats
+            AnchorPane statisticsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/StatisticsRequestRide.fxml")));
+
+            // Add all panels including the new Taxi Stats panel
             panels.addAll(Arrays.asList(
                     usersPanel,
                     bikesPanel,
@@ -67,9 +60,10 @@ public class DashboardTemplateController implements Initializable {
                     announcementsPanel,
                     reservationsPanel,
                     relocationsPanel,
-                    statisticsPanel
+                    statisticsPanel  // Add the Taxi Stats panel here
             ));
 
+            // Setting visibility of panels
             for (AnchorPane panel : panels) {
                 contentPane.getChildren().add(panel);
                 AnchorPane.setTopAnchor(panel, 0.0);
@@ -84,7 +78,6 @@ public class DashboardTemplateController implements Initializable {
             throw new RuntimeException("Failed to load FXML files", e);
         }
     }
-
 
     @FXML
     private void showPanel(int panelIndex) {
@@ -113,7 +106,6 @@ public class DashboardTemplateController implements Initializable {
         });
     }
 
-
     @FXML
     private void menuBar() {
         TranslateTransition transition = new TranslateTransition(Duration.millis(ANIMATION_DURATION), navPanel);
@@ -128,7 +120,7 @@ public class DashboardTemplateController implements Initializable {
 
     @FXML
     private void logoutBtn(ActionEvent e) throws IOException {
-
+        // Implement logout functionality
     }
 
     @FXML
@@ -165,16 +157,34 @@ public class DashboardTemplateController implements Initializable {
     public void responsesBtn() {
         showPanel(6);
     }
-    @FXML
-    public void announcementsBtn( ) {showPanel(7);}
 
     @FXML
-    public void reservationsBtn( ) {showPanel(8);}
-    @FXML
-    public void relocationsBtn( ){showPanel(9);}
+    public void announcementsBtn() {
+        showPanel(7);
+    }
 
     @FXML
-    public void statisticsBtn( ){showPanel(10);}
+    public void reservationsBtn() {
+        showPanel(8);
+    }
+
+    @FXML
+    public void relocationsBtn() {
+        showPanel(9);
+    }
+
+    @FXML
+    public void statisticsBtn() {
+        showPanel(10);
+    }
+
+    @FXML
+    private void taxiStatisticsBtn(ActionEvent event) {
+        // Handle the button click here, for example:
+        System.out.println("Taxi Statistics button clicked!");
+        // You can also load a new scene or show the taxi statistics
+        showPanel(10);
+    }
 
     @FXML
     private void AccountSettingsBtn() {
@@ -191,10 +201,8 @@ public class DashboardTemplateController implements Initializable {
         showPanel(6);
     }
 
-
     @FXML
     private void close() {
-
         System.exit(0);
     }
 
@@ -213,7 +221,4 @@ public class DashboardTemplateController implements Initializable {
         // Stage stage = (Stage) navPanel.getScene().getWindow();
         // stage.setMaximized(false);
     }
-
-
-
 }

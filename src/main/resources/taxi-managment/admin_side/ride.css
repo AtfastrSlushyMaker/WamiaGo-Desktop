@@ -185,3 +185,16 @@
 .station-bike-close-button:hover {
     -fx-background-color: #ff4444;
 }
+.ride-button-update {
+    -fx-background-color: #85A9FF; /* Light blue color */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.ride-button-update:hover {
+    -fx-background-color: #5A6BE5; /* Darker blue on hover */
+}

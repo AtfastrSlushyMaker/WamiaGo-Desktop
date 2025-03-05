@@ -55,6 +55,7 @@
                         <Insets top="3.0" />
                     </padding>
                 </Button>
+
                 <Text fill="WHITE" layoutX="54.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WamiaGo" AnchorPane.leftAnchor="54.0">
                     <font>
                         <Font name="System Bold" size="18.0" />
@@ -146,6 +147,7 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </Button>
+
                         <Button fx:id="enquiries" graphicTextGap="0.0" mnemonicParsing="false" onAction="#QueriesBtn" prefHeight="25.0" prefWidth="186.0" text="Feedbacks">
                             <graphic>
                                 <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" translateX="-27.0">
@@ -212,6 +214,15 @@
                         <String fx:value="text" />
                      </styleClass>
                   </Button>
+                        <Button fx:id="taxiStatistics" graphicTextGap="0.0" mnemonicParsing="false" onAction="#taxiStatisticsBtn" prefHeight="25.0" prefWidth="186.0" text="Taxi Statistics">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                            <styleClass>
+                                <String fx:value="navButtons" />
+                                <String fx:value="text" />
+                            </styleClass>
+                        </Button>
                     </children>
                 </VBox>
                 <Rectangle arcHeight="5.0" arcWidth="1.0" fill="#ecf1f5" height="1.0" layoutX="30.0" layoutY="169.0" stroke="WHITE" strokeType="INSIDE" width="130.0" AnchorPane.bottomAnchor="375.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="210.0" />

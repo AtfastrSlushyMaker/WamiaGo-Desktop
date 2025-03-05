@@ -304,6 +304,16 @@ public class RideService implements IService<Ride> {
     }
 
 
+    public int countRides() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM ride";  // SQL query to count all rides
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);  // Return the count of rides
+            }
+        }
+        return 0;  // Return 0 if no rides exist
+    }
 
 
 

@@ -7,7 +7,10 @@
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/taxi/driverside/request/RequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/taxi/driverside/request/RequestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/ride/RideController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/taxi/adminside/ride/RideController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/RideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RideService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/taxi-managment/admin_side/ride.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,9 +25,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="FxmlFile" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -218,7 +221,7 @@
       <workItem from="1740688482091" duration="11064000" />
       <workItem from="1741116266105" duration="10883000" />
       <workItem from="1741177117102" duration="7597000" />
-      <workItem from="1741203359744" duration="3853000" />
+      <workItem from="1741203359744" duration="7726000" />
     </task>
     <servers />
   </component>
