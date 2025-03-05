@@ -1,13 +1,11 @@
 package controllers.station.front;
 
 import com.google.zxing.WriterException;
-import entities.Bicycle;
-import entities.BicycleRental;
-import entities.Station;
-import entities.WeatherInfo;
+import entities.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -31,6 +30,7 @@ import netscape.javascript.JSObject;
 import services.BicycleRentalService;
 import services.BicycleService;
 import services.StationService;
+import utils.GeoCoding.GeocodingService;
 import utils.QrCode.QRCodeGenerator;
 import utils.SessionManager;
 import utils.Weather.WeatherService;
@@ -47,6 +47,7 @@ public class StationController {
     // Services
     private final StationService stationService = new StationService();
     private final List<Stage> openModals = new ArrayList<>();
+
 
     // FXML Components
     @FXML
@@ -85,6 +86,9 @@ public class StationController {
     private TextField searchField;
     @FXML
     private ProgressIndicator loadingSpinner;
+    @FXML
+    private ComboBox searchByComboBox;
+
 
     // Map and Web Engine
     private WebEngine webEngine;
@@ -99,6 +103,7 @@ public class StationController {
         loadStationsIntoFlowPane();
         setupSearch();
         setupButtons();
+
 
     }
 
@@ -124,6 +129,7 @@ public class StationController {
 
     private void setupButtons() {
         sortButton.setOnAction(event -> sort());
+        searchByComboBox.setValue("Station Name");
     }
 
     // Map Setup and Functions
@@ -262,7 +268,6 @@ public class StationController {
         }
         return stationCard;
     }
-
 
 
     private HBox createImageAndTextBox(Station station) {
@@ -469,8 +474,8 @@ public class StationController {
             BicycleRentalService bicycleRentalService = new BicycleRentalService();
             try {
                 rental.setId(bicycleRentalService.create(rental));
-                reserveBike(bicycle, station,rental);
-                showReservationConfirmation(bicycle,rental );
+                reserveBike(bicycle, station, rental);
+                showReservationConfirmation(bicycle, rental);
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -593,7 +598,7 @@ public class StationController {
             String reservationDetails =
                     "=== Bike Reservation Details ===\n" +
                             "Reservation N°" + rental.getId() + "\n" +
-                            "***** Bike Details ***** "+"\n" +
+                            "***** Bike Details ***** " + "\n" +
                             "Battery Level: " + bicycle.getBattery_level() + "%" + "\n" +
                             "Range: " + bicycle.getRange_km() + " km" + "\n" +
                             "Last Updated: " + bicycle.getLast_updated() + "\n" +
@@ -843,9 +848,24 @@ public class StationController {
         }
     }
 
-    // Search Functions
+
     private void setupSearch() {
-        searchField.setOnKeyReleased(event -> search());
+        String searchBy = (searchByComboBox.getValue() != null) ? (String) searchByComboBox.getValue() : "Station Name"; // Default value if null
+        switch (searchBy) {
+            case "Address":
+                searchField.setOnKeyPressed(event -> {
+                    if (event.getCode() == KeyCode.ENTER) {
+                        search();  // Trigger search when Enter key is pressed
+                    }
+                });
+
+                break;
+            default:
+                searchField.setOnKeyReleased(event -> search());
+                break;
+        }
+
+        // Clear button functionality to reset search field and reload stations
         clear_button.setOnAction(event -> {
             searchField.clear();
             search();
@@ -853,28 +873,101 @@ public class StationController {
     }
 
     public void search() {
-        String query = searchField.getText();
+        String query = searchField.getText().trim();
+        String searchBy = searchByComboBox.getValue().toString();
+
         if (query.isEmpty()) {
             loadStationsIntoFlowPane();
+            return;
+        }
+
+        loadingSpinner.setVisible(true);
+
+        // Handle Address Search in Background
+        if ("Address".equals(searchBy)) {
+            Task<Double[]> geocodingTask = new Task<>() {
+                @Override
+                protected Double[] call() throws Exception {
+                    double[] coords = GeocodingService.getCoordinatesFromAddress(query);
+                    return (coords != null)
+                            ? new Double[]{coords[0], coords[1]}
+                            : null;
+                }
+            };
+
+            geocodingTask.setOnSucceeded(e -> {
+                loadingSpinner.setVisible(false);
+                Double[] coords = geocodingTask.getValue();
+                if (coords != null) {
+                    try {
+                        Location searchLocation = new Location(coords[0], coords[1]);
+                        List<Station> stations = stationService.searchByCoordinates(searchLocation);
+
+                        // Find the closest station
+                        Station closestStation = stationService.findClosestStation(searchLocation, stations);
+                        if (closestStation != null) {
+                            // Zoom to the closest station's location
+                            centerMapOnCoordinates(
+                                    closestStation.getLocation().getLatitude(),
+                                    closestStation.getLocation().getLongitude(),
+                                    18 // Higher zoom level (e.g., 18 for closer view)
+                            );
+                        }
+
+                        updateStationCards(stations);
+                    } catch (SQLException ex) {
+                        showErrorDialog("Search Error", "Failed to load stations.");
+                    }
+                } else {
+                    showErrorDialog("Address Not Found", "Could not locate: " + query);
+                }
+            });
+
+            geocodingTask.setOnFailed(e -> {
+                loadingSpinner.setVisible(false);
+                showErrorDialog("Geocoding Error", "Failed to fetch coordinates.");
+            });
+
+            new Thread(geocodingTask).start();
+
         } else {
+            // Handle Other Searches (Station Name, Available Bikes) Synchronously
             try {
-                List<Station> stations = stationService.search("name", query);
-                stationFlowPane.getChildren().clear();
-                for (Station station : stations) {
-                    VBox stationCard = createStationCard(station);
-                    stationFlowPane.getChildren().add(stationCard);
+                List<Station> stations;
+                switch (searchBy) {
+                    case "Station Name":
+                        stations = stationService.search("name", query);
+                        break;
+                    case "Available Bikes":
+                        stations = stationService.searchByAvailableBikes(query);
+                        break;
+                    default:
+                        stations = stationService.read();
+                        break;
                 }
-                if (stations.size() == 1) {
-                    Station station = stations.get(0);
-                    String latitude = String.valueOf(station.getLocation().getLatitude());
-                    String longitude = String.valueOf(station.getLocation().getLongitude());
-                    String script = String.format("map.setView([%s, %s], 15, {animate: true, duration: 2.0});", latitude, longitude);
-                    webEngine.executeScript(script);
-                }
-            } catch (SQLException e) {
-                showErrorDialog("Search Error", "An error occurred while searching for stations.");
-                e.printStackTrace();
+                updateStationCards(stations);
+                loadingSpinner.setVisible(false);
+
+            } catch (SQLException ex) {
+                loadingSpinner.setVisible(false);
+                showErrorDialog("Search Error", "Failed to load stations.");
             }
+        }
+    }
+    private void centerMapOnCoordinates(double lat, double lon, int zoomLevel) {
+        String script = String.format(
+                "map.setView([%s, %s], %d, {animate: true, duration: 1.0});",
+                lat, lon, zoomLevel
+        );
+        webEngine.executeScript(script);
+    }
+
+    public void updateStationCards(List<Station> stations)
+    {
+        stationFlowPane.getChildren().clear();
+        for (Station station : stations) {
+            VBox stationCard = createStationCard(station);
+            stationFlowPane.getChildren().add(stationCard);
         }
     }
 

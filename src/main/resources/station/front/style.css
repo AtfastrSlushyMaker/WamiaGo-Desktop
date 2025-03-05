@@ -252,3 +252,47 @@
     -fx-spacing: 10px;
     -fx-alignment: center;
 }
+/* ComboBox - Light Green Theme */
+#comboBox_search {
+    -fx-background-color: Transparent; /* Light background from .root */
+    -fx-text-fill: #2D2F33; /* Dark text for contrast */
+    -fx-font-size: 13px;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-weight: bold;
+    -fx-border-width: 1px;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 28px;
+    -fx-effect: dropshadow(gaussian, rgba(107, 191, 89, 0.15), 6, 0, 1, 1);
+}
+
+/* Dropdown List */
+#comboBox_search .list-cell {
+    -fx-text-fill: #2D2F33;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 13px;
+}
+
+#comboBox_search .list-cell:hover {
+    -fx-background-color: #6BBF59; /* Light green hover */
+    -fx-text-fill: white;
+}
+
+#comboBox_search .list-cell:selected {
+    -fx-background-color: Transparent; /* Your primary green */
+    -fx-text-fill: black;
+}
+
+#comboBox_search .list-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 6px;
+    -fx-effect: dropshadow(gaussian, rgba(107, 191, 89, 0.2), 8, 0, 2, 2);
+}
+
+/* Arrow Button */
+#comboBox_search .arrow {
+    -fx-background-color: #6BBF59; /* Green arrow */
+}
+
+#comboBox_search:focused {
+    -fx-effect: innershadow(gaussian, rgba(78, 157, 58, 0.15), 8, 0, 0, 0);
+}

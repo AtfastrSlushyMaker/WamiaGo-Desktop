@@ -3,6 +3,11 @@ package utils.GeoCoding;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -12,35 +17,60 @@ public class GeocodingService {
 
     public static double[] getCoordinatesFromAddress(String address) {
         try {
-            // Construct the API URL
-            String urlString = NOMINATIM_URL + address.replace(" ", "+");
+            // 1. Encode the address
+            String encodedAddress = URLEncoder.encode(address, StandardCharsets.UTF_8);
+            String urlString = NOMINATIM_URL + encodedAddress + "&limit=1&format=json";
             URL url = new URL(urlString);
 
-            // Open the connection and send the GET request
+            // 2. Configure HTTP connection
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            connection.setRequestProperty("User-Agent", "JavaFX App");
+            connection.setRequestProperty("User-Agent", "YourApp/1.0 (contact@example.com)"); // Required!
 
-            // Read the response
-            InputStreamReader reader = new InputStreamReader(connection.getInputStream());
-            JsonObject response = JsonParser.parseReader(reader).getAsJsonArray().get(0).getAsJsonObject();
+            // 3. Check HTTP status
+            int responseCode = connection.getResponseCode();
+            if (responseCode != 200) {
+                System.err.println("Nominatim Error: HTTP " + responseCode);
+                return null;
+            }
 
-            // Extract latitude and longitude from the response
-            double lat = response.get("lat").getAsDouble();
-            double lon = response.get("lon").getAsDouble();
+            // 4. Parse JSON response
+            JsonArray responseArray = JsonParser.parseReader(
+                    new InputStreamReader(connection.getInputStream())
+            ).getAsJsonArray();
 
-            // Return the coordinates
-            return new double[]{lat, lon};
+            if (responseArray.isEmpty()) {
+                System.out.println("No results for: " + address);
+                return null;
+            }
+
+            // 5. Extract coordinates
+            JsonObject firstResult = responseArray.get(0).getAsJsonObject();
+            if (!firstResult.has("lat") || !firstResult.has("lon")) {
+                System.err.println("Invalid response format");
+                return null;
+            }
+
+            return new double[]{
+                    firstResult.get("lat").getAsDouble(),
+                    firstResult.get("lon").getAsDouble()
+            };
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Geocoding Error: " + e.getMessage());
             return null;
         }
     }
 
-        //USAGE
-        /*String address = "ariana, tunisia";
-        double[] coordinates = getCoordinatesFromAddress(address);*/
+    // USAGE EXAMPLE
+    public static void main(String[] args) {
+        String address = "Ariana, Tunisia";
+        double[] coordinates = getCoordinatesFromAddress(address);
 
+        if (coordinates != null) {
+            System.out.println("Latitude: " + coordinates[0] + ", Longitude: " + coordinates[1]);
+        } else {
+            System.out.println("Could not find coordinates for the address.");
+        }
+    }
 }
-

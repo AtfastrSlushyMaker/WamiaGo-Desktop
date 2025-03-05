@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import services.StationService;
 
 public class Home extends Application {
 
@@ -16,7 +17,8 @@ public class Home extends Application {
         primaryStage.setTitle("Wamia Go - Welcome!");
         primaryStage.setResizable(false);
         primaryStage.show();
-
+        StationService stationService = new StationService();
+        stationService.fixDataBaseBicycles();
 
 
     }

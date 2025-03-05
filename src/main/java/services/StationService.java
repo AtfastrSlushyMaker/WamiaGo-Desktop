@@ -318,5 +318,61 @@ public class StationService implements IService<Station> {
         stations.sort(Comparator.<Station>comparingDouble(s ->Location.calculateDistance(user.getLocation(),s.getLocation())).reversed());
         return stations;
     }
+    public Station findClosestStation(Location location, List<Station> stations) {
+        Station closestStation = null;
+        double minDistance = Double.MAX_VALUE;
+        for (Station station : stations) {
+            double distance = Location.calculateDistance(location, station.getLocation());
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestStation = station;
+            }
+        }
+        return closestStation;
+    }
 
+    public List<Station> searchByCoordinates(Location location) throws SQLException {
+        List<Station> stations = new ArrayList<>();
+        try {
+            // Loop through all stations in your database or station list
+            for (Station station : read()) {
+                Location stationLocation = station.getLocation();  // Assuming getLocation() returns a Location object
+
+                // Calculate the distance between the input location and the station location
+                double distance = Location.calculateDistance(location, stationLocation);
+
+                // Assuming a maximum distance
+                if (distance <= 20) {
+                    stations.add(station);
+                }
+            }
+        } catch (SQLException e) {
+            // Log and handle the error properly
+            System.err.println("SQL error while searching for stations: " + e.getMessage());
+            throw new RuntimeException("Error fetching stations", e);
+        }
+        return stations;
+    }
+
+
+    public List<Station> searchByAvailableBikes(String minBikes) throws SQLException {
+        List<Station> stations = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle_station WHERE available_bikes >= ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, minBikes);
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            Station station = new Station();
+            station.setId(rs.getInt("id_station"));
+            station.setName(rs.getString("name"));
+            station.setLocation(new LocationService().getById(rs.getInt("id_location")));
+            station.setTotal_docks(rs.getInt("total_docks"));
+            station.setAvailable_docks(rs.getInt("available_docks"));
+            station.setAvailable_bikes(rs.getInt("available_bikes"));
+            station.setCharging_bikes(rs.getInt("charging_bikes"));
+            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
+            stations.add(station);
+        }
+        return stations;
+    }
 }
