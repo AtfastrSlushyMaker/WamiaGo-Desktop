@@ -68,7 +68,7 @@ public class AddAnnouncementController {
         }
 
         // Ajouter un emoji au TextArea
-        emojiButton.setOnAction(event -> contentField.appendText("😊"));
+        //emojiButton.setOnAction(event -> contentField.appendText("😊"));
 
         recordButton.setOnAction(event -> {
             if (isRecording) stopRecording();
@@ -94,16 +94,21 @@ public class AddAnnouncementController {
 
 
         // Gestion du bouton "Generate"
-//        generateButton.setOnAction(event -> {
-//            String prompt = "Génère un texte pour une annonce de déménagement avec un ton professionnel.";
-//            try {
-//                OpenAIService openAIService = new OpenAIService();
-//                String generatedText = openAIService.generateText(prompt);
-//                contentField.setText(generatedText);
-//            } catch (IOException e) {
-//                showAlert("Error", "Failed to generate text: " + e.getMessage(), Alert.AlertType.ERROR);
-//            }
-//        });
+        generateButton.setOnAction(event -> {
+            String userContent = contentField.getText(); // Récupérer le contenu déjà saisi par l'utilisateur
+            String prompt = userContent.isEmpty()
+                    ? "Génère un texte pour une annonce de déménagement avec un ton professionnel."
+                    : "Améliore ou complète le texte suivant pour une annonce de déménagement avec un ton professionnel : " + userContent;
+
+            try {
+                OpenAIService openAIService = new OpenAIService();
+                String generatedText = openAIService.generateText(prompt);
+                contentField.setText(generatedText);
+            } catch (IOException e) {
+                showAlert("Error", "Failed to generate text: " + e.getMessage(), Alert.AlertType.ERROR);
+            }
+        });
+
 
 
     }
@@ -243,10 +248,14 @@ public class AddAnnouncementController {
             isRecording = true;
             recordButton.setText("Stop Recording");
 
+            // Réinitialiser le contenu du champ de texte avant de commencer une nouvelle transcription
+            Platform.runLater(() -> contentField.clear());
+
             Task<String> task = azureSpeechService.startRecording();
             task.valueProperty().addListener((obs, oldValue, newValue) -> {
                 if (newValue != null) {
-                    contentField.appendText(newValue + " ");
+                    // Ajouter le nouveau texte transcrit sans répéter l'ancien contenu
+                    Platform.runLater(() -> contentField.setText(newValue));
                 }
             });
 

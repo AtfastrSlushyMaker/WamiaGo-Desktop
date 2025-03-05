@@ -5,11 +5,16 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class OpenAIService {
-    private static final String API_KEY = "sk-proj-FzpD3A6aAstkxWjNIk4lT3BlbkFJ9mx3r7F6x1D0FYerR7ZI";
     private static final String API_URL = "https://api.openai.com/v1/completions";
 
     public String generateText(String prompt) throws IOException {
         OkHttpClient client = new OkHttpClient();
+
+        // Récupérer la clé API depuis les variables d'environnement
+        String apiKey = System.getenv("OPENAI_API_KEY");
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new IOException("La clé API OpenAI n'est pas définie dans les variables d'environnement.");
+        }
 
         // Corps de la requête JSON
         JSONObject jsonBody = new JSONObject();
@@ -27,7 +32,7 @@ public class OpenAIService {
         Request request = new Request.Builder()
                 .url(API_URL)
                 .post(body)
-                .addHeader("Authorization", "Bearer " + API_KEY)
+                .addHeader("Authorization", "Bearer " + apiKey)
                 .addHeader("Content-Type", "application/json")
                 .build();
 

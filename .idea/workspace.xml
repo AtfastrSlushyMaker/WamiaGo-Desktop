@@ -7,12 +7,10 @@
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationClentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationClentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationControllerTransporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationControllerTransporter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/AzureSpeechService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/AzureSpeechService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/OpenAIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/OpenAIService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RelocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RelocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/BadWordFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/BadWordFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bad_words.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bad_words.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/addAnnouncement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/addAnnouncement.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,43 +73,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AudioFormatChecker.executor": "Run",
-    "Application.GeocodingService.executor": "Run",
-    "Application.Home.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MainRequest.executor": "Run",
-    "Application.MainRide.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
-    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor": "Run",
-    "Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "Maven.wamiaGo [clean].executor": "Run",
-    "Maven.wamiaGo [install].executor": "Run",
-    "Maven.wamiaGo [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
-    "Maven.wamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor": "Run",
-    "Maven.wamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Relocation__Management",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.24712643",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AudioFormatChecker.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GeocodingService.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Home.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainRequest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainRide.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.wamiaGo [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.wamiaGo [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.wamiaGo [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.wamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.wamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Relocation__Management&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.24712643&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\icons" />
@@ -283,6 +281,9 @@
       <workItem from="1741088194333" duration="1523000" />
       <workItem from="1741114647355" duration="6735000" />
       <workItem from="1741124545057" duration="11795000" />
+      <workItem from="1741141018800" duration="707000" />
+      <workItem from="1741182561489" duration="2483000" />
+      <workItem from="1741205560379" duration="4516000" />
     </task>
     <servers />
   </component>
@@ -308,12 +309,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java</url>
-          <line>53</line>
-          <properties field="currentDriver" class="controllers.Announcement.AddAnnouncementController" />
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/services/ReservationService.java</url>
           <line>19</line>

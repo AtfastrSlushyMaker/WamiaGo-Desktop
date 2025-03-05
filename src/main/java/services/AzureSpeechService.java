@@ -12,6 +12,7 @@ public class AzureSpeechService {
     private AudioConfig audioConfig;
     private SpeechRecognizer recognizer;
     private boolean isRecording = false;
+    private StringBuilder recognizedText = new StringBuilder(); // Pour accumuler le texte transcrit
 
     public AzureSpeechService() {
         // Récupérer la clé et la région depuis les variables d'environnement
@@ -36,7 +37,9 @@ public class AzureSpeechService {
 
                 recognizer.recognizing.addEventListener((s, e) -> {
                     if (e.getResult().getText() != null && !e.getResult().getText().isEmpty()) {
-                        recognizedText.append(e.getResult().getText()).append(" ");
+                        // Ajouter le nouveau texte transcrit sans répéter l'ancien contenu
+                        recognizedText.setLength(0); // Réinitialiser le StringBuilder
+                        recognizedText.append(e.getResult().getText());
                         updateValue(recognizedText.toString());
                     }
                 });
