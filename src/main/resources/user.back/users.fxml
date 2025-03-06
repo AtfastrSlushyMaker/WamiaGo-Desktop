@@ -2,15 +2,18 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="583.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.UsersController">
+<AnchorPane prefHeight="583.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.UsersController">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>
@@ -28,10 +31,17 @@
                             </BorderPane.margin>
                         </Text>
                     </center>
+                    <right>
+                        <!-- Search Bar and Sort Dropdown -->
+                        <HBox spacing="10" alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+                            <TextField fx:id="searchField" promptText="Search users..." styleClass="search-field" />
+                            <ComboBox fx:id="sortField" promptText="Sort by" styleClass="sort-combo" />
+                        </HBox>
+                    </right>
                 </BorderPane>
             </top>
             <center>
-                <ScrollPane fitToHeight="true" fitToWidth="true">
+                <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
                     <FlowPane fx:id="usersFlowPane" styleClass="user-flow-pane" />
                 </ScrollPane>
             </center>

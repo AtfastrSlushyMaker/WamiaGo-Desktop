@@ -8,17 +8,31 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class DashboardTemplateController implements Initializable {
+public class DashboardUserController implements Initializable {
     public AnchorPane contentPane;
+    public Button home_button;
+    public Button rides_button;
+    public Label date_label;
+    public Button booking_button;
+    public Button history_button;
+    public Text Username;
+    public Button menuBarBtn;
+    public Button restoreBtn;
+    public Button maxBtn;
+    public Button closeBtn;
+    public Button logout;
     @FXML
     private AnchorPane navPanel;
     @FXML
@@ -55,32 +69,22 @@ public class DashboardTemplateController implements Initializable {
     }
 
     private void loadPanels() {
-        try {
-            panels.addAll(Arrays.asList(
-                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.back/users.fxml"))),
-                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bicycle.back/bicycle.fxml"))),
-                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/station/back/stations.fxml"))),
-                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/rentals.back/rentals.fxml"))),
-                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml"))),
-                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")))
-            ));
+        panels.addAll(Arrays.asList(
 
-            for (AnchorPane panel : panels) {
-                contentPane.getChildren().add(panel);
+        ));
 
-                panel.prefWidthProperty().bind(contentPane.widthProperty());
-                panel.prefHeightProperty().bind(contentPane.heightProperty());
+        for (AnchorPane panel : panels) {
+            contentPane.getChildren().add(panel);
 
-                AnchorPane.setTopAnchor(panel, 0.0);
-                AnchorPane.setBottomAnchor(panel, 0.0);
-                AnchorPane.setLeftAnchor(panel, 0.0);
-                AnchorPane.setRightAnchor(panel, 0.0);
+            panel.prefWidthProperty().bind(contentPane.widthProperty());
+            panel.prefHeightProperty().bind(contentPane.heightProperty());
 
-                panel.setVisible(false);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to load FXML files", e);
+            AnchorPane.setTopAnchor(panel, 0.0);
+            AnchorPane.setBottomAnchor(panel, 0.0);
+            AnchorPane.setLeftAnchor(panel, 0.0);
+            AnchorPane.setRightAnchor(panel, 0.0);
+
+            panel.setVisible(false);
         }
     }
 
@@ -152,24 +156,6 @@ public class DashboardTemplateController implements Initializable {
         stage.close(); // Close the window
     }
 
-    @FXML
-    private void usersBtn() { showPanel(0); }
-    @FXML
-    public void bicyclesBtn() { showPanel(1); }
-    @FXML
-    public void stationsBtn() { showPanel(2); }
-    @FXML
-    public void rentalsBtn() { showPanel(3); }
-    @FXML
-    public void taxiRequests() { showPanel(4); }
-    @FXML
-    public void taxiRides() { showPanel(5); }
-    @FXML
-    private void AccountSettingsBtn() { showPanel(1); }
-    @FXML
-    private void DashboardBtn() { showPanel(1); }
-    @FXML
-    private void QueriesBtn() { showPanel(6); }
 
     @FXML
     private void handleTopBarDoubleClick(MouseEvent event) {
@@ -190,4 +176,9 @@ public class DashboardTemplateController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+    private void updateDateLabel(SimpleDateFormat dateFormat) {
+        date_label.setText(dateFormat.format(new Date()));
+    }
+
 }

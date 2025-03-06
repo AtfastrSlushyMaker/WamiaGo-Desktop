@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
-<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.UsersEditController" spacing="10" alignment="CENTER" stylesheets="@../style.css" styleClass="modal-pane">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/17" fx:controller="controllers.user.UsersEditController" spacing="10" alignment="CENTER" stylesheets="@../style.css" styleClass="modal-pane">
     <children>
         <Label text="Edit User" styleClass="modal-title" />
 

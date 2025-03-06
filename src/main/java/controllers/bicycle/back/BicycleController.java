@@ -1,4 +1,4 @@
 package controllers.bicycle.back;
 
-public class bicycleController {
+public class BicycleController {
 }

@@ -1,15 +1,14 @@
 package controllers.user;
 
 import entities.User;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Pagination;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,12 +26,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 public class UsersController implements Initializable {
     @FXML
     private FlowPane usersFlowPane;
     @FXML
     private Pagination pagination;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private ComboBox<String> sortField;
 
     private final UserService userService = new UserService();
     private List<User> allUsers;
@@ -50,6 +52,9 @@ public class UsersController implements Initializable {
             pagination.setPageCount(totalPages);
             pagination.setCurrentPageIndex(0);
 
+            // Configure FlowPane for responsiveness
+            configureFlowPane();
+
             // Preload user cards for better performance
             preloadUserCards();
 
@@ -60,10 +65,65 @@ public class UsersController implements Initializable {
             pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
                 loadPage(newIndex.intValue());
             });
+
+            // Add listeners for search and sort actions
+            searchField.textProperty().addListener((obs, oldText, newText) -> {
+                handleSearch(newText);
+            });
+
+            sortField.valueProperty().addListener((obs, oldSort, newSort) -> {
+                handleSort(newSort);
+            });
+
         } catch (SQLException e) {
             System.err.println("Connection to Database Cannot Be Established: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void handleSearch(String searchText) {
+        Task<List<User>> searchTask = new Task<>() {
+            @Override
+            protected List<User> call() throws SQLException {
+                return userService.searchUsers("name", searchText); // Adjust the search field as needed
+            }
+        };
+
+        searchTask.setOnSucceeded(event -> {
+            allUsers = searchTask.getValue();
+            refreshCards();
+        });
+
+        searchTask.setOnFailed(event -> {
+            searchTask.getException().printStackTrace();
+        });
+
+        new Thread(searchTask).start();
+    }
+
+    private void handleSort(String sortField) {
+        try {
+            allUsers = userService.sortUsers(sortField, true); // Assuming ascending order
+            refreshCards();
+        } catch (SQLException e) {
+            System.err.println("Sort failed: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Configures the FlowPane for responsiveness and alignment.
+     */
+    private void configureFlowPane() {
+        usersFlowPane.setAlignment(Pos.CENTER);
+        usersFlowPane.setHgap(20); // Horizontal gap between cards
+        usersFlowPane.setVgap(20); // Vertical gap between rows
+        usersFlowPane.setPadding(new Insets(20)); // Padding around the FlowPane
+
+        // Bind the prefWrapLength to the FlowPane's width for responsive wrapping
+        usersFlowPane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            usersFlowPane.setPrefWrapLength(newVal.doubleValue() - 40); // Account for padding
+        });
     }
 
     /**
@@ -103,10 +163,11 @@ public class UsersController implements Initializable {
      */
     private VBox createUserCard(User user) {
         VBox card = new VBox(10);
-        card.setPadding(new Insets(15));
+        card.setPadding(new Insets(20));
         card.setStyle("-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-background-radius: 10;");
-        card.setPrefWidth(300); // Increased width for better spacing
-        card.setPrefHeight(350); // Increased height for additional features
+        card.setPrefWidth(300);
+        card.setMinWidth(280); // Allow slight resizing
+        card.setMaxWidth(320);
         card.setSpacing(10);
 
         // Add elevation (shadow effect)
@@ -119,7 +180,7 @@ public class UsersController implements Initializable {
 
         // User image
         ImageView userImage = new ImageView(new Image(getClass().getResourceAsStream("/images/icons/user.png")));
-        userImage.setFitHeight(100); // Larger image
+        userImage.setFitHeight(100);
         userImage.setFitWidth(100);
         userImage.setPreserveRatio(true);
 
@@ -129,25 +190,6 @@ public class UsersController implements Initializable {
         Label phoneLabel = createDetailLabel("Phone: " + user.getPhone(), FontWeight.NORMAL, 14);
         Label roleLabel = createDetailLabel("Role: " + user.getRole().toString(), FontWeight.NORMAL, 14);
         Label statusLabel = createDetailLabel("Status: " + user.getStatus(), FontWeight.NORMAL, 14);
-
-        // Placeholder for additional features (e.g., user statistics or actions)
-        VBox additionalFeatures = new VBox(10);
-        additionalFeatures.setPadding(new Insets(10));
-        additionalFeatures.setStyle("-fx-background-color: #f5f5f5; -fx-border-radius: 5; -fx-background-radius: 5;");
-
-        // Example: Add a placeholder for user statistics
-        Label statsLabel = new Label("User Statistics");
-        statsLabel.setFont(Font.font("System", FontWeight.BOLD, 14));
-        statsLabel.setTextFill(Color.DARKGRAY);
-
-        // Example: Add a placeholder for actions (e.g., send message, view history)
-        Button sendMessageButton = createIconButton("/images/icons/message.png", "#2196F3", event -> sendMessage(user));
-        Button viewHistoryButton = createIconButton("/images/icons/history.png", "#FF9800", event -> viewHistory(user));
-
-        HBox actionButtons = new HBox(10, sendMessageButton, viewHistoryButton);
-        actionButtons.setAlignment(Pos.CENTER);
-
-        additionalFeatures.getChildren().addAll(statsLabel, actionButtons);
 
         // Action buttons (edit and delete)
         HBox adminActions = new HBox(10);
@@ -159,7 +201,7 @@ public class UsersController implements Initializable {
         adminActions.getChildren().addAll(editButton, deleteButton);
 
         // Add all elements to the card
-        card.getChildren().addAll(adminActions, userImage, nameLabel, emailLabel, phoneLabel, roleLabel, statusLabel, additionalFeatures);
+        card.getChildren().addAll(adminActions, userImage, nameLabel, emailLabel, phoneLabel, roleLabel, statusLabel);
 
         return card;
     }

@@ -16,7 +16,7 @@ public class Home extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/user.front/loginSignup.fxml"));
 
         // Set up the scene with a fixed size
-        Scene scene = new Scene(root, 1024, 800);
+        Scene scene = new Scene(root, 1400, 827);
 
         // Initialize the stage
         primaryStage.initStyle(StageStyle.UNDECORATED);

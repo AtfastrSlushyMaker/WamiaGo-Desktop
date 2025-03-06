@@ -76,21 +76,21 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <ImageView id="home" fitHeight="36.0" fitWidth="44.0" layoutX="47.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" styleClass="home">
+                  <ImageView id="home" fitHeight="40.0" fitWidth="40.0" layoutX="47.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" styleClass="home">
                      <image>
                         <Image url="@../images/icons/home.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="48.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="48.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/icons/rides.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="47.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="48.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/icons/delivery-truck.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="40.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="45.0" layoutY="579.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/icons/history.png" />
                      </image></ImageView>
