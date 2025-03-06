@@ -8,61 +8,99 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.input.MouseEvent?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.taxi.adminside.StatisticsRequestRide"
-            prefHeight="400.0" prefWidth="800.0">
+            stylesheets="@style.css"
+            prefHeight="700.0" prefWidth="800.0">
 
-    <!-- HBox to arrange ride statistics and request statistics horizontally -->
-    <HBox spacing="20.0" layoutX="20.0" layoutY="20.0">
+    <!-- VBox to Center Content -->
+    <VBox alignment="CENTER" spacing="20.0" prefWidth="800.0">
 
-        <!-- VBox for Ride Statistics -->
-        <VBox spacing="10" alignment="TOP_LEFT">
-            <Text fx:id="totalRidesText" text="Total Rides: 0" />
-            <Text fx:id="completedRidesText" text="Completed Rides: 0" />
-            <Text fx:id="ongoingRidesText" text="Ongoing Rides: 0" />
-            <Text fx:id="canceledRidesText" text="Canceled Rides: 0" />
-        </VBox>
+        <!-- FlowPane for Summary Cards (Total Requests and Total Rides) -->
+        <FlowPane alignment="CENTER" hgap="20.0" vgap="20.0">
+            <!-- Requests Card -->
+            <VBox styleClass="card" prefWidth="150.0" prefHeight="80.0" alignment="CENTER">
+                <Text text="Total Requests" styleClass="card-title"/>
+                <Text fx:id="totalRequestsText" text="0" styleClass="card-value"/>
+            </VBox>
 
-        <!-- PieChart for Ride Status -->
-        <PieChart fx:id="rideStatusPieChart" prefWidth="150.0" prefHeight="150.0" />
+            <!-- Rides Card -->
+            <VBox styleClass="card" prefWidth="150.0" prefHeight="80.0" alignment="CENTER">
+                <Text text="Total Rides" styleClass="card-title"/>
+                <Text fx:id="totalRidesText" text="0" styleClass="card-value"/>
+            </VBox>
+        </FlowPane>
 
-        <!-- BarChart for Ride Status Distribution -->
-        <BarChart fx:id="rideStatusBarChart" prefWidth="150.0" prefHeight="150.0">
+        <!-- FlowPane for Button to Show Graph -->
+        <FlowPane alignment="CENTER" hgap="20.0" vgap="20.0">
+            <!-- Button Card to Show Graph -->
+            <VBox styleClass="card" prefWidth="200.0" prefHeight="80.0" alignment="CENTER" onMouseClicked="#handleShowGraphClick">
+                <Text text="Afficher Graphique" styleClass="card-title"/>
+            </VBox>
+        </FlowPane>
+
+        <!-- HBox to Arrange Ride Statistics and Charts -->
+        <HBox alignment="CENTER" spacing="40.0">
+            <!-- VBox for Ride Statistics -->
+            <VBox spacing="10.0" alignment="CENTER">
+                <Text fx:id="completedRidesText" text="Completed Rides: 0" />
+                <Text fx:id="ongoingRidesText" text="Ongoing Rides: 0" />
+                <Text fx:id="canceledRidesText" text="Canceled Rides: 0" />
+            </VBox>
+
+            <!-- PieChart for Ride Status -->
+            <PieChart fx:id="rideStatusPieChart" prefWidth="250.0" prefHeight="250.0" />
+
+            <!-- BarChart for Ride Status Distribution -->
+            <BarChart fx:id="rideStatusBarChart" prefWidth="200.0" prefHeight="180.0">
+                <xAxis>
+                    <CategoryAxis label="Ride Status"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Number of Rides"/>
+                </yAxis>
+            </BarChart>
+
+        </HBox>
+
+        <!-- HBox to Arrange Request Statistics and Charts -->
+        <HBox alignment="CENTER" spacing="40.0">
+            <!-- VBox for Request Statistics -->
+            <VBox spacing="10.0" alignment="CENTER">
+                <Text fx:id="pendingRequestsText" text="Pending Requests: 0" />
+                <Text fx:id="acceptedRequestsText" text="Accepted Requests: 0" />
+                <Text fx:id="canceledRequestsText" text="Canceled Requests: 0" />
+            </VBox>
+
+            <!-- PieChart for Request Status -->
+            <PieChart fx:id="requestStatusPieChart" prefWidth="250.0" prefHeight="250.0" />
+
+            <!-- BarChart for Request Status Distribution -->
+            <BarChart fx:id="requestStatusBarChart" prefWidth="200.0" prefHeight="180.0">
+                <xAxis>
+                    <CategoryAxis label="Request Status"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Number of Requests"/>
+                </yAxis>
+            </BarChart>
+
+        </HBox>
+
+        <!-- LineChart for Ride Request Statistics (Initially hidden) -->
+        <LineChart fx:id="rideRequestLineChart" prefWidth="600.0" prefHeight="250.0" visible="false">
             <xAxis>
-                <CategoryAxis label="Ride Status"/>
+                <NumberAxis label="Jour" />
             </xAxis>
             <yAxis>
-                <NumberAxis label="Number of Rides"/>
+                <NumberAxis label="Nombre de demandes" />
             </yAxis>
-        </BarChart>
+        </LineChart>
 
-    </HBox>
+    </VBox>
 
-    <!-- HBox for Request Statistics -->
-    <HBox spacing="20.0" layoutX="20.0" layoutY="250.0">
-
-        <!-- VBox for Request Statistics -->
-        <VBox spacing="10" alignment="TOP_LEFT">
-            <Text fx:id="totalRequestsText" text="Total Requests: 0" />
-            <Text fx:id="pendingRequestsText" text="Pending Requests: 0" />
-            <Text fx:id="acceptedRequestsText" text="Accepted Requests: 0" />
-            <Text fx:id="canceledRequestsText" text="Canceled Requests: 0" />
-        </VBox>
-
-        <!-- PieChart for Request Status -->
-        <PieChart fx:id="requestStatusPieChart" prefWidth="150.0" prefHeight="150.0" />
-
-        <!-- BarChart for Request Status Distribution -->
-        <BarChart fx:id="requestStatusBarChart" prefWidth="150.0" prefHeight="150.0">
-            <xAxis>
-                <CategoryAxis label="Request Status"/>
-            </xAxis>
-            <yAxis>
-                <NumberAxis label="Number of Requests"/>
-            </yAxis>
-        </BarChart>
-
-    </HBox>
 </AnchorPane>

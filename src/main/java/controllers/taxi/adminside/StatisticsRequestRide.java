@@ -2,15 +2,22 @@ package controllers.taxi.adminside;
 
 import entities.Ride;
 import entities.Request;
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
+import javafx.scene.Scene;
+import javafx.scene.chart.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import services.RideService;
 import services.RequestService;
 
 public class StatisticsRequestRide {
 
+    @FXML
+    private LineChart<Number, Number> rideRequestLineChart;
     @FXML
     private Text totalRidesText;  // Total rides
     @FXML
@@ -35,6 +42,11 @@ public class StatisticsRequestRide {
     private BarChart<String, Number> rideStatusBarChart;  // Bar chart for ride statuses
     @FXML
     private BarChart<String, Number> requestStatusBarChart;  // Bar chart for request statuses
+    // Line chart for ride requests
+    @FXML
+    private VBox totalRequestsCard;
+    @FXML
+    private VBox totalRidesCard;
 
     private RideService rideService;
     private RequestService requestService;
@@ -45,6 +57,9 @@ public class StatisticsRequestRide {
         requestService = new RequestService();
         loadRideStats();
         loadRequestStats();
+        animateCard(totalRequestsCard);
+        animateCard(totalRidesCard);
+        loadRideRequestStats();
     }
 
     private void loadRideStats() {
@@ -123,5 +138,67 @@ public class StatisticsRequestRide {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadRideRequestStats() {
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("Request per day");
+
+        // Exemple de données pour plusieurs jours
+        series.getData().add(new XYChart.Data<>(1, 30)); // Jour 1 - 30 demandes
+        series.getData().add(new XYChart.Data<>(2, 50)); // Jour 2 - 50 demandes
+        series.getData().add(new XYChart.Data<>(3, 40)); // Jour 3 - 40 demandes
+        series.getData().add(new XYChart.Data<>(4, 60)); // Jour 4 - 60 demandes
+
+        rideRequestLineChart.getData().clear();
+        rideRequestLineChart.getData().add(series);
+    }
+
+    private void animateCard(VBox card) {
+        // Animation de fondu (Opacity de 0 à 1)
+        FadeTransition fade = new FadeTransition(Duration.millis(800), card);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+
+        // Animation de translation (Effet "glissé" depuis le bas)
+        TranslateTransition translate = new TranslateTransition(Duration.millis(800), card);
+        translate.setFromY(20);
+        translate.setToY(0);
+
+        // Lancer les animations ensemble
+        fade.play();
+        translate.play();
+    }
+    @FXML
+    public void handleShowGraphClick() {
+        // Créer les axes pour le graphique (si vous n'en avez pas déjà)
+        NumberAxis xAxis = new NumberAxis();
+        xAxis.setLabel("day");
+
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Request");
+
+        // Créer le LineChart
+        LineChart<Number, Number> chart = new LineChart<>(xAxis, yAxis);
+
+        // Créer une série de données fictives pour le graphique
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("Request per day");
+        series.getData().add(new XYChart.Data<>(1, 30));
+        series.getData().add(new XYChart.Data<>(2, 50));
+        series.getData().add(new XYChart.Data<>(3, 40));
+        series.getData().add(new XYChart.Data<>(4, 60));
+
+        // Ajouter la série de données au graphique
+        chart.getData().add(series);
+
+        // Créer un VBox pour contenir le graphique
+        VBox vbox = new VBox(chart);
+
+        // Créer un stage (fenêtre modale) pour afficher le graphique
+        Stage modalStage = new Stage();
+        modalStage.setTitle("Request Graphique ");
+        modalStage.setScene(new Scene(vbox, 600, 400));
+        modalStage.show();
     }
 }

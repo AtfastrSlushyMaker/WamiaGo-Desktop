@@ -1,0 +1,35 @@
+.card {
+    -fx-background-color: #2A9D8F;
+    -fx-background-radius: 10;
+    -fx-padding: 15;
+    -fx-min-width: 180;
+    -fx-min-height: 90;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* Effet de hover */
+.card:hover {
+    -fx-background-color: #21867A;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 15, 0, 0, 7);
+}
+
+.card-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-fill: white;
+}
+
+.card-value {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-fill: white;
+}
+
+FlowPane {
+    -fx-padding: 10;
+}
