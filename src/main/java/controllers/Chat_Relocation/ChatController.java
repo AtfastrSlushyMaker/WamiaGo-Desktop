@@ -18,6 +18,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class ChatController {
@@ -34,24 +36,24 @@ public class ChatController {
     private String fromEmail ;
     private String toEmail ;
 
-    
+
     public String getFromEmail() {
-		return fromEmail;
-	}
+        return fromEmail;
+    }
 
-	public void setFromEmail(String fromEmail) {
-		this.fromEmail = fromEmail;
-	}
+    public void setFromEmail(String fromEmail) {
+        this.fromEmail = fromEmail;
+    }
 
-	public String getToEmail() {
-		return toEmail;
-	}
+    public String getToEmail() {
+        return toEmail;
+    }
 
-	public void setToEmail(String toEmail) {
-		this.toEmail = toEmail;
-	}
+    public void setToEmail(String toEmail) {
+        this.toEmail = toEmail;
+    }
 
-	private static final String BASE_URL = "http://localhost:8081/api/messages";
+    private static final String BASE_URL = "http://localhost:8081/api/messages";
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @FXML
@@ -63,7 +65,7 @@ public class ChatController {
             refreshChatList();
         }
 
-      
+
         chatListView.setCellFactory(new ChatMessageCellFactory(fromEmail, this));
         chatListView.getItems().addListener((ListChangeListener<Message>) change -> {
             while (change.next()) {
@@ -81,14 +83,14 @@ public class ChatController {
     private void sendMessage() {
         String content = messageArea.getText().trim();
 
-        
+
         if (content.isEmpty()) {
             System.out.println("Please enter a message.");
             return;
         }
 
         try {
-         
+
             String response = sendMessageToServer(fromEmail, toEmail, content);
             System.out.println("Message sent: " + response);
             System.out.println("Email to : " + toEmail);
@@ -101,11 +103,19 @@ public class ChatController {
     }
 
     private String sendMessageToServer(String fromEmail, String toEmail, String content) throws IOException {
-        String url = BASE_URL + "/send?fromEmail=" + fromEmail + "&toEmail=" + toEmail + "&content=" + content;
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(url);
-        HttpResponse response = client.execute(httpPost);
-        return EntityUtils.toString(response.getEntity());
+        // Encoder les paramètres pour éviter les caractères non valides dans l'URL
+        String encodedContent = URLEncoder.encode(content, StandardCharsets.UTF_8.toString());
+        String url = BASE_URL + "/send?fromEmail=" + fromEmail + "&toEmail=" + toEmail + "&content=" + encodedContent;
+
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpPost httpPost = new HttpPost(url);
+            HttpResponse response = client.execute(httpPost);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                return EntityUtils.toString(response.getEntity());
+            } else {
+                throw new IOException("Failed to send message: " + response.getStatusLine().getReasonPhrase());
+            }
+        }
     }
 
     public void refreshChatList() throws IOException {

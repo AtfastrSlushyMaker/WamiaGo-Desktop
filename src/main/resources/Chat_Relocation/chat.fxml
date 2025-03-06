@@ -16,19 +16,19 @@
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
-    
+
 
     <!-- Label to display the recipient's email -->
     <Label fx:id="toEmailLabel" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #333;"/>
 
-   
+
 
     <ListView fx:id="chatListView" style="-fx-background-color: transparent;">
         <VBox.vgrow><Priority fx:constant="ALWAYS"/></VBox.vgrow>
     </ListView>
 
     <HBox spacing="10" alignment="CENTER_RIGHT">
-        <TextArea fx:id="messageArea" promptText="Type your message here..." wrapText="true" 
+        <TextArea fx:id="messageArea" promptText="Type your message here..." wrapText="true"
                   style="-fx-pref-height: 10; -fx-background-radius: 15; -fx-pref-width: 300;"/>
         <Button text="Send" onAction="#sendMessage"
                 style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-height: 25;"/>

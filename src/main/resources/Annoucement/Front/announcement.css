@@ -76,3 +76,67 @@
 .custom-alert .button:hover {
     -fx-background-color: #c82333; /* Couleur du bouton au survol */
 }
+
+/* Search Section */
+.search-section {
+    -fx-padding: 20px;
+    -fx-background-color: #f5f7fb;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 2);
+}
+
+/* TextField for Keyword Search */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused {
+    -fx-border-color: #5A6BE5;
+}
+
+/* DatePicker */
+.date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+}
+
+.date-picker:focused {
+    -fx-border-color: #5A6BE5;
+}
+
+/* ComboBox for Zone */
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+}
+
+.combo-box:focused {
+    -fx-border-color: #5A6BE5;
+}
+
+/* Search Button */
+.search-button {
+    -fx-background-color: #5A6BE5;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 1);
+}
+
+.search-button:hover {
+    -fx-background-color: #3F51B5;
+    -fx-cursor: hand;
+}

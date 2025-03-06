@@ -323,4 +323,53 @@ public class AnnouncementService implements IService<Announcement> {
         return announcements;
     }
 
+    public List<Announcement> findByFilters(String keyword, LocalDate date, Announcement.Zone zone) throws SQLException {
+        List<Announcement> announcements = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM announcement WHERE 1=1");
+
+        List<Object> parameters = new ArrayList<>();
+
+        // Ajouter des conditions en fonction des paramètres fournis
+        if (keyword != null && !keyword.isEmpty()) {
+            sql.append(" AND (title LIKE ? OR content LIKE ?)");
+            parameters.add("%" + keyword + "%");
+            parameters.add("%" + keyword + "%");
+        }
+
+        if (date != null) {
+            sql.append(" AND DATE(date) = ?");
+            parameters.add(Date.valueOf(date));
+        }
+
+        if (zone != null) {
+            sql.append(" AND zone = ?");
+            parameters.add(zone.toString());
+        }
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
+            for (int i = 0; i < parameters.size(); i++) {
+                preparedStatement.setObject(i + 1, parameters.get(i));
+            }
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Announcement announcement = new Announcement();
+                announcement.setIdAnnouncement(rs.getInt("id_announcement"));
+
+                DriverService driverService = new DriverService();
+                Driver transporter = driverService.getById(rs.getInt("id_transporter"));
+                announcement.setTransporter(transporter);
+
+                announcement.setTitle(rs.getString("title"));
+                announcement.setContent(rs.getString("content"));
+                announcement.setDate(rs.getTimestamp("date"));
+                announcement.setZone(Announcement.Zone.valueOf(rs.getString("zone")));
+                announcement.setStatus(rs.getBoolean("status"));
+
+                announcements.add(announcement);
+            }
+        }
+        return announcements;
+    }
+
 }

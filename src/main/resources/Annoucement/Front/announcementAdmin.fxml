@@ -13,7 +13,7 @@
 
         <Pane prefHeight="827.0" prefWidth="1400.0" stylesheets="@announcement.css">
             <children>
-                <Label id="available_announcements_label" fx:id="available_announcements_label" layoutX="564.0" layoutY="14.0" prefHeight="50.0" prefWidth="272.0" stylesheets="@announcementAdmin.css" text="Available Announcements" textFill="#323131">
+                <Label id="available_announcements_label" fx:id="available_announcements_label" layoutX="564.0" layoutY="14.0" prefHeight="50.0" prefWidth="272.0" stylesheets="@announcementAdmin.css" text="Announcements Dashboard" textFill="#323131">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
