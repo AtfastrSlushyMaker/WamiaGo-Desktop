@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.web.WebView?>
+<?import javafx.scene.control.SplitPane?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.back.StationsController">
    <children>
@@ -29,6 +31,19 @@
                      </image>
                   </ImageView>
                   <Label styleClass="title-label" text="Bike Station Management" />
+                  <HBox spacing="10.0" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="toggleMapButton" mnemonicParsing="false" styleClass="toggle-button" text="Toggle Map View">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0">
+                                 <image>
+                                    <Image url="@/images/station/icons/map.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
 
@@ -79,22 +94,31 @@
                </children>
             </HBox>
 
-            <!-- Replace TableView with ScrollPane containing a FlowPane -->
-            <ScrollPane fx:id="stationsScrollPane" VBox.vgrow="ALWAYS" fitToWidth="true" styleClass="stations-scroll-pane">
-               <content>
-                  <FlowPane fx:id="stationsFlowPane" hgap="15.0" vgap="15.0" styleClass="stations-flow-pane">
-                     <padding>
-                        <Insets top="10.0" right="10.0" bottom="10.0" left="10.0" />
-                     </padding>
-                  </FlowPane>
-               </content>
-            </ScrollPane>
+            <!-- SplitPane containing stations view and map -->
+            <SplitPane fx:id="contentSplitPane" VBox.vgrow="ALWAYS" dividerPositions="0.6">
+               <items>
+                  <!-- Stations view -->
+                  <ScrollPane fx:id="stationsScrollPane" fitToWidth="true" styleClass="stations-scroll-pane">
+                     <content>
+                        <FlowPane fx:id="stationsFlowPane" hgap="15.0" vgap="15.0" styleClass="stations-flow-pane">
+                           <padding>
+                              <Insets top="10.0" right="10.0" bottom="10.0" left="10.0" />
+                           </padding>
+                        </FlowPane>
+                     </content>
+                  </ScrollPane>
+
+                  <!-- Map view -->
+                  <WebView fx:id="mapWebView" />
+               </items>
+            </SplitPane>
 
             <!-- Status bar -->
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
                   <ProgressIndicator fx:id="loadingIndicator" visible="false" />
                   <Label fx:id="statusLabel" text="Ready" />
+                  <Label fx:id="mapCoordinatesLabel" text="" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </children>

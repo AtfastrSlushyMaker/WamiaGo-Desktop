@@ -5,26 +5,33 @@ import entities.Station;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
+import netscape.javascript.JSObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import services.LocationService;
 import services.StationService;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 public class StationsController {
     @FXML
@@ -45,10 +52,24 @@ public class StationsController {
     private Label statusLabel;
     @FXML
     private Button exportToPdfButton;
+    @FXML
+    private WebView mapWebView;
+    @FXML
+    private SplitPane contentSplitPane;
+    @FXML
+    private Button toggleMapButton;
+    @FXML
+    private Label mapCoordinatesLabel;
 
     private StationService stationService;
     private LocationService locationService;
     private Set<Station> selectedStations = new HashSet<>();
+    private WebEngine webEngine;
+    private boolean isMapVisible = true;
+    private double lastClickedLat;
+    private double lastClickedLng;
+    private final String MAP_HTML_RESOURCE = "/map.html";
+    private File tempMapHtmlFile;
 
     @FXML
     public void initialize() {
@@ -69,11 +90,411 @@ public class StationsController {
 
         // Configure FlowPane
         stationsFlowPane.prefWidthProperty().bind(stationsScrollPane.widthProperty().subtract(20));
-
+        initializeWebView();
         // Initial load
         loadStations();
     }
+    private void initializeWebView() {
+        webEngine = mapWebView.getEngine();
 
+        try {
+            createTempMapHtmlFile();
+            webEngine.load(tempMapHtmlFile.toURI().toString());
+
+            webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue == Worker.State.SUCCEEDED) {
+                    JSObject window = (JSObject) webEngine.executeScript("window");
+                    // Expose this Java controller to JavaScript
+                    window.setMember("stationApp", this);
+                    loadStationsOnMap();
+                }
+            });
+        } catch (IOException e) {
+            showError("Map Error", "Could not initialize map: " + e.getMessage());
+        }
+    }
+
+    public void handleMapClick(double lat, double lng) {
+        lastClickedLat = lat;
+        lastClickedLng = lng;
+
+        Platform.runLater(() -> {
+            showCreateStationDialog(lat, lng);
+        });
+    }
+    private void showCreateStationDialog(double lat, double lng) {
+        // Create a dialog
+        Dialog<Station> dialog = new Dialog<>();
+        dialog.setTitle("Create New Station");
+        dialog.setHeaderText("Create a new station at location: " +
+                String.format("%.6f, %.6f", lat, lng));
+        dialog.initStyle(StageStyle.UTILITY);
+
+        // Set the button types
+        ButtonType createButtonType = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(createButtonType, ButtonType.CANCEL);
+
+        // Create the form fields
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField stationNameField = new TextField();
+        stationNameField.setPromptText("Station Name");
+
+        ComboBox<String> statusComboBox = new ComboBox<>(
+                FXCollections.observableArrayList("Active", "Inactive", "Maintenance", "Disabled"));
+        statusComboBox.setValue("Active");
+
+        Spinner<Integer> capacitySpinner = new Spinner<>(1, 100, 10);
+        capacitySpinner.setEditable(true);
+
+        Spinner<Integer> availableBikesSpinner = new Spinner<>(0, 100, 5);
+        availableBikesSpinner.setEditable(true);
+
+        Spinner<Integer> chargingBikesSpinner = new Spinner<>(0, 100, 0);
+        chargingBikesSpinner.setEditable(true);
+
+        // Add fields to the grid
+        grid.add(new Label("Station Name:"), 0, 0);
+        grid.add(stationNameField, 1, 0);
+        grid.add(new Label("Status:"), 0, 1);
+        grid.add(statusComboBox, 1, 1);
+        grid.add(new Label("Capacity:"), 0, 2);
+        grid.add(capacitySpinner, 1, 2);
+        grid.add(new Label("Available Bikes:"), 0, 3);
+        grid.add(availableBikesSpinner, 1, 3);
+        grid.add(new Label("Charging Bikes:"), 0, 4);
+        grid.add(chargingBikesSpinner, 1, 4);
+
+        dialog.getDialogPane().setContent(grid);
+
+        // Request focus on the name field by default
+        Platform.runLater(stationNameField::requestFocus);
+
+        // Validate inputs and convert to a station when the create button is clicked
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == createButtonType) {
+                try {
+                    // Validate input
+                    if (stationNameField.getText().trim().isEmpty()) {
+                        throw new IllegalArgumentException("Station name cannot be empty");
+                    }
+
+                    int capacity = capacitySpinner.getValue();
+                    int availableBikes = availableBikesSpinner.getValue();
+                    int chargingBikes = chargingBikesSpinner.getValue();
+
+                    if (availableBikes + chargingBikes > capacity) {
+                        throw new IllegalArgumentException("Total bikes cannot exceed capacity");
+                    }
+
+                    // Create location
+                    Location location = new Location();
+                    location.setAddress(stationNameField.getText());
+                    location.setLatitude(lat);
+                    location.setLongitude(lng);
+
+                    // Create station
+                    Station station = new Station();
+                    station.setName("Station "+stationNameField.getText().trim());
+                    station.setStatus(Station.STATUS.valueOf(statusComboBox.getValue().toLowerCase()));
+                    station.setAvailable_bikes(availableBikes);
+                    station.setCharging_bikes(chargingBikes);
+                    station.setAvailable_docks(capacity - availableBikes - chargingBikes);
+                    station.setLocation(location);
+
+                    return station;
+                } catch (IllegalArgumentException e) {
+                    showError("Validation Error", e.getMessage());
+                    return null;
+                }
+            }
+            return null;
+        });
+
+        // Show the dialog and process the result
+        Optional<Station> result = dialog.showAndWait();
+        result.ifPresent(station -> {
+            try {
+                // First save the location
+                station.setLocation(locationService.createLocation(station.getLocation()));
+
+                // Then save the station
+                stationService.create(station);
+
+                // Show temporary marker for the new station
+                addTemporaryMarkerToMap(lat, lng);
+
+                // Refresh the stations list
+                loadStations();
+
+                showInfo("Success", "Station created successfully!");
+            } catch (SQLException e) {
+                showError("Database Error", "Could not create station: " + e.getMessage());
+            }
+        });
+    }
+
+    private void addTemporaryMarkerToMap(double lat, double lng) {
+        if (webEngine != null) {
+            Platform.runLater(() -> {
+                webEngine.executeScript("window.mapFunctions.addTemporaryMarker(" + lat + ", " + lng + ")");
+                webEngine.executeScript("window.mapFunctions.centerMap(" + lat + ", " + lng + ", 15)");
+            });
+        }
+    }
+    private void loadStationsOnMap() {
+        try {
+            List<Station> stations = stationService.read();
+
+            // Convert stations to JSON
+            JSONArray stationsArray = new JSONArray();
+            for (Station station : stations) {
+                JSONObject stationObj = new JSONObject();
+                stationObj.put("name", station.getName());
+                stationObj.put("status", station.getStatus());
+                stationObj.put("available_bikes", station.getAvailable_bikes());
+                stationObj.put("available_docks", station.getAvailable_docks());
+                stationObj.put("charging_bikes", station.getCharging_bikes());
+
+                if (station.getLocation() != null) {
+                    JSONObject locationObj = new JSONObject();
+                    locationObj.put("latitude", station.getLocation().getLatitude());
+                    locationObj.put("longitude", station.getLocation().getLongitude());
+                    stationObj.put("location", locationObj);
+                }
+
+                stationsArray.put(stationObj);
+            }
+
+            // Add stations to map
+            Platform.runLater(() -> {
+                webEngine.executeScript("window.mapFunctions.addStations('" + stationsArray.toString().replace("'", "\\'") + "')");
+            });
+        } catch (SQLException e) {
+            showError("Database Error", "Could not load stations on map: " + e.getMessage());
+        }
+    }
+    private void createTempMapHtmlFile() throws IOException {
+        // Read the map.html resource
+        URL mapHtmlUrl = getClass().getResource(MAP_HTML_RESOURCE);
+        if (mapHtmlUrl == null) {
+            // Create the map.html file if it doesn't exist in resources
+            tempMapHtmlFile = File.createTempFile("map", ".html");
+            tempMapHtmlFile.deleteOnExit();
+
+            // Write the map HTML content to the temp file
+            try (FileWriter writer = new FileWriter(tempMapHtmlFile)) {
+                writer.write(generateMapHtml());
+            }
+        } else {
+            // If it's in resources, load directly
+            webEngine.load(mapHtmlUrl.toString());
+        }
+    }
+    private String generateMapHtml() {
+        // This method generates the HTML content for the map if the resource isn't available
+        // You can paste the entire HTML content from the map.html file we created earlier
+        return "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "    <meta charset=\"utf-8\" />\n" +
+                "    <title>Bike Stations Map</title>\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    \n" +
+                "    <!-- Leaflet CSS -->\n" +
+                "    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\" \n" +
+                "          integrity=\"sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=\" \n" +
+                "          crossorigin=\"\" />\n" +
+                "    \n" +
+                "    <!-- Leaflet JavaScript -->\n" +
+                "    <script src=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\" \n" +
+                "            integrity=\"sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=\" \n" +
+                "            crossorigin=\"\"></script>\n" +
+                "    \n" +
+                "    <style>\n" +
+                "        html, body {\n" +
+                "            height: 100%;\n" +
+                "            margin: 0;\n" +
+                "            padding: 0;\n" +
+                "        }\n" +
+                "        #map {\n" +
+                "            width: 100%;\n" +
+                "            height: 100vh;\n" +
+                "        }\n" +
+                "        .station-icon {\n" +
+                "            background-color: #3388ff;\n" +
+                "            border-radius: 50%;\n" +
+                "            border: 2px solid white;\n" +
+                "            text-align: center;\n" +
+                "            color: white;\n" +
+                "            font-weight: bold;\n" +
+                "        }\n" +
+                "        .active-station {\n" +
+                "            background-color: #00b300;\n" +
+                "        }\n" +
+                "        .inactive-station {\n" +
+                "            background-color: #ff3333;\n" +
+                "        }\n" +
+                "        .maintenance-station {\n" +
+                "            background-color: #ff9900;\n" +
+                "        }\n" +
+                "        .disabled-station {\n" +
+                "            background-color: #808080;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <div id=\"map\"></div>\n" +
+                "    \n" +
+                "    <script>\n" +
+                "        // Initialize the map\n" +
+                "        const map = L.map('map').setView([36.8065, 10.1815], 13); // Default to Tunisia's coordinates\n" +
+                "        \n" +
+                "        // Add the OpenStreetMap tiles\n" +
+                "        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\n" +
+                "            maxZoom: 19,\n" +
+                "            attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'\n" +
+                "        }).addTo(map);\n" +
+                "        \n" +
+                "        // Create a markers layer group\n" +
+                "        const markersLayer = L.layerGroup().addTo(map);\n" +
+                "        \n" +
+                "        // Handle map click event\n" +
+                "        map.on('click', function(e) {\n" +
+                "            // Send the coordinates to the JavaFX application\n" +
+                "            if (window.stationApp) {\n" +
+                "                window.stationApp.handleMapClick(e.latlng.lat, e.latlng.lng);\n" +
+                "            }\n" +
+                "            \n" +
+                "            // Update coordinates display\n" +
+                "            if (window.stationApp) {\n" +
+                "                window.stationApp.updateCoordinates(e.latlng.lat, e.latlng.lng);\n" +
+                "            }\n" +
+                "        });\n" +
+                "        \n" +
+                "        // Mouse move to update coordinates\n" +
+                "        map.on('mousemove', function(e) {\n" +
+                "            if (window.stationApp) {\n" +
+                "                window.stationApp.updateCoordinates(e.latlng.lat, e.latlng.lng);\n" +
+                "            }\n" +
+                "        });\n" +
+                "        \n" +
+                "        // Function to add station markers to the map\n" +
+                "        function addStations(stationsJson) {\n" +
+                "            // Clear existing markers\n" +
+                "            markersLayer.clearLayers();\n" +
+                "            \n" +
+                "            try {\n" +
+                "                const stations = JSON.parse(stationsJson);\n" +
+                "                \n" +
+                "                stations.forEach(station => {\n" +
+                "                    if (station.location && station.location.latitude && station.location.longitude) {\n" +
+                "                        // Create custom icon based on station status\n" +
+                "                        const iconClass = getStationStatusClass(station.status);\n" +
+                "                        const icon = L.divIcon({\n" +
+                "                            className: `station-icon ${iconClass}`,\n" +
+                "                            html: '<div style=\"width: 100%; height: 100%;\">' + \n" +
+                "                                  (station.available_bikes + station.charging_bikes) + \n" +
+                "                                  '</div>',\n" +
+                "                            iconSize: [30, 30]\n" +
+                "                        });\n" +
+                "                        \n" +
+                "                        // Create marker\n" +
+                "                        const marker = L.marker([station.location.latitude, station.location.longitude], {\n" +
+                "                            icon: icon,\n" +
+                "                            title: station.name\n" +
+                "                        }).addTo(markersLayer);\n" +
+                "                        \n" +
+                "                        // Add popup\n" +
+                "                        let popupContent = `\n" +
+                "                            <div class=\"station-info\">\n" +
+                "                                <h3>${station.name}</h3>\n" +
+                "                                <p><strong>Status:</strong> ${station.status}</p>\n" +
+                "                                <p><strong>Available Bikes:</strong> ${station.available_bikes}</p>\n" +
+                "                                <p><strong>Available Docks:</strong> ${station.available_docks}</p>\n" +
+                "                                <p><strong>Charging Bikes:</strong> ${station.charging_bikes}</p>\n" +
+                "                            </div>\n" +
+                "                        `;\n" +
+                "                        \n" +
+                "                        marker.bindPopup(popupContent);\n" +
+                "                    }\n" +
+                "                });\n" +
+                "            } catch (error) {\n" +
+                "                console.error(\"Error parsing stations JSON:\", error);\n" +
+                "            }\n" +
+                "        }\n" +
+                "        \n" +
+                "        // Helper function to get station status class\n" +
+                "        function getStationStatusClass(status) {\n" +
+                "            switch(status.toLowerCase()) {\n" +
+                "                case 'active': return 'active-station';\n" +
+                "                case 'inactive': return 'inactive-station';\n" +
+                "                case 'maintenance': return 'maintenance-station';\n" +
+                "                case 'disabled': return 'disabled-station';\n" +
+                "                default: return '';\n" +
+                "            }\n" +
+                "        }\n" +
+                "        \n" +
+                "        // Function to add a temporary marker at a specific location\n" +
+                "        function addTemporaryMarker(lat, lng) {\n" +
+                "            // Clear any existing temporary markers\n" +
+                "            markersLayer.clearLayers();\n" +
+                "            \n" +
+                "            // Create a marker at the clicked location\n" +
+                "            const marker = L.marker([lat, lng], {\n" +
+                "                draggable: true,\n" +
+                "                title: \"New Station Location\"\n" +
+                "            }).addTo(markersLayer);\n" +
+                "            \n" +
+                "            // Add popup to the marker\n" +
+                "            marker.bindPopup(\"<b>New Station Location</b><br>Drag to adjust.\").openPopup();\n" +
+                "            \n" +
+                "            // Handle drag end to update coordinates\n" +
+                "            marker.on('dragend', function(e) {\n" +
+                "                if (window.stationApp) {\n" +
+                "                    window.stationApp.updateCoordinates(marker.getLatLng().lat, marker.getLatLng().lng);\n" +
+                "                }\n" +
+                "            });\n" +
+                "            \n" +
+                "            return marker;\n" +
+                "        }\n" +
+                "        \n" +
+                "        // Function to center the map on specific coordinates\n" +
+                "        function centerMap(lat, lng, zoom) {\n" +
+                "            map.setView([lat, lng], zoom || 15);\n" +
+                "        }\n" +
+                "        \n" +
+                "        // Expose functions for JavaFX to call\n" +
+                "        window.mapFunctions = {\n" +
+                "            addStations: addStations,\n" +
+                "            addTemporaryMarker: addTemporaryMarker,\n" +
+                "            centerMap: centerMap\n" +
+                "        };\n" +
+                "    </script>\n" +
+                "</body>\n" +
+                "</html>";
+    }
+    private void toggleMapVisibility() {
+        isMapVisible = !isMapVisible;
+
+        if (isMapVisible) {
+            // Show map
+            if (contentSplitPane.getItems().size() == 1) {
+                contentSplitPane.getItems().add(mapWebView);
+                contentSplitPane.setDividerPositions(0.6);
+            }
+            toggleMapButton.setText("Hide Map");
+        } else {
+            // Hide map
+            if (contentSplitPane.getItems().size() > 1) {
+                contentSplitPane.getItems().remove(mapWebView);
+            }
+            toggleMapButton.setText("Show Map");
+        }
+    }
     private VBox createStationCard(Station station) {
         // Main card container
         VBox card = new VBox(10);
@@ -259,70 +680,6 @@ public class StationsController {
         }
     }
 
-    private Callback<TableColumn<Station, Void>, TableCell<Station, Void>> createActionColumnCellFactory() {
-        return new Callback<>() {
-            @Override
-            public TableCell<Station, Void> call(TableColumn<Station, Void> param) {
-                return new TableCell<>() {
-                    private final Button editButton = new Button();
-                    private final Button deleteButton = new Button();
-                    private final HBox buttonContainer = new HBox(5);
-
-                    {
-                        // Configure edit button
-                        editButton.getStyleClass().add("table-button");
-                        editButton.getStyleClass().add("edit-button");
-                        try {
-                            ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/station/icons/edit.png")));
-                            editIcon.setFitHeight(16);
-                            editIcon.setFitWidth(16);
-                            editButton.setGraphic(editIcon);
-                        } catch (Exception e) {
-                            editButton.setText("Edit");
-                        }
-                        editButton.setTooltip(new Tooltip("Edit"));
-
-                        // Configure delete button
-                        deleteButton.getStyleClass().add("table-button");
-                        deleteButton.getStyleClass().add("delete-button");
-                        try {
-                            ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/station/icons/delete.png")));
-                            deleteIcon.setFitHeight(16);
-                            deleteIcon.setFitWidth(16);
-                            deleteButton.setGraphic(deleteIcon);
-                        } catch (Exception e) {
-                            deleteButton.setText("Delete");
-                        }
-                        deleteButton.setTooltip(new Tooltip("Delete"));
-
-                        // Configure button container
-                        buttonContainer.setAlignment(Pos.CENTER);
-                        buttonContainer.getChildren().addAll(editButton, deleteButton);
-                    }
-
-                    @Override
-                    protected void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            // Set button actions only if the row has data
-                            int index = getIndex();
-                            if (index >= 0 && index < getTableView().getItems().size()) {
-                                Station station = getTableView().getItems().get(index);
-                                editButton.setOnAction(event -> updateStation(station));
-                                deleteButton.setOnAction(event -> deleteSingleStation(station));
-                                setGraphic(buttonContainer);
-                            } else {
-                                setGraphic(null);
-                            }
-                        }
-                    }
-                };
-            }
-        };
-    }
-
     private void filterStations(String searchText) {
         try {
             // If search text is empty, just load all stations
@@ -395,52 +752,38 @@ public class StationsController {
         statusLabel.setText(message);
     }
 
-    public void loadStations() {
-        // Show loading indicator
+    private void loadStations() {
         loadingIndicator.setVisible(true);
-        stationsFlowPane.setDisable(true);
-        updateStatusLabel("Loading stations...");
-        selectedStations.clear();
+        statusLabel.setText("Loading stations...");
 
-        // Load data asynchronously
-        CompletableFuture.supplyAsync(() -> {
+        CompletableFuture.runAsync(() -> {
             try {
-                return stationService.read();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }).thenAccept(stations -> {
-            Platform.runLater(() -> {
-                try {
-                    // Clear existing content
-                    stationsFlowPane.getChildren().clear();
+                List<Station> stations = stationService.read();
 
-                    if (stations != null && !stations.isEmpty()) {
-                        // Create station cards
-                        for (Station station : stations) {
-                            VBox stationCard = createStationCard(station);
-                            stationsFlowPane.getChildren().add(stationCard);
-                        }
-                        updateStatusLabel(stations.size() + " stations loaded");
-                    } else {
-                        updateStatusLabel("No stations available");
+                Platform.runLater(() -> {
+                    // Clear existing stations
+                    stationsFlowPane.getChildren().clear();
+                    selectedStations.clear();
+
+                    // Add stations to the UI
+                    for (Station station : stations) {
+                        stationsFlowPane.getChildren().add(createStationCard(station));
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    showError("Load Error", "Error loading stations: " + e.getMessage());
-                } finally {
+
+                    // Load stations on map
+                    loadStationsOnMap();
+
+                    // Update UI
                     loadingIndicator.setVisible(false);
-                    stationsFlowPane.setDisable(false);
-                }
-            });
-        }).exceptionally(e -> {
-            Platform.runLater(() -> {
-                e.printStackTrace();
-                showError("Load Error", "Error loading stations: " + e.getMessage());
-                loadingIndicator.setVisible(false);
-                stationsFlowPane.setDisable(false);
-            });
-            return null;
+                    statusLabel.setText(stations.size() + " stations loaded");
+                });
+            } catch (SQLException e) {
+                Platform.runLater(() -> {
+                    loadingIndicator.setVisible(false);
+                    statusLabel.setText("Error loading stations");
+                    showError("Database Error", "Could not load stations: " + e.getMessage());
+                });
+            }
         });
     }
 
@@ -577,7 +920,7 @@ public class StationsController {
 
         ComboBox<Station.STATUS> statusComboBox = new ComboBox<>();
         statusComboBox.getItems().addAll(Station.STATUS.values());
-        statusComboBox.setValue(isEdit ? station.getStatus() : Station.STATUS.active);
+        statusComboBox.setValue(isEdit ? Station.STATUS.valueOf(station.getStatus().name()) : Station.STATUS.active);
 
         // Load locations
         try {
