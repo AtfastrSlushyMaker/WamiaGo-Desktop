@@ -56,8 +56,7 @@ public class StationsController {
     private WebView mapWebView;
     @FXML
     private SplitPane contentSplitPane;
-    @FXML
-    private Button toggleMapButton;
+
     @FXML
     private Label mapCoordinatesLabel;
 
@@ -147,12 +146,16 @@ public class StationsController {
                 FXCollections.observableArrayList("Active", "Inactive", "Maintenance", "Disabled"));
         statusComboBox.setValue("Active");
 
-        Spinner<Integer> capacitySpinner = new Spinner<>(1, 100, 10);
-        capacitySpinner.setEditable(true);
+
+
+        Spinner<Integer> totalDockSpinner = new Spinner<>(0, 100, 10);
+        totalDockSpinner.setEditable(true);
 
         Spinner<Integer> availableBikesSpinner = new Spinner<>(0, 100, 5);
         availableBikesSpinner.setEditable(true);
 
+        Spinner<Integer> availableDockSpinner = new Spinner<>(totalDockSpinner.getValue()-availableBikesSpinner.getValue(), 100, totalDockSpinner.getValue()-availableBikesSpinner.getValue());
+        availableDockSpinner.setEditable(true);
         Spinner<Integer> chargingBikesSpinner = new Spinner<>(0, 100, 0);
         chargingBikesSpinner.setEditable(true);
 
@@ -162,11 +165,14 @@ public class StationsController {
         grid.add(new Label("Status:"), 0, 1);
         grid.add(statusComboBox, 1, 1);
         grid.add(new Label("Capacity:"), 0, 2);
-        grid.add(capacitySpinner, 1, 2);
+        grid.add(totalDockSpinner, 1, 2);
         grid.add(new Label("Available Bikes:"), 0, 3);
         grid.add(availableBikesSpinner, 1, 3);
-        grid.add(new Label("Charging Bikes:"), 0, 4);
-        grid.add(chargingBikesSpinner, 1, 4);
+        grid.add(new Label("Available Docks:"), 0, 4);
+        grid.add(availableDockSpinner, 1, 4);
+        grid.add(new Label("Charging Bikes:"), 0, 5);
+        grid.add(chargingBikesSpinner, 1, 5);
+
 
         dialog.getDialogPane().setContent(grid);
 
@@ -182,13 +188,19 @@ public class StationsController {
                         throw new IllegalArgumentException("Station name cannot be empty");
                     }
 
-                    int capacity = capacitySpinner.getValue();
+                    int availabelDocks = availableDockSpinner.getValue();
+                    int capacity = totalDockSpinner.getValue();
                     int availableBikes = availableBikesSpinner.getValue();
                     int chargingBikes = chargingBikesSpinner.getValue();
 
                     if (availableBikes + chargingBikes > capacity) {
                         throw new IllegalArgumentException("Total bikes cannot exceed capacity");
                     }
+
+                    if (availabelDocks < 0) {
+                        throw new IllegalArgumentException("Available docks cannot be negative");
+                    }
+
 
                     // Create location
                     Location location = new Location();
@@ -201,6 +213,7 @@ public class StationsController {
                     station.setName("Station "+stationNameField.getText().trim());
                     station.setStatus(Station.STATUS.valueOf(statusComboBox.getValue().toLowerCase()));
                     station.setAvailable_bikes(availableBikes);
+                    station.setTotal_docks(capacity);
                     station.setCharging_bikes(chargingBikes);
                     station.setAvailable_docks(capacity - availableBikes - chargingBikes);
                     station.setLocation(location);
@@ -477,24 +490,6 @@ public class StationsController {
                 "</body>\n" +
                 "</html>";
     }
-    private void toggleMapVisibility() {
-        isMapVisible = !isMapVisible;
-
-        if (isMapVisible) {
-            // Show map
-            if (contentSplitPane.getItems().size() == 1) {
-                contentSplitPane.getItems().add(mapWebView);
-                contentSplitPane.setDividerPositions(0.6);
-            }
-            toggleMapButton.setText("Hide Map");
-        } else {
-            // Hide map
-            if (contentSplitPane.getItems().size() > 1) {
-                contentSplitPane.getItems().remove(mapWebView);
-            }
-            toggleMapButton.setText("Show Map");
-        }
-    }
     private VBox createStationCard(Station station) {
         // Main card container
         VBox card = new VBox(10);
@@ -606,7 +601,7 @@ public class StationsController {
 
         Label capacityLabel = new Label("Bike Availability");
         capacityLabel.getStyleClass().add("capacity-label");
-
+        capacityLabel.setText(String.format("%d / %d bikes available", station.getAvailable_bikes(), station.getTotal_docks()));
         // Action buttons
         HBox actionButtons = new HBox(10);
         actionButtons.setAlignment(Pos.CENTER);

@@ -5,15 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.web.WebView?>
-<?import javafx.scene.control.SplitPane?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.back.StationsController">
    <children>
@@ -31,27 +31,15 @@
                      </image>
                   </ImageView>
                   <Label styleClass="title-label" text="Bike Station Management" />
-                  <HBox spacing="10.0" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Button fx:id="toggleMapButton" mnemonicParsing="false" styleClass="toggle-button" text="Toggle Map View">
-                           <graphic>
-                              <ImageView fitHeight="16.0" fitWidth="16.0">
-                                 <image>
-                                    <Image url="@/images/station/icons/map.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
 
             <!-- Search and buttons -->
-            <HBox spacing="10.0" alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
-                  <TextField fx:id="searchField" promptText="Search stations..." prefWidth="300.0" styleClass="search-field" />
-                  <HBox spacing="10.0" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="searchField" prefWidth="300.0" promptText="Search stations..." styleClass="search-field" />
+                  <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Button fx:id="exportToPdfButton" mnemonicParsing="false" styleClass="export-button" text="Export to PDF">
                            <graphic>
@@ -95,14 +83,14 @@
             </HBox>
 
             <!-- SplitPane containing stations view and map -->
-            <SplitPane fx:id="contentSplitPane" VBox.vgrow="ALWAYS" dividerPositions="0.6">
+            <SplitPane fx:id="contentSplitPane" dividerPositions="0.6" VBox.vgrow="ALWAYS">
                <items>
                   <!-- Stations view -->
                   <ScrollPane fx:id="stationsScrollPane" fitToWidth="true" styleClass="stations-scroll-pane">
                      <content>
-                        <FlowPane fx:id="stationsFlowPane" hgap="15.0" vgap="15.0" styleClass="stations-flow-pane">
+                        <FlowPane fx:id="stationsFlowPane" hgap="15.0" styleClass="stations-flow-pane" vgap="15.0">
                            <padding>
-                              <Insets top="10.0" right="10.0" bottom="10.0" left="10.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </FlowPane>
                      </content>
