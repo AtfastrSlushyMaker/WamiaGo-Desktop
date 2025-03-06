@@ -264,11 +264,11 @@ public class MyBikesController {
             rental.setEnd_station(selectedStation);
             rental.setDistance_km((float) Location.calculateDistance(rental.getStart_station().getLocation(), selectedStation.getLocation()));
             rental.setBattery_used((float) Math.random() * 100); // Random battery usage
-            rental.setCost((float) (rental.getDistance_km() * 0.1)); // Cost per km
+            // Cost per km
 
             bicycle.setStation(selectedStation);
             rental.setEnd_time(new Timestamp(System.currentTimeMillis()));
-
+            rental.setCost((float)rental.calculateCost(rental));
             // Debug: Print the updated rental details
             System.out.println("Updated Rental: " + rental);
 
@@ -342,7 +342,7 @@ public class MyBikesController {
             );
 
             // Calculate estimated cost
-            float estimatedCost = (float) (distance * 0.1); // $0.10 per km
+            float estimatedCost = rental.bestCost(rental,distance); // 0.10 per km
 
             // Create station selection box
             VBox stationBox = createStationSelectionBox(station, distance, estimatedCost, group);
@@ -490,18 +490,18 @@ public class MyBikesController {
                 rental.getStart_station().getLocation(),
                 nearestStation.getLocation()
         );
-        float bestCost = (float) (bestDistance * 0.1); // $0.10 per km
+        float bestCost = rental.bestCost(rental, bestDistance);
 
         // Estimated cost range
         Label costLabel = new Label("Estimated Cost:");
         costLabel.setStyle("-fx-font-weight: bold;");
-        Label costValue = new Label(String.format("$%.2f (best rate)", bestCost));
+        Label costValue = new Label(String.format("%.2fTND (best rate)", bestCost));
         costValue.setStyle("-fx-text-fill: #28a745;");
 
         // Estimated distance
         Label distanceLabel = new Label("Trip Distance:");
         distanceLabel.setStyle("-fx-font-weight: bold;");
-        Label distanceValue = new Label(String.format("%.2f km (to nearest station)", bestDistance));
+        Label distanceValue = new Label(String.format("%.2fKm (to nearest station)", bestDistance));
 
         // Add to grid
         grid.add(costLabel, 0, 1);
@@ -554,10 +554,10 @@ public class MyBikesController {
         HBox metricsBox = new HBox(15);
         metricsBox.setAlignment(Pos.CENTER);
 
-        Label distanceLabel = new Label(String.format("%.2f km", distance));
+        Label distanceLabel = new Label(String.format("%.2fKm", distance));
         distanceLabel.setStyle("-fx-font-size: 12px;");
 
-        Label costLabel = new Label(String.format("$%.2f", cost));
+        Label costLabel = new Label(String.format("%.2f ", cost));
         costLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #28a745;");
 
         Label availabilityLabel = new Label("Docks: " + station.getAvailable_docks());

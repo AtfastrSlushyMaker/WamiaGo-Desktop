@@ -151,13 +151,21 @@ public class BicycleRental {
                 ", cost=" + cost +
                 '}';
     }
-    public double calculateCost(Station start, Station end, Timestamp startTime, Timestamp endTime) {
-        double baseRate = 0.50; // Base rate per km
-        double distance = Location.calculateDistance(start.getLocation(), end.getLocation());
-        double cost = baseRate * distance;
+    public double calculateCost(BicycleRental rental) {
+        double baseRatePerKm = 0.50; // Base rate per km
+        double baseRatePerHour = 2.00; // Base rate per hour
+
+        double distance = Location.calculateDistance(rental.getStart_station().getLocation(), rental.end_station.getLocation());
+        double distanceCost = baseRatePerKm * distance;
+
+        long durationMillis = System.currentTimeMillis() - rental.getStart_time().getTime();
+        double durationHours = durationMillis / (1000.0 * 60 * 60);
+        double timeCost = baseRatePerHour * durationHours;
+
+        double cost = distanceCost + timeCost;
 
         // Fetch Weather Data
-        WeatherInfo weatherInfo = WeatherService.getWeatherInfo(start.getLocation());
+        WeatherInfo weatherInfo = WeatherService.getWeatherInfo(rental.getStart_station().getLocation());
 
         if (weatherInfo != null) {
             String description = weatherInfo.getDescription().toLowerCase();
@@ -181,6 +189,43 @@ public class BicycleRental {
 
         return Math.max(cost, 0.50); // Minimum price safeguard
     }
+
+    public float bestCost(BicycleRental rental, double distance) {
+        double baseRatePerKm = 0.50; // Base rate per km
+        double baseRatePerHour = 2.00; // Base rate per hour
+
+        double distanceCost = baseRatePerKm * distance;
+
+        long durationMillis = System.currentTimeMillis() - rental.getStart_time().getTime();
+        double durationHours = durationMillis / (1000.0 * 60 * 60);
+        double timeCost = baseRatePerHour * durationHours;
+
+        double cost = distanceCost + timeCost;
+
+        WeatherInfo weatherInfo = WeatherService.getWeatherInfo(rental.getStart_station().getLocation());
+        if (weatherInfo != null) {
+            String description = weatherInfo.getDescription().toLowerCase();
+            double temp = Double.parseDouble(weatherInfo.getDescription().split("°C")[0]); // Extract temp from "25°C, clear sky"
+
+            // 🌧️ Rainy, Snowy, or Stormy → 15% Discount
+            if (description.contains("rain") || description.contains("snow") || description.contains("storm")) {
+                cost *= 0.85;
+            }
+
+            // 🔥 Hot Weather (Above 35°C) or ❄️ Cold Weather (Below 5°C) → 10% Discount
+            if (temp > 35 || temp < 5) {
+                cost *= 0.90;
+            }
+
+            // 🌬️ High Wind Speed (>30km/h) → 20% Discount (Encourage safer rides)
+            if (weatherInfo.getWindSpeed() > 30) {
+                cost *= 0.80;
+            }
+        }
+
+        return (float) Math.max(cost, 0.50); // Minimum price safeguard
+    }
+
     public int  getDuration_minutes(){
         return (int) (getStart_time().getTime()-getEnd_time().getTime()) / 60000;
     }
