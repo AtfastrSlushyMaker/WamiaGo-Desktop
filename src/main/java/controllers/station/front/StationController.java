@@ -3,10 +3,7 @@
     import entities.Bicycle;
     import javafx.animation.KeyFrame;
     import javafx.animation.Timeline;
-    import javafx.concurrent.Worker;
     import javafx.scene.control.*;
-    import javafx.scene.web.WebEngine;
-    import javafx.scene.web.WebView;
     import javafx.util.Duration;
     import entities.BicycleRental;
     import entities.Station;
@@ -29,7 +26,6 @@
     import utils.SessionManager;
 
     import java.io.IOException;
-    import java.net.URL;
     import java.sql.SQLException;
     import java.sql.Timestamp;
     import java.util.ArrayList;
@@ -60,16 +56,6 @@
         private ScrollPane scrollPane;
         @FXML
         private Button my_bikes_button;
-        @FXML
-        private WebView map;
-
-        @FXML
-        private Button sortButton;
-
-        @FXML
-        private TextField searchField;
-
-        private WebEngine webEngine;
 
         private final StationService stationService = new StationService();
         private final List<Stage> openModals = new ArrayList<>();
@@ -79,27 +65,10 @@
             root.getStylesheets().add(getClass().getResource("/station/front/station.css").toExternalForm());
             loadStationsIntoFlowPane();
             setupNavigation();
-            loadMap();
             scrollPane.setFitToWidth(true);
             scrollPane.setFitToHeight(true);
             scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        }
-        private void loadMap() {
-            webEngine = map.getEngine();
-            String path = getClass().getResource("/maps/map.html").toExternalForm();
-            webEngine.load(path);
-            map.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
-                if (newState == Worker.State.SUCCEEDED) {
-                    // Map is loaded, now add markers
-                    try {
-                        addMarkersToMap(stationService.read());
-                    }// stations is your list of station data
-                    catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            });
         }
 
         private void setupNavigation() {
@@ -130,7 +99,7 @@
 
             new Thread(() -> {
                 try {
-                    List<Station> stations = stationService.getSortedStationsByUserDistance(SessionManager.getInstance().getUser());
+                    List<Station> stations = stationService.read();
                     Platform.runLater(() -> {
                         stationFlowPane.getChildren().clear();
                         for (Station station : stations) {
@@ -526,52 +495,5 @@
                 showErrorDialog("Pick Up Failed", "An error occurred while picking up the bike. Please try again.");
             }
         }
-
-        public void addMarkersToMap(List<Station> stations) {
-            for (Station station : stations) {
-                String latitude = String.valueOf(station.getLocation().getLatitude());
-                String longitude = String.valueOf(station.getLocation().getLongitude());
-                String name = station.getName();
-
-                URL imageUrl = getClass().getResource("/images/station/icons/mapStationIcon.png");
-                if (imageUrl != null) {
-                    String imagePath = imageUrl.toString();
-                    String script = String.format(
-                            "var customIcon = L.icon({ " +
-                                    "iconUrl: '%s', " +
-                                    "iconSize: [64, 64], " +
-                                    "iconAnchor: [16, 32], " +
-                                    "popupAnchor: [0, -32] " +
-                                    "}); " +
-                                    "L.marker([%s, %s], { icon: customIcon }).addTo(map).bindPopup('%s');",
-                            imagePath, latitude, longitude, name);
-                    webEngine.executeScript(script);
-                } else {
-                    System.out.println("Image not found!");
-                }
-
-            }
-        }
-
-//        public void search() {
-//            String query = searchField.getText();
-//            if (query.isEmpty()) {
-//                loadStationsIntoFlowPane();
-//            } else {
-//                try {
-//                    List<Station> stations = stationService.search(query);
-//                    stationFlowPane.getChildren().clear();
-//                    for (Station station : stations) {
-//                        VBox stationCard = createStationCard(station);
-//                        stationFlowPane.getChildren().add(stationCard);
-//                    }
-//                } catch (SQLException e) {
-//                    showErrorDialog("Search Error", "An error occurred while searching for stations.");
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-
-
 
     }

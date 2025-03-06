@@ -13,7 +13,6 @@
     -fx-font-family: Inter;
     -fx-padding: 10px;
     -fx-alignment: center;}
-
 .station-card {
     -fx-background-color: #6BBF59;
     -fx-background-radius: 12px;
@@ -28,8 +27,8 @@
 
 .station-card:hover {
     -fx-background-color: #4E9D3A;
-    -fx-scale-x: 1.005;
-    -fx-scale-y: 1.005;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 7);
 }
 
@@ -181,20 +180,5 @@
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 10, 0, 0, 2);
 }
-.stack-pane {
-    -fx-background-color: #F5F7FA; /* Match the background color */
-    -fx-background-radius: 20px; /* Rounded corners for the StackPane */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 20, 0, 0, 5); /* Shadow effect */
-    -fx-padding: 25px;
-    -fx-spacing: 15px;
-}
-
-.web-view {
-    -fx-background-color: #F5F7FA; /* Match the background color */
-    -fx-background-radius: 20px; /* Ensure rounded corners for the WebView */
-}
-
-
-
 
 

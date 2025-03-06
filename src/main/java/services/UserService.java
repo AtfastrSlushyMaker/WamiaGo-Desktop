@@ -183,7 +183,7 @@ public class UserService implements IService<User> {
 
     public Driver getDriver(User user) throws SQLException {
         String sql = "SELECT d.id_driver, u.id_user, u.name, u.email, u.phone_number, u.role, u.gender, u.profile_picture, " +
-                "u.is_verified, u.account_status, u.date_of_birth, u.status, d.permit_number, d.driver_role, d.driver_status " +
+                "u.is_verified, u.account_status, u.date_of_birth, u.status, d.permit_number, d.role, d.status " +
                 "FROM `driver` d JOIN `user` u ON d.id_user = u.id_user WHERE u.id_user = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {

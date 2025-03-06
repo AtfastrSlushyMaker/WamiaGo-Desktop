@@ -1,5 +1,4 @@
 package controllers.taxi.userside.ride;
-import controllers.taxi.chat.ChatController;
 import entities.Ride;
 import entities.User;
 import javafx.fxml.FXML;
@@ -119,7 +118,6 @@ public class RideController {
                 System.out.println("Price: " + ride.getPrice() + " TND");
                 System.out.println("Status: " + ride.getStatus());
 
-
                 // Create a ride card UI component
                 VBox rideCard = createRideCard(ride);
                 rideFlowPane.getChildren().add(rideCard);  // Add the card to the FlowPane
@@ -163,12 +161,11 @@ public class RideController {
         // Create buttons
         Button selectButton = createSelectButtonForRide(ride);
         Button cancelButton = createCancelButton(ride, rideCard);
-        Button chatButton = createChatButton(ride);
 
         // Place buttons in an HBox to align them horizontally
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, cancelButton,chatButton);
+        buttonContainer.getChildren().addAll(selectButton, cancelButton);
 
         rideCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
 
@@ -208,7 +205,7 @@ public class RideController {
         return hbox;
     }
     private void openRideDetails(Ride ride) {
-
+        System.out.println("Opening details for Ride ID: " + ride.getIdRide());
 
         Stage modalStage = new Stage();
         modalStage.setTitle("Ride Details - " + ride.getIdRide());
@@ -229,16 +226,7 @@ public class RideController {
         // Displaying the details from the Ride object
         Label arrivalLabel = new Label("Arrival Location: " + ride.getRequest().getArrivalLocation().getAddress());
         Label departureLabel = new Label("Departure Location: " + ride.getRequest().getDepartureLocation().getAddress());
-
-        // Check if driver is null before trying to access its properties
-        Label driverLabel;
-        if (ride.getDriver() != null && ride.getDriver().getUser() != null) {
-            driverLabel = new Label("Driver: " + ride.getDriver().getUser().getName());
-
-        } else {
-            driverLabel = new Label("Driver");
-        }
-
+        Label driverLabel = new Label("Driver: " + ride.getDriver().getUser().getName());  // Assuming Driver class has a getName() method
         Label distanceLabel = new Label("Distance: " + ride.getDistance() + " km");
         Label durationLabel = new Label("Duration: " + ride.getDuration() + " min");
         Label priceLabel = new Label("Price: " + ride.getPrice() + " TND");
@@ -274,7 +262,6 @@ public class RideController {
         modalStage.show();
     }
 
-
     private Button createSelectButtonForRide(Ride ride) {
         Button selectButton = new Button("Details");
         selectButton.getStyleClass().add("ride-button");
@@ -298,30 +285,6 @@ public class RideController {
 
         return deleteButton;
     }
-    private Button createChatButton(Ride ride) {
-        Button chatButton = new Button("Chat");
-        chatButton.getStyleClass().add("ride-button-chat");
-        chatButton.setOnAction(event -> openChatWindow(ride));
-        return chatButton;
-    }
-    private void openChatWindow(Ride ride) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/chat/chat.fxml"));
-            Parent chatRoot = loader.load();
-
-            ChatController chatController = loader.getController();
-            chatController.initChat(ride, SessionManager.getInstance().getUser()); // Get user from session manager
-
-            Stage chatStage = new Stage();
-            chatStage.setTitle("Chat - Ride ID: " + ride.getIdRide());
-            chatStage.setScene(new Scene(chatRoot));
-            chatStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 
 
 

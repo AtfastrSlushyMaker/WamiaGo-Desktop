@@ -3,8 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>wamiaGo</groupId>
-    <artifactId>wamiaGo</artifactId>
+
+    <groupId>tn.esprit</groupId>
+    <artifactId>Pidev3a11</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -18,14 +19,6 @@
             <id>central</id>
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
-
-        <repository>
-            <id>cmusphinx</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -35,11 +28,22 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
+        <!-- Other dependencies -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
 
         <!-- JavaFX Dependencies -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
+            <version>17.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
             <version>17.0.6</version>
         </dependency>
         <dependency>
@@ -65,74 +69,6 @@
             <version>17</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>17.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>17.0.6</version>
-        </dependency>
-
-        <!-- Vosk -->
-        <dependency>
-            <groupId>org.vosk</groupId>
-            <artifactId>vosk</artifactId>
-            <version>0.3.32</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/vosk-0.3.32.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>17</version>
-        </dependency>
-        <dependency>
-            <groupId>org.controlsfx</groupId>
-            <artifactId>controlsfx</artifactId>
-            <version>11.1.2</version>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>17.0.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>17</version>
-        </dependency>
-        <dependency>
-            <groupId>org.controlsfx</groupId>
-            <artifactId>controlsfx</artifactId>
-            <version>11.1.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
-            <version>1.6.2</version>
-        </dependency>
-
-
-        <!-- Twilio -->
-        <dependency>
-            <groupId>com.twilio.sdk</groupId>
-            <artifactId>twilio</artifactId>
-            <version>8.35.0</version>
-        </dependency>
-
-
-
-
-
 
 
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
@@ -154,82 +90,6 @@
             <artifactId>AnimateFX</artifactId>
             <version>1.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-web</artifactId>
-            <version>17.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-media</artifactId>
-            <version>17.0.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.json</groupId>
-            <artifactId>javax.json-api</artifactId>
-            <version>1.1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
-            <version>1.1.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>edu.cmu.sphinx</groupId>
-            <artifactId>sphinx4-core</artifactId>
-            <version>5prealpha-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>edu.cmu.sphinx</groupId>
-            <artifactId>sphinx4-data</artifactId>
-            <version>5prealpha-SNAPSHOT</version>
-        </dependency>
-
-        <!-- Dépendance JNA -->
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>5.13.0</version>
-        </dependency>
-
-        <!-- Extension JNA Platform -->
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>5.12.1</version> <!-- Vérifie la dernière version sur Maven Repository -->
-        </dependency>
-
-        <dependency>
-            <groupId>com.alphacephei</groupId>
-            <artifactId>vosk</artifactId>
-            <version>0.3.38</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>4.9.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20231013</version>
-        </dependency>
-
-
-            <!-- Dépendance OpenAI Java -->
-            <dependency>
-                <groupId>com.theokanning.openai-gpt3-java</groupId>
-                <artifactId>service</artifactId>
-                <version>0.12.0</version>
-            </dependency>
-
-
-
-
 
 
     </dependencies>

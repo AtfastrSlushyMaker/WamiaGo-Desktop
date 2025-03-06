@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Response.UpdateResponse">
+    <VBox spacing="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <Button fx:id="home_button" mnemonicParsing="false" text="Home" />
+            <Label text="Update Response" styleClass="title-label">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Label>
+        </HBox>
+
+        <VBox spacing="10.0" styleClass="reclamation-details">
+            <Label text="Reclamation Details:" styleClass="section-label">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+            <Label text="Title:" styleClass="field-label" />
+            <Label fx:id="reclamationTitleLabel" styleClass="content-label" wrapText="true" />
+            <Label text="Content:" styleClass="field-label" />
+            <Label fx:id="reclamationContentLabel" styleClass="content-label" wrapText="true" />
+        </VBox>
+
+        <VBox spacing="10.0">
+            <Label text="Update Your Response:" styleClass="section-label">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+            <TextArea fx:id="responseContentArea" prefHeight="150.0" promptText="Enter your updated response here..." wrapText="true" />
+        </VBox>
+
+        <HBox spacing="10.0" alignment="CENTER_RIGHT">
+            <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="updateButton" mnemonicParsing="false" text="Update" defaultButton="true" />
+        </HBox>
+    </VBox>
+</AnchorPane>

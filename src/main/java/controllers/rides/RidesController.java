@@ -80,6 +80,7 @@ public class RidesController {
                 e.printStackTrace();
             }
         });
+
         request_button.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/user_side/request.fxml"));
@@ -89,6 +90,17 @@ public class RidesController {
                 stage.setScene(ridesScene);
             } catch (IOException e) {
 
+                e.printStackTrace();
+            }
+        });
+        join_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/booking/booking.fxml"));
+                Parent bookingRoot = loader.load();
+                Scene bookingScene = new Scene(bookingRoot);
+                Stage stage = (Stage) join_button.getScene().getWindow();
+                stage.setScene(bookingScene);
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });

@@ -136,7 +136,7 @@
 
                     <!-- Edit Button -->
                     <HBox alignment="TOP_RIGHT">
-                        <Button fx:id="editButton" style="-fx-background-color: transparent;  -fx-text-fill: white; -fx-font-size: 14; -fx-cursor: hand;" text="✏️ Edit" onAction="#edit"/>
+                        <Button fx:id="editButton" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14; -fx-cursor: hand;" text="✏️ Edit" />
                     </HBox>
 
                     <!-- Profile Image -->
@@ -150,7 +150,6 @@
                         <Label fx:id="addressLabel" style="-fx-text-fill: white;" text="📍 " />
                         <Label fx:id="emailLabel" style="-fx-text-fill: white;" text="📧 " />
                         <Label fx:id="phoneLabel" style="-fx-text-fill: white;" text="📞 " />
-                        <Label fx:id="dobLabel" style="-fx-text-fill: white;" text="🎂 " />
                     <Separator />
                     <Label fx:id="genderLabel" style="-fx-text-fill: white;" text="Sex:" />
                 </VBox>

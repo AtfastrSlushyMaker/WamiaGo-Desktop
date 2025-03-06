@@ -1,5 +1,4 @@
 package controllers.taxi.driverside.ride;
-import controllers.taxi.chat.ChatController;
 import entities.Driver;
 import entities.Request;
 import entities.User;
@@ -202,13 +201,12 @@ public class RideController {
         // Create buttons
         Button selectButton = createSelectButtonForRide(ride);
         Button cancelButton = createCancelButton(ride, rideCard);
-        Button updateButton = createUpdateButton(ride);
-        Button chatButton = createChatButton(ride);
+        Button updateButton = createUpdateButton(ride);  // Create update button
 
         // Place buttons in an HBox to align them horizontally
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, cancelButton, updateButton,chatButton);  // Add updateButton here
+        buttonContainer.getChildren().addAll(selectButton, cancelButton, updateButton);  // Add updateButton here
 
         rideCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
 
@@ -245,7 +243,6 @@ public class RideController {
 
         return hbox;
     }
-
     private void openRideDetails(Ride ride) {
         System.out.println("Opening details for Ride ID: " + ride.getIdRide());
 
@@ -274,26 +271,24 @@ public class RideController {
         // Safely display ride details
         Label arrivalLabel = new Label("Arrival Location: " + (ride.getRequest().getArrivalLocation() != null ? ride.getRequest().getArrivalLocation().getAddress() : "Unknown"));
         Label departureLabel = new Label("Departure Location: " + (ride.getRequest().getDepartureLocation() != null ? ride.getRequest().getDepartureLocation().getAddress() : "Unknown"));
-
+        Label driverLabel = new Label("Driver: " + (ride.getDriver() != null ? ride.getDriver().getUser().getName() : "Unknown"));
         Label distanceLabel = new Label("Distance: " + ride.getDistance() + " km");
         Label durationLabel = new Label("Duration: " + ride.getDuration() + " min");
         Label priceLabel = new Label("Price: " + ride.getPrice() + " TND");
         Label statusLabel = new Label("Status: " + ride.getStatus());
         Label dateLabel = new Label("Date: " + ride.getRideDate().toString());
-        Label clientLabel = new Label("Client Name: " + ride.getRequest().getClient().getName());
-
 
         // Style the labels
         arrivalLabel.getStyleClass().add("modal-detail-label");
         departureLabel.getStyleClass().add("modal-detail-label");
-
+        driverLabel.getStyleClass().add("modal-detail-label");
         distanceLabel.getStyleClass().add("modal-detail-label");
         durationLabel.getStyleClass().add("modal-detail-label");
         priceLabel.getStyleClass().add("modal-detail-label");
         statusLabel.getStyleClass().add("modal-detail-label");
         dateLabel.getStyleClass().add("modal-detail-label");
 
-        rideDetailsBox.getChildren().addAll(clientLabel,arrivalLabel, departureLabel,distanceLabel,
+        rideDetailsBox.getChildren().addAll(arrivalLabel, departureLabel, driverLabel, distanceLabel,
                 durationLabel, priceLabel, statusLabel, dateLabel);
 
         Button closeButton = new Button("Close");
@@ -406,29 +401,6 @@ public class RideController {
         dialogStage.setScene(dialogScene);
         dialogStage.initModality(Modality.APPLICATION_MODAL); // Block interaction with the main window
         dialogStage.showAndWait();
-    }
-
-    private Button createChatButton(Ride ride) {
-        Button chatButton = new Button("Chat");
-        chatButton.getStyleClass().add("ride-button-chat");
-        chatButton.setOnAction(event -> openChatWindow(ride));
-        return chatButton;
-    }
-    private void openChatWindow(Ride ride) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/taxi-managment/chat/chat.fxml"));
-            Parent chatRoot = loader.load();
-
-            ChatController chatController = loader.getController();
-            chatController.initChat(ride, SessionManager.getInstance().getUser()); // Get user from session manager
-
-            Stage chatStage = new Stage();
-            chatStage.setTitle("Chat - Ride ID: " + ride.getIdRide());
-            chatStage.setScene(new Scene(chatRoot));
-            chatStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 

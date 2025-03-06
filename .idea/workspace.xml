@@ -5,27 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/utils/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardTemplateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/EmailService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/SMSService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/SMSService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/addAnnouncement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/addAnnouncement.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementAdmin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bad_words.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bad_words.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bicycle.back/bicycle.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bicycle.back/bicycle.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardTemplate.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/rides/RidesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/rides/RidesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/BookingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/TripService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/TripService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/DataBase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +29,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="CSS File" />
         <option value="FxmlFile" />
         <option value="Class" />
@@ -46,6 +36,12 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="bicycle-station-management" />
@@ -62,7 +58,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git&quot;,
-    &quot;accountId&quot;: &quot;46535ebf-73b9-42d2-ba27-6b0d2fe2271e&quot;
+    &quot;accountId&quot;: &quot;d6cf9076-ac81-47f2-b284-5793fe0ee2cc&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -87,50 +83,40 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.AudioFormatChecker.executor": "Run",
-    "Application.GeocodingService.executor": "Run",
     "Application.Home.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MainRequest.executor": "Run",
     "Application.MainRide.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
     "Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
     "Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor": "Run",
     "Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "Maven.wamiaGo [clean].executor": "Run",
-    "Maven.wamiaGo [install].executor": "Run",
-    "Maven.wamiaGo [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
-    "Maven.wamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor": "Run",
-    "Maven.wamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "covoiturage-management-",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop",
+    "last_opened_file_path": "C:/Users/islem/Downloads/javafx-project-main/javafx-project-main",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.24712643",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MavenSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\icons" />
-      <recent name="D:\Projects\WamiaGo_desktop\src\main\resources\images\station\icons" />
       <recent name="C:\Users\islem\OneDrive\Bureau\mes etudes\3\sem2\pidev\WamiaGo-Desktop\src\main\resources\trips" />
       <recent name="C:\Users\Rzouga.RZOUGALAPTOP\Desktop\School\3A\Sem 2\Pidev\WamiaGo-Desktop\src\main\resources\user.back" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="services" />
+      <recent name="org.wamiago.wamiago.services" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -139,36 +125,10 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Home">
-    <configuration name="AudioFormatChecker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.AudioFormatChecker" />
-      <module name="WamiaGo" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GeocodingService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="services.GeocodingService" />
-      <module name="WamiaGo" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="WamiaGo" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
+      <module name="Pidev3a11" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.*" />
@@ -182,7 +142,7 @@
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="test.Main" />
       <module name="WamiaGo" />
-      <option name="PROGRAM_PARAMETERS" value="--module-path &quot;C:\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -215,8 +175,6 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.AudioFormatChecker" />
-      <item itemvalue="Application.GeocodingService" />
       <item itemvalue="Application.Home" />
       <item itemvalue="Application.MainRequest" />
       <item itemvalue="Application.MainRide" />
@@ -224,8 +182,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Home" />
-        <item itemvalue="Application.AudioFormatChecker" />
-        <item itemvalue="Application.GeocodingService" />
         <item itemvalue="Application.MainRide" />
         <item itemvalue="Application.MainRequest" />
       </list>
@@ -234,8 +190,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.387" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.387" />
       </set>
     </attachedChunks>
   </component>
@@ -270,24 +226,16 @@
       <workItem from="1740045267310" duration="2385000" />
       <workItem from="1740057965950" duration="11924000" />
       <workItem from="1740071912131" duration="4265000" />
-      <workItem from="1740107393256" duration="245000" />
-      <workItem from="1740519859692" duration="1950000" />
-      <workItem from="1740521822252" duration="4655000" />
-      <workItem from="1740565542998" duration="284000" />
-      <workItem from="1740593153296" duration="3702000" />
-      <workItem from="1740671974983" duration="674000" />
-      <workItem from="1740731194720" duration="2766000" />
-      <workItem from="1740739888310" duration="3332000" />
-      <workItem from="1740770720244" duration="12054000" />
-      <workItem from="1740785748373" duration="46000" />
-      <workItem from="1740785800306" duration="7204000" />
-      <workItem from="1740836917139" duration="11519000" />
-      <workItem from="1740860852658" duration="24603000" />
-      <workItem from="1740893033972" duration="5000" />
-      <workItem from="1740928682045" duration="4571000" />
-      <workItem from="1740946083408" duration="19929000" />
-      <workItem from="1741032201343" duration="191000" />
-      <workItem from="1741032412156" duration="629000" />
+      <workItem from="1740126699661" duration="50000" />
+      <workItem from="1740127009640" duration="3053000" />
+      <workItem from="1741180812269" duration="1545000" />
+      <workItem from="1741194613032" duration="426000" />
+      <workItem from="1741204986644" duration="94000" />
+      <workItem from="1741205302468" duration="24000" />
+      <workItem from="1741206110351" duration="4546000" />
+      <workItem from="1741262818615" duration="34000" />
+      <workItem from="1741262879878" duration="2658000" />
+      <workItem from="1741267843392" duration="11782000" />
     </task>
     <servers />
   </component>
@@ -309,18 +257,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java</url>
-          <line>52</line>
-          <properties field="currentDriver" class="controllers.Announcement.AddAnnouncementController" />
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

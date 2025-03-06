@@ -154,18 +154,6 @@ public class DriverService implements IService<Driver> {
         return null;
     }
 
-public Driver getDriverByUserId(User user) throws SQLException {
-    String sql = "SELECT * FROM driver WHERE id_user = ?";
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
-        ps.setInt(1, user.getId());
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return new DriverService().getById(rs.getInt("id_driver"));    }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    return null;
-}
+
 }
 

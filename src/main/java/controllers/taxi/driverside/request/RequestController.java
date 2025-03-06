@@ -221,19 +221,17 @@ public class RequestController {
         VBox requestDetailsBox = new VBox(8);
         requestDetailsBox.getStyleClass().add("request-details-box");
 
-        Label clientLabel = new Label("Client: " + (request.getClient() != null ? request.getClient().getName() : "Unknown"));
         Label arrivalLabel = new Label("Arrival Location: " + request.getArrivalLocation().getAddress());
         Label departureLabel = new Label("Departure Location: " + request.getDepartureLocation().getAddress());
         Label statusLabel = new Label("Status: " + request.getStatus());
         Label dateLabel = new Label("Date: " + request.getRequestDate().toString());
 
-        clientLabel.getStyleClass().add("modal-detail-label");
         arrivalLabel.getStyleClass().add("modal-detail-label");
         departureLabel.getStyleClass().add("modal-detail-label");
         statusLabel.getStyleClass().add("modal-detail-label");
         dateLabel.getStyleClass().add("modal-detail-label");
 
-        requestDetailsBox.getChildren().addAll(clientLabel, arrivalLabel, departureLabel, statusLabel, dateLabel);
+        requestDetailsBox.getChildren().addAll(arrivalLabel, departureLabel, statusLabel, dateLabel);
 
         Button closeButton = new Button("Close");
         closeButton.getStyleClass().add("modal-close-button");

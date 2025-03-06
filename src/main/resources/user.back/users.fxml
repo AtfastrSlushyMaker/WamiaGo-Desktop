@@ -1,43 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="583.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.UsersController">
-    <stylesheets>
-        <URL value="@style.css" />
-    </stylesheets>
-    <children>
-        <BorderPane layoutX="85.0" layoutY="-28.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <top>
-                <BorderPane prefHeight="52.0" prefWidth="600.0" styleClass="header">
-                    <center>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="All Users" BorderPane.alignment="CENTER">
-                            <font>
-                                <Font name="System Bold" size="23.0" />
-                            </font>
-                            <BorderPane.margin>
-                                <Insets bottom="0.0" left="40.0" right="60.0" top="0.0" />
-                            </BorderPane.margin>
-                        </Text>
-                    </center>
-                </BorderPane>
-            </top>
-            <center>
-                <ScrollPane fitToHeight="true" fitToWidth="true">
-                    <FlowPane fx:id="usersFlowPane" styleClass="user-flow-pane" />
-                </ScrollPane>
-            </center>
-            <bottom>
-                <Pagination fx:id="pagination" currentPageIndex="0" maxPageIndicatorCount="5" pageCount="1" />
-            </bottom>
-        </BorderPane>
-    </children>
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.user.UsersController"
+            style="-fx-background-color: #f0f0f0;"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox alignment="CENTER" spacing="20.0"
+          AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+
+        <Label text="User Management" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+        <Label text="Total Users: 3" style="-fx-font-size: 18px;"/>
+
+        <VBox spacing="10.0">
+            <Label text="1. John Doe - john@example.com"/>
+            <Label text="2. Jane Smith - jane@example.com"/>
+            <Label text="3. Bob Johnson - bob@example.com"/>
+        </VBox>
+
+    </VBox>
+
 </AnchorPane>
