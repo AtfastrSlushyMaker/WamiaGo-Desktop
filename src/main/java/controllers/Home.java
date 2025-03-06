@@ -1,18 +1,24 @@
 package controllers;
 
+import com.mysql.cj.xdevapi.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.json.JSONObject;
+import services.CityFinder;
 import services.ClimatiqService;
 import services.TrafficTimeEstimator;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 
 public class Home extends Application {
@@ -35,12 +41,21 @@ public class Home extends Application {
 
         try {
 
-            JSONObject result = service.calculateElectricityEmissions(100);
-            System.out.println("Emission Results:\n" + result.toString(2));
 
-            // Test car emissions (50 kW power for 2 hours, electric)
-            JSONObject carResult = service.calculateCarEmissions(50, 2, "electric");
-            System.out.println("\nCar Emissions:\n" + carResult.toString(2));
+
+
+            // In main application
+
+//            String departureCity = CityFinder.getCurrentCity();
+//            System.out.println("Starting from: " + departureCity);
+
+
+//            JSONObject result = service.calculateElectricityEmissions(100);
+//            System.out.println("Emission Results:\n" + result.toString(2));
+//
+//            // Test car emissions (50 kW power for 2 hours, electric)
+//            JSONObject carResult = service.calculateCarEmissions(50, 2, "electric");
+//            System.out.println("\nCar Emissions:\n" + carResult.toString(2));
 
 
 
