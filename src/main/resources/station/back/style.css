@@ -1,130 +1,110 @@
-/* modern-style.css */
-
-/* Root styles */
-.root {
-    -fx-font-family: 'Segoe UI', Arial, sans-serif;
-    -fx-background-color: #f5f7fa;
-    -fx-font-size: 14px;
+/* Station Card Styles */
+.stations-flow-pane {
+    -fx-background-color: #f5f5f5;
 }
 
-/* Title styles */
-.title-label {
-    -fx-font-size: 22px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50;
-}
-
-/* Button styles */
-.button {
-    -fx-background-color: #f8f9fa;
-    -fx-text-fill: #495057;
-    -fx-background-radius: 4px;
-    -fx-border-radius: 4px;
-    -fx-border-color: #ced4da;
-    -fx-border-width: 1px;
-    -fx-padding: 8px 16px;
-    -fx-cursor: hand;
-}
-
-.button:hover {
-    -fx-background-color: #e9ecef;
-}
-
-.button:pressed {
-    -fx-background-color: #dee2e6;
-}
-
-.primary-button {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-    -fx-border-color: #2980b9;
-}
-
-.primary-button:hover {
-    -fx-background-color: #2980b9;
-}
-
-.primary-button:pressed {
-    -fx-background-color: #2471a3;
-}
-
-.delete-button {
-    -fx-background-color: #e74c3c;
-    -fx-text-fill: white;
-    -fx-border-color: #c0392b;
-}
-
-.delete-button:hover {
-    -fx-background-color: #c0392b;
-}
-
-.delete-button:pressed {
-    -fx-background-color: #a93226;
-}
-
-.refresh-button {
-    -fx-background-color: #f8f9fa;
-    -fx-padding: 6px 10px;
-}
-
-.table-button {
+.stations-scroll-pane {
     -fx-background-color: transparent;
+    -fx-background: transparent;
     -fx-border-color: transparent;
-    -fx-padding: 4px;
 }
 
-.edit-button:hover {
-    -fx-background-color: rgba(52, 152, 219, 0.2);
+.stations-scroll-pane > .viewport {
+    -fx-background-color: transparent;
 }
 
-.delete-button.table-button:hover {
-    -fx-background-color: rgba(231, 76, 60, 0.2);
-}
-
-/* Status bar */
-.progress-indicator {
-    -fx-progress-color: #3498db;
-}
-
-/* PDF Export Dialog Styling */
-.pdf-export-dialog {
+.station-card {
     -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 3);
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease;
 }
 
-.pdf-export-dialog .dialog-pane {
-    -fx-background-color: white;
-    -fx-padding: 20px;
+.station-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0, 0, 5);
+    -fx-translate-y: -2px;
 }
 
-.pdf-export-dialog .dialog-pane .header-panel {
-    -fx-background-color: #27ae60;
-    -fx-padding: 10px;
+.station-card-selected {
+    -fx-border-color: #007bff;
+    -fx-border-width: 2px;
+    -fx-background-color: #f0f8ff;
 }
 
-.pdf-export-dialog .dialog-pane .header-panel .label {
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
+.station-card-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.station-card-location {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+    -fx-font-style: italic;
+}
+
+.station-card-status {
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 
-.pdf-export-dialog .button-bar .button {
-    -fx-background-color: #27ae60;
-    -fx-text-fill: white;
+.metric-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
 }
 
-.pdf-export-dialog .button-bar .button:hover {
-    -fx-background-color: #219653;
+.metric-value {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
 }
 
-.pdf-export-dialog .button-bar .button:pressed {
-    -fx-background-color: #1e874b;
+.capacity-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666666;
+    -fx-padding: 0 0 3 0;
 }
 
-/* PDF Export Progress Dialog */
-.pdf-progress-dialog .progress-bar > .bar {
-    -fx-background-color: #27ae60;
+.capacity-high .bar {
+    -fx-background-color: #28a745;
 }
 
-.pdf-progress-dialog .progress-bar > .track {
-    -fx-background-color: #e0e0e0;
+.capacity-medium .bar {
+    -fx-background-color: #ffc107;
+}
+
+.capacity-low .bar {
+    -fx-background-color: #dc3545;
+}
+
+.separator {
+    -fx-opacity: 0.5;
+}
+
+.card-edit-button, .card-delete-button {
+    -fx-background-radius: 20px;
+    -fx-min-width: 32px;
+    -fx-min-height: 32px;
+    -fx-max-width: 32px;
+    -fx-max-height: 32px;
+}
+
+.card-edit-button {
+    -fx-background-color: #007bff;
+}
+
+.card-edit-button:hover {
+    -fx-background-color: #0069d9;
+}
+
+.card-delete-button {
+    -fx-background-color: #dc3545;
+}
+
+.card-delete-button:hover {
+    -fx-background-color: #c82333;
 }

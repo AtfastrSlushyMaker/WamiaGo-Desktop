@@ -3,6 +3,8 @@ package controllers.station.back;
 import entities.Location;
 import entities.Station;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -12,19 +14,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import services.LocationService;
 import services.StationService;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -38,17 +36,19 @@ public class StationsController {
     @FXML
     private TextField searchField;
     @FXML
-    private TableView<Station> stationTableView;
+    private ScrollPane stationsScrollPane;
+    @FXML
+    private FlowPane stationsFlowPane;
     @FXML
     private ProgressIndicator loadingIndicator;
     @FXML
     private Label statusLabel;
+    @FXML
+    private Button exportToPdfButton;
 
     private StationService stationService;
     private LocationService locationService;
-
-    @FXML
-    private Button exportToPdfButton;
+    private Set<Station> selectedStations = new HashSet<>();
 
     @FXML
     public void initialize() {
@@ -56,127 +56,207 @@ public class StationsController {
         stationService = new StationService();
         locationService = new LocationService();
 
-        // Make sure table allows multiple selection for batch deletion
-        stationTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        // Initialize TableView columns
-        setupTableColumns();
-
         // Setup button actions
         addButton.setOnAction(event -> addStation());
         deleteButton.setOnAction(event -> deleteStations());
         refreshButton.setOnAction(event -> loadStations());
+        exportToPdfButton.setOnAction(event -> exportToPdf());
 
         // Setup search functionality
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filterStations(newValue);
         });
 
+        // Configure FlowPane
+        stationsFlowPane.prefWidthProperty().bind(stationsScrollPane.widthProperty().subtract(20));
 
-        exportToPdfButton.setOnAction(event -> exportToPdf());
-
-        // Double-click handler for editing
-        stationTableView.setRowFactory(tv -> {
-            TableRow<Station> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && !row.isEmpty()) {
-                    updateStation(row.getItem());
-                }
-            });
-            return row;
-        });
-
-        // Initial load - call this after the columns are set up
+        // Initial load
         loadStations();
-
-
     }
 
-    private void setupTableColumns() {
-        // Clear any existing columns first
-        stationTableView.getColumns().clear();
+    private VBox createStationCard(Station station) {
+        // Main card container
+        VBox card = new VBox(10);
+        card.setPrefWidth(300);
+        card.setPrefHeight(300);
+        card.setPadding(new Insets(15));
+        card.getStyleClass().add("station-card");
 
-        // Create columns
-        TableColumn<Station, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        // Card selection state
+        BooleanProperty isSelected = new SimpleBooleanProperty(false);
 
-        TableColumn<Station, String> locationColumn = new TableColumn<>("Location");
-        locationColumn.setCellValueFactory(cellData -> {
-            if (cellData.getValue() != null && cellData.getValue().getLocation() != null) {
-                return new SimpleStringProperty(cellData.getValue().getLocation().getAddress());
-            }
-            return new SimpleStringProperty("");
-        });
-
-        TableColumn<Station, Integer> totalDocksColumn = new TableColumn<>("Total Docks");
-        totalDocksColumn.setCellValueFactory(new PropertyValueFactory<>("total_docks"));
-        totalDocksColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        TableColumn<Station, Integer> availableDocksColumn = new TableColumn<>("Available Docks");
-        availableDocksColumn.setCellValueFactory(new PropertyValueFactory<>("available_docks"));
-        availableDocksColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        TableColumn<Station, Integer> availableBikesColumn = new TableColumn<>("Available Bikes");
-        availableBikesColumn.setCellValueFactory(new PropertyValueFactory<>("available_bikes"));
-        availableBikesColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        TableColumn<Station, Integer> chargingBikesColumn = new TableColumn<>("Charging");
-        chargingBikesColumn.setCellValueFactory(new PropertyValueFactory<>("charging_bikes"));
-        chargingBikesColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        TableColumn<Station, Station.STATUS> statusColumn = new TableColumn<>("Status");
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        statusColumn.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Station.STATUS status, boolean empty) {
-                super.updateItem(status, empty);
-                if (empty || status == null) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(status.toString());
-
-                    switch (status) {
-                        case active:
-                            setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
-                            break;
-                        case inactive:
-                            setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-                            break;
-                        case maintenance:
-                            setStyle("-fx-text-fill: orange; -fx-font-weight: bold;");
-                            break;
-                        case disabled:
-                            setStyle("-fx-text-fill: gray; -fx-font-weight: bold;");
-                            break;
-                        default:
-                            setStyle("");
-                            break;
-                    }
-                }
+        // Update background based on selection state
+        isSelected.addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                card.getStyleClass().add("station-card-selected");
+                selectedStations.add(station);
+            } else {
+                card.getStyleClass().remove("station-card-selected");
+                selectedStations.remove(station);
             }
         });
 
-        // Action column with edit/delete buttons
-        TableColumn<Station, Void> actionColumn = new TableColumn<>("Actions");
-        actionColumn.setCellFactory(createActionColumnCellFactory());
+        // Handle card selection
+        card.setOnMouseClicked(event -> {
+            if (event.isControlDown()) {
+                // Toggle selection with Ctrl key
+                isSelected.set(!isSelected.get());
+            } else if (event.getClickCount() == 2) {
+                // Double-click to edit
+                updateStation(station);
+            } else {
+                // Single click selects only this card
+                clearAllSelections();
+                isSelected.set(true);
+            }
+        });
 
-        // Add columns to table
-        stationTableView.getColumns().addAll(
-                nameColumn, locationColumn, totalDocksColumn,
-                availableDocksColumn, availableBikesColumn, chargingBikesColumn,
-                statusColumn, actionColumn
+        // Station header with name
+        Label nameLabel = new Label(station.getName());
+        nameLabel.getStyleClass().add("station-card-title");
+        nameLabel.setMaxWidth(Double.MAX_VALUE);
+        nameLabel.setAlignment(Pos.CENTER);
+
+        // Location
+        Label locationLabel = new Label(station.getLocation() != null ? station.getLocation().getAddress() : "No location");
+        locationLabel.getStyleClass().add("station-card-location");
+        locationLabel.setWrapText(true);
+
+        // Status indicator
+        HBox statusBox = new HBox(5);
+        statusBox.setAlignment(Pos.CENTER);
+
+        Region statusIndicator = new Region();
+        statusIndicator.setPrefSize(12, 12);
+        statusIndicator.setMinSize(12, 12);
+        statusIndicator.setMaxSize(12, 12);
+
+        Label statusLabel = new Label(station.getStatus().toString());
+        statusLabel.getStyleClass().add("station-card-status");
+
+        // Set status color
+        switch (station.getStatus()) {
+            case active:
+                statusIndicator.setStyle("-fx-background-color: green; -fx-background-radius: 6;");
+                statusLabel.setTextFill(Color.GREEN);
+                break;
+            case inactive:
+                statusIndicator.setStyle("-fx-background-color: red; -fx-background-radius: 6;");
+                statusLabel.setTextFill(Color.RED);
+                break;
+            case maintenance:
+                statusIndicator.setStyle("-fx-background-color: orange; -fx-background-radius: 6;");
+                statusLabel.setTextFill(Color.ORANGE);
+                break;
+            case disabled:
+                statusIndicator.setStyle("-fx-background-color: gray; -fx-background-radius: 6;");
+                statusLabel.setTextFill(Color.GRAY);
+                break;
+        }
+
+        statusBox.getChildren().addAll(statusIndicator, statusLabel);
+
+        // Station metrics
+        GridPane metricsGrid = new GridPane();
+        metricsGrid.setHgap(10);
+        metricsGrid.setVgap(8);
+        metricsGrid.setPadding(new Insets(15, 0, 15, 0));
+
+        // Add metrics labels
+        addMetric(metricsGrid, 0, "Total Docks:", String.valueOf(station.getTotal_docks()));
+        addMetric(metricsGrid, 1, "Available Docks:", String.valueOf(station.getAvailable_docks()));
+        addMetric(metricsGrid, 2, "Available Bikes:", String.valueOf(station.getAvailable_bikes()));
+        addMetric(metricsGrid, 3, "Charging Bikes:", String.valueOf(station.getCharging_bikes()));
+
+        // Visual indicator of dock/bike capacity
+        ProgressBar capacityBar = new ProgressBar();
+        capacityBar.setPrefWidth(Double.MAX_VALUE);
+        double availableRatio = (double) (station.getAvailable_bikes() + station.getCharging_bikes()) / station.getTotal_docks();
+        capacityBar.setProgress(availableRatio);
+
+        // Style the capacity bar based on availability
+        if (availableRatio > 0.7) {
+            capacityBar.getStyleClass().add("capacity-high");
+        } else if (availableRatio > 0.3) {
+            capacityBar.getStyleClass().add("capacity-medium");
+        } else {
+            capacityBar.getStyleClass().add("capacity-low");
+        }
+
+        Label capacityLabel = new Label("Bike Availability");
+        capacityLabel.getStyleClass().add("capacity-label");
+
+        // Action buttons
+        HBox actionButtons = new HBox(10);
+        actionButtons.setAlignment(Pos.CENTER);
+
+        Button editButton = new Button();
+        editButton.getStyleClass().add("card-edit-button");
+        try {
+            ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/station/icons/edit.png")));
+            editIcon.setFitHeight(16);
+            editIcon.setFitWidth(16);
+            editButton.setGraphic(editIcon);
+        } catch (Exception e) {
+            editButton.setText("Edit");
+        }
+        editButton.setTooltip(new Tooltip("Edit"));
+        editButton.setOnAction(event -> {
+            event.consume(); // Prevent event bubbling to the card
+            updateStation(station);
+        });
+
+        Button deleteButton = new Button();
+        deleteButton.getStyleClass().add("card-delete-button");
+        try {
+            ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/station/icons/delete.png")));
+            deleteIcon.setFitHeight(16);
+            deleteIcon.setFitWidth(16);
+            deleteButton.setGraphic(deleteIcon);
+        } catch (Exception e) {
+            deleteButton.setText("Delete");
+        }
+        deleteButton.setTooltip(new Tooltip("Delete"));
+        deleteButton.setOnAction(event -> {
+            event.consume(); // Prevent event bubbling to the card
+            deleteSingleStation(station);
+        });
+
+        actionButtons.getChildren().addAll(editButton, deleteButton);
+
+        // Add all components to card
+        card.getChildren().addAll(
+                nameLabel,
+                statusBox,
+                new Separator(),
+                locationLabel,
+                metricsGrid,
+                capacityLabel,
+                capacityBar,
+                new Separator(),
+                actionButtons
         );
 
-        // Set column widths
-        nameColumn.prefWidthProperty().bind(stationTableView.widthProperty().multiply(0.15));
-        locationColumn.prefWidthProperty().bind(stationTableView.widthProperty().multiply(0.25));
-        totalDocksColumn.prefWidthProperty().bind(stationTableView.widthProperty().multiply(0.1));
-        availableDocksColumn.prefWidthProperty().bind(stationTableView.widthProperty().multiply(0.1));
-        availableBikesColumn.prefWidthProperty().bind(stationTableView.widthProperty().multiply(0.1));
-        chargingBikesColumn.prefWidthProperty().bind(stationTableView.widthProperty().multiply(0.1));
-        statusColumn.prefWidthProperty().bind(stationTableView.widthProperty().multiply(0.1));
-        actionColumn.prefWidthProperty().bind(stationTableView.widthProperty().multiply(0.15));
+        return card;
+    } private void addMetric(GridPane grid, int row, String label, String value) {
+        Label labelNode = new Label(label);
+        labelNode.getStyleClass().add("metric-label");
+
+        Label valueNode = new Label(value);
+        valueNode.getStyleClass().add("metric-value");
+
+        grid.add(labelNode, 0, row);
+        grid.add(valueNode, 1, row);
+    }
+    private void clearAllSelections() {
+        selectedStations.clear();
+
+        for (javafx.scene.Node node : stationsFlowPane.getChildren()) {
+            if (node instanceof VBox) {
+                VBox card = (VBox) node;
+                card.getStyleClass().remove("station-card-selected");
+            }
+        }
     }
 
     private Callback<TableColumn<Station, Void>, TableCell<Station, Void>> createActionColumnCellFactory() {
@@ -251,44 +331,76 @@ public class StationsController {
                 return;
             }
 
-            // Determine which column to search based on the input
-            String searchColumn = "name"; // Default to searching by name
-            List<Station> searchResults = new ArrayList<>();
+            // Show loading indicator
+            loadingIndicator.setVisible(true);
+            updateStatusLabel("Searching stations...");
 
-            try {
-                // First try to search by name
-                searchResults = stationService.search("name", searchText);
+            CompletableFuture.supplyAsync(() -> {
+                try {
+                    List<Station> searchResults = new ArrayList<>();
 
-                // If status is mentioned, search by status instead
-                if (searchText.equalsIgnoreCase("active") ||
-                        searchText.equalsIgnoreCase("inactive") ||
-                        searchText.equalsIgnoreCase("maintenance")) {
-                    searchResults = stationService.search("status", searchText);
+                    // First try to search by name
+                    searchResults = stationService.search("name", searchText);
+
+                    // If status is mentioned, search by status instead
+                    if (searchText.equalsIgnoreCase("active") ||
+                            searchText.equalsIgnoreCase("inactive") ||
+                            searchText.equalsIgnoreCase("maintenance") ||
+                            searchText.equalsIgnoreCase("disabled")) {
+                        searchResults = stationService.search("status", searchText);
+                    }
+
+                    return searchResults;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
+            }).thenAccept(stations -> {
+                Platform.runLater(() -> {
+                    try {
+                        // Clear existing content
+                        stationsFlowPane.getChildren().clear();
+                        selectedStations.clear();
 
-                // You might want to add "address" to your allowedColumns and handle it in the search method
+                        if (stations != null && !stations.isEmpty()) {
+                            // Create station cards
+                            for (Station station : stations) {
+                                VBox stationCard = createStationCard(station);
+                                stationsFlowPane.getChildren().add(stationCard);
+                            }
+                            updateStatusLabel(stations.size() + " stations found");
+                        } else {
+                            updateStatusLabel("No stations found");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showError("Search Error", "Error searching stations: " + e.getMessage());
+                    } finally {
+                        loadingIndicator.setVisible(false);
+                    }
+                });
+            }).exceptionally(e -> {
+                Platform.runLater(() -> {
+                    e.printStackTrace();
+                    showError("Search Error", "Error searching stations: " + e.getMessage());
+                    loadingIndicator.setVisible(false);
+                });
+                return null;
+            });
 
-                // Update table with search results
-                stationTableView.setItems(FXCollections.observableArrayList(searchResults));
-
-                // Update status label
-                updateStatusLabel(searchResults.size() + " stations found");
-
-            } catch (SQLException e) {
-                showError("Search Error", "Database error while searching: " + e.getMessage());
-            } catch (IllegalArgumentException e) {
-                showError("Search Error", e.getMessage());
-            }
         } catch (Exception e) {
             showError("Filter Error", "Error filtering stations: " + e.getMessage());
         }
+    }
+    private void updateStatusLabel(String message) {
+        statusLabel.setText(message);
     }
 
     public void loadStations() {
         // Show loading indicator
         loadingIndicator.setVisible(true);
-        stationTableView.setDisable(true);
+        stationsFlowPane.setDisable(true);
         updateStatusLabel("Loading stations...");
+        selectedStations.clear();
 
         // Load data asynchronously
         CompletableFuture.supplyAsync(() -> {
@@ -300,12 +412,17 @@ public class StationsController {
         }).thenAccept(stations -> {
             Platform.runLater(() -> {
                 try {
-                    if (stations != null) {
-                        // Create a new observable list to ensure the UI updates
-                        stationTableView.setItems(FXCollections.observableArrayList(stations));
+                    // Clear existing content
+                    stationsFlowPane.getChildren().clear();
+
+                    if (stations != null && !stations.isEmpty()) {
+                        // Create station cards
+                        for (Station station : stations) {
+                            VBox stationCard = createStationCard(station);
+                            stationsFlowPane.getChildren().add(stationCard);
+                        }
                         updateStatusLabel(stations.size() + " stations loaded");
                     } else {
-                        stationTableView.setItems(FXCollections.observableArrayList());
                         updateStatusLabel("No stations available");
                     }
                 } catch (Exception e) {
@@ -313,7 +430,7 @@ public class StationsController {
                     showError("Load Error", "Error loading stations: " + e.getMessage());
                 } finally {
                     loadingIndicator.setVisible(false);
-                    stationTableView.setDisable(false);
+                    stationsFlowPane.setDisable(false);
                 }
             });
         }).exceptionally(e -> {
@@ -321,15 +438,12 @@ public class StationsController {
                 e.printStackTrace();
                 showError("Load Error", "Error loading stations: " + e.getMessage());
                 loadingIndicator.setVisible(false);
-                stationTableView.setDisable(false);
+                stationsFlowPane.setDisable(false);
             });
             return null;
         });
     }
 
-    private void updateStatusLabel(String message) {
-        statusLabel.setText(message);
-    }
 
     public void deleteSingleStation(Station station) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -356,7 +470,6 @@ public class StationsController {
     }
 
     public void deleteStations() {
-        List<Station> selectedStations = stationTableView.getSelectionModel().getSelectedItems();
         if (selectedStations.isEmpty()) {
             showWarning("No Selection", "Please select stations to delete.");
             return;
@@ -692,7 +805,7 @@ public class StationsController {
             fileChooser.getExtensionFilters().add(
                     new javafx.stage.FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
             fileChooser.setInitialFileName("stations_report.pdf");
-            java.io.File file = fileChooser.showSaveDialog(stationTableView.getScene().getWindow());
+            java.io.File file = fileChooser.showSaveDialog(stationsFlowPane.getScene().getWindow());
 
             if (file == null) {
                 return; // User cancelled the operation
