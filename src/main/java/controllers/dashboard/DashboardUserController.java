@@ -1,5 +1,6 @@
 package controllers.dashboard;
 
+import entities.User;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,11 +50,22 @@ public class DashboardUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        User user = SessionManager.getInstance().getUser();
+        Username.setText(user.getName());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        date_label.setText(dateFormat.format(new Date()));
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> updateDateLabel(dateFormat)),
+                new KeyFrame(Duration.seconds(1), e -> updateDateLabel(dateFormat))
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
         loadPanels();
         setupInitialVisibility();
         setupNavigationPanelAnimation();
 
-        AnchorPane.setLeftAnchor(contentPane, 0.0);
+        AnchorPane.setLeftAnchor(contentPane, 186.0); // Set initial left anchor to 186.0
 
         navPanel.setViewOrder(-1);
 
@@ -66,6 +79,31 @@ public class DashboardUserController implements Initializable {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
+    }
+
+    private void setupNavigationPanelAnimation() {
+        navPanel.setTranslateX(0); // Set initial translation to 0
+        navPanel.setOnMouseClicked(event -> toggleNavigationPanel());
+    }
+
+    private void toggleNavigationPanel() {
+        double targetLeftAnchor = (Menu_Counter % 2 == 0) ? 0.0 : 186.0;
+
+        TranslateTransition sidebarTransition = new TranslateTransition(Duration.millis(ANIMATION_DURATION), navPanel);
+        sidebarTransition.setToX((Menu_Counter % 2 == 0) ? NAV_PANEL_HIDDEN_TRANSLATE : 0);
+
+        Timeline contentTimeline = new Timeline();
+        KeyValue keyValue = new KeyValue(contentPane.layoutXProperty(), targetLeftAnchor);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(ANIMATION_DURATION), keyValue);
+        contentTimeline.getKeyFrames().add(keyFrame);
+
+        ParallelTransition parallelTransition = new ParallelTransition(sidebarTransition, contentTimeline);
+        parallelTransition.setOnFinished(event -> {
+            AnchorPane.setLeftAnchor(contentPane, targetLeftAnchor);
+        });
+        parallelTransition.play();
+
+        Menu_Counter++;
     }
 
     private void loadPanels() {
@@ -104,34 +142,9 @@ public class DashboardUserController implements Initializable {
         }
     }
 
-    private void setupNavigationPanelAnimation() {
-        navPanel.setTranslateX(NAV_PANEL_HIDDEN_TRANSLATE);
-        navPanel.setOnMouseClicked(event -> toggleNavigationPanel());
-    }
-
     @FXML
     private void menuBar() {
         toggleNavigationPanel();
-    }
-
-    private void toggleNavigationPanel() {
-        double targetLeftAnchor = (Menu_Counter % 2 == 0) ? 186.0 : 0.0;
-
-        TranslateTransition sidebarTransition = new TranslateTransition(Duration.millis(ANIMATION_DURATION), navPanel);
-        sidebarTransition.setToX((Menu_Counter % 2 == 0) ? 0 : NAV_PANEL_HIDDEN_TRANSLATE);
-
-        Timeline contentTimeline = new Timeline();
-        KeyValue keyValue = new KeyValue(contentPane.layoutXProperty(), targetLeftAnchor);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(ANIMATION_DURATION), keyValue);
-        contentTimeline.getKeyFrames().add(keyFrame);
-
-        ParallelTransition parallelTransition = new ParallelTransition(sidebarTransition, contentTimeline);
-        parallelTransition.setOnFinished(event -> {
-            AnchorPane.setLeftAnchor(contentPane, targetLeftAnchor);
-        });
-        parallelTransition.play();
-
-        Menu_Counter++;
     }
 
     @FXML

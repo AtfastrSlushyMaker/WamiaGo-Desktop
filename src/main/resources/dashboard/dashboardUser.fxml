@@ -113,11 +113,16 @@
                <Image url="@../Images/icons/logout.png" />
             </image>
          </ImageView>
-        </children>
+            <Button fx:id="Settings" layoutX="39.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="" />
+              <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="54.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../Images/icons/down-arrow.png" />
+                  </image>
+              </ImageView></children>
     </AnchorPane>
 
           <!-- Content Area -->
-    <AnchorPane fx:id="contentPane" layoutX="244.0" layoutY="58.0" prefHeight="675.0" prefWidth="786.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="244.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="58.0">
+    <AnchorPane fx:id="contentPane" layoutX="275.2" layoutY="56.0" prefHeight="778.0" prefWidth="1119.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="56.0">
         <!-- Add your content here -->
     </AnchorPane>
    <Button fx:id="booking_button" layoutX="16.0" layoutY="468.0" prefHeight="50.0" prefWidth="220.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Bookings " textFill="#c6b6b6">

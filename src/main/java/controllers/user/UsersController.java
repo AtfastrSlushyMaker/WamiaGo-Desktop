@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 public class UsersController implements Initializable {
+    public Button addUser;
     @FXML
     private FlowPane usersFlowPane;
     @FXML

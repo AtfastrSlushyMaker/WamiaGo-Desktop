@@ -2,10 +2,13 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -13,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="583.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.UsersController">
+<AnchorPane prefHeight="583.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.UsersController">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>
@@ -22,27 +25,37 @@
             <top>
                 <BorderPane prefHeight="52.0" prefWidth="600.0" styleClass="header">
                     <center>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="All Users" BorderPane.alignment="CENTER">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="All Users" textAlignment="CENTER" wrappingWidth="131.65521240234375" BorderPane.alignment="CENTER">
                             <font>
-                                <Font name="System Bold" size="23.0" />
+                                <Font name="System Bold" size="32.0" />
                             </font>
                             <BorderPane.margin>
-                                <Insets bottom="0.0" left="40.0" right="60.0" top="0.0" />
+                                <Insets />
                             </BorderPane.margin>
                         </Text>
                     </center>
                     <right>
                         <!-- Search Bar and Sort Dropdown -->
-                        <HBox spacing="10" alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+                        <HBox alignment="CENTER_RIGHT" spacing="10" BorderPane.alignment="CENTER">
                             <TextField fx:id="searchField" promptText="Search users..." styleClass="search-field" />
                             <ComboBox fx:id="sortField" promptText="Sort by" styleClass="sort-combo" />
                         </HBox>
                     </right>
+               <left>
+                  <Button id="addUser" fx:id="addUser" mnemonicParsing="false" prefHeight="51.0" prefWidth="159.0" styleClass="addUser" text="Add User" BorderPane.alignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/icons/addUser.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+               </left>
                 </BorderPane>
             </top>
             <center>
                 <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
-                    <FlowPane fx:id="usersFlowPane" styleClass="user-flow-pane" />
+                    <FlowPane fx:id="usersFlowPane" layoutX="50.0" styleClass="user-flow-pane" />
                 </ScrollPane>
             </center>
             <bottom>

@@ -96,3 +96,15 @@
 #navPanel .circle {
     -fx-fill: #c0c0c0;
 }
+#date {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-min-width: 150px;
+    -fx-max-width: 200px;
+}

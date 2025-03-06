@@ -34,7 +34,7 @@
                 <graphic>
                     <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/images/icons/close.png" />
+                            <Image url="@/Images/icons/close.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -43,7 +43,7 @@
                 <graphic>
                     <ImageView fitHeight="16.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/images/icons/maximize.png" />
+                            <Image url="@/Images/icons/maximize.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -52,7 +52,7 @@
                 <graphic>
                     <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/images/icons/minus.png" />
+                            <Image url="@/Images/icons/minus.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -140,7 +140,7 @@
         <Pane fx:id="slidingPanel" prefWidth="500" styleClass="sliding-panel" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
             <ImageView fitHeight="363.0" fitWidth="464.0" layoutX="30.0" layoutY="21.0">
                 <image>
-                    <Image url="@../images/wamiaGO.png" />
+                    <Image url="@../Images/wamiaGO.png" />
                 </image>
                 <effect>
                     <DropShadow color="rgba(70, 70, 70, 0.8)" offsetX="5.0" offsetY="5.0" radius="2.0" spread="0.5" />
