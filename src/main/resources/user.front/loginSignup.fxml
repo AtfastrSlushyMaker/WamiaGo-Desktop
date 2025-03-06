@@ -1,97 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="922.0" style="-fx-background-color: #3F6EDD;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.LoginController">
+<AnchorPane fx:id="rootPane" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-color: #3F6EDD;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.LoginController">
 
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
 
-    <!-- Sign-Up Section -->
-    <VBox fx:id="signupPane" alignment="TOP_CENTER" prefHeight="500" prefWidth="460.0" spacing="20" styleClass="form-pane">
-        <Label styleClass="form-title" text="Join Us">
-            <font>
-                <Font name="Brittany Signature" size="48" />
-            </font>
-            <effect>
-                <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
-            </effect>
-        </Label>
-        <TextField fx:id="signupEmailField" promptText="Email" styleClass="form-field" />
-        <TextField fx:id="signupFirstNameField" promptText="First Name" styleClass="form-field" />
-        <TextField fx:id="signupLastNameField" promptText="Last Name" styleClass="form-field" />
-        <TextField fx:id="signupPhoneField" promptText="Phone Number" styleClass="form-field" />
-        <DatePicker fx:id="signupDatePicker" promptText="Date Of Birth" styleClass="form-field" />
-        <ComboBox fx:id="signupLocationComboBox" promptText="Select Location" styleClass="form-field" />
-        <!-- Gender Selection -->
-        <HBox alignment="CENTER_LEFT" spacing="10">
-            <Label styleClass="form-label" text="Gender:" />
-            <RadioButton fx:id="maleRadioButton" styleClass="form-radio" text="Male">
-                <toggleGroup>
-                    <ToggleGroup fx:id="genderGroup" />
-                </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="femaleRadioButton" styleClass="form-radio" text="Female" toggleGroup="$genderGroup" />
-        </HBox>
+    <!-- Top Bar -->
+    <AnchorPane fx:id="topBar" prefHeight="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"  onMouseClicked="#handleTopBarDoubleClick">
+        <children>
+            <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="30.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+                <graphic>
+                    <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@/images/icons/close.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button fx:id="maxBtn" mnemonicParsing="false" onAction="#handleMaximizeButton" prefHeight="30.0" prefWidth="30.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0">
+                <graphic>
+                    <ImageView fitHeight="16.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@/images/icons/maximize.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button fx:id="restoreBtn" mnemonicParsing="false" onAction="#handleMinimizeButton" prefHeight="30.0" prefWidth="30.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="5.0">
+                <graphic>
+                    <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@/images/icons/minus.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Text>
+        </children>
+    </AnchorPane>
 
-        <PasswordField fx:id="signupPasswordField" promptText="Password" styleClass="form-field" />
-        <PasswordField fx:id="signupConfirmPasswordField" promptText="Confirm Password" styleClass="form-field" />
-        <Button fx:id="signupButton" onAction="#handleSignUpButtonClick" styleClass="form-button" text="Sign Up">
-            <effect>
-                <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
-            </effect>
-        </Button>
-    </VBox>
+    <!-- Main Content -->
+    <AnchorPane fx:id="contentPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
 
-    <!-- Login Section -->
-    <VBox fx:id="loginPane" alignment="TOP_CENTER" layoutX="470.0" prefHeight="500.0" prefWidth="460.0" spacing="20" styleClass="form-pane">
-        <Label styleClass="form-title" text="Welcome Back">
-            <font>
-                <Font name="Brittany Signature" size="48" />
-            </font>
-            <effect>
-                <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
-            </effect>
-        </Label>
-        <TextField fx:id="emailField" promptText="Email" styleClass="form-field" />
-        <PasswordField fx:id="passwordField" promptText="Password" styleClass="form-field" />
-        <Button fx:id="loginButton" onAction="#handleLoginButtonClick" styleClass="form-button" text="Log In">
-            <effect>
-                <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
-            </effect>
-        </Button>
+        <!-- Sign-Up Section -->
+        <VBox fx:id="signupPane" alignment="TOP_CENTER" spacing="10" styleClass="form-pane" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+            <Label styleClass="form-title" text="Join Us">
+                <font>
+                    <Font name="Brittany Signature" size="61.0" />
+                </font>
+                <effect>
+                    <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
+                </effect>
+            </Label>
+            <Label styleClass="field-label" text="Email" />
+            <TextField fx:id="signupEmailField" promptText="Enter your email" styleClass="transparent-field" />
+            <Label styleClass="field-label" text="First Name" />
+            <TextField fx:id="signupFirstNameField" promptText="Enter your first name" styleClass="transparent-field" />
+            <Label styleClass="field-label" text="Last Name" />
+            <TextField fx:id="signupLastNameField" promptText="Enter your last name" styleClass="transparent-field" />
+            <Label styleClass="field-label" text="Phone Number" />
+            <TextField fx:id="signupPhoneField" promptText="Enter your phone number" styleClass="transparent-field" />
+            <Label styleClass="field-label" text="Date of Birth" />
+            <DatePicker fx:id="signupDatePicker" promptText="Select your date of birth" styleClass="transparent-field" />
+            <Label styleClass="field-label" text="Location" />
+            <ComboBox fx:id="signupLocationComboBox" promptText="Select your location" styleClass="transparent-field" />
+            <!-- Gender Selection -->
+            <Label styleClass="field-label" text="Gender" />
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <RadioButton fx:id="maleRadioButton" styleClass="form-radio" text="Male">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="genderGroup" />
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="femaleRadioButton" styleClass="form-radio" text="Female" toggleGroup="$genderGroup" />
+            </HBox>
+            <Label styleClass="field-label" text="Password" />
+            <PasswordField fx:id="signupPasswordField" promptText="Enter your password" styleClass="transparent-field" />
+            <Label styleClass="field-label" text="Confirm Password" />
+            <PasswordField fx:id="signupConfirmPasswordField" promptText="Confirm your password" styleClass="transparent-field" />
+            <Button fx:id="signupButton" onAction="#handleSignUpButtonClick" styleClass="form-button" text="Sign Up">
+                <effect>
+                    <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
+                </effect>
+            </Button>
+        </VBox>
 
-        <HBox alignment="CENTER" spacing="5">
-            <Label styleClass="form-label" text="Forgot your Password?" />
-            <Label styleClass="form-link" text="Click Here" />
-        </HBox>
-    </VBox>
+        <!-- Login Section -->
+        <VBox fx:id="loginPane" alignment="TOP_CENTER" spacing="10" styleClass="form-pane" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+            <Label styleClass="form-title" text="Welcome Back">
+                <font>
+                    <Font name="Brittany Signature" size="61.0" />
+                </font>
+                <effect>
+                    <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
+                </effect>
+            </Label>
+            <Label styleClass="field-label" text="Email" />
+            <TextField fx:id="emailField" promptText="Enter your email" styleClass="transparent-field" />
+            <Label styleClass="field-label" text="Password" />
+            <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="transparent-field" />
+            <Button fx:id="loginButton" onAction="#handleLoginButtonClick" styleClass="form-button" text="Log In">
+                <effect>
+                    <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
+                </effect>
+            </Button>
+            <HBox alignment="CENTER" spacing="5">
+                <Label styleClass="form-label" text="Forgot your Password?" textFill="WHITE" />
+                <Label styleClass="form-link" text="Click Here" />
+            </HBox>
+        </VBox>
 
-    <!-- Sliding Panel -->
-    <Pane fx:id="slidingPanel" layoutX="0.0" prefHeight="694.0" prefWidth="478.0" styleClass="sliding-panel">
-        <ImageView fitHeight="350.0" fitWidth="420.0" layoutX="37.0" layoutY="31.0">
-            <image>
-                <Image url="@../images/wamiaGO.png" />
-            </image>
-            <effect>
-                <DropShadow color="rgba(70, 70, 70, 0.8)" offsetX="5.0" offsetY="5.0" radius="2.0" spread="0.5" />
-            </effect>
-        </ImageView>
-        <Button fx:id="switchFormButton" layoutX="170.0" layoutY="400.0" onAction="#handleSwitchFormButtonClick" styleClass="sliding-button" text="Sign Up">
-            <effect>
-                <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
-            </effect>
-        </Button>
-    </Pane>
+        <!-- Sliding Panel -->
+        <Pane fx:id="slidingPanel" prefWidth="500" styleClass="sliding-panel" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+            <ImageView fitHeight="363.0" fitWidth="464.0" layoutX="30.0" layoutY="21.0">
+                <image>
+                    <Image url="@../images/wamiaGO.png" />
+                </image>
+                <effect>
+                    <DropShadow color="rgba(70, 70, 70, 0.8)" offsetX="5.0" offsetY="5.0" radius="2.0" spread="0.5" />
+                </effect>
+            </ImageView>
+            <Button fx:id="switchFormButton" contentDisplay="CENTER" layoutX="195.0" layoutY="366.0" onAction="#handleSwitchFormButtonClick" styleClass="sliding-button" text="Sign Up">
+                <effect>
+                    <DropShadow color="rgba(0, 0, 0, 0.5)" offsetX="2" offsetY="2" radius="5" spread="0.3" />
+                </effect>
+            </Button>
+        </Pane>
+    </AnchorPane>
 
-    <ProgressIndicator fx:id="loadingIndicator" prefWidth="50" prefHeight="50" visible="false">
-        <AnchorPane.topAnchor>225.0</AnchorPane.topAnchor>
-        <AnchorPane.leftAnchor>436.0</AnchorPane.leftAnchor>
-    </ProgressIndicator>
+    <!-- Loading Indicator -->
+    <StackPane fx:id="loadingStackPane" mouseTransparent="true" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+        <ProgressIndicator fx:id="loadingIndicator" prefHeight="50" prefWidth="50" visible="false" />
+    </StackPane>
 </AnchorPane>

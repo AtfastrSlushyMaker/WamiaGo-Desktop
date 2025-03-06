@@ -1,30 +1,44 @@
 /* General Styles */
+.root {
+    -fx-font-family: "Arial";
+}
+
+/* Form Panes */
 .form-pane {
-    -fx-background-color: #3F6EDD;
+    -fx-background-color: rgba(255, 255, 255, 0.1);
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-padding: 20;
+    -fx-spacing: 10;
 }
 
 .form-title {
     -fx-text-fill: #77DD77;
+    -fx-font-family: "Brittany Signature";
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0.3, 2, 2);
+    -fx-font-size: 44px;
 }
 
-.form-field {
-    -fx-pref-width: 260px;
-    -fx-pref-height: 36px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
-    -fx-border-color: #ccc;
-    -fx-border-width: 1px;
-    -fx-padding: 5;
-    -fx-font-size: 14px;
-}
-
-.form-label {
+.field-label {
     -fx-text-fill: white;
     -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.transparent-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #77DD77;
+    -fx-border-width: 0 0 2 0;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #77DD77;
+    -fx-font-size: 14px;
+    -fx-padding: 5 0 5 0;
+    -fx-pref-width: 300px;
+    -fx-pref-height: 30px;
+}
+
+.transparent-field:focused {
+    -fx-border-color: #4CAF50;
 }
 
 .form-link {
@@ -76,4 +90,21 @@
 
 .sliding-button:hover {
     -fx-background-color: #45a049;
+}
+
+#topBar {
+    -fx-background-color: #2D2F33;
+}
+
+/* Close, Maximize, Minimize Buttons */
+#closeBtn, #maxBtn, #restoreBtn, #menuBarBtn {
+    -fx-background-color: transparent;
+}
+
+#closeBtn:hover {
+    -fx-background-color: #FF0606;
+}
+
+#maxBtn:hover, #restoreBtn:hover, #menuBarBtn:hover {
+    -fx-background-color: rgba(187, 184, 184, 0.35);
 }

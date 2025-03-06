@@ -3,13 +3,16 @@ package controllers.user;
 import entities.Location;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import entities.User;
@@ -27,6 +30,10 @@ public class LoginController {
     @FXML
     public ProgressIndicator loadingIndicator;
     public TextField signupFirstNameField;
+    public AnchorPane topBar;
+    public AnchorPane contentPane;
+    public AnchorPane rootPane;
+    public StackPane loadingStackPane;
     @FXML
     private TextField signupEmailField;
     @FXML
@@ -70,11 +77,27 @@ public class LoginController {
     private final UserService userService = new UserService();
     private final LocationService locationService = new LocationService();
     private boolean isSignUpVisible = false;
-
     @FXML
     public void initialize() {
-        loadLocations();
-}
+        loadLocations(); // Load locations into the ComboBox
+        setupFormSwitching(); // Set up the sliding animation for form switching
+        makeResponsive(); // Make the layout responsive
+    }
+    private void makeResponsive() {
+        // Bind the width of the signupPane and loginPane to the contentPane's width
+        signupPane.prefWidthProperty().bind(contentPane.widthProperty().divide(2));
+        loginPane.prefWidthProperty().bind(contentPane.widthProperty().divide(2));
+
+        // Bind the height of the signupPane and loginPane to the contentPane's height
+        signupPane.prefHeightProperty().bind(contentPane.heightProperty());
+        loginPane.prefHeightProperty().bind(contentPane.heightProperty());
+
+        // Bind the sliding panel's width to the contentPane's width divided by 2
+        slidingPanel.prefWidthProperty().bind(contentPane.widthProperty().divide(2));
+
+        // No need to bind the loading indicator's position, as it's centered by the StackPane
+    }
+
     private void loadLocations() {
         try {
             List<Location> locations = locationService.read();
@@ -85,34 +108,44 @@ public class LoginController {
     }
 
     @FXML
-    private void handleSignUpButtonClick() throws SQLException {
+    private void handleSignUpButtonClick() {
         if (validateSignUpForm()) {
-            User newUser = new User();
-            newUser.setEmail(signupEmailField.getText());
-            newUser.setName(signupFirstNameField.getText() + " " + signupLastNameField.getText());
-            newUser.setPhone(signupPhoneField.getText());
-            newUser.setDateOfBirth(signupDatePicker.getValue());
-            newUser.setGender(maleRadioButton.isSelected() ? Gender.MALE : Gender.FEMALE);
-            newUser.setPassword(signupPasswordField.getText());
-            newUser.setLocation(signupLocationComboBox.getValue());
-            newUser.setRole(Role.CLIENT);
-            newUser.setVerified(false);
-            newUser.setAccountStatus(User.AccountStatus.ACTIVE);
-            newUser.setStatus(User.Status.OFFLINE);
-
-            if (userService.create(newUser)) {
-                showAlert("Sign-Up Successful", "Welcome, " + newUser.getName() + "!");
-                clearSignUpForm();
-            } else {
-                showAlert("Error", "User registration failed. Try again.");
+            User newUser = createUserFromForm();
+            if (newUser != null) {
+                try {
+                    if (userService.create(newUser)) {
+                        showAlert("Sign-Up Successful", "Welcome, " + newUser.getName() + "!");
+                        clearSignUpForm();
+                    } else {
+                        showAlert("Error", "User registration failed. Try again.");
+                    }
+                } catch (SQLException e) {
+                    showAlert("Database Error", "Could not register user.");
+                }
             }
         } else {
             showAlert("Validation Error", "Please fill in all fields correctly.");
         }
     }
 
+    private User createUserFromForm() {
+        User newUser = new User();
+        newUser.setEmail(signupEmailField.getText());
+        newUser.setName(signupFirstNameField.getText() + " " + signupLastNameField.getText());
+        newUser.setPhone(signupPhoneField.getText());
+        newUser.setDateOfBirth(signupDatePicker.getValue());
+        newUser.setGender(maleRadioButton.isSelected() ? Gender.MALE : Gender.FEMALE);
+        newUser.setPassword(signupPasswordField.getText());
+        newUser.setLocation(signupLocationComboBox.getValue());
+        newUser.setRole(Role.CLIENT);
+        newUser.setVerified(false);
+        newUser.setAccountStatus(User.AccountStatus.ACTIVE);
+        newUser.setStatus(User.Status.OFFLINE);
+        return newUser;
+    }
+
     @FXML
-    private void handleLoginButtonClick() throws SQLException {
+    private void handleLoginButtonClick() {
         if (validateLoginForm()) {
             String email = emailField.getText();
             String password = passwordField.getText();
@@ -168,6 +201,7 @@ public class LoginController {
             }
         }).start();
     }
+
     @FXML
     private void handleSwitchFormButtonClick() {
         if (isSignUpVisible) {
@@ -234,4 +268,49 @@ public class LoginController {
             alert.showAndWait();
         });
     }
+
+    private void setupFormSwitching() {
+        slidingPanel.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            if (isSignUpVisible) {
+                slidePanelToRight();
+            } else {
+                slidePanelToLeft();
+            }
+        });
+    }
+
+
+    @FXML
+    private void handleTopBarDoubleClick(MouseEvent event) {
+        if (event.getClickCount() == 2) { // Check for double-click
+            Stage stage = (Stage) topBar.getScene().getWindow();
+            if (stage.isMaximized()) {
+                stage.setMaximized(false); // Restore the window
+            } else {
+                stage.setMaximized(true); // Maximize the window
+            }
+        }
+    }
+    @FXML
+    private void handleMinimizeButton(ActionEvent event) {
+        Stage stage = (Stage) topBar.getScene().getWindow();
+        stage.setIconified(true); // Minimize the window
+    }
+
+    @FXML
+    private void handleMaximizeButton(ActionEvent event) {
+        Stage stage = (Stage) topBar.getScene().getWindow();
+        if (stage.isMaximized()) {
+            stage.setMaximized(false); // Restore the window
+        } else {
+            stage.setMaximized(true); // Maximize the window
+        }
+    }
+
+    @FXML
+    private void handleCloseButton(ActionEvent event) {
+        Stage stage = (Stage) topBar.getScene().getWindow();
+        stage.close();
+    }
+
 }

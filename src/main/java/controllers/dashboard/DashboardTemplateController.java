@@ -18,34 +18,30 @@ import java.net.URL;
 import java.util.*;
 
 public class DashboardTemplateController implements Initializable {
+    public AnchorPane contentPane;
     @FXML
-    private AnchorPane navPanel; // Navigation panel
+    private AnchorPane navPanel;
     @FXML
-    private AnchorPane contentPane; // Content area for panels
-    @FXML
-    private AnchorPane topBar; // Top bar for window controls
+    private AnchorPane topBar;
 
-    // Constants for navbar animation
-    private static final int NAV_PANEL_HIDDEN_TRANSLATE = -186;
+    private static final int NAV_PANEL_HIDDEN_TRANSLATE = -300;
     private static final int ANIMATION_DURATION = 400;
     private static int Menu_Counter = 0;
 
-    private List<AnchorPane> panels = new ArrayList<>(); // List to hold all panels
+    private List<AnchorPane> panels = new ArrayList<>();
     private double xOffset = 0;
     private double yOffset = 0;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadPanels(); // Load all panels
-        setupInitialVisibility(); // Show the first panel by default
-        setupNavigationPanelAnimation(); // Set up navbar toggle animation
-
+        loadPanels();
+        setupInitialVisibility();
+        setupNavigationPanelAnimation();
 
         AnchorPane.setLeftAnchor(contentPane, 0.0);
 
-        // Ensure the navPanel is always on top
         navPanel.setViewOrder(-1);
 
-        // Enable dragging of the window
         topBar.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -57,12 +53,9 @@ public class DashboardTemplateController implements Initializable {
             stage.setY(event.getScreenY() - yOffset);
         });
     }
-    /**
-     * Loads all FXML panels into the content pane and makes them responsive.
-     */
+
     private void loadPanels() {
         try {
-            // Load FXML files into panels
             panels.addAll(Arrays.asList(
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.back/users.fxml"))),
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bicycle.back/bicycle.fxml"))),
@@ -72,32 +65,25 @@ public class DashboardTemplateController implements Initializable {
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")))
             ));
 
-            // Add panels to content pane and set visibility
             for (AnchorPane panel : panels) {
                 contentPane.getChildren().add(panel);
 
-                // Bind panel size to contentPane size for responsiveness
                 panel.prefWidthProperty().bind(contentPane.widthProperty());
                 panel.prefHeightProperty().bind(contentPane.heightProperty());
 
-                // Set layout constraints
                 AnchorPane.setTopAnchor(panel, 0.0);
                 AnchorPane.setBottomAnchor(panel, 0.0);
                 AnchorPane.setLeftAnchor(panel, 0.0);
                 AnchorPane.setRightAnchor(panel, 0.0);
 
-                panel.setVisible(false); // Hide all panels initially
+                panel.setVisible(false);
             }
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to load FXML files", e);
         }
     }
-    /**
-     * Shows the specified panel and hides all others.
-     *
-     * @param panelIndex The index of the panel to show.
-     */
+
     @FXML
     private void showPanel(int panelIndex) {
         if (panelIndex < 0 || panelIndex >= panels.size()) {
@@ -108,26 +94,17 @@ public class DashboardTemplateController implements Initializable {
         }
     }
 
-    /**
-     * Sets up the initial visibility of the first panel.
-     */
     private void setupInitialVisibility() {
         if (!panels.isEmpty()) {
-            panels.get(0).setVisible(true); // Show the first panel by default
+            panels.get(0).setVisible(true);
         }
     }
 
-    /**
-     * Sets up the navbar toggle animation and adjusts the content pane layout.
-     */
     private void setupNavigationPanelAnimation() {
         navPanel.setTranslateX(NAV_PANEL_HIDDEN_TRANSLATE);
         navPanel.setOnMouseClicked(event -> toggleNavigationPanel());
     }
 
-    /**
-     * Toggles the navbar visibility and adjusts the content pane layout.
-     */
     @FXML
     private void menuBar() {
         toggleNavigationPanel();
@@ -136,26 +113,23 @@ public class DashboardTemplateController implements Initializable {
     private void toggleNavigationPanel() {
         double targetLeftAnchor = (Menu_Counter % 2 == 0) ? 186.0 : 0.0;
 
-        // Animate the sidebar
         TranslateTransition sidebarTransition = new TranslateTransition(Duration.millis(ANIMATION_DURATION), navPanel);
         sidebarTransition.setToX((Menu_Counter % 2 == 0) ? 0 : NAV_PANEL_HIDDEN_TRANSLATE);
 
-        // Animate the contentPane's left anchor
         Timeline contentTimeline = new Timeline();
         KeyValue keyValue = new KeyValue(contentPane.layoutXProperty(), targetLeftAnchor);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(ANIMATION_DURATION), keyValue);
         contentTimeline.getKeyFrames().add(keyFrame);
 
-        // Play both animations simultaneously
         ParallelTransition parallelTransition = new ParallelTransition(sidebarTransition, contentTimeline);
         parallelTransition.setOnFinished(event -> {
-            // Update the contentPane's left anchor after the animation completes
             AnchorPane.setLeftAnchor(contentPane, targetLeftAnchor);
         });
         parallelTransition.play();
 
         Menu_Counter++;
     }
+
     @FXML
     private void handleMinimizeButton(ActionEvent event) {
         Stage stage = (Stage) topBar.getScene().getWindow();
@@ -166,9 +140,9 @@ public class DashboardTemplateController implements Initializable {
     private void handleMaximizeButton(ActionEvent event) {
         Stage stage = (Stage) topBar.getScene().getWindow();
         if (stage.isMaximized()) {
-            stage.setMaximized(false); // Restore the window
+            stage.setMaximized(false);
         } else {
-            stage.setMaximized(true); // Maximize the window
+            stage.setMaximized(true);
         }
     }
 
@@ -178,7 +152,6 @@ public class DashboardTemplateController implements Initializable {
         stage.close(); // Close the window
     }
 
-    // Panel button handlers
     @FXML
     private void usersBtn() { showPanel(0); }
     @FXML
@@ -200,20 +173,18 @@ public class DashboardTemplateController implements Initializable {
 
     @FXML
     private void handleTopBarDoubleClick(MouseEvent event) {
-        if (event.getClickCount() == 2) { // Check for double-click
+        if (event.getClickCount() == 2) {
             Stage stage = (Stage) topBar.getScene().getWindow();
             if (stage.isMaximized()) {
-                stage.setMaximized(false); // Restore the window
+                stage.setMaximized(false);
             } else {
-                stage.setMaximized(true); // Maximize the window
+                stage.setMaximized(true);
             }
         }
     }
-
-    // Logout button handler (to be implemented)
+    
     @FXML
     private void logoutBtn(ActionEvent event) throws IOException {
-        // Perform logout logic here (e.g., clear session, redirect to login page)
         Stage stage = (Stage) topBar.getScene().getWindow();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.front/loginSignup.fxml")));
         stage.setScene(new Scene(root));
