@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -99,10 +100,31 @@ public class ReservationclientController {
         Label startLocationLabel = new Label("Start: " + reservation.getStartLocation().getAddress());
         Label endLocationLabel = new Label("End: " + reservation.getEndLocation().getAddress());
 
+        // Appliquer la couleur en fonction du statut
+        switch (reservation.getStatus()) {
+            case ON_GOING:
+                statusLabel.getStyleClass().add("status-label ON_GOING");
+                break;
+            case CONFIRMED:
+                statusLabel.getStyleClass().add("status-label CONFIRMED");
+                break;
+            case CANCELLED:
+                statusLabel.getStyleClass().add("status-label CANCELLED");
+                break;
+            case COMPLETED:
+                statusLabel.getStyleClass().add("status-label COMPLETED");
+                break;
+        }
+
         // Buttons with icons
         Button selectButton = createIconButton("/images/icons/eye.png", event -> openStationDetails(reservation));
         Button editButton = createIconButton("/images/icons/edit.png", event -> editReservation(reservation));
         Button deleteButton = createIconButton("/images/icons/delete.png", event -> deleteReservation(reservation));
+
+        // Désactiver le bouton de modification si le statut n'est pas ON_GOING
+        if (!reservation.getStatus().equals(Reservation.Status.ON_GOING)) {
+            editButton.setDisable(true);
+        }
 
         // Button container
         HBox buttonBox = new HBox(10, selectButton, editButton, deleteButton);
@@ -239,9 +261,9 @@ public class ReservationclientController {
 
         // Create Input Fields
         DatePicker datePicker = new DatePicker(reservation.getDate().toLocalDateTime().toLocalDate());
-        ComboBox<String> statusComboBox = new ComboBox<>();
-        statusComboBox.getItems().addAll("Pending", "Confirmed", "Cancelled");
-        statusComboBox.setValue(reservation.getStatus().toString());
+//        //ComboBox<String> statusComboBox = new ComboBox<>();
+//        statusComboBox.getItems().addAll("Pending", "Confirmed", "Cancelled");
+//        statusComboBox.setValue(reservation.getStatus().toString());
         TextField descriptionField = new TextField(reservation.getDescription());
         TextField startLocationField = new TextField(reservation.getStartLocation().getAddress());
         TextField endLocationField = new TextField(reservation.getEndLocation().getAddress());
@@ -252,8 +274,8 @@ public class ReservationclientController {
         grid.setVgap(10);
         grid.add(new Label("Date:"), 0, 0);
         grid.add(datePicker, 1, 0);
-        grid.add(new Label("Status:"), 0, 1);
-        grid.add(statusComboBox, 1, 1);
+//        grid.add(new Label("Status:"), 0, 1);
+//        grid.add(statusComboBox, 1, 1);
         grid.add(new Label("Description:"), 0, 2);
         grid.add(descriptionField, 1, 2);
         grid.add(new Label("Start Location:"), 0, 3);
@@ -280,7 +302,7 @@ public class ReservationclientController {
 
                 // Update reservation fields
                 reservation.setDate(Timestamp.valueOf(datePicker.getValue().atStartOfDay()));
-                reservation.setStatus(Reservation.Status.valueOf(statusComboBox.getValue())); // Update status
+                //reservation.setStatus(Reservation.Status.valueOf(statusComboBox.getValue())); // Update status
                 reservation.setDescription(descriptionField.getText());
                 // Address fields remain unchanged for complex objects
                 return reservation;
@@ -300,7 +322,7 @@ public class ReservationclientController {
             if (confirmResult.isPresent() && confirmResult.get() == ButtonType.OK) {
                 try {
                     reservationService.update(updatedReservation);
-                    refreshReservations();
+                    loadStationsIntoFlowPane(); // Rafraîchir les réservations après la mise à jour
                 } catch (SQLException e) {
                     showErrorDialog("Error", "An error occurred while updating the reservation: " + e.getMessage());
                 }
@@ -325,6 +347,22 @@ public class ReservationclientController {
             } catch (SQLException e) {
                 showErrorDialog("Error", "An error occurred while deleting the reservation: " + e.getMessage());
             }
+        }
+    }
+
+
+    @FXML
+    public void handleBackButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements_client.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            //showAlert("Error", "Failed to load the announcements view: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 

@@ -321,7 +321,12 @@ public class AnnouncementController implements Initializable {
 
         // Titre de l'annonce
         Label title = new Label(announcement.getTitle());
-        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;");
+        title.setStyle("-fx-font-size: 18px; "
+                + "-fx-font-weight: bold; "
+                + "-fx-text-fill: #5A6BE5; " // Couleur bleue
+                + "-fx-alignment: center;"); // Centrer le texte dans le Label
+        title.setMaxWidth(Double.MAX_VALUE); // Prendre toute la largeur disponible
+        VBox.setMargin(title, new Insets(0, 0, 10, 0)); // Marge en bas pour l'espacement
 
         // Icônes et détails
         ImageView dateIcon = createIcon("/images/icons/date.png");
@@ -354,8 +359,15 @@ public class AnnouncementController implements Initializable {
         HBox closeButtonContainer = new HBox(closeButton);
         closeButtonContainer.setAlignment(Pos.CENTER);
 
+        // Ajouter une image statique avant le bouton "Close"
+        ImageView headerImage = new ImageView(new Image(getClass().getResourceAsStream("/images/icons/truck.png")));
+        headerImage.setFitWidth(300); // Ajuster la largeur de l'image
+        headerImage.setPreserveRatio(true);
+        headerImage.setSmooth(true);
+        headerImage.setCache(true);
+
         // Ajouter tous les éléments au layout
-        modalLayout.getChildren().addAll(title, dateBox, contentBox, zoneBox, closeButtonContainer);
+        modalLayout.getChildren().addAll(title, dateBox, contentBox, zoneBox, headerImage, closeButtonContainer);
 
         // Ajouter un ScrollPane pour permettre le défilement si le contenu est trop long
         ScrollPane scrollPane = new ScrollPane(modalLayout);
@@ -365,7 +377,7 @@ public class AnnouncementController implements Initializable {
         stackPane.getChildren().add(scrollPane);
 
         // Ajuster la taille du dialogue
-        Scene modalScene = new Scene(stackPane, 500, 400); // Taille agrandie
+        Scene modalScene = new Scene(stackPane, 500, 500); // Taille agrandie pour accommoder l'image
         modalStage.setScene(modalScene);
         modalStage.show();
     }

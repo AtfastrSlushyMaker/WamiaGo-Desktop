@@ -283,3 +283,63 @@
 .station-button-admin:hover {
     -fx-background-color: #357ab8; /* Darker blue on hover */
 }
+
+.button:disabled {
+    -fx-opacity: 0.5; /* Réduire l'opacité des boutons désactivés */
+    -fx-cursor: default; /* Changer le curseur par défaut */
+}
+
+/* En-tête */
+.header {
+    -fx-padding: 20;
+    -fx-background-color: #5A6BE5; /* Couleur de fond */
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+}
+
+/* Titre de l'en-tête */
+.title-label {
+    -fx-font-size: 24px; /* Taille de police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-fill: white; /* Couleur du texte */
+    -fx-font-family: "Century Gothic Bold"; /* Police */
+}
+
+/* Bouton de retour */
+.back-button {
+    -fx-background-color: transparent; /* Fond transparent */
+    -fx-border-color: transparent; /* Bordure transparente */
+    -fx-cursor: hand; /* Curseur en forme de main */
+}
+
+.back-button:hover {
+    -fx-opacity: 0.8; /* Effet de survol */
+}
+
+/* Style pour les statuts */
+.status-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.status-label.ON_GOING {
+    -fx-text-fill: #FFA500; /* Orange pour ON_GOING */
+}
+
+.status-label.CONFIRMED {
+    -fx-text-fill: #32CD32; /* Vert pour CONFIRMED */
+}
+
+.status-label.CANCELLED {
+    -fx-text-fill: #FF0000; /* Rouge pour CANCELLED */
+}
+
+.status-label.COMPLETED {
+    -fx-text-fill: #0000FF; /* Bleu pour COMPLETED */
+}
+
+/* Style pour les boutons désactivés */
+.button:disabled {
+    -fx-opacity: 0.5; /* Réduire l'opacité des boutons désactivés */
+    -fx-cursor: default; /* Changer le curseur par défaut */
+}

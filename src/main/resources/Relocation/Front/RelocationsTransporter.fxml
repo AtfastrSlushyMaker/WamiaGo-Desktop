@@ -14,6 +14,7 @@
 
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.text.Text?>
 <HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@relocation.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Relocation.RelocationControllerTransporter">
 
     <children>
@@ -108,16 +109,23 @@
         <Pane prefHeight="827.0" prefWidth="1143.0">
             <children>
                 <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
-                <Label id="available_stations_label" fx:id="available_stations_label" layoutX="411.0" layoutY="115.0" prefHeight="50.0" prefWidth="272.0" stylesheets="@relocation.css" text="Available Relocations" textFill="#323131">
-                    <font>
-                        <Font name="Century Gothic Bold" size="20.0" />
-                    </font>
-                </Label>
 
+                <!-- En-tête avec bouton de retour et titre -->
+                <HBox alignment="CENTER_LEFT" layoutX="126.0" layoutY="95.0" prefHeight="77.0" prefWidth="780.0" spacing="10" styleClass="header">
+                    <Button fx:id="backButton" onAction="#handleBackButtonAction" styleClass="back-button">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24">
+                                <Image url="@../../images/icons/back_arrow.PNG" />
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Text styleClass="title-label" text="Manage Relocation Requests" />
+                </HBox>
+
+                <!-- FlowPane to display relocations -->
                 <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" layoutX="14.0" layoutY="172.0" prefHeight="641.0" prefWidth="1070.0">
                     <FlowPane fx:id="stationFlowPane" hgap="10" vgap="10" />
                 </ScrollPane>
-
             </children>
         </Pane>
 

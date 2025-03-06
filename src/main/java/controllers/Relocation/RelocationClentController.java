@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -101,18 +102,26 @@ public class RelocationClentController {
         Label reservationLabel = new Label("Reservation: " + station.getReservation().getDescription());
         Label dateLabel = new Label("Date: " + station.getDate());
         Label costLabel = new Label("Cost: " + station.getCost());
+        Label statusLabel = new Label("Status: " + (station.isStatus() ? "Completed" : "Pending"));
+
+        // Appliquer la couleur en fonction du statut
+        if (station.isStatus()) {
+            statusLabel.getStyleClass().add("status-label COMPLETED");
+        } else {
+            statusLabel.getStyleClass().add("status-label ON_GOING");
+        }
 
         // Button with icon for selecting
         Button selectButton = createIconButton("/images/icons/eye.png", event -> openStationDetails(station));
-        Button messengerButton = createIconButton("/images/icons/messenger.png", event -> openMessenger(station)); // Nouveau bouton de messagerie
+        Button messengerButton = createIconButton("/images/icons/messenger.png", event -> openMessenger(station));
 
         // Button container: Select and Messenger buttons
-        HBox buttonBox = new HBox(10, selectButton, messengerButton); // Ajouter le bouton de messagerie
+        HBox buttonBox = new HBox(10, selectButton, messengerButton);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setSpacing(10);
 
         // Add elements to card
-        stationCard.getChildren().addAll(imageAndTextBox, reservationLabel, dateLabel, costLabel, buttonBox);
+        stationCard.getChildren().addAll(imageAndTextBox, reservationLabel, dateLabel, costLabel, statusLabel, buttonBox);
 
         // Optional: Add hover effects
         stationCard.setOnMouseEntered(event -> {
@@ -279,6 +288,21 @@ public class RelocationClentController {
         HBox box = new HBox(8, icon, label);
         box.setAlignment(Pos.CENTER_LEFT);
         return box;
+    }
+
+    @FXML
+    public void handleBackButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements_client.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            //showAlert("Error", "Failed to load the announcements view: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
     }
 
     private void showErrorDialog(String header, String content) {

@@ -15,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.controlsfx.control.Notifications;
 import services.*;
 import utils.SMSService;
 import utils.SessionManager;
@@ -88,27 +89,32 @@ public class AnnouncementClientController {
                             } else {
                                 VBox vbox = new VBox(10);
                                 vbox.setPadding(new Insets(15));
-                                vbox.setAlignment(Pos.CENTER); // Center all content vertically and horizontally
+                                vbox.setAlignment(Pos.CENTER);
                                 vbox.setStyle("-fx-background-color: #2c3e50; -fx-border-radius: 10; -fx-background-radius: 10;");
                                 vbox.getStyleClass().add("announcement-card");
 
-                                // Title Label
+                                // Titre de l'annonce
                                 Label titleLabel = new Label(announcement.getTitle());
                                 titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ecf0f1;");
 
-                                // Content with Icon
+                                // Contenu avec icône
                                 ImageView contentIcon = new ImageView(new Image(getClass().getResource("/images/icons/description.png").toExternalForm()));
                                 contentIcon.setFitWidth(18);
                                 contentIcon.setFitHeight(18);
 
-                                Label contentLabel = new Label(announcement.getContent());
+                                String content = announcement.getContent();
+                                if (content.length() > 100) {
+                                    content = content.substring(0, 100) + "...";
+                                }
+
+                                Label contentLabel = new Label(content);
                                 contentLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #bdc3c7;");
                                 contentLabel.setWrapText(true);
 
                                 HBox contentBox = new HBox(8, contentIcon, contentLabel);
-                                contentBox.setAlignment(Pos.CENTER); // Center content horizontally
+                                contentBox.setAlignment(Pos.CENTER);
 
-                                // Date Info
+                                // Date
                                 ImageView dateIcon = new ImageView(new Image(getClass().getResource("/images/icons/date.png").toExternalForm()));
                                 dateIcon.setFitWidth(16);
                                 dateIcon.setFitHeight(16);
@@ -117,9 +123,9 @@ public class AnnouncementClientController {
                                 dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #95a5a6;");
 
                                 HBox dateBox = new HBox(8, dateIcon, dateLabel);
-                                dateBox.setAlignment(Pos.CENTER); // Center date horizontally
+                                dateBox.setAlignment(Pos.CENTER);
 
-                                // Zone Information
+                                // Zone
                                 ImageView zoneIcon = new ImageView(new Image(getClass().getResource("/images/icons/place.png").toExternalForm()));
                                 zoneIcon.setFitWidth(16);
                                 zoneIcon.setFitHeight(16);
@@ -128,9 +134,11 @@ public class AnnouncementClientController {
                                 zoneLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #95a5a6;");
 
                                 HBox zoneBox = new HBox(8, zoneIcon, zoneLabel);
-                                zoneBox.setAlignment(Pos.CENTER); // Center zone horizontally
+                                zoneBox.setAlignment(Pos.CENTER);
 
-                                // Buttons
+
+
+                                // Boutons
                                 Button selectButton = new Button("Détails");
                                 selectButton.getStyleClass().add("select-button");
                                 selectButton.setOnAction(event -> openAnnouncementDetails(announcement));
@@ -141,12 +149,11 @@ public class AnnouncementClientController {
                                 reserveButton.setOnAction(event -> handleReserveButtonAction(announcement));
                                 styleButton(reserveButton);
 
-                                // Button Box
                                 HBox buttonBox = new HBox(10, selectButton, reserveButton);
-                                buttonBox.setAlignment(Pos.CENTER); // Center buttons horizontally
+                                buttonBox.setAlignment(Pos.CENTER);
 
-                                // Add children to VBox
-                                vbox.getChildren().addAll(titleLabel, contentBox, dateBox, zoneBox, buttonBox);
+                                // Ajouter les éléments au VBox
+                                vbox.getChildren().addAll(titleLabel, contentBox, dateBox, zoneBox,  buttonBox);
                                 setGraphic(vbox);
                             }
                         }
@@ -157,6 +164,8 @@ public class AnnouncementClientController {
             e.printStackTrace();
         }
     }
+
+
 
     // Method to style buttons
     private void styleButton(Button button) {
@@ -177,40 +186,80 @@ public class AnnouncementClientController {
         VBox modalLayout = new VBox(15);
         modalLayout.setPadding(new Insets(20));
         modalLayout.setAlignment(Pos.CENTER_LEFT);
-        modalLayout.setStyle("-fx-background-color: white; " +
-                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);");
+        modalLayout.setStyle("-fx-background-color: white; "
+                + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);");
 
+        // Titre de l'annonce
         Label titleLabel = new Label(announcement.getTitle());
-        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;");
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #5A6BE5;");
+        titleLabel.setMaxWidth(Double.MAX_VALUE);
+        VBox.setMargin(titleLabel, new Insets(0, 0, 10, 0));
 
-        // Load icons
+        // Icônes et détails
         ImageView dateIcon = createIcon("/images/icons/date.png");
-        ImageView zoneIcon = createIcon("/images/icons/place.png"); // Assuming you have an icon for the zone
         ImageView contentIcon = createIcon("/images/icons/description.png");
+        ImageView zoneIcon = createIcon("/images/icons/place.png");
+        ImageView transporterIcon = createIcon("/images/icons/trans.png");
 
-        // Labels with icons
+        // Date
         HBox dateBox = createLabeledIconBox(dateIcon, "Date: " + announcement.getDate());
-        HBox zoneBox = createLabeledIconBox(zoneIcon, "Zone: " + announcement.getZone());
-        HBox contentBox = createLabeledIconBox(contentIcon, "Content: " + announcement.getContent());
 
+        // Contenu
+        Label contentLabel = new Label(announcement.getContent());
+        contentLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333; -fx-wrap-text: true;");
+        contentLabel.setMaxWidth(500);
+        HBox contentBox = createLabeledIconBox(contentIcon, "Content: ");
+        contentBox.getChildren().add(contentLabel);
+
+        // Zone
+        HBox zoneBox = createLabeledIconBox(zoneIcon, "Zone: " + announcement.getZone().toString());
+
+        // Vérification pour éviter une erreur si `getTransporter()` est null
+        String transporterInfo = "Transporter: Not Assigned"; // Valeur par défaut
+        if (announcement.getTransporter() != null) {
+            if (announcement.getTransporter().getUser() != null) {
+                transporterInfo = "Transporter: " + announcement.getTransporter().getUser().getPhone();
+            } else {
+                transporterInfo = "Transporter: No User Information";
+            }
+        }
+
+        // Transporter
+        HBox transporterBox = createLabeledIconBox(transporterIcon, transporterInfo);
+
+        // Bouton "Close"
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> modalStage.close());
-        closeButton.setStyle("-fx-background-color: #000000; " +
-                "-fx-text-fill: white; " +
-                "-fx-font-weight: bold; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-padding: 8px 16px;");
+        closeButton.setStyle("-fx-background-color: #000000; -fx-text-fill: white; -fx-font-weight: bold; "
+                + "-fx-background-radius: 5px; -fx-padding: 8px 16px;");
 
         HBox closeButtonContainer = new HBox(closeButton);
         closeButtonContainer.setAlignment(Pos.CENTER);
 
-        modalLayout.getChildren().addAll(titleLabel, dateBox, zoneBox, contentBox, closeButtonContainer);
-        stackPane.getChildren().add(modalLayout);
+        // Image statique
+        ImageView headerImage = new ImageView(new Image(getClass().getResourceAsStream("/images/icons/truck.png")));
+        headerImage.setFitWidth(300);
+        headerImage.setPreserveRatio(true);
+        headerImage.setSmooth(true);
+        headerImage.setCache(true);
 
-        Scene modalScene = new Scene(stackPane, 400, 300);
+        // Ajouter tous les éléments
+        modalLayout.getChildren().addAll(titleLabel, dateBox, contentBox, zoneBox, transporterBox, headerImage, closeButtonContainer);
+
+        // Ajouter un ScrollPane
+        ScrollPane scrollPane = new ScrollPane(modalLayout);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        stackPane.getChildren().add(scrollPane);
+
+        // Ajuster la taille du dialogue
+        Scene modalScene = new Scene(stackPane, 500, 500);
         modalStage.setScene(modalScene);
         modalStage.show();
     }
+
+
 
     // Helper method to create labeled icon boxes
     private HBox createLabeledIconBox(ImageView icon, String label) {
@@ -346,51 +395,9 @@ public class AnnouncementClientController {
             if (confirmResult.isPresent() && confirmResult.get() == ButtonType.OK) {
                 try {
                     reservationService.create(reservation);
-                    // SMSService.sendSMS("99478730", "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
-                    //EmailService.sendEmail("abrouguiazer1920@gmail.com", "Nouvelle Réservation", "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
 
-//                    emailService.sendEmail("abrouguiazer1920@gmail.com");
-//                    refreshAnnouncements();
-
-//                    // Vérifier si le transporteur est null
-//                    Driver transporter = reservation.getAnnouncement().getTransporter();
-//                    System.out.println(reservation.getAnnouncement().getTransporter().getIdDriver());
-//
-//                    //announcement.getTransporter().getIdDriver()
-//                    if (transporter != null) {
-//                        // Instancier le DriverService
-//                        DriverService driverService = new DriverService();
-//
-//                        // Récupérer le transporteur associé à l'annonce
-//                        Driver fullTransporter = driverService.getById(transporter.getIdDriver());
-//
-//                        // Vérifier si le transporteur est null avant d'envoyer SMS/e-mail
-//                        if (fullTransporter != null) {
-//                            // Assurez-vous que getUser() ne retourne pas null
-//                            User transporterUser = fullTransporter.getUser();
-//                            String transporterPhoneNumber = transporterUser.getPhone();
-//                            String transporterEmail = transporterUser.getEmail();
-//
-//                            // Envoyer un SMS et un e-mail au transporteur
-//                            //SMSService.sendSMS(transporterPhoneNumber, "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
-//                            EmailService.sendEmail(transporterEmail, "Nouvelle Réservation", "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
-//                           // if (transporterUser != null) {
-////                                String transporterPhoneNumber = transporterUser.getPhone();
-////                                String transporterEmail = transporterUser.getEmail();
-////
-////                                // Envoyer un SMS et un e-mail au transporteur
-////                                SMSService.sendSMS(transporterPhoneNumber, "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
-////                                EmailService.sendEmail(transporterEmail, "Nouvelle Réservation", "Une nouvelle réservation a été effectuée. Détails : " + reservation.getDescription());
-////                            } else {
-////                                System.out.println("L'utilisateur du transporteur est null. Impossible d'envoyer SMS/e-mail.");
-////                            }
-//                        } else {
-//                            System.out.println("Aucun transporteur associé à cette annonce. Impossible d'envoyer SMS/e-mail.");
-//                        }
-//                    } else {
-//                        System.out.println("Le transporteur de l'annonce est null. Impossible d'envoyer SMS/e-mail.");
-//                    }
-
+                    // Afficher une notification de succès
+                    showSuccessNotification("Reservation Successful", "Your reservation has been successfully created.");
                 } catch (SQLException e) {
                     showErrorDialog("Error Reserving Announcement", e.getMessage());
                 }
@@ -398,6 +405,13 @@ public class AnnouncementClientController {
         });
     }
 
+    private void showSuccessNotification(String title, String message) {
+        // Créer une notification
+        Notifications.create()
+                .title(title)
+                .text(message)
+                .showInformation();
+    }
     /**
      * Show an error dialog with a custom message.
      */

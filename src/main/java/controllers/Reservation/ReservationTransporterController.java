@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -119,6 +120,7 @@ public class ReservationTransporterController {
         Label descriptionLabel = new Label("Description: " + reservation.getDescription());
         Label startLocationLabel = new Label("Start: " + reservation.getStartLocation().getAddress());
         Label endLocationLabel = new Label("End: " + reservation.getEndLocation().getAddress());
+        Label clientLabel = new Label("Client: " + reservation.getUser().getEmail());
 
         // Buttons with icons
         Button selectButton = createIconButton("/images/icons/eye.png", event -> openStationDetails(reservation));
@@ -131,16 +133,34 @@ public class ReservationTransporterController {
         buttonBox.setSpacing(10);
 
         // Add elements to card
-        stationCard.getChildren().addAll(imageAndTextBox, dateLabel, statusLabel, descriptionLabel, startLocationLabel, endLocationLabel, buttonBox);
+        stationCard.getChildren().addAll(imageAndTextBox, dateLabel, statusLabel, descriptionLabel, startLocationLabel, endLocationLabel, clientLabel, buttonBox);
 
-        // Désactiver les boutons si la réservation est déjà traitée
-        if (reservation.getStatus() == Reservation.Status.CANCELLED || reservation.getStatus() == Reservation.Status.COMPLETED) {
-            stationCard.setStyle("-fx-opacity: 0.5;"); // Griser la carte
-            selectButton.setDisable(true);
-            acceptButton.setDisable(true);
-            refuseButton.setDisable(true);
+        // Appliquer les styles en fonction du statut
+        switch (reservation.getStatus()) {
+            case CANCELLED:
+                stationCard.setStyle("-fx-opacity: 0.5; -fx-background-color: #f0f0f0;");
+                statusLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                acceptButton.setDisable(true);
+                refuseButton.setDisable(true);
+                break;
+            case CONFIRMED:
+                stationCard.setStyle("-fx-opacity: 0.5; -fx-background-color: #f0f0f0;");
+                statusLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+                acceptButton.setDisable(true);
+                refuseButton.setDisable(true);
+                break;
+            case COMPLETED:
+                stationCard.setStyle("-fx-opacity: 0.5; -fx-background-color: #f0f0f0;");
+                statusLabel.setStyle("-fx-text-fill: blue; -fx-font-weight: bold;");
+                acceptButton.setDisable(true);
+                refuseButton.setDisable(true);
+                break;
+            default:
+                // Pas de style particulier pour les autres statuts
+                break;
         }
 
+        // Animation au survol
         stationCard.setOnMouseEntered(event -> {
             stationCard.setScaleX(1.05);
             stationCard.setScaleY(1.05);
@@ -153,6 +173,7 @@ public class ReservationTransporterController {
 
         return stationCard;
     }
+
 
     private Button createIconButton(String imagePath, EventHandler<ActionEvent> eventHandler) {
         ImageView icon = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
@@ -208,6 +229,7 @@ public class ReservationTransporterController {
         ImageView descriptionIcon = createIcon("/images/icons/description.png");
         ImageView startIcon = createIcon("/images/icons/place.png");
         ImageView endIcon = createIcon("/images/icons/place.png");
+        ImageView clientIcon = createIcon("/images/icons/client.png");
 
         // Labels with icons
         HBox dateBox = createLabeledIconBox(dateIcon, "Date: " + reservation.getDate());
@@ -215,6 +237,7 @@ public class ReservationTransporterController {
         HBox descriptionBox = createLabeledIconBox(descriptionIcon, "Description: " + reservation.getDescription());
         HBox startLocationBox = createLabeledIconBox(startIcon, "Start: " + reservation.getStartLocation().getAddress());
         HBox endLocationBox = createLabeledIconBox(endIcon, "End: " + reservation.getEndLocation().getAddress());
+        HBox clientBox = createLabeledIconBox(clientIcon, "Client: " + reservation.getUser().getEmail());
 
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> modalStage.close());
@@ -227,13 +250,14 @@ public class ReservationTransporterController {
         HBox closeButtonContainer = new HBox(closeButton);
         closeButtonContainer.setAlignment(Pos.CENTER);
 
-        modalLayout.getChildren().addAll(title, dateBox, statusBox, descriptionBox, startLocationBox, endLocationBox, closeButtonContainer);
+        modalLayout.getChildren().addAll(title, dateBox, statusBox, descriptionBox, startLocationBox, endLocationBox, clientBox, closeButtonContainer);
         stackPane.getChildren().add(modalLayout);
 
         Scene modalScene = new Scene(stackPane, 400, 300);
         modalStage.setScene(modalScene);
         modalStage.show();
     }
+
 
     // Helper method to create an icon
     private ImageView createIcon(String path) {
@@ -380,6 +404,21 @@ public class ReservationTransporterController {
             } catch (SQLException e) {
                 showErrorDialog("Error Refusing Reservation", e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    public void handleBackButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            //showAlert("Error", "Failed to load the announcements view: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 

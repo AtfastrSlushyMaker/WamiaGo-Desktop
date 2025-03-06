@@ -226,8 +226,6 @@
     -fx-background-color: #2D2F33; /* Keep same dark gray */
     -fx-background-radius: 0 40px 0 0; /* Smooth rounded top-right */
 }
-
-
 /* Partie droite : Formulaire */
 .content-box {
     -fx-padding: 30;
@@ -251,6 +249,11 @@
     -fx-fill: white;
 }
 
+.subtitle-label {
+    -fx-font-size: 16px;
+    -fx-fill: #34495e;
+}
+
 /* Champs du formulaire */
 .form-label {
     -fx-font-size: 18px;
@@ -258,28 +261,41 @@
     -fx-text-fill: #34495e;
 }
 
-/*.form-field {*/
-/*    -fx-pref-width: 400px;*/
-/*    -fx-font-size: 16px;*/
-/*    -fx-background-color: #ecf0f1;*/
-/*    -fx-border-color: #5A6BE5;*/
-/*    -fx-border-width: 2;*/
-/*    -fx-border-radius: 6;*/
-/*    -fx-background-radius: 6;*/
-/*    -fx-padding: 12;*/
-/*}*/
-
 .form-field {
-    -fx-font-size: 14px; /* Adjust font size */
-    -fx-padding: 10px; /* Add padding */
-    -fx-background-color: #f9f9f9; /* Light background color */
-    -fx-border-color: #ccc; /* Light border color */
-    -fx-border-radius: 5px; /* Rounded corners */
-    -fx-focus-color: transparent; /* Remove focus border */
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-focus-color: transparent;
 }
 
+.form-field:focused {
+    -fx-border-color: #0078d7;
+}
+
+/* TextArea */
 .text-area {
     -fx-pref-height: 150px;
+    -fx-pref-width: 639px;
+    -fx-wrap-text: true;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-focus-color: transparent;
+}
+
+.text-area:focused {
+    -fx-border-color: #5A6BE5;
+}
+
+.text-area .content {
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 10px;
 }
 
 /* Boutons */
@@ -313,19 +329,6 @@
     -fx-background-color: #c0392b;
 }
 
-.emoji-button {
-    -fx-background-color: #5A6BE5;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-padding: 8 12;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-}
-
-.emoji-button:hover {
-    -fx-background-color: #4A5AD5;
-}
-
 .record-button {
     -fx-background-color: #27ae60;
     -fx-text-fill: white;
@@ -339,17 +342,6 @@
     -fx-background-color: #219150;
 }
 
-.text-area {
-    -fx-pref-height: 300px; /* Hauteur du TextArea */
-    -fx-pref-width: 700px;  /* Largeur du TextArea */
-    -fx-wrap-text: true;    /* Retour à la ligne automatique */
-}
-
-
-.form-field:focused {
-    -fx-border-color: #0078d7; /* Highlight border when focused */
-}
-
 .generate-button {
     -fx-background-color: #5A6BE5;
     -fx-text-fill: white;
@@ -361,4 +353,14 @@
 
 .generate-button:hover {
     -fx-background-color: #4A5AD5;
+}
+
+.back-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.back-button:hover {
+    -fx-opacity: 0.7;
 }

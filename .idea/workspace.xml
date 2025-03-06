@@ -7,10 +7,20 @@
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AddAnnouncementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/AzureSpeechService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/AzureSpeechService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/OpenAIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/OpenAIService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/AnnouncementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationClentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationClentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationControllerTransporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationControllerTransporter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationTransporterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationTransporterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationclientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationclientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/addAnnouncement.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/addAnnouncement.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcements.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Relocation/Front/RelocationClient.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Relocation/Front/RelocationClient.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Relocation/Front/RelocationsTransporter.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Relocation/Front/RelocationsTransporter.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Relocation/Front/relocation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Relocation/Front/relocation.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reservation/Front/ReservationsTransporter.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/ReservationsTransporter.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reservation/Front/Reservationsclient.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/Reservationsclient.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reservation/Front/reservation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/reservation.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,6 +294,7 @@
       <workItem from="1741141018800" duration="707000" />
       <workItem from="1741182561489" duration="2483000" />
       <workItem from="1741205560379" duration="4516000" />
+      <workItem from="1741210866536" duration="25106000" />
     </task>
     <servers />
   </component>
@@ -317,9 +328,14 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/controllers/Relocation/RelocationControllerTransporter.java</url>
-          <line>41</line>
+          <line>42</line>
           <properties field="stationFlowPane" class="controllers.Relocation.RelocationControllerTransporter" />
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/controllers/Reservation/ReservationclientController.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

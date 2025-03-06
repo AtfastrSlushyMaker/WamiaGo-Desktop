@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -104,26 +105,37 @@ public class RelocationControllerTransporter {
         HBox imageAndTextBox = createImageAndTextBox(station);
 
         // Labels for details
-        Label reservationLabel = new Label("Reservation: " + station.getReservation().getDescription());
+        String description = station.getReservation().getDescription();
+        if (description.length() > 100) {
+            description = description.substring(0, 100) + "..."; // Tronquer la description si trop longue
+        }
+        Label reservationLabel = new Label("Reservation: " + description);
+        reservationLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333; -fx-wrap-text: true;");
+
         Label dateLabel = new Label("Date: " + station.getDate());
         Label costLabel = new Label("Cost: " + station.getCost());
+
+        // Ajout du label client
+        Label clientLabel = new Label("Client: " + station.getReservation().getUser().getEmail());
+        clientLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;");
 
         // Buttons with icons
         Button selectButton = createIconButton("/images/icons/eye.png", event -> openStationDetails(station));
         Button editButton = createIconButton("/images/icons/edit.png", event -> editRelocation(station));
         Button deleteButton = createIconButton("/images/icons/delete.png", event -> deleteRelocation(station));
-        Button messengerButton = createIconButton("/images/icons/messenger.png", event -> openMessenger(station)); // Nouveau bouton de messagerie
+        Button messengerButton = createIconButton("/images/icons/messenger.png", event -> openMessenger(station));
 
         // Button container: Select next to Edit, Delete aligned
-        HBox buttonBox = new HBox(10, selectButton, editButton, deleteButton, messengerButton); // Ajouter le bouton de messagerie
+        HBox buttonBox = new HBox(10, selectButton, editButton, deleteButton, messengerButton);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setSpacing(10);
 
         // Add elements to card
-        stationCard.getChildren().addAll(imageAndTextBox, reservationLabel, dateLabel, costLabel, buttonBox);
+        stationCard.getChildren().addAll(imageAndTextBox, reservationLabel, dateLabel, costLabel, clientLabel, buttonBox);
 
         return stationCard;
     }
+
 
     // Méthode pour gérer l'ouverture de la messagerie
     private void openMessenger(Relocation station) {
@@ -223,11 +235,12 @@ public class RelocationControllerTransporter {
         VBox modalLayout = new VBox(15);
         modalLayout.setPadding(new Insets(20));
         modalLayout.setAlignment(Pos.CENTER_LEFT);
-        modalLayout.setStyle("-fx-background-color: white; " + // Changed to white
-                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);");
+        modalLayout.setStyle("-fx-background-color: white; "
+                + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);");
 
+        // Titre de la relocalisation
         Label title = new Label(station.getReservation().getDescription());
-        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;"); // Darker text for contrast
+        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;");
 
         // Load icons
         ImageView dateIcon = createIcon("/images/icons/date.png");
@@ -239,21 +252,39 @@ public class RelocationControllerTransporter {
         HBox statusBox = createLabeledIconBox(statusIcon, "Status: " + (station.isStatus() ? "Completed" : "Pending"));
         HBox costBox = createLabeledIconBox(costIcon, "Cost: " + station.getCost());
 
+        // Ajout du label client
+        Label clientLabel = new Label("Client: " + station.getReservation().getUser().getEmail());
+        clientLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;");
+
+        // Description complète (sans troncature)
+        Label descriptionLabel = new Label("Description: " + station.getReservation().getDescription());
+        descriptionLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333; -fx-wrap-text: true;");
+        descriptionLabel.setMaxWidth(500);
+
+        // Bouton "Close"
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> modalStage.close());
-        closeButton.setStyle("-fx-background-color: #000000; " + // Changed button color to a calming blue
-                "-fx-text-fill: white; " +
-                "-fx-font-weight: bold; " +
-                "-fx-background-radius: 5px; " + // Reduced radius
-                "-fx-padding: 8px 16px;");
+        closeButton.setStyle("-fx-background-color: #000000; "
+                + "-fx-text-fill: white; "
+                + "-fx-font-weight: bold; "
+                + "-fx-background-radius: 5px; "
+                + "-fx-padding: 8px 16px;");
 
         HBox closeButtonContainer = new HBox(closeButton);
         closeButtonContainer.setAlignment(Pos.CENTER);
 
-        modalLayout.getChildren().addAll(title, dateBox, statusBox, costBox, closeButtonContainer);
-        stackPane.getChildren().add(modalLayout);
+        // Ajouter tous les éléments au layout
+        modalLayout.getChildren().addAll(title, dateBox, statusBox, costBox, clientLabel, descriptionLabel, closeButtonContainer);
 
-        Scene modalScene = new Scene(stackPane, 400, 280); // Reduced size
+        // Ajouter un ScrollPane pour permettre le défilement si la description est trop longue
+        ScrollPane scrollPane = new ScrollPane(modalLayout);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        stackPane.getChildren().add(scrollPane);
+
+        // Ajuster la taille du dialogue
+        Scene modalScene = new Scene(stackPane, 400, 300);
         modalStage.setScene(modalScene);
         modalStage.show();
     }
@@ -450,6 +481,21 @@ public class RelocationControllerTransporter {
                 e.printStackTrace();
                 showErrorDialog("An error occurred while deleting the relocation.", e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    public void handleBackButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+           // showAlert("Error", "Failed to load the announcements view: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 

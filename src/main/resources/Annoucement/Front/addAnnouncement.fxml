@@ -1,25 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Announcement.AddAnnouncementController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Announcement.AddAnnouncementController">
 
     <children>
 
@@ -110,13 +96,19 @@
 
         </VBox>
 
-        <Pane prefHeight="827.0" prefWidth="1120.0">
+        <Pane prefHeight="781.0" prefWidth="1120.0">
             <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
             <!-- Partie droite : Formulaire d'ajout d'annonce -->
-
-            <VBox fx:id="contentBox" alignment="TOP_CENTER" layoutY="89.0" prefHeight="671.0" prefWidth="1093.0" spacing="20" styleClass="content-box">
-                <!-- En-tête avec image -->
-                <HBox alignment="CENTER" prefHeight="74.0" prefWidth="944.0" spacing="10" styleClass="header">
+            <VBox fx:id="contentBox" alignment="TOP_CENTER" layoutY="74.0" prefHeight="695.0" prefWidth="1093.0" spacing="20" styleClass="content-box">
+                <!-- En-tête avec image et bouton de retour -->
+                <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="944.0" spacing="10" styleClass="header">
+                    <Button fx:id="backButton" onAction="#handleBackButtonAction" styleClass="back-button">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24">
+                                <Image url="@../../images/icons/back_arrow.PNG" />
+                            </ImageView>
+                        </graphic>
+                    </Button>
                     <Text styleClass="title-label" text="Announcement Details" />
                 </HBox>
                 <Text fontSmoothingType="LCD" styleClass="subtitle-label" text="Customize the announcement to ensure clarity and engagement across platforms." wrappingWidth="697.1683225631714">
@@ -136,40 +128,36 @@
                     <TextField fx:id="titleField" prefHeight="37.0" prefWidth="532.0" promptText="Enter the title here..." styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                     <Label styleClass="form-label" text="Content:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                        <TextArea fx:id="contentField" prefWidth="700.0" prefHeight="300.0" promptText="Write your announcement here..." styleClass="form-field" wrapText="true">
+                    <VBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextArea fx:id="contentField" prefHeight="150.0" prefWidth="639.0" promptText="Write your announcement here..." styleClass="text-area" wrapText="true">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </TextArea>
-<!--                        <Button fx:id="emojiButton" styleClass="emoji-button" text="😊">-->
-<!--                            <graphic>-->
-<!--                                <ImageView fitHeight="20" fitWidth="20">-->
-<!--                                    <Image url="@../../images/icons/emoji_icon.png" />-->
-<!--                                </ImageView>-->
-<!--                            </graphic>-->
-<!--                        </Button>-->
-                        <Button fx:id="recordButton" styleClass="record-button" text="🎤">
-                            <graphic>
-                                <ImageView fitHeight="20" fitWidth="20">
-                                    <Image url="@../../images/icons/microphone_icon.png" />
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <Button fx:id="generateButton" styleClass="generate-button" text="Generate">
-                            <graphic>
-                                <ImageView fitHeight="20" fitWidth="20">
-                                    <Image url="@../../images/icons/ai_icon.png" /> <!-- Ajoutez une icône IA -->
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                    </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Button fx:id="recordButton" styleClass="record-button" text="🎤 Record">
+                                <graphic>
+                                    <ImageView fitHeight="20" fitWidth="20">
+                                        <Image url="@../../images/icons/microphone_icon.png" />
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button fx:id="generateButton" styleClass="generate-button" text="Generate">
+                                <graphic>
+                                    <ImageView fitHeight="20" fitWidth="20">
+                                        <Image url="@../../images/icons/ai_icon.png" />
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                        </HBox>
+                    </VBox>
 
                     <Label styleClass="form-label" text="Zone:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                     <ComboBox fx:id="zoneComboBox" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                     <Label styleClass="form-label" text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                     <CheckBox fx:id="statusCheckBox" styleClass="form-field" text="Active" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
                     <columnConstraints>
                         <ColumnConstraints />
                         <ColumnConstraints />
@@ -183,7 +171,7 @@
                 </GridPane>
 
                 <!-- Boutons avec icônes -->
-                <HBox alignment="CENTER" prefHeight="80.0" prefWidth="424.0" spacing="20">
+                <HBox alignment="CENTER" prefHeight="80.0" prefWidth="1033.0" spacing="20">
                     <Button fx:id="submitButton" onAction="#handleSubmitButtonAction" styleClass="submit-button" text="Submit">
                         <graphic>
                             <ImageView fitHeight="20" fitWidth="20">

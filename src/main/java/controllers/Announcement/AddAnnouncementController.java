@@ -5,8 +5,10 @@ import entities.Driver;
 import entities.User;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -38,7 +40,7 @@ public class AddAnnouncementController {
     private CheckBox statusCheckBox;
 
     @FXML
-    private Button submitButton, cancelButton, emojiButton, recordButton;
+    private Button submitButton, cancelButton, emojiButton, recordButton, backButton;
 
     private static final Logger logger = Logger.getLogger(AddAnnouncementController.class.getName());
 
@@ -46,19 +48,16 @@ public class AddAnnouncementController {
     private Button generateButton;
 
     private boolean isRecording = false;
-    private OpenAIService openAIService; // Utiliser OpenAI au lieu de SpeechRecognitionService
+    private OpenAIService openAIService;
     private WhisperTranscriptionService transcriptionService;
     private AnnouncementService announcementService;
     private SpeechRecognitionService speechRecognitionService;
     private AzureSpeechService azureSpeechService;
     private Driver currentDriver;
 
-
     public AddAnnouncementController() {
         this.announcementService = new AnnouncementService();
-        // this.transcriptionService = new WhisperTranscriptionService();
         this.azureSpeechService = new AzureSpeechService();
-
     }
 
     @FXML
@@ -67,35 +66,13 @@ public class AddAnnouncementController {
             zoneComboBox.getItems().setAll(Announcement.Zone.values());
         }
 
-        // Ajouter un emoji au TextArea
-        //emojiButton.setOnAction(event -> contentField.appendText("😊"));
-
         recordButton.setOnAction(event -> {
             if (isRecording) stopRecording();
             else startRecording();
         });
 
-//        // Initialiser le service de reconnaissance vocale
-//        try {
-//            String modelPath = "C:\\Users\\BAZINFO\\Desktop\\3A\\S2\\PIDEV\\WamiaGo-Desktop\\src\\main\\resources\\models\\vosk-model-small-en-us-0.15";
-//            Set<String> badWords = BadWordFilter.loadBadWords("C:\\Users\\BAZINFO\\Desktop\\3A\\S2\\PIDEV\\WamiaGo-Desktop\\src\\main\\resources\\bad_words.csv");
-//            speechRecognitionService = new SpeechRecognitionService(modelPath, badWords);
-//        } catch (IOException e) {
-//            showAlert("Error", "Failed to load speech recognition model: " + e.getMessage(), Alert.AlertType.ERROR);
-//            recordButton.setDisable(true);
-//        }
-//
-//        // Gérer l'enregistrement vocal
-//        recordButton.setOnAction(event -> {
-//            if (isRecording) stopRecording();
-//            else startRecording();
-//        });
-
-
-
-        // Gestion du bouton "Generate"
         generateButton.setOnAction(event -> {
-            String userContent = contentField.getText(); // Récupérer le contenu déjà saisi par l'utilisateur
+            String userContent = contentField.getText();
             String prompt = userContent.isEmpty()
                     ? "Génère un texte pour une annonce de déménagement avec un ton professionnel."
                     : "Améliore ou complète le texte suivant pour une annonce de déménagement avec un ton professionnel : " + userContent;
@@ -108,153 +85,33 @@ public class AddAnnouncementController {
                 showAlert("Error", "Failed to generate text: " + e.getMessage(), Alert.AlertType.ERROR);
             }
         });
-
-
-
     }
 
-//    private void startRecording() {
-//        if (!isRecording) {
-//            isRecording = true;
-//            recordButton.setText("Stop Recording");
-//
-//            // Enregistrer l'audio dans un fichier temporaire
-//            File audioFile = new File("temp_audio.wav");
-//            try {
-//                AudioRecorder.recordAudio(audioFile, 10); // Enregistre pendant 10 secondes
-//            } catch (Exception e) {
-//                showAlert("Error", "Failed to record audio: " + e.getMessage(), Alert.AlertType.ERROR);
-//                isRecording = false;
-//                recordButton.setText("Start Recording");
-//                return;
-//            }
-//
-//            // Transcrivez l'audio avec OpenAI
-//            Task<String> task = new Task<>() {
-//                @Override
-//                protected String call() throws Exception {
-//                    return transcriptionService.transcribeAudio(audioFile);
-//                }
-//            };
-//
-//            task.setOnSucceeded(event -> {
-//                String transcribedText = task.getValue();
-//                contentField.appendText(transcribedText + " ");
-//                isRecording = false;
-//                recordButton.setText("Start Recording");
-//            });
-//
-//            task.setOnFailed(event -> {
-//                showAlert("Error", "Failed to transcribe audio: " + task.getException().getMessage(), Alert.AlertType.ERROR);
-//                isRecording = false;
-//                recordButton.setText("Start Recording");
-//            });
-//
-//            new Thread(task).start();
-//        }
-//
-//
-//    }
-//
-//    private void stopRecording() {
-//        isRecording = false;
-//        recordButton.setText("Start Recording");
-//    }
-
-//    private void startRecording() {
-//        if (!isRecording) {
-//            isRecording = true;
-//            recordButton.setText("Stop Recording");
-//
-//            Task<Void> task = new Task<>() {
-//                @Override
-//                protected Void call() throws Exception {
-//                    logger.info("Début de l'enregistrement audio...");
-//                    File audioFile = new File("temp_audio.wav");
-//                    try {
-//                        AudioRecorder.recordAudio(audioFile, 10); // Enregistrer pendant 10 secondes
-//                        logger.info("Enregistrement audio terminé. Fichier créé : " + audioFile.getAbsolutePath());
-//
-//                        // Vérifier la taille du fichier
-//                        long fileSize = audioFile.length();
-//                        logger.info("Taille du fichier audio : " + fileSize + " bytes");
-//
-//                        if (fileSize == 0) {
-//                            throw new IOException("Le fichier audio est vide.");
-//                        }
-//
-//                        logger.info("Début de la transcription audio...");
-//                        String transcribedText = transcriptionService.transcribeAudio(audioFile);
-//                        logger.info("Transcription audio terminée.");
-//
-//                        Platform.runLater(() -> {
-//                            contentField.appendText(transcribedText + " ");
-//                            isRecording = false;
-//                            recordButton.setText("Start Recording");
-//                        });
-//
-//                    } catch (Exception e) {
-//                        logger.severe("Erreur lors de l'enregistrement ou de la transcription audio : " + e.getMessage());
-//                        throw e;
-//                    }
-//                    return null;
-//                }
-//            };
-//
-//            task.setOnFailed(event -> {
-//                logger.severe("Erreur lors de la transcription audio : " + task.getException().getMessage());
-//                Platform.runLater(() -> {
-//                    showAlert("Error", "Failed to transcribe audio: " + task.getException().getMessage(), Alert.AlertType.ERROR);
-//                    isRecording = false;
-//                    recordButton.setText("Start Recording");
-//                });
-//            });
-//
-//            new Thread(task).start();
-//        }
-//    }
-//
-//    private void stopRecording() {
-//        isRecording = false;
-//        recordButton.setText("Start Recording");
-//    }
-
-//    private void startRecording() {
-//        if (!isRecording) {
-//            isRecording = true;
-//            recordButton.setText("Stop Recording");
-//
-//            Task<String> task = speechRecognitionService.startRecording();
-//            task.valueProperty().addListener((obs, oldValue, newValue) -> {
-//                if (newValue != null) {
-//                    contentField.appendText(newValue + " ");
-//                }
-//            });
-//
-//            new Thread(task).start();
-//        }
-//    }
-//
-//    private void stopRecording() {
-//        if (isRecording) {
-//            isRecording = false;
-//            recordButton.setText("Start Recording");
-//            speechRecognitionService.stopRecording();
-//        }
-//    }
+    @FXML
+    public void handleBackButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Error", "Failed to load the announcements view: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
 
     private void startRecording() {
         if (!isRecording) {
             isRecording = true;
             recordButton.setText("Stop Recording");
 
-            // Réinitialiser le contenu du champ de texte avant de commencer une nouvelle transcription
             Platform.runLater(() -> contentField.clear());
 
             Task<String> task = azureSpeechService.startRecording();
             task.valueProperty().addListener((obs, oldValue, newValue) -> {
                 if (newValue != null) {
-                    // Ajouter le nouveau texte transcrit sans répéter l'ancien contenu
                     Platform.runLater(() -> contentField.setText(newValue));
                 }
             });
@@ -271,7 +128,6 @@ public class AddAnnouncementController {
         }
     }
 
-
     @FXML
     public void handleCancelButtonAction() {
         titleField.clear();
@@ -285,7 +141,7 @@ public class AddAnnouncementController {
         try {
             String title = titleField.getText();
             String content = contentField.getText();
-            System.out.println("Transcribed content: " + content); // Log pour vérifier le texte transcrit
+            System.out.println("Transcribed content: " + content);
             Announcement.Zone zone = zoneComboBox.getValue();
             boolean status = statusCheckBox.isSelected();
 
@@ -300,7 +156,7 @@ public class AddAnnouncementController {
 
             Announcement announcement = new Announcement();
             announcement.setTitle(title);
-            announcement.setContent(content); // Assigner le texte transcrit
+            announcement.setContent(content);
             announcement.setZone(zone);
             announcement.setStatus(status);
             announcement.setDate(Timestamp.valueOf(LocalDateTime.now()));
