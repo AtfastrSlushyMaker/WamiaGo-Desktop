@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Announcement/announcementAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Announcement/announcementAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Chat_Relocation/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Chat_Relocation/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/AnnouncementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/AnnouncementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcement.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcement.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Annoucement/Front/announcementAdmin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Chat_Relocation/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Chat_Relocation/chat.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Relocation/Front/Relocations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Relocation/Front/Relocations.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Reservation/Front/Reservations.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reservation/Front/Reservations.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +93,7 @@
     &quot;git-widget-placeholder&quot;: &quot;Relocation__Management&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/chatback&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -288,7 +282,10 @@
       <workItem from="1741182561489" duration="2483000" />
       <workItem from="1741205560379" duration="4516000" />
       <workItem from="1741210866536" duration="29620000" />
-      <workItem from="1741278717572" duration="3912000" />
+      <workItem from="1741278717572" duration="3983000" />
+      <workItem from="1741286345009" duration="52000" />
+      <workItem from="1741292004523" duration="6654000" />
+      <workItem from="1741298863273" duration="852000" />
     </task>
     <servers />
   </component>
