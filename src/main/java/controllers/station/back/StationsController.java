@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import services.LocationService;
 import services.StationService;
+import utils.GeoCoding.GeocodingService;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -204,9 +205,11 @@ public class StationsController {
 
                     // Create location
                     Location location = new Location();
-                    location.setAddress(stationNameField.getText());
+
+                    String Address=GeocodingService.getAddressFromCoordinates(lat,lng);
                     location.setLatitude(lat);
                     location.setLongitude(lng);
+                    location.setAddress(Address);
 
                     // Create station
                     Station station = new Station();

@@ -101,28 +101,26 @@ public class BicycleRentalService {
     public List<BicycleRental> read() throws SQLException {
         List<BicycleRental> bicycleRentals = new ArrayList<>();
         String sql = "SELECT * FROM bicycle_rental";
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(sql);
-        BicycleRental bicycleRental=new BicycleRental();
-        BicycleService bicycleService = new BicycleService();
-        StationService stationService = new StationService();
-        UserService userService = new UserService();
-
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            bicycleRental.setBicycle(bicycleService.getById(rs.getInt("id_bike")));
-            bicycleRental.setStart_station(stationService.getById(rs.getInt("id_start_station")));
-            bicycleRental.setEnd_station(stationService.getById(rs.getInt("id_end_station")));
-            bicycleRental.setUser(userService.getById(rs.getInt("id_user")));
-            bicycleRental.setStart_time(rs.getTimestamp("start_time"));
-            bicycleRental.setEnd_time(rs.getTimestamp("end_time"));
-            bicycleRental.setDistance_km(rs.getFloat("distance_km"));
-            bicycleRental.setBattery_used(rs.getFloat("battery_used"));
-            bicycleRental.setCost(rs.getFloat("cost"));
+            BicycleRental bicycleRental = new BicycleRental(
+                    rs.getInt("id_user_rental"),
+                    new UserService().getById(rs.getInt("id_user")),
+                    new BicycleService().getById(rs.getInt("id_bike")),
+                    new StationService().getById(rs.getInt("id_start_station")),
+                    new StationService().getById(rs.getInt("id_end_station")),
+                    rs.getTimestamp("start_time"),
+                    rs.getTimestamp("end_time"),
+                    rs.getFloat("distance_km"),
+                    rs.getFloat("battery_used"),
+                    rs.getFloat("cost")
+            );
             bicycleRentals.add(bicycleRental);
-
         }
         return bicycleRentals;
     }
+
     public BicycleRental getById(int id) throws SQLException
     {
         String sql="SELECT * FROM bicycle_rental WHERE id_user_rental=?";

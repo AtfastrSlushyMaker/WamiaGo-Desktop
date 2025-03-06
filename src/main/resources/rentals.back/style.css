@@ -1,60 +1,238 @@
-/* General styles */
-.root {
-    -fx-font-family: "Arial";
-    -fx-base: #dfe6e9;
+/* Base Styles */
+.background {
+    -fx-background-color: #f5f7fa;
 }
 
-/* ListView styles */
-.list-view {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #b2bec3;
-    -fx-border-width: 1px;
+/* Header Container */
+.header-container {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+    -fx-background-radius: 8px;
 }
 
-.list-cell {
-    -fx-padding: 10px;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #b2bec3;
-    -fx-border-width: 0 0 1 0;
+.page-title {
+    -fx-text-fill: #2c3e50;
 }
 
-.list-cell:filled:selected {
-    -fx-background-color: #74b9ff;
+/* Search Elements */
+.search-field {
+    -fx-background-color: #f1f3f6;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px;
+    -fx-prompt-text-fill: #95a5a6;
+}
+
+.search-button {
+    -fx-background-color: #3498db;
     -fx-text-fill: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px;
+    -fx-cursor: hand;
 }
 
-/* Button styles */
-.button {
-    -fx-background-color: #0984e3;
-    -fx-text-fill: white;
+.search-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Action Buttons */
+.action-buttons-container {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, -2);
+    -fx-background-radius: 8px;
+}
+
+.action-button {
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
     -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
+    -fx-alignment: center;
 }
 
-.button:hover {
-    -fx-background-color: #74b9ff;
+.add-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
 }
 
-/* Dialog styles */
-.dialog-pane {
-    -fx-background-color: #ffffff;
+.add-button:hover {
+    -fx-background-color: #27ae60;
 }
 
-.dialog-pane .label {
-    -fx-text-fill: #2d3436;
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
 }
 
-.dialog-pane .text-field, .dialog-pane .combo-box {
-    -fx-background-color: #dfe6e9;
-    -fx-border-color: #b2bec3;
+.delete-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+.refresh-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.refresh-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Button Icons */
+.button-icon {
+    -fx-min-width: 16px;
+    -fx-min-height: 16px;
+    -fx-max-width: 16px;
+    -fx-max-height: 16px;
+}
+
+.add-icon {
+    -fx-background-image: url('/images/station/icons/add.png');
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+}
+
+.delete-icon {
+    -fx-background-image: url('/images/station/icons/delete.png');
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+}
+
+.refresh-icon {
+    -fx-background-image: url('/images/station/icons/refresh_icon.png');
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+}
+
+/* Rental Card Styles - Following Station Card Style Pattern */
+.rentals-flow-pane {
+    -fx-background-color: #f5f5f5;
+}
+
+.rentals-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+}
+
+.rentals-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.rental-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 3);
+    -fx-border-color: #e0e0e0;
     -fx-border-width: 1px;
+    -fx-cursor: hand;
+    -fx-min-width: 250px;
+    -fx-max-width: 280px;
+    -fx-min-height: 200px;
+    -fx-padding: 15px;
+    -fx-transition: all 0.3s ease;
 }
 
-/* Alert styles */
-.alert {
-    -fx-background-color: #ffffff;
+.rental-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0, 0, 5);
+    -fx-translate-y: -2px;
 }
 
-.alert .label {
-    -fx-text-fill: #2d3436;
+.rental-card-selected {
+    -fx-border-color: #007bff;
+    -fx-border-width: 2px;
+    -fx-background-color: #f0f8ff;
+}
+
+.rental-id {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.rental-status {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 8px;
+    -fx-background-radius: 10px;
+}
+
+.status-active {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+}
+
+.status-completed {
+    -fx-background-color: #95a5a6;
+    -fx-text-fill: white;
+}
+
+.rental-card-body {
+    -fx-padding: 10px 0;
+}
+
+.rental-info-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+}
+
+.rental-info-value {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.bike-icon {
+    -fx-background-image: url('/images/station/icons/bike_rental.png');
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-min-width: 24px;
+    -fx-min-height: 24px;
+}
+
+.separator {
+    -fx-opacity: 0.5;
+}
+
+.card-edit-button, .card-delete-button {
+    -fx-background-radius: 20px;
+    -fx-min-width: 32px;
+    -fx-min-height: 32px;
+    -fx-max-width: 32px;
+    -fx-max-height: 32px;
+}
+
+.card-edit-button {
+    -fx-background-color: #007bff;
+}
+
+.card-edit-button:hover {
+    -fx-background-color: #0069d9;
+}
+
+.card-delete-button {
+    -fx-background-color: #dc3545;
+}
+
+.card-delete-button:hover {
+    -fx-background-color: #c82333;
+}
+
+/* ComboBox Styling */
+.combo-box {
+    -fx-background-color: #f1f3f6;
+    -fx-background-radius: 20px;
+    -fx-padding: 4px 10px;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 5px 10px;
+}
+
+/* ScrollPane Styling */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 5px;
 }
