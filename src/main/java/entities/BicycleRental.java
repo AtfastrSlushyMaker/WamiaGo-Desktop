@@ -167,24 +167,22 @@ public class BicycleRental {
         // Fetch Weather Data
         WeatherInfo weatherInfo = WeatherService.getWeatherInfo(rental.getStart_station().getLocation());
 
-        if (weatherInfo != null) {
-            String description = weatherInfo.getDescription().toLowerCase();
-            double temp = Double.parseDouble(weatherInfo.getDescription().split("°C")[0]); // Extract temp from "25°C, clear sky"
+        String description = weatherInfo.getDescription().toLowerCase();
+        double temp = Double.parseDouble(weatherInfo.getDescription().split("°C")[0]); // Extract temp from "25°C, clear sky"
 
-            // 🌧️ Rainy, Snowy, or Stormy → 15% Discount
-            if (description.contains("rain") || description.contains("snow") || description.contains("storm")) {
-                cost *= 0.85;
-            }
+        // 🌧️ Rainy, Snowy, or Stormy → 15% Discount
+        if (description.contains("rain") || description.contains("snow") || description.contains("storm")) {
+            cost *= 0.85;
+        }
 
-            // 🔥 Hot Weather (Above 35°C) or ❄️ Cold Weather (Below 5°C) → 10% Discount
-            if (temp > 35 || temp < 5) {
-                cost *= 0.90;
-            }
+        // 🔥 Hot Weather (Above 35°C) or ❄️ Cold Weather (Below 5°C) → 10% Discount
+        if (temp > 35 || temp < 5) {
+            cost *= 0.90;
+        }
 
-            // 🌬️ High Wind Speed (>30km/h) → 20% Discount (Encourage safer rides)
-            if (weatherInfo.getWindSpeed() > 30) {
-                cost *= 0.80;
-            }
+        // 🌬️ High Wind Speed (>30km/h) → 20% Discount (Encourage safer rides)
+        if (weatherInfo.getWindSpeed() > 30) {
+            cost *= 0.80;
         }
 
         return Math.max(cost, 0.50); // Minimum price safeguard
@@ -203,30 +201,31 @@ public class BicycleRental {
         double cost = distanceCost + timeCost;
 
         WeatherInfo weatherInfo = WeatherService.getWeatherInfo(rental.getStart_station().getLocation());
-        if (weatherInfo != null) {
-            String description = weatherInfo.getDescription().toLowerCase();
-            double temp = Double.parseDouble(weatherInfo.getDescription().split("°C")[0]); // Extract temp from "25°C, clear sky"
+        String description = weatherInfo.getDescription().toLowerCase();
+        double temp = Double.parseDouble(weatherInfo.getDescription().split("°C")[0]); // Extract temp from "25°C, clear sky"
 
-            // 🌧️ Rainy, Snowy, or Stormy → 15% Discount
-            if (description.contains("rain") || description.contains("snow") || description.contains("storm")) {
-                cost *= 0.85;
-            }
+        // 🌧️ Rainy, Snowy, or Stormy → 15% Discount
+        if (description.contains("rain") || description.contains("snow") || description.contains("storm")) {
+            cost *= 0.85;
+        }
 
-            // 🔥 Hot Weather (Above 35°C) or ❄️ Cold Weather (Below 5°C) → 10% Discount
-            if (temp > 35 || temp < 5) {
-                cost *= 0.90;
-            }
+        // 🔥 Hot Weather (Above 35°C) or ❄️ Cold Weather (Below 5°C) → 10% Discount
+        if (temp > 35 || temp < 5) {
+            cost *= 0.90;
+        }
 
-            // 🌬️ High Wind Speed (>30km/h) → 20% Discount (Encourage safer rides)
-            if (weatherInfo.getWindSpeed() > 30) {
-                cost *= 0.80;
-            }
+        // 🌬️ High Wind Speed (>30km/h) → 20% Discount (Encourage safer rides)
+        if (weatherInfo.getWindSpeed() > 30) {
+            cost *= 0.80;
         }
 
         return (float) Math.max(cost, 0.50); // Minimum price safeguard
     }
 
     public int  getDuration_minutes(){
+        if (getEnd_station()==null){
+            return 0;
+        }
         return (int) (getStart_time().getTime()-getEnd_time().getTime()) / 60000;
     }
 }
