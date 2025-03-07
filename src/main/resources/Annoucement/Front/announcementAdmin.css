@@ -1,0 +1,71 @@
+#announcementFlowPane {
+    -fx-padding: 0 0 0 0; /* Adds space on top */
+    -fx-hgap: 20px;
+    -fx-vgap: 20px;
+    -fx-alignment: center;
+}
+
+/* Style for each announcement card */
+#available_announcements_label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: Black;
+    -fx-font-family: Inter;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
+.announcement-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 8, 0, 0, 2);
+    -fx-padding: 20px;
+    -fx-pref-width: 300px;
+    -fx-spacing: 15px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s;
+}
+
+.announcement-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 3);
+    -fx-translate-y: -2px;
+}
+
+/* Style for the announcement title */
+.announcement-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 200px;
+    -fx-text-alignment: center;
+    -fx-ellipsize: middle;
+    -fx-font-family: Inter;
+}
+
+/* Style for the announcement content */
+.announcement-content {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-family: Inter;
+    -fx-font-weight: bold;
+}
+
+/* Style for the select button */
+.announcement-button-admin {
+    -fx-background-color: #1B2E44; /* Bright blue */
+    -fx-border-color: transparant;
+    -fx-background-radius: 45px;
+    -fx-border-radius: 45px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 20px;
+    -fx-border-width: 2px;
+    -fx-font-size: 14px;
+}
+
+.announcement-button-admin:hover {
+    -fx-background-color: #357ab8; /* Darker blue on hover */
+}

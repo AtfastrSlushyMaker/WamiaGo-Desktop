@@ -11,19 +11,19 @@ public class Reservation {
     private Location startLocation;
     private Location endLocation;
     private Announcement announcement;
-
+    private User user;
     public enum Status {
         CONFIRMED, CANCELLED, COMPLETED, ON_GOING
     }
 
     // Constructeur par défaut
     public Reservation() {
-        this(0, new Timestamp(System.currentTimeMillis()), Status.CONFIRMED, "", new Location(), new Location(), new Announcement());
+
     }
 
     // Constructeur avec tous les paramètres
     public Reservation(int idReservation, Timestamp date, Status status, String description,
-                       Location startLocation, Location endLocation, Announcement announcement) {
+                       Location startLocation, Location endLocation, Announcement announcement,User user) {
         this.idReservation = idReservation;
         this.date = date;
         this.status = status;
@@ -31,9 +31,19 @@ public class Reservation {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.announcement = announcement;
+        this.user = user;
     }
 
     // Getters and Setters
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public int getIdReservation() {
         return idReservation;
     }
@@ -100,12 +110,13 @@ public class Reservation {
                 Objects.equals(description, that.description) &&
                 Objects.equals(startLocation, that.startLocation) &&
                 Objects.equals(endLocation, that.endLocation) &&
-                Objects.equals(announcement, that.announcement);
+                Objects.equals(announcement, that.announcement)&&
+                Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idReservation, date, status, description, startLocation, endLocation, announcement);
+        return Objects.hash(idReservation, date, status, description, startLocation, endLocation, announcement,user);
     }
 
     @Override
@@ -118,6 +129,7 @@ public class Reservation {
                 ", startLocation=" + startLocation +
                 ", endLocation=" + endLocation +
                 ", announcement=" + announcement +
+                ", user=" + user +
                 '}';
     }
 }

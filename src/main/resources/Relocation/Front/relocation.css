@@ -1,0 +1,285 @@
+#stationFlowPane {
+    -fx-padding: 0 0 0 0; /* Adds space on top */
+    -fx-hgap: 20px;
+    -fx-vgap: 20px;
+    -fx-alignment: center;
+}
+
+/* Style for each station card */
+#available_stations_label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: Black;
+    -fx-font-family: Inter;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
+.station-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 2);
+    -fx-padding: 20px;
+    -fx-pref-width: 300px;
+    /* -fx-pref-height: 200px; */
+    -fx-spacing: 15px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s;
+}
+
+.station-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
+    -fx-translate-y: -2px;
+}
+
+/* Style for the station name */
+.station-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 200px;
+    -fx-text-alignment: center;
+    -fx-ellipsize: middle;
+    -fx-font-family: Inter;
+}
+
+/* Style for the bike count label */
+.station-bike-count {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-family: Inter;
+    -fx-font-weight: bold;
+}
+
+/* Style for the select button */
+.station-button {
+    -fx-background-color: #6BBF59; /* Fresh green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.station-button:hover {
+    -fx-background-color: #4E9D3A;
+
+    /* Lighter green on hover */
+}
+
+/* Add some margin to the ImageView */
+.station-image {
+    -fx-fit-width: 100px;
+    -fx-fit-height: 100px;
+    -fx-preserve-ratio: true;
+    -fx-margin-bottom: 10px;
+}
+
+.modal {
+    -fx-background-color: #F5F7FA;
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 20, 0, 0, 5);
+}
+
+.modal-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.modal-close-button {
+    -fx-background-color: #ff4444;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+}
+
+.modal-close-button:hover {
+    -fx-background-color: #e73737;
+}
+
+/* Bicycle Rectangle and Label */
+/* Bicycle Icon */
+.bicycle-icon {
+    -fx-width: 40px; /* Icon width */
+    -fx-height: 40px; /* Icon height */
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+/* Bicycle Label */
+.bicycle-label {
+    -fx-font-size: 10px; /* Smaller font for the label */
+    -fx-text-fill: black;
+    -fx-alignment: center;
+}
+
+/* FlowPane Styling */
+.flow-pane {
+    -fx-hgap: 5px;
+    -fx-vgap: 5px;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+.station-bike-close-button :hover {
+    -fx-background-color: #ff4444;
+}
+
+/* ScrollPane Styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+/* Viewport (visible area) */
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* Vertical ScrollBar */
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12px;
+    -fx-padding: 2px;
+}
+
+/* Vertical ScrollBar Track */
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: transparent;
+    -fx-background-radius: 6px;
+}
+
+/* Vertical ScrollBar Thumb */
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #c1c1c1;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #a8a8a8;
+}
+
+/* Horizontal ScrollBar (disabled in our case) */
+.scroll-pane .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+}
+
+/* ScrollPane Corner */
+.scroll-pane .corner {
+    -fx-background-color: #f0f0f0;
+}
+
+/* Remove increment/decrement buttons */
+.scroll-pane .increment-button,
+.scroll-pane .decrement-button {
+    -fx-padding: 0;
+    -fx-shape: "";
+    -fx-opacity: 0;
+}
+
+/* Optional: Add smooth scrolling effect */
+.scroll-pane {
+    -fx-fit-to-width: true;
+    -fx-pannable: true;
+    -fx-snap-to-pixel: false;
+}
+
+
+.station-card-admin {
+    -fx-background-color: #f0f8ff; /* Light blue background */
+    -fx-background-radius: 45px;
+    -fx-border-radius: 45px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);
+    -fx-padding: 10px;
+    -fx-pref-width: 270px;
+    -fx-spacing: 10px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s;
+}
+
+.station-card-admin:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 12, 0, 0, 5);
+    -fx-translate-y: -3px;
+}
+
+/* Style for the select button */
+.station-button-admin {
+    -fx-background-color: #1B2E44; /* Bright blue */
+    -fx-border-color: transparant;
+    -fx-background-radius: 45px;
+    -fx-border-radius: 45px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 20px;
+    -fx-border-width: 2px;
+    -fx-font-size: 14px;
+}
+
+.station-button-admin:hover {
+    -fx-background-color: #357ab8; /* Darker blue on hover */
+}
+
+/* En-tête */
+.header {
+    -fx-padding: 20;
+    -fx-background-color: #5A6BE5; /* Couleur de fond */
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+}
+
+/* Titre de l'en-tête */
+.title-label {
+    -fx-font-size: 24px; /* Taille de police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-fill: white; /* Couleur du texte */
+    -fx-font-family: "Century Gothic Bold"; /* Police */
+}
+
+/* Bouton de retour */
+.back-button {
+    -fx-background-color: transparent; /* Fond transparent */
+    -fx-border-color: transparent; /* Bordure transparente */
+    -fx-cursor: hand; /* Curseur en forme de main */
+}
+
+.back-button:hover {
+    -fx-opacity: 0.8; /* Effet de survol */
+}
+
+/* Style pour les statuts */
+.status-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.status-label.ON_GOING {
+    -fx-text-fill: #FFA500; /* Orange pour ON_GOING */
+}
+
+.status-label.CONFIRMED {
+    -fx-text-fill: #32CD32; /* Vert pour CONFIRMED */
+}
+
+.status-label.CANCELLED {
+    -fx-text-fill: #FF0000; /* Rouge pour CANCELLED */
+}
+
+.status-label.COMPLETED {
+    -fx-text-fill: #0000FF; /* Bleu pour COMPLETED */
+}
+
+/* Style pour les boutons désactivés */
+.button:disabled {
+    -fx-opacity: 0.5; /* Réduire l'opacité des boutons désactivés */
+    -fx-cursor: default; /* Changer le curseur par défaut */
+}
