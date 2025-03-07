@@ -6,38 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/bicycle/back/BicycleController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/rentals/back/rentalController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/back/stationsController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/myBikes/MyBikesController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Bicycle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Bicycle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/BicycleRental.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/BicycleRental.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Location.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Station.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/BicycleRentalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/BicycleRentalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/BicycleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/BicycleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/LocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/StationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/StationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bicycle.back/bicycle.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardAdmin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardUser.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/rentals.back/rentals.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/rides/rides.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/rides/rides.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/back/stations.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/myBikes.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/myBikes/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/StationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/front/myBikes/MyBikesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/front/myBikes/MyBikesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/station/front/station.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +83,7 @@
     "Maven.wamiaGo [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "user-management",
+    "git-widget-placeholder": "main-il-kbir",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/Rzouga.RZOUGALAPTOP/Desktop/School/3A/Sem 2/Pidev/WamiaGo-Desktop/src/main/resources/user.back",
@@ -153,7 +125,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="WamiaGo" />
+      <module name="Pidev3a11" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <extension name="coverage">
         <pattern>
