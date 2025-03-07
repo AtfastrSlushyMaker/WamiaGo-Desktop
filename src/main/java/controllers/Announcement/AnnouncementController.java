@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -41,13 +42,12 @@ public class AnnouncementController implements Initializable {
     private ListView<Announcement> announcementListView;
 
     @FXML
+    private Button btn_workbench1, btn_workbench11, btn_workbench12, btn_workbench1211;
+
+    @FXML
     private Button btnAdd;
 
-    @FXML
-    private Button btn_workbench1;
 
-    @FXML
-    private Button btn_workbench11;
 
     @FXML
     private Button btnAddReservation;
@@ -114,6 +114,70 @@ public class AnnouncementController implements Initializable {
             e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Une erreur inattendue s'est produite lors de l'initialisation : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleHomeButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            //showAlert("Error", "Failed to load the dashboard view: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleRidesButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/rides/rides.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            //showAlert("Error", "Failed to load the rides view: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleBookingsButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements_client.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            //showAlert("Error", "Failed to load the bookings view: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleLogoutButtonAction(ActionEvent event) {
+        try {
+            // Nettoyer la session
+            SessionManager.getInstance().logout();
+
+            // Naviguer vers la vue de connexion
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.front/loginSignup.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            //showAlert("Error", "Failed to load the login view: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }

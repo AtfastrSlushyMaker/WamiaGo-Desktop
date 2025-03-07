@@ -36,6 +36,9 @@ public class ReservationclientController {
     @FXML
     private FlowPane stationFlowPane;
 
+    @FXML
+    private Button btn_workbench1000, btn_workbench1001, btn_workbench1002, btn_workbench1003;
+
     private final ReservationService reservationService = new ReservationService();
     private final StationService stationService = new StationService();
 
@@ -61,6 +64,70 @@ public class ReservationclientController {
             Stage stage = (Stage) home_button.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleHomeButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard/dashboard.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) home_button.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showErrorDialog("Error", "Failed to load the dashboard view: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleRidesButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/rides/rides.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) rides_button.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showErrorDialog("Error", "Failed to load the rides view: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleBookingsButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements_client.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) bookings_button.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showErrorDialog("Error", "Failed to load the bookings view: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleLogoutButtonAction(ActionEvent event) {
+        try {
+            // Nettoyer la session
+            SessionManager.getInstance().logout();
+
+            // Naviguer vers la vue de connexion
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.front/loginSignup.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) logout_button.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showErrorDialog("Error", "Failed to load the login view: " + e.getMessage());
             e.printStackTrace();
         }
     }
