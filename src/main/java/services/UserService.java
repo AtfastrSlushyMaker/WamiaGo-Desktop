@@ -168,6 +168,31 @@ public class UserService implements IService<User> {
         return null;
     }
 
+    public User getUserByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM `user` WHERE email = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id_user"));
+                    user.setName(rs.getString("name"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+                    user.setPhone(rs.getString("phone_number"));
+                    user.setRole(User.Role.valueOf(rs.getString("role")));
+                    user.setGender(User.Gender.valueOf(rs.getString("gender")));
+                    user.setProfilePicture(rs.getString("profile_picture"));
+                    user.setVerified(rs.getBoolean("is_verified"));
+                    user.setAccountStatus(User.AccountStatus.valueOf(rs.getString("account_status")));
+                    user.setDateOfBirth(rs.getDate("date_of_birth") != null ? rs.getDate("date_of_birth").toLocalDate() : null);
+                    user.setStatus(User.Status.valueOf(rs.getString("status")));
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
     public boolean isDriver(User user) {
         String sql = "SELECT id_driver FROM driver WHERE id_user = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -488,6 +513,18 @@ public class UserService implements IService<User> {
         return null;
     }
 
+    public boolean updatePassword(String email, String newPassword) throws SQLException {
+        String sql = "UPDATE `user` SET `password` = ? WHERE `email` = ?";
+        String hashedPassword = Password.hash(newPassword).withBcrypt().getResult();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, hashedPassword);
+            ps.setString(2, email);
+
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        }
+    }
 }
 
 

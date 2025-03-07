@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.AuthController">
+    <children>
+        <VBox alignment="TOP_CENTER" layoutX="50.0" layoutY="20.0" prefHeight="360.0" prefWidth="400.0" spacing="15.0">
+            <children>
+                <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Images/wamiaGO.png" />
+                    </image>
+                    <effect>
+                        <DropShadow color="rgba(70, 70, 70, 0.5)" height="10.0" radius="4.5" width="10.0" />
+                    </effect>
+                </ImageView>
+                <Label text="Two-Factor Authentication" textFill="#3f6edd">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label text="We've sent a verification code to your email." textFill="#333333" wrapText="true">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="emailLabel" text="email@example.com" textFill="#666666">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label text="Please enter the 6-digit code below:" textFill="#333333">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="codeField" alignment="CENTER" maxWidth="200.0" promptText="Enter code" style="-fx-background-color: #f5f5f5; -fx-border-color: #e0e0e0; -fx-border-radius: 4; -fx-background-radius: 4;">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextField>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <Label text="Code expires in:" textFill="#666666">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="timerLabel" text="10:00" textFill="#e74c3c">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <ProgressBar fx:id="timerProgressBar" maxWidth="200.0" prefWidth="200.0" progress="1.0" style="-fx-accent: #3f6edd;" />
+                <Button fx:id="verifyButton" maxWidth="200.0" mnemonicParsing="false" onAction="#handleVerifyButtonClick" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #3f6edd; -fx-text-fill: white; -fx-background-radius: 4;" text="Verify">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                    <effect>
+                        <DropShadow color="rgba(0, 0, 0, 0.3)" height="5.0" radius="2.0" width="5.0" />
+                    </effect>
+                </Button>
+                <Label fx:id="statusLabel" textFill="#e74c3c" wrapText="true">
+                    <font>
+                        <Font size="12.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" spacing="5.0">
+                    <children>
+                        <Label text="Didn't receive the code?" textFill="#333333">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="resendCodeLabel" onMouseClicked="#handleResendCode" style="-fx-cursor: hand;" text="Resend" textFill="#3f6edd" underline="true">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <Button fx:id="cancelButton" maxWidth="200.0" mnemonicParsing="false" onAction="#handleCancelButtonClick" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #3f6edd; -fx-text-fill: #3f6edd; -fx-border-radius: 4; -fx-background-radius: 4;" text="Cancel">
+                    <font>
+                        <Font size="12.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
