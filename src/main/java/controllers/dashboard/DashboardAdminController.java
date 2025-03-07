@@ -105,7 +105,9 @@ public class DashboardAdminController implements Initializable {
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bicycle.back/bicycle.fxml"))),
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/rentals.back/rentals.fxml"))),
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml"))),
-                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")))
+                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml"))),
+                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/StatisticsRequestRide.fxml")))
+
             ));
 
             for (AnchorPane panel : panels) {
@@ -139,7 +141,7 @@ public class DashboardAdminController implements Initializable {
 
     private void setupInitialVisibility() {
         if (!panels.isEmpty()) {
-            panels.get(0).setVisible(true);
+            panels.get(6).setVisible(true);
         }
     }
 
@@ -186,9 +188,9 @@ public class DashboardAdminController implements Initializable {
     public void taxiRides() { showPanel(5); }
 
     @FXML
-    private void DashboardBtn() { showPanel(-1); }
+    private void DashboardBtn() { showPanel(6); }
     @FXML
-    private void QueriesBtn() { showPanel(6); }
+    private void QueriesBtn() { showPanel(-1); }
 
     @FXML
     private void handleTopBarDoubleClick(MouseEvent event) {

@@ -1,13 +1,14 @@
 package controllers.taxi.driverside.request;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 import entities.Driver;
 import entities.Request;
 import entities.User;
 import entities.Ride;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -17,20 +18,30 @@ import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import services.DriverService;
 import services.RequestService;
 import services.UserService;
 import services.RideService;
 import utils.SessionManager;
-import javafx.scene.control.TextFormatter;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RequestController {
+
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private DatePicker searchDatePicker;
 
     @FXML
     private Button bookings_button;
@@ -53,11 +64,18 @@ public class RequestController {
 
     @FXML
     private Button See_you_Rides_button;
+    @FXML
+    private WebView webView;
+    private WebEngine webEngine;
 
     private final RequestService requestService = new RequestService();
     private final UserService userService = new UserService();
     private final DriverService driverService = new DriverService();
     private final RideService rideService = new RideService();
+
+    private static final String ACCOUNT_SID = "AC9012091b8b155a0743d30e8f6cbdbe55";
+    private static final String AUTH_TOKEN = "6dafad2d58c6d83e299d629d032aa219";
+    private static final String TWILIO_PHONE_NUMBER = "+12402554395"; // Numéro Twilio
 
     // Class-level field to hold the current driver.
     private Driver currentDriver;
@@ -86,9 +104,63 @@ public class RequestController {
             System.err.println("SQL error while retrieving the driver: " + e.getMessage());
             e.printStackTrace();
         }
-
+        searchDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> filterRequestsByDate(newValue));
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> filterRequests(newValue));
         See_you_Rides_button.setOnAction(event -> loadScene("/taxi-managment/driver_side/ride.fxml"));
     }
+
+    private void filterRequestsByDate(LocalDate selectedDate) {
+        if (selectedDate != null) {
+            try {
+                // Récupérer toutes les demandes disponibles pour les chauffeurs
+                List<Request> requests = requestService.read();
+
+                // Filtrer les demandes en fonction de la date sélectionnée
+                List<Request> filteredRequests = requests.stream()
+                        .filter(request -> request.getRequestDate().toLocalDate().isEqual(selectedDate))
+                        .collect(Collectors.toList());
+
+                // Rafraîchir la vue avec les demandes filtrées
+                updateRequestFlowPane(filteredRequests);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void filterRequests(String searchText) {
+        try {
+            // Récupérer toutes les demandes disponibles pour les chauffeurs
+            List<Request> requests = requestService.read();
+
+            // Filtrer les demandes en fonction du texte de recherche
+            List<Request> filteredRequests = requests.stream()
+                    .filter(request -> request.getDepartureLocation().getAddress().toLowerCase().contains(searchText.toLowerCase()) ||
+                            request.getArrivalLocation().getAddress().toLowerCase().contains(searchText.toLowerCase()) ||
+                            request.getStatus().toString().toLowerCase().contains(searchText.toLowerCase()))
+                    .collect(Collectors.toList());
+
+            // Rafraîchir la vue avec les demandes filtrées
+            updateRequestFlowPane(filteredRequests);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateRequestFlowPane(List<Request> filteredRequests) {
+        // Vider le FlowPane avant d'ajouter les nouvelles demandes
+        requestFlowPane.getChildren().clear();
+
+        // Ajouter les demandes filtrées au FlowPane
+        for (Request request : filteredRequests) {
+            if (request.getStatus() == Request.RequestStatus.PENDING) { // Vérifie que la demande est encore en attente
+                VBox requestCard = createRequestCard(request);
+                requestFlowPane.getChildren().add(requestCard);
+            }
+        }
+    }
+
+
 
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
@@ -140,10 +212,11 @@ public class RequestController {
         // Create buttons: Accept and Details.
         Button acceptButton = createAcceptButton(request);
         Button selectButton = createSelectButton(request);
+        Button mapButton = createMapButton(request);
 
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(acceptButton, selectButton);
+        buttonContainer.getChildren().addAll(acceptButton, selectButton , mapButton);
         requestCard.getChildren().add(buttonContainer);
 
         // Hover effects.
@@ -221,17 +294,19 @@ public class RequestController {
         VBox requestDetailsBox = new VBox(8);
         requestDetailsBox.getStyleClass().add("request-details-box");
 
+        Label clientLabel = new Label("Client: " + (request.getClient() != null ? request.getClient().getName() : "Unknown"));
         Label arrivalLabel = new Label("Arrival Location: " + request.getArrivalLocation().getAddress());
         Label departureLabel = new Label("Departure Location: " + request.getDepartureLocation().getAddress());
         Label statusLabel = new Label("Status: " + request.getStatus());
         Label dateLabel = new Label("Date: " + request.getRequestDate().toString());
 
+        clientLabel.getStyleClass().add("modal-detail-label");
         arrivalLabel.getStyleClass().add("modal-detail-label");
         departureLabel.getStyleClass().add("modal-detail-label");
         statusLabel.getStyleClass().add("modal-detail-label");
         dateLabel.getStyleClass().add("modal-detail-label");
 
-        requestDetailsBox.getChildren().addAll(arrivalLabel, departureLabel, statusLabel, dateLabel);
+        requestDetailsBox.getChildren().addAll(clientLabel, arrivalLabel, departureLabel, statusLabel, dateLabel);
 
         Button closeButton = new Button("Close");
         closeButton.getStyleClass().add("modal-close-button");
@@ -250,100 +325,176 @@ public class RequestController {
         modalStage.show();
     }
 
+
     private void openDurationModal(Request request) {
         Stage durationStage = new Stage();
         durationStage.setTitle("Enter Ride Duration");
-        RideService rideService1 =new RideService();
+        RideService rideService = new RideService();
 
-        // Apply the CSS class to the root layout
         VBox layout = new VBox(10);
-        layout.getStyleClass().add("modal-container");  // Apply the custom modal style
+        layout.getStyleClass().add("modal-container");
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.CENTER);
 
         Label label = new Label("Enter ride duration (in minutes):");
-        label.getStyleClass().add("modal-label");  // Apply the label style
+        label.getStyleClass().add("modal-label");
 
         TextField durationField = new TextField();
         durationField.setPromptText("Duration in minutes");
-        durationField.getStyleClass().add("duration-field");  // Apply the duration field style
+        durationField.getStyleClass().add("duration-field");
 
-        // Appliquer un filtre pour empêcher la saisie de caractères non numériques
         TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
-            if (newText.matches("\\d*")) {
-                return change; // Accepter seulement les chiffres
-            } else {
-                return null; // Bloquer la modification
-            }
+            return newText.matches("\\d*") ? change : null;
         });
         durationField.setTextFormatter(textFormatter);
 
-        // Label pour afficher les erreurs
         Label warningLabel = new Label();
-        warningLabel.getStyleClass().add("warning-label");  // Apply the warning label style
-        warningLabel.setVisible(false); // Masquer le label par défaut
+        warningLabel.getStyleClass().add("warning-label");
+        warningLabel.setVisible(false);
 
         Button submitButton = new Button("Submit");
-        submitButton.getStyleClass().add("submit-button");  // Apply the submit button style
+        submitButton.getStyleClass().add("submit-button");
+
         submitButton.setOnAction(e -> {
-            String durationText = durationField.getText().trim();
-            if (durationText.isEmpty()) {
-                warningLabel.setText("⚠️ Please enter a duration.");
-                warningLabel.setVisible(true);
-                return;
-            }
-
             try {
-                int duration = Integer.parseInt(durationText);
+                String durationText = durationField.getText().trim();
+                if (durationText.isEmpty()) {
+                    warningLabel.setText("⚠️ Please enter a duration.");
+                    warningLabel.setVisible(true);
+                    return;
+                }
 
-                // Vérifier si la durée est dans une plage acceptable
+                int duration = Integer.parseInt(durationText);
                 if (duration < 1 || duration > 300) {
                     warningLabel.setText("⚠️ Duration must be between 1 and 300 minutes.");
                     warningLabel.setVisible(true);
                     return;
                 }
 
-                // Masquer l'avertissement si la durée est valide
                 warningLabel.setVisible(false);
-
-                // Calculer le prix en fonction de la distance (1 DT par km)
                 double price = RideService.calculatePrice(request);
 
-                // Créer un nouveau Ride
                 Ride newRide = new Ride();
                 newRide.setRequest(request);
                 newRide.setDriver(currentDriver);
                 newRide.setStatus(Ride.Status.ONGOING);
                 newRide.setRideDate(new Timestamp(System.currentTimeMillis()));
                 newRide.setDuration(duration);
-                newRide.setPrice(price);  // Prix calculé
+                newRide.setPrice(price);
 
                 boolean created = rideService.create(newRide);
                 if (created) {
                     System.out.println("✅ Ride created successfully");
                     request.setStatus(Request.RequestStatus.ACCEPTED);
                     requestService.update(request);
+
+                    String clientPhoneNumber = request.getClient().getPhone();
+                    String driverName = currentDriver.getUser().getName();
+                    String driverPhone = currentDriver.getUser().getPhone();
+                    sendSmsToClient(clientPhoneNumber, duration, price, driverName, driverPhone);
+
                 } else {
                     System.out.println("❌ Ride creation failed");
                 }
+
                 durationStage.close();
                 loadRequestsIntoFlowPane();
+
             } catch (NumberFormatException ex) {
                 warningLabel.setText("⚠️ Invalid duration. Please enter a valid number.");
                 warningLabel.setVisible(true);
             } catch (SQLException ex) {
                 ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
 
         layout.getChildren().addAll(label, durationField, warningLabel, submitButton);
-
-        // Load the CSS file
         Scene scene = new Scene(layout, 300, 200);
-        scene.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/duration-modal.css").toExternalForm());  // Add your CSS file path here
+        scene.getStylesheets().add(getClass().getResource("/taxi-managment/driver_side/duration-modal.css").toExternalForm());
         durationStage.setScene(scene);
         durationStage.show();
     }
+
+    private void sendSmsToClient(String clientPhoneNumber, int duration, double price, String driverName, String driverPhone) {
+        try {
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+            String formattedPrice = String.format("%.3f", price);
+
+            String messageBody = "🚖 Hey there! Your ride is confirmed! 🚖\n" +
+                    "⏳ Estimated duration: " + duration + " min\n" +
+                    "💰 Price: " + formattedPrice + " DT\n" +
+                    "👨‍✈️ Driver: " + driverName + "\n" +
+                    "📞 Contact: " + driverPhone + "\n" +
+                    "✨ Safe travels with us!";
+
+            Message message = Message.creator(
+                    new com.twilio.type.PhoneNumber(clientPhoneNumber),
+                    new com.twilio.type.PhoneNumber(TWILIO_PHONE_NUMBER),
+                    messageBody
+            ).create();
+
+            System.out.println("✅ SMS sent to client: " + clientPhoneNumber);
+        } catch (Exception e) {
+            System.out.println("❌ Failed to send SMS: " + e.getMessage());
+        }
+    }
+
+    private Button createMapButton(Request request) {
+        Button mapButton = new Button("Show on Map");
+        mapButton.getStyleClass().add("request-button");
+
+        mapButton.setOnAction(event -> {
+            // Passer l'objet request à la méthode openMapInWebView
+            openMapInWebView(request);
+        });
+
+        return mapButton;
+    }
+
+
+    private void openMapInWebView(Request request) {
+        WebView webView = new WebView();
+        WebEngine webEngine = webView.getEngine();
+
+        // Charger la carte (fichier HTML)
+        String mapFilePath = getClass().getResource("/taxi-managment/driver_side/map.html").toExternalForm();
+        webEngine.load(mapFilePath);
+
+        // Attendre que la page soit complètement chargée avant d'injecter les données
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                // Récupérer les coordonnées de départ et d'arrivée
+                double departureLat = request.getDepartureLocation().getLatitude();
+                double departureLng = request.getDepartureLocation().getLongitude();
+                double arrivalLat = request.getArrivalLocation().getLatitude();
+                double arrivalLng = request.getArrivalLocation().getLongitude();
+
+                // Injecter les coordonnées dans la carte
+                String script = "window.javaConnector.setCoordinates("
+                        + departureLat + ", " + departureLng + ", "
+                        + arrivalLat + ", " + arrivalLng + ");";
+                webEngine.executeScript(script);
+            }
+        });
+
+        // Créer une scène pour afficher la carte
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().add(webView);
+
+        Scene mapScene = new Scene(stackPane, 800, 600);
+        Stage mapStage = new Stage();
+        mapStage.setTitle("Map View");
+        mapStage.setScene(mapScene);
+        mapStage.show();
+    }
+
+
+
+
+
 
 }

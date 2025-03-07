@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -64,34 +65,34 @@
                         </Button>
                         <ImageView fitHeight="36.0" fitWidth="44.0" layoutX="83.0" layoutY="721.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../Images/icons/logout.png" />
+                                <Image url="@../../images/icons/logout.png" />
                             </image></ImageView>
                         <Pane fx:id="pane_1121" layoutX="19.0" layoutY="47.0" prefHeight="140.0" prefWidth="248.0" styleClass="logo-pane" stylesheets="@style.css">
                             <children>
                                 <ImageView id="logo" fitHeight="118.0" fitWidth="176.0" layoutX="40.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../../Images/logo/wamiaGO.png" />
+                                        <Image url="@../../images/logo/wamiaGO.png" />
                                     </image>
                                 </ImageView>
                             </children>
                         </Pane>
                         <ImageView id="home" fitHeight="36.0" fitWidth="44.0" layoutX="47.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" styleClass="home">
                             <image>
-                                <Image url="@../../Images/icons/home.png" />
+                                <Image url="@../../images/icons/home.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="48.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../Images/icons/rides.png" />
+                                <Image url="@../../images/icons/rides.png" />
                             </image></ImageView>
                         <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="47.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../Images/icons/delivery-truck.png" />
+                                <Image url="@../../images/icons/delivery-truck.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="40.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../Images/icons/history.png" />
+                                <Image url="@../../images/icons/history.png" />
                             </image></ImageView>
 
                     </children>
@@ -102,27 +103,33 @@
 
         </VBox>
 
-        <Pane prefHeight="827.0" prefWidth="1143.0">
+        <Pane prefHeight="827.0" prefWidth="1143.0" stylesheets="@../driver_side/ride.css">
             <children>
                 <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
 
 
                 <!-- FlowPane to display rides -->
                 <FlowPane fx:id="rideFlowPane" hgap="20" layoutX="4.0" layoutY="185.0" prefHeight="638.0" prefWidth="1087.0" vgap="20">
-                    <!-- Dynamically populated station cards will go here -->
-                </FlowPane>
-                <Button id="request_taxi_button" fx:id="back_to_request" alignment="BASELINE_LEFT" layoutX="46.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="138.0" stylesheets="@request.css" text="See Requests" />
-                <Button id="See_you_Rides_buuton" fx:id="See_you_Rides_buuton" alignment="BASELINE_LEFT" layoutX="201.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="132.0" stylesheets="@request.css" text="See Rides" />
+               <effect>
+                  <DropShadow />
+               </effect></FlowPane>
+                <Button id="back_to_request" fx:id="back_to_request" alignment="BASELINE_LEFT" layoutX="40.0" layoutY="109.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="144.0" styleClass="E-Bicycle_quick" stylesheets="@request.css" text="See Requests" />
+                <Button id="See_you_Rides_buuton" fx:id="See_you_Rides_buuton" alignment="BASELINE_LEFT" layoutX="195.0" layoutY="109.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="138.0" styleClass="E-Bicycle_quick" stylesheets="@request.css" text="See Rides" />
                 <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="139.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../Images/icons/add.png" />
+                        <Image url="@../../images/icons/add.png" />
                     </image>
                 </ImageView>
                 <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="279.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../Images/icons/see.png" />
+                        <Image url="@../../images/icons/see.png" />
                     </image>
                 </ImageView>
+            <ImageView fitHeight="174.0" fitWidth="188.0" layoutX="942.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/taxi/traffic-light.png" />
+               </image>
+            </ImageView>
 
             </children>
         </Pane>

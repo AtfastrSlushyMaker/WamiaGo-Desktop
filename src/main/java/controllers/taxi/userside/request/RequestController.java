@@ -24,11 +24,21 @@ import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class RequestController {
+
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private DatePicker searchDatePicker;
+
 
     @FXML
     private Button bookings_button;
@@ -60,15 +70,80 @@ public class RequestController {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/request.css").toExternalForm());
         loadRequestsIntoFlowPane();
         setupNavigation();
+        searchDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> filterRequestsByDate(newValue));
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> filterRequests(newValue));
         request_taxi_button.setOnAction(event -> openRequestForm());
         See_you_Rides_button.setOnAction(event -> loadScene("/taxi-managment/user_side/ride.fxml"));
     }
+
 
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
         // Other navigation buttons commented out.
     }
+
+    private void filterRequestsByDate(LocalDate selectedDate) {
+        if (selectedDate != null) {
+            try {
+                // Récupérer l'utilisateur connecté
+                SessionManager sessionManager = SessionManager.getInstance();
+                User user = sessionManager.getUser();
+                int loggedInUserId = user.getId();
+
+                // Récupérer toutes les demandes pour l'utilisateur connecté
+                List<Request> requests = requestService.getRequestsByUserId(loggedInUserId);
+
+                // Filtrer les demandes en fonction de la date sélectionnée
+                List<Request> filteredRequests = requests.stream()
+                        .filter(request -> request.getRequestDate().toLocalDate().isEqual(selectedDate))
+                        .collect(Collectors.toList());
+
+                // Rafraîchir la vue avec les demandes filtrées
+                updateRequestFlowPane(filteredRequests);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void filterRequests(String searchText) {
+        try {
+            // Récupérer l'utilisateur connecté
+            SessionManager sessionManager = SessionManager.getInstance();
+            User user = sessionManager.getUser();
+            int loggedInUserId = user.getId();
+
+            // Récupérer toutes les demandes pour l'utilisateur connecté
+            List<Request> requests = requestService.getRequestsByUserId(loggedInUserId);
+
+            // Filtrer les demandes en fonction du texte de recherche
+            List<Request> filteredRequests = requests.stream()
+                    .filter(request -> request.getDepartureLocation().getAddress().toLowerCase().contains(searchText.toLowerCase()) ||
+                            request.getArrivalLocation().getAddress().toLowerCase().contains(searchText.toLowerCase()) ||
+                            request.getStatus().toString().toLowerCase().contains(searchText.toLowerCase()))
+                    .collect(Collectors.toList());
+
+            // Rafraîchir la vue avec les demandes filtrées
+            updateRequestFlowPane(filteredRequests);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void updateRequestFlowPane(List<Request> filteredRequests) {
+        // Vider le FlowPane avant d'ajouter les nouvelles demandes
+        requestFlowPane.getChildren().clear();
+
+        // Ajouter les demandes filtrées au FlowPane
+        for (Request request : filteredRequests) {
+            if (request.getStatus() != Request.RequestStatus.ACCEPTED) {
+                VBox requestCard = createRequestCard(request);
+                requestFlowPane.getChildren().add(requestCard);
+            }
+        }
+    }
+
+
 
     private void loadScene(String fxmlPath) {
         try {
@@ -301,6 +376,37 @@ public class RequestController {
         departureComboBox.setValue(request.getDepartureLocation());
         arrivalComboBox.setValue(request.getArrivalLocation());
 
+        // Configurer l'affichage des noms des locations dans les ComboBox
+        departureComboBox.setCellFactory(lv -> new ListCell<Location>() {
+            @Override
+            protected void updateItem(Location item, boolean empty) {
+                super.updateItem(item, empty);
+                setText((item == null || empty) ? null : item.getAddress());
+            }
+        });
+        departureComboBox.setButtonCell(new ListCell<Location>() {
+            @Override
+            protected void updateItem(Location item, boolean empty) {
+                super.updateItem(item, empty);
+                setText((item == null || empty) ? null : item.getAddress());
+            }
+        });
+
+        arrivalComboBox.setCellFactory(lv -> new ListCell<Location>() {
+            @Override
+            protected void updateItem(Location item, boolean empty) {
+                super.updateItem(item, empty);
+                setText((item == null || empty) ? null : item.getAddress());
+            }
+        });
+        arrivalComboBox.setButtonCell(new ListCell<Location>() {
+            @Override
+            protected void updateItem(Location item, boolean empty) {
+                super.updateItem(item, empty);
+                setText((item == null || empty) ? null : item.getAddress());
+            }
+        });
+
         // Create an "Update" button
         Button updateRequestButton = new Button("Update Locations");
         updateRequestButton.setOnAction(event -> {
@@ -308,14 +414,13 @@ public class RequestController {
             Location newDeparture = departureComboBox.getValue();
             Location newArrival = arrivalComboBox.getValue();
 
-            if(newDeparture != null && newArrival != null) {
+            if (newDeparture != null && newArrival != null) {
                 // Update the request with new locations
                 request.setDepartureLocation(newDeparture);
                 request.setArrivalLocation(newArrival);
 
                 try {
                     // Call service method to update the request locations in the database
-                    // (Ensure your update method handles updating only the location columns)
                     requestService.update(request);
                     System.out.println("✅ Request locations updated successfully!");
 
@@ -343,10 +448,10 @@ public class RequestController {
 
         // Set up the Scene and Stage
         Scene modalScene = new Scene(stackPane, 350, 300);
-
         modalStage.setScene(modalScene);
         modalStage.show();
     }
+
 
 
     private void openRequestForm() {
@@ -371,6 +476,37 @@ public class RequestController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        // Configurer l'affichage pour afficher uniquement le nom de la location
+        departureComboBox.setCellFactory(lv -> new ListCell<Location>() {
+            @Override
+            protected void updateItem(Location item, boolean empty) {
+                super.updateItem(item, empty);
+                setText((item == null || empty) ? null : item.getAddress());
+            }
+        });
+        departureComboBox.setButtonCell(new ListCell<Location>() {
+            @Override
+            protected void updateItem(Location item, boolean empty) {
+                super.updateItem(item, empty);
+                setText((item == null || empty) ? null : item.getAddress());
+            }
+        });
+
+        arrivalComboBox.setCellFactory(lv -> new ListCell<Location>() {
+            @Override
+            protected void updateItem(Location item, boolean empty) {
+                super.updateItem(item, empty);
+                setText((item == null || empty) ? null : item.getAddress());
+            }
+        });
+        arrivalComboBox.setButtonCell(new ListCell<Location>() {
+            @Override
+            protected void updateItem(Location item, boolean empty) {
+                super.updateItem(item, empty);
+                setText((item == null || empty) ? null : item.getAddress());
+            }
+        });
 
         VBox comboBoxBox = new VBox(10);
         comboBoxBox.getChildren().addAll(
@@ -401,8 +537,9 @@ public class RequestController {
 
                     requestService.create(newRequest);
                     System.out.println("✅ Request created successfully!");
-                    // Refresh requests using session-based method
-                    refreshRequestsFlowPane();
+
+                    // Rafraîchir les requêtes
+                    loadRequestsIntoFlowPane();
 
                     modalStage.close();
                 } catch (SQLException ex) {
@@ -419,6 +556,7 @@ public class RequestController {
         modalStage.setScene(modalScene);
         modalStage.show();
     }
+
 
     private void refreshRequestsFlowPane() {
         try {
@@ -439,4 +577,8 @@ public class RequestController {
             e.printStackTrace();
         }
     }
+
+
+
+
 }

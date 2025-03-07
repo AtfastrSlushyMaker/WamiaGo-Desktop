@@ -1,7 +1,7 @@
 package controllers.taxi.adminside.ride;
-import entities.Location;
-import entities.Request;
+
 import entities.Ride;
+import entities.Request;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,153 +9,140 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import services.RequestService;
-import services.LocationService;
-import services.RideService;
-import services.UserService;
-import utils.SessionManager;
+import services.RideService;  // Import your RideService
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public class RideController {
+
     @FXML
-    private AnchorPane side_ankerpane;
+    private Button home_button;
+    @FXML
+    private Button logout_button;
     @FXML
     private FlowPane rideFlowPane;
     @FXML
-    private AnchorPane root;
-
+    private Button back_button;
     @FXML
-    private Label totalRideLabel;
+    private AnchorPane root;
 
     private final RideService rideService = new RideService();
 
-
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/taxi-managment/admin_side/ride.css").toExternalForm());
-        loadRidesIntoFlowPane();
-     //updateTotalRidesCount();
+        loadAllRidesIntoFlowPane();
+        //updateTotalRequests(); // Call the method to update the total request count
+    }
 
+    private void setupNavigation() {
+        home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
+    }
+
+    private void loadScene(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent rootScene = loader.load();
+            Stage stage = (Stage) home_button.getScene().getWindow();
+            stage.setScene(new Scene(rootScene));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleBack() {
 
     }
- /*   public void updateTotalRidesCount() {
-        try {
-            // Assuming totalRequests is fetched from the database or service
-            int totalRequests = rideService.countRides();
-            // Set the label text and apply the style class
-            totalRideLabel.setText("Total Requests: " + totalRequests);
-            totalRideLabel.getStyleClass().add("total-ride-label");
-        } catch (SQLException e) {
-            e.printStackTrace();  // Handle any database errors
-            // Optionally, show a user-friendly message or log the error
-        }
-    }*/
-    private void loadRidesIntoFlowPane() {
-        try {
-            // Fetch all rides from the database (not specific to any user)
-            List<Ride> rides = rideService.read();  // Assume this method fetches all rides
 
-            // Clear any existing content from the FlowPane
+    private void loadAllRidesIntoFlowPane() {
+        try {
+            List<Ride> rides = rideService.read();
             rideFlowPane.getChildren().clear();
 
-            // Check if no rides were found
-            if (rides == null || rides.isEmpty()) {
-                System.out.println("No rides available.");
-                return;  // Exit if no rides exist
-            }
-
-            // Iterate through the rides and display them
             for (Ride ride : rides) {
-                if (ride == null || ride.getRequest() == null) {
-                    continue;  // Skip any ride or request that is null
-                }
                 VBox rideCard = createRideCard(ride);
-                rideFlowPane.getChildren().add(rideCard);  // Add the card to the FlowPane
+                rideFlowPane.getChildren().add(rideCard);
             }
         } catch (SQLException e) {
-            e.printStackTrace();  // Handle any SQL errors
-            // Optionally, you can display an error message to the user here
+            e.printStackTrace();
+            showErrorAlert("Database Error", "Failed to load the rides from the database.");
         }
     }
 
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     private VBox createRideCard(Ride ride) {
-        VBox rideCard = new VBox(10);
-        rideCard.setPadding(new Insets(10));
+        VBox rideCard = new VBox(5);
+        rideCard.setPadding(new Insets(5));
         rideCard.getStyleClass().add("ride-card");
         rideCard.setAlignment(Pos.CENTER);
+        rideCard.setPrefWidth(250);
 
-        // Create image and text box for ride status
         HBox imageAndTextBox = createImageAndTextBoxForRide(ride);
         rideCard.getChildren().add(imageAndTextBox);
 
-        // Show ride start and end location
-        Label locationLabel = new Label("From: " + ride.getRequest().getDepartureLocation().getAddress() +
-                " To: " + ride.getRequest().getArrivalLocation().getAddress());
-        locationLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(locationLabel);
+        if (ride.getRequest() != null && ride.getRequest().getDepartureLocation() != null
+                && ride.getRequest().getArrivalLocation() != null) {
 
-        // Show ride duration
-        Label durationLabel = new Label("Duration: " + ride.getDuration() + " mins");
-        durationLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(durationLabel);
+            Label locationLabel = new Label("From: " + ride.getRequest().getDepartureLocation().getAddress());
+            locationLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: white;");
+            locationLabel.setWrapText(true);
 
-        // Show ride date
-        Label dateLabel = new Label("Date: " + ride.getRideDate().toString());
-        dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(dateLabel);
+            Label destinationLabel = new Label("To: " + ride.getRequest().getArrivalLocation().getAddress());
+            destinationLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: white;");
+            destinationLabel.setWrapText(true);
 
-        // Show ride status (optional)
-        Label statusLabel = new Label("Status: " + ride.getStatus().toString());  // Assuming Status is an enum
-        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(statusLabel);
+            rideCard.getChildren().addAll(locationLabel, destinationLabel);
+        }
 
-        // Create buttons
         Button selectButton = createSelectButtonForRide(ride);
         Button cancelButton = createCancelButton(ride, rideCard);
+        Button updateButton = createUpdateButton(ride);
 
-        // Place buttons in an HBox to align them horizontally
-        HBox buttonContainer = new HBox(10);
+        selectButton.setPrefSize(80, 30);
+        cancelButton.setPrefSize(80, 30);
+        updateButton.setPrefSize(80, 30);
+
+        HBox buttonContainer = new HBox(5, selectButton, cancelButton, updateButton);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, cancelButton);
 
-        rideCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
+        rideCard.getChildren().add(buttonContainer);
 
-        // Add hover effect for the ride card
+        rideCard.setOnMouseEntered(event -> {
+            rideCard.setScaleX(1.03);
+            rideCard.setScaleY(1.03);
+        });
         rideCard.setOnMouseExited(event -> {
             rideCard.setScaleX(1);
             rideCard.setScaleY(1);
         });
-        rideCard.setOnMouseEntered(event -> {
-            rideCard.setScaleX(1.05);
-            rideCard.setScaleY(1.05);
-        });
 
         return rideCard;
     }
+
     private HBox createImageAndTextBoxForRide(Ride ride) {
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);
         hbox.setFillHeight(true);
 
-        // Set an appropriate image for the ride, for example, a car or a ride icon
         ImageView rideImage = new ImageView(new Image(getClass().getResource("/images/icons/taxi.png").toExternalForm()));
         rideImage.setFitWidth(50);
         rideImage.setFitHeight(50);
         rideImage.setPreserveRatio(true);
 
-        // Display ride status (e.g., "Completed", "Ongoing")
         Text statusText = new Text("Status: " + ride.getStatus());
         statusText.setWrappingWidth(180);
         statusText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #FFFFFF;");
@@ -165,9 +152,42 @@ public class RideController {
 
         return hbox;
     }
-    private void openRideDetails(Ride ride) {
-        System.out.println("Opening details for Ride ID: " + ride.getIdRide());
 
+    private Button createSelectButtonForRide(Ride ride) {
+        Button selectButton = new Button("Details");
+        selectButton.getStyleClass().add("ride-button");
+        selectButton.setOnAction(e -> openRideDetails(ride));
+        return selectButton;
+    }
+
+    private Button createCancelButton(Ride ride, VBox rideCard) {
+        Button deleteButton = new Button("Delete");
+        deleteButton.getStyleClass().add("ride-button-delete");
+
+        deleteButton.setOnAction(event -> {
+            try {
+                rideService.delete(ride.getIdRide());
+                rideFlowPane.getChildren().remove(rideCard);
+                System.out.println("Ride ID " + ride.getIdRide() + " deleted.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Failed to delete ride ID " + ride.getIdRide());
+            }
+        });
+
+        return deleteButton;
+    }
+
+    private Button createUpdateButton(Ride ride) {
+        Button updateButton = new Button("Update");
+        updateButton.getStyleClass().add("ride-button-update");
+
+        updateButton.setOnAction(event -> openUpdateStatusDialog(ride));
+
+        return updateButton;
+    }
+
+    private void openRideDetails(Ride ride) {
         Stage modalStage = new Stage();
         modalStage.setTitle("Ride Details - " + ride.getIdRide());
 
@@ -184,26 +204,17 @@ public class RideController {
         VBox rideDetailsBox = new VBox(8);
         rideDetailsBox.getStyleClass().add("ride-details-box");
 
-        // Displaying the details from the Ride object
-        Label arrivalLabel = new Label("Arrival Location: " + ride.getRequest().getArrivalLocation().getAddress());
-        Label departureLabel = new Label("Departure Location: " + ride.getRequest().getDepartureLocation().getAddress());
-        Label driverLabel = new Label("Driver: " + ride.getDriver().getUser().getName());  // Assuming Driver class has a getName() method
+        Label arrivalLabel = new Label("Arrival Location: " + (ride.getRequest().getArrivalLocation() != null ? ride.getRequest().getArrivalLocation().getAddress() : "Unknown"));
+        Label departureLabel = new Label("Departure Location: " + (ride.getRequest().getDepartureLocation() != null ? ride.getRequest().getDepartureLocation().getAddress() : "Unknown"));
+
         Label distanceLabel = new Label("Distance: " + ride.getDistance() + " km");
         Label durationLabel = new Label("Duration: " + ride.getDuration() + " min");
         Label priceLabel = new Label("Price: " + ride.getPrice() + " TND");
         Label statusLabel = new Label("Status: " + ride.getStatus());
         Label dateLabel = new Label("Date: " + ride.getRideDate().toString());
+        Label clientLabel = new Label("Client Name: " + ride.getRequest().getClient().getName());
 
-        arrivalLabel.getStyleClass().add("modal-detail-label");
-        departureLabel.getStyleClass().add("modal-detail-label");
-        driverLabel.getStyleClass().add("modal-detail-label");
-        distanceLabel.getStyleClass().add("modal-detail-label");
-        durationLabel.getStyleClass().add("modal-detail-label");
-        priceLabel.getStyleClass().add("modal-detail-label");
-        statusLabel.getStyleClass().add("modal-detail-label");
-        dateLabel.getStyleClass().add("modal-detail-label");
-
-        rideDetailsBox.getChildren().addAll(arrivalLabel, departureLabel, driverLabel, distanceLabel,
+        rideDetailsBox.getChildren().addAll(clientLabel,arrivalLabel, departureLabel,distanceLabel,
                 durationLabel, priceLabel, statusLabel, dateLabel);
 
         Button closeButton = new Button("Close");
@@ -218,36 +229,49 @@ public class RideController {
         stackPane.getChildren().add(modalLayout);
 
         Scene modalScene = new Scene(stackPane, 400, 350);
-        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/user_side/ride.css").toExternalForm());
+        modalScene.getStylesheets().add(getClass().getResource("/taxi-managment/admin_side/ride.css").toExternalForm());
         modalStage.setScene(modalScene);
         modalStage.show();
     }
 
-    private Button createSelectButtonForRide(Ride ride) {
-        Button selectButton = new Button("Details");
-        selectButton.getStyleClass().add("ride-button");
-        selectButton.setOnAction(e -> openRideDetails(ride));  // You will need to implement the openRideDetails method
-        return selectButton;
-    }
-    private Button createCancelButton(Ride ride, VBox rideCard) {
-        Button deleteButton = new Button("Delete");
-        deleteButton.getStyleClass().add("ride-button-delete");
+    private void openUpdateStatusDialog(Ride ride) {
+        RideService rideService1 = new RideService();
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Update Ride Status");
 
-        deleteButton.setOnAction(event -> {
-            try {
-                rideService.delete(ride.getIdRide());  // Assuming rideService handles the delete operation
-                rideFlowPane.getChildren().remove(rideCard);  // Assuming rideFlowPane contains the ride cards
-                System.out.println("Ride ID " + ride.getIdRide() + " deleted.");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("Failed to delete ride ID " + ride.getIdRide());
+        VBox dialogVBox = new VBox(10);
+        dialogVBox.setPadding(new Insets(20));
+        dialogVBox.setAlignment(Pos.CENTER);
+
+        ComboBox<Ride.Status> statusComboBox = new ComboBox<>();
+        statusComboBox.getItems().addAll(Ride.Status.values());
+        statusComboBox.setValue(ride.getStatus());
+
+        Button saveButton = new Button("Save");
+        saveButton.getStyleClass().add("save-button");
+
+        saveButton.setOnAction(event -> {
+            Ride.Status newStatus = statusComboBox.getValue();
+
+            if (newStatus != null) {
+                try {
+                    rideService1.updateRideStatus(ride.getIdRide(), newStatus);
+                    loadAllRidesIntoFlowPane();  // Reload the rides list
+                    dialogStage.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a status.");
+                alert.showAndWait();
             }
         });
 
-        return deleteButton;
+        dialogVBox.getChildren().addAll(new Label("Select New Status:"), statusComboBox, saveButton);
+
+        Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        dialogStage.setScene(dialogScene);
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.showAndWait();
     }
-
-
-
-
 }
