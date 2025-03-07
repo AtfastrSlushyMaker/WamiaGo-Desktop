@@ -167,7 +167,7 @@ public class RequestController {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
         See_you_Rides_button.setOnAction(event -> loadScene("/ride.fxml"));
-        bookings_button.setOnAction(actionEvent ->loadScene("/Annoucement/Front/announcements_client.fxml") );
+      //  bookings_button.setOnAction(actionEvent ->loadScene("/Annoucement/Front/announcements_client.fxml") );
     }
 
     private void loadScene(String fxmlPath) {
