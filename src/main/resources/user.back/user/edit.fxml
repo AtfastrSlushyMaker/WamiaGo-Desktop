@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/17" fx:controller="controllers.user.UsersEditController" spacing="10" alignment="CENTER" stylesheets="@../style.css" styleClass="modal-pane">
+    <children>
+        <Label text="Edit User" styleClass="modal-title" />
+
+        <Label text="Name:" />
+        <TextField fx:id="nameField" />
+
+        <Label text="Email:" />
+        <TextField fx:id="emailField" />
+
+        <Label text="Phone:" />
+        <TextField fx:id="phoneField" />
+
+        <Label text="Gender:" />
+        <ComboBox fx:id="genderComboBox" />
+
+
+        <Label text="Date of Birth:" />
+        <DatePicker fx:id="dobDatePicker" />
+
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Save" onAction="#saveUser" styleClass="modal-button" />
+            <Button text="Cancel" styleClass="modal-button" />
+        </HBox>
+    </children>
+</VBox>

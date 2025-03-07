@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@station.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.front.StationController">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@station.css" xmlns="http://javafx.com/javafx/17.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.station.front.StationController">
 
     <children>
 
@@ -54,11 +62,6 @@
                             </font>
 
                         </Button>
-                        <Button fx:id="history_button" layoutX="18.0" layoutY="572.0" prefHeight="53.0" prefWidth="248.0" styleClass="navbar_buttons" stylesheets="@style.css" text="History" textFill="#c6b6b6">
-                            <font>
-                                <Font name="Century Gothic Bold" size="13.0" />
-                            </font>
-                        </Button>
                         <Button id="logout-button" fx:id="logout_button" layoutX="73.0" layoutY="711.0" prefHeight="56.0" prefWidth="160.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Logout" textFill="#c6b6b6">
                             <font>
                                 <Font name="Century Gothic Bold" size="13.0" />
@@ -91,10 +94,6 @@
                                 <Image url="@../../images/icons/delivery-truck.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="49.0" fitWidth="50.0" layoutX="40.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../images/icons/history.png" />
-                            </image></ImageView>
 
                     </children>
 
@@ -104,7 +103,7 @@
 
         </VBox>
 
-        <Pane prefHeight="827.0" prefWidth="1143.0">
+        <Pane focusTraversable="true" prefHeight="827.0" prefWidth="1143.0">
             <children>
                 <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
                 <Label id="available_stations_label" fx:id="available_stations_label" layoutX="411.0" layoutY="115.0" prefHeight="50.0" prefWidth="272.0" stylesheets="@station.css" text="Available Stations" textFill="#323131">
@@ -112,22 +111,44 @@
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
                 </Label>
-            <ScrollPane id="scrollPane" fx:id="scrollPane" layoutX="512.0" layoutY="212.0" prefHeight="583.0" prefWidth="557.0" stylesheets="@station.css">
-               <content>
-      
-                                                                <!-- FlowPane to display stations -->
-                      <FlowPane id="scrollPane" fx:id="stationFlowPane" columnHalignment="CENTER" hgap="20" prefHeight="621.0" prefWidth="644.0" stylesheets="@station.css" vgap="20">
-                    <!-- Dynamically populated station cards will go here -->
-                </FlowPane>
-               </content>
-            </ScrollPane>
-          <AnchorPane layoutX="42.0" layoutY="521.0" minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="438.0" />
-            <ImageView fitHeight="583.0" fitWidth="352.0" layoutX="121.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/station/images/sygic-satellite-maps.png" />
-               </image>
-            </ImageView>
-            <Button id="my_bikes_button" fx:id="my_bikes_button" layoutX="919.0" layoutY="122.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" text="My Bikes" />
+                <ScrollPane id="scrollPane" fx:id="scrollPane" layoutX="512.0" layoutY="240.0" prefHeight="555.0" prefWidth="545.0" stylesheets="@station.css">
+                    <content>
+
+                        <!-- FlowPane to display stations -->
+                        <FlowPane id="scrollPane" fx:id="stationFlowPane" columnHalignment="CENTER" focusTraversable="true" hgap="20" prefHeight="555.0" prefWidth="545.0" stylesheets="@station.css" vgap="20">
+                            <!-- Dynamically populated station cards will go here -->
+                        </FlowPane>
+                    </content>
+
+                </ScrollPane>
+                <Button id="my_bikes_button" fx:id="my_bikes_button" layoutX="947.0" layoutY="121.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" text="My Bikes" />
+                <StackPane fx:id="stackPaneMap" layoutX="21.0" layoutY="200.0" prefHeight="591.0" prefWidth="452.0" styleClass="web-view" stylesheets="@station.css">
+                    <children>
+                        <WebView fx:id="map" prefHeight="558.0" prefWidth="452.0" stylesheets="@station.css" />
+                        <ProgressIndicator fx:id="loadingSpinner" visible="false" />
+                    </children>
+                </StackPane>
+                <ComboBox id="comboBox_search" fx:id="searchByComboBox" layoutX="535.0" layoutY="160.0" prefHeight="32.0" prefWidth="150.0">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Station Name" />
+                            <String fx:value="Address" />
+                            <String fx:value="Available Bikes" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <Button fx:id="sortButton" layoutX="947.0" layoutY="193.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" stylesheets="@station.css" text="Sort" />
+                <TextField fx:id="searchField" layoutX="535.0" layoutY="196.0" prefHeight="32.0" prefWidth="316.0" promptText=" Where do you want to go? " stylesheets="@station.css" />
+                <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="963.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/icons/sort_icon.png" />
+                    </image>
+                </ImageView>
+            <Button fx:id="clear_button" layoutX="807.0" layoutY="201.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="36.0" styleClass="clear_button" stylesheets="@station.css" text="X" textFill="RED">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
 
             </children>
         </Pane>

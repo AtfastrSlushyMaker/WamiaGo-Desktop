@@ -1,9 +1,20 @@
 package controllers.taxi.userside.ride;
-import entities.Ride;
-import entities.User;
+
+
+
+
+import javafx.concurrent.Worker;
+import javafx.scene.control.ScrollPane;
+import controllers.Home;
+import entities.*;
+import javafx.application.HostServices;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
@@ -15,13 +26,24 @@ import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import services.PaymentService;
 import services.RideService;
 import utils.SessionManager;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 
+
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class RideController {
     @FXML
@@ -48,6 +70,9 @@ public class RideController {
     private Button See_you_Rides_button;
 
     private final RideService rideService = new RideService();
+
+    private final PaymentService paymentService = new PaymentService("67c0e6eedeff4671bb44d983:I2Cgjpot0lmfhlhMehyxRNd5u8RsZm");
+    private boolean isPaymentInProgress = false;
 
     @FXML
     public void initialize() {
@@ -118,6 +143,7 @@ public class RideController {
                 System.out.println("Price: " + ride.getPrice() + " TND");
                 System.out.println("Status: " + ride.getStatus());
 
+
                 // Create a ride card UI component
                 VBox rideCard = createRideCard(ride);
                 rideFlowPane.getChildren().add(rideCard);  // Add the card to the FlowPane
@@ -137,35 +163,21 @@ public class RideController {
         HBox imageAndTextBox = createImageAndTextBoxForRide(ride);
         rideCard.getChildren().add(imageAndTextBox);
 
-        // Show ride start and end location
-        Label locationLabel = new Label("From: " + ride.getRequest().getDepartureLocation().getAddress() +
-                " To: " + ride.getRequest().getArrivalLocation().getAddress());
-        locationLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(locationLabel);
-
         // Show ride duration
         Label durationLabel = new Label("Duration: " + ride.getDuration() + " mins");
         durationLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
         rideCard.getChildren().add(durationLabel);
 
-        // Show ride date
-        Label dateLabel = new Label("Date: " + ride.getRideDate().toString());
-        dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(dateLabel);
-
-        // Show ride status (optional)
-        Label statusLabel = new Label("Status: " + ride.getStatus().toString());  // Assuming Status is an enum
-        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
-        rideCard.getChildren().add(statusLabel);
-
         // Create buttons
         Button selectButton = createSelectButtonForRide(ride);
         Button cancelButton = createCancelButton(ride, rideCard);
+        Button payButton = createPayButton(ride);
+
 
         // Place buttons in an HBox to align them horizontally
         HBox buttonContainer = new HBox(10);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(selectButton, cancelButton);
+        buttonContainer.getChildren().addAll(selectButton, cancelButton,payButton);
 
         rideCard.getChildren().add(buttonContainer); // Add the HBox to the VBox
 
@@ -205,7 +217,7 @@ public class RideController {
         return hbox;
     }
     private void openRideDetails(Ride ride) {
-        System.out.println("Opening details for Ride ID: " + ride.getIdRide());
+
 
         Stage modalStage = new Stage();
         modalStage.setTitle("Ride Details - " + ride.getIdRide());
@@ -226,7 +238,16 @@ public class RideController {
         // Displaying the details from the Ride object
         Label arrivalLabel = new Label("Arrival Location: " + ride.getRequest().getArrivalLocation().getAddress());
         Label departureLabel = new Label("Departure Location: " + ride.getRequest().getDepartureLocation().getAddress());
-        Label driverLabel = new Label("Driver: " + ride.getDriver().getUser().getName());  // Assuming Driver class has a getName() method
+
+        // Check if driver is null before trying to access its properties
+        Label driverLabel;
+        if (ride.getDriver() != null && ride.getDriver().getUser() != null) {
+            driverLabel = new Label("Driver: " + ride.getDriver().getUser().getName());
+
+        } else {
+            driverLabel = new Label("Driver");
+        }
+
         Label distanceLabel = new Label("Distance: " + ride.getDistance() + " km");
         Label durationLabel = new Label("Duration: " + ride.getDuration() + " min");
         Label priceLabel = new Label("Price: " + ride.getPrice() + " TND");
@@ -262,6 +283,7 @@ public class RideController {
         modalStage.show();
     }
 
+
     private Button createSelectButtonForRide(Ride ride) {
         Button selectButton = new Button("Details");
         selectButton.getStyleClass().add("ride-button");
@@ -286,11 +308,116 @@ public class RideController {
         return deleteButton;
     }
 
+    private Button createPayButton(Ride ride) {
+        Button payButton = new Button("Payer");
+        payButton.getStyleClass().add("ride-button-pay");
+
+        payButton.setOnAction(event -> {
+            if (!isPaymentInProgress) {
+                isPaymentInProgress = true; // Start the payment process
+                payButton.setDisable(true); // Disable the button to prevent multiple clicks
+
+                // Call the payment method
+                handleConfirmride(ride);
+            }
+        });
+
+        return payButton;
+    }
+
+    private void handleConfirmride(Ride ride) {
+        try {
+            // 1. Créer une demande de paiement
+            InitiatePaymentRequest paymentRequest = new InitiatePaymentRequest(
+                    "67c0e6eedeff4671bb44d98b", // Remplacer par l'ID de ton wallet
+                    ride.getPrice() * 1000 // Conversion de DT en millimes
+            );
+
+            // 2. Initialiser le paiement
+            InitiatePaymentResponse paymentResponse = paymentService.initiatePayment(paymentRequest);
+
+            // 3. Ouvrir la passerelle de paiement
+            if (paymentResponse != null && paymentResponse.getPayUrl() != null) {
+                // Open payment URL
+                openPaymentPage(paymentResponse.getPayUrl());
+            } else {
+                showErrorAlert("Erreur", "L'URL de paiement est invalide.");
+            }
+
+        } catch (IOException e) {
+            showErrorAlert("Erreur", "Erreur réseau lors de l'ouverture du lien de paiement : " + e.getMessage());
+        } catch (Exception e) {
+            showErrorAlert("Erreur", "Erreur inconnue : " + e.getMessage());
+        }
+    }
 
 
+
+    // Méthode pour afficher une alerte d'erreur
+    public void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+
+    private void openPaymentPage(String url) {
+        Stage paymentStage = new Stage();
+        paymentStage.setTitle("Paiement");
+
+        // Créer WebView pour charger l'URL
+        WebView webView = new WebView();
+        WebEngine webEngine = webView.getEngine();
+        webEngine.load(url);
+
+        // Créer un ScrollPane pour permettre le défilement du contenu
+        ScrollPane scrollPane = new ScrollPane(webView);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
+        // Make the scrollPane grow vertically
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+
+        // Bouton pour fermer la fenêtre
+        Button closeButton = new Button("Fermer");
+        closeButton.getStyleClass().add("modal-close-button");
+        closeButton.setOnAction(e -> paymentStage.close());
+
+        // Créer le layout avec WebView et le bouton
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(10));
+        layout.getChildren().addAll(scrollPane, closeButton);
+
+        // Créer la scène avec un redimensionnement automatique
+        Scene scene = new Scene(layout, 1200, 800); // Increase height if necessary
+        paymentStage.setScene(scene);
+        paymentStage.setResizable(true);
+
+        // Vérifier que la page est bien chargée
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                System.out.println("Page loaded successfully.");
+            }
+        });
+
+        // Afficher la fenêtre
+        paymentStage.show();
+
+        System.out.println("Payment page opened in WebView.");
+    }
 
 
 
 
 
 }
+
+
+
+
+

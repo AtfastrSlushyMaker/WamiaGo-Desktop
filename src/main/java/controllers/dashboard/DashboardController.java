@@ -248,6 +248,18 @@ taxi_request_button.setOnAction(event -> openRequestForm());
                 e.printStackTrace();
             }
         });
+        bicycle_rent_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/station/front/myBikes/myBikes.fxml"));
+                Parent ridesRoot = loader.load();
+                Scene ridesScene = new Scene(ridesRoot);
+                Stage stage = (Stage) rides_button.getScene().getWindow();
+                stage.setScene(ridesScene);
+                pageNavigation();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         logout_button.setOnAction(event -> {
             SessionManager.getInstance().logout();

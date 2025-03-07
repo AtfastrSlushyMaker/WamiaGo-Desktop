@@ -5,9 +5,9 @@ import java.util.Objects;
 public class Location {
     private int id;
     private String address;
-    private float latitude;
-    private float longitude;
-
+    private double latitude;
+    private double longitude;
+    private static final double EARTH_RADIUS = 6371;
     public Location(int id, String address, float latitude, float longitude) {
         this.id = id;
         this.address = address;
@@ -20,6 +20,12 @@ public class Location {
         this.address = "";
         this.latitude = 0;
         this.longitude = 0;
+    }
+
+    public Location(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = "";
     }
 
     public int getId() {
@@ -38,19 +44,19 @@ public class Location {
         this.address = address;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -58,7 +64,7 @@ public class Location {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Location location)) return false;
-        return getId() == location.getId() && Float.compare(getLatitude(), location.getLatitude()) == 0 && Float.compare(getLongitude(), location.getLongitude()) == 0 && Objects.equals(getAddress(), location.getAddress());
+        return getId() == location.getId() && Double.compare(getLatitude(), location.getLatitude()) == 0 && Double.compare(getLongitude(), location.getLongitude()) == 0 && Objects.equals(getAddress(), location.getAddress());
     }
 
     @Override
@@ -98,4 +104,6 @@ public class Location {
 
         return R * c;
     }
+
+
 }

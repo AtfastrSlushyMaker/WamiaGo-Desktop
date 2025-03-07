@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.layout.Pane?>
+<AnchorPane prefHeight="827.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.dashboard.DashboardUserController">
+    <stylesheets>
+        <URL value="@dashboard.css" />
+    </stylesheets>
+
+    <!-- Top Bar -->
+    <AnchorPane fx:id="topBar" onMouseClicked="#handleTopBarDoubleClick" prefHeight="58.0" prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <children>
+            <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="35.0" prefWidth="50.0" AnchorPane.rightAnchor="0.0">
+                <graphic>
+                    <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@/images/icons/close.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button fx:id="maxBtn" mnemonicParsing="false" onAction="#handleMaximizeButton" prefHeight="35.0" prefWidth="50.0" AnchorPane.rightAnchor="50.0">
+                <graphic>
+                    <ImageView fitHeight="16.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@/images/icons/maximize.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button fx:id="restoreBtn" mnemonicParsing="false" onAction="#handleMinimizeButton" prefHeight="35.0" prefWidth="50.0" AnchorPane.rightAnchor="100.0">
+                <graphic>
+                    <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@/images/icons/minus.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button fx:id="menuBarBtn" mnemonicParsing="false" onAction="#menuBar" prefHeight="35.0" prefWidth="52.0" AnchorPane.leftAnchor="0.0">
+                <graphic>
+                    <ImageView fitHeight="21.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@/images/icons/hamburger.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+                <padding>
+                    <Insets top="3.0" />
+                </padding>
+            </Button>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="WamiaGo" AnchorPane.leftAnchor="54.0" AnchorPane.topAnchor="18.0">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Text>
+        </children>
+    </AnchorPane>
+
+    <!-- Sidebar -->
+    <AnchorPane fx:id="navPanel" layoutY="48.8" prefHeight="682.0" prefWidth="200.0" style="-fx-background-color: #2D2F33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="49.0">
+        <children>
+            <!-- User Profile Section -->
+            <Circle fill="#c0c0c0" layoutX="36.0" layoutY="76.0" radius="23.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Text fill="WHITE" layoutX="63.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello," />
+            <Text fx:id="Username" fill="WHITE" layoutX="68.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" wrappingWidth="82.86328125">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Text>
+              <Button fx:id="logout" graphicTextGap="0.0" layoutX="28.0" layoutY="642.0" mnemonicParsing="false" onAction="#logoutBtn" prefHeight="58.0" prefWidth="160.0" text="Logout" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                      <Font size="10.0" />
+                  </font>
+                  <styleClass>
+                      <String fx:value="navButtons" />
+                      <String fx:value="text" />
+                  </styleClass>
+              </Button>
+         <Label id="date" fx:id="date_label" layoutX="22.0" layoutY="126.0" maxWidth="208.0" prefHeight="45.0" prefWidth="208.0" text="Date" />
+         <ImageView fitHeight="36.0" fitWidth="44.0" layoutX="36.0" layoutY="654.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../images/icons/logout.png" />
+            </image>
+         </ImageView>
+            <Button fx:id="Settings" layoutX="39.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="" />
+              <ImageView fitHeight="20.0" fitWidth="16.0" layoutX="45.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../images/icons/down-arrow.png" />
+                  </image>
+              </ImageView>
+         <Button fx:id="home_button" layoutX="16.0" layoutY="210.0" onAction="#homeBtn" prefHeight="50.0" prefWidth="220.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Home" textFill="#c6b6b6">
+            <font>
+               <Font name="Century Gothic Bold" size="13.0" />
+            </font>
+         </Button>
+         <ImageView id="home" fitHeight="36.0" fitWidth="44.0" layoutX="43.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" styleClass="home">
+            <image>
+               <Image url="@../images/icons/home.png" />
+            </image>
+         </ImageView>
+         <Button fx:id="rides_button" layoutX="16.0" layoutY="310.0" onAction="#ridesBtn" prefHeight="50.0" prefWidth="220.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Rides " textFill="#c6b6b6">
+            <font>
+               <Font name="Century Gothic Bold" size="13.0" />
+            </font>
+         </Button>
+         <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="37.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../images/icons/rides.png" />
+            </image>
+         </ImageView></children>
+    </AnchorPane>
+
+    <AnchorPane fx:id="contentPane"
+                xmlns="http://javafx.com/javafx"
+                xmlns:fx="http://javafx.com/fxml">
+        <children>
+            <Pane fx:id="backgroundPane" />
+        </children>
+    </AnchorPane>
+
+    <Button fx:id="booking_button" layoutX="16.0" layoutY="468.0" prefHeight="50.0" prefWidth="220.0" styleClass="navbar_buttons" stylesheets="@style.css" text="Bookings " textFill="#c6b6b6">
+      <font>
+         <Font name="Century Gothic Bold" size="13.0" />
+      </font>
+   </Button>
+   <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="39.0" layoutY="476.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../images/icons/delivery-truck.png" />
+      </image>
+   </ImageView>
+   <Button fx:id="history_button" layoutX="16.0" layoutY="566.0" prefHeight="50.0" prefWidth="220.0" styleClass="navbar_buttons" stylesheets="@style.css" text="History" textFill="#c6b6b6">
+      <font>
+         <Font name="Century Gothic Bold" size="13.0" />
+      </font>
+   </Button>
+   <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="39.0" layoutY="572.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../images/icons/history.png" />
+      </image>
+   </ImageView>
+</AnchorPane>

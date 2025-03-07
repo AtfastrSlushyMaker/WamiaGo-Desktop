@@ -5,18 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/rides/RidesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/rides/RidesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/BookingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/TripService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wamiago/wamiago/services/TripService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/DataBase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,19 +19,12 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="PUSH_TAGS">
-      <GitPushTagMode>
-        <option name="argument" value="--tags" />
-        <option name="title" value="All" />
-      </GitPushTagMode>
-    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="bicycle-station-management" />
@@ -58,7 +41,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git&quot;,
-    &quot;accountId&quot;: &quot;d6cf9076-ac81-47f2-b284-5793fe0ee2cc&quot;
+    &quot;accountId&quot;: &quot;827ce6ba-4645-4d94-8043-833eb4e1af9f&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -70,6 +53,9 @@
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -91,19 +77,20 @@
     &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
     &quot;Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.wamiaGo [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;covoiturage-management-&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main-il-kbir&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/islem/Downloads/javafx-project-main/javafx-project-main&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/Rzouga.RZOUGALAPTOP/Desktop/School/3A/Sem 2/Pidev/WamiaGo-Desktop/src/main/resources/user.back&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/WamiaGo-Desktop/src/main/resources&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
@@ -112,23 +99,31 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\islem\OneDrive\Bureau\mes etudes\3\sem2\pidev\WamiaGo-Desktop\src\main\resources\trips" />
-      <recent name="C:\Users\Rzouga.RZOUGALAPTOP\Desktop\School\3A\Sem 2\Pidev\WamiaGo-Desktop\src\main\resources\user.back" />
+      <recent name="D:\WamiaGo-Desktop\src\main\resources" />
+      <recent name="D:\WamiaGo-Desktop\src\main\resources\dashboard" />
+      <recent name="D:\WamiaGo-Desktop\src\main\java\controllers" />
+      <recent name="D:\WamiaGo-Desktop\src\main\resources\images" />
+      <recent name="D:\WamiaGo-Desktop\src\main\resources\images\station" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\WamiaGo-Desktop\src\main\resources\images" />
+      <recent name="C:\Users\Rzouga.RZOUGALAPTOP\Desktop\School\3A\Sem 2\Pidev\WamiaGo-Desktop\src\main\resources\user.front" />
+      <recent name="C:\Users\Rzouga.RZOUGALAPTOP\Desktop\School\3A\Sem 2\Pidev\WamiaGo-Desktop\src\main\resources\user" />
+      <recent name="C:\Pidev\src\main\resources\Response" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="org.wamiago.wamiago.services" />
+      <recent name="controllers.dashboard" />
+      <recent name="services" />
+      <recent name="entities" />
     </key>
-  </component>
-  <component name="RunAnythingCache">
-    <option name="myCommands">
-      <command value=" " />
-    </option>
   </component>
   <component name="RunManager" selected="Application.Home">
     <configuration name="Home" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
       <module name="Pidev3a11" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.*" />
@@ -140,8 +135,8 @@
       </method>
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="test.Main" />
-      <module name="WamiaGo" />
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Pidev3a11" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -190,8 +185,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.387" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.387" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -221,39 +216,35 @@
       <workItem from="1739895110015" duration="2640000" />
       <workItem from="1739898136784" duration="3265000" />
       <workItem from="1739903249076" duration="1548000" />
-      <workItem from="1739989989824" duration="685000" />
-      <workItem from="1739992321782" duration="1756000" />
-      <workItem from="1740045267310" duration="2385000" />
-      <workItem from="1740057965950" duration="11924000" />
-      <workItem from="1740071912131" duration="4265000" />
-      <workItem from="1740126699661" duration="50000" />
-      <workItem from="1740127009640" duration="3053000" />
-      <workItem from="1741180812269" duration="1545000" />
-      <workItem from="1741194613032" duration="426000" />
-      <workItem from="1741204986644" duration="94000" />
-      <workItem from="1741205302468" duration="24000" />
-      <workItem from="1741206110351" duration="4546000" />
-      <workItem from="1741262818615" duration="34000" />
-      <workItem from="1741262879878" duration="2658000" />
-      <workItem from="1741267843392" duration="11782000" />
-      <workItem from="1741295547402" duration="5674000" />
-      <workItem from="1741303787183" duration="16000" />
+      <workItem from="1739982982365" duration="9338000" />
+      <workItem from="1740108653406" duration="13899000" />
+      <workItem from="1740125763395" duration="2609000" />
+      <workItem from="1740522729116" duration="738000" />
+      <workItem from="1740524958448" duration="5036000" />
+      <workItem from="1740601050675" duration="13353000" />
+      <workItem from="1740662234661" duration="1944000" />
+      <workItem from="1740671863699" duration="193000" />
+      <workItem from="1740698084294" duration="7938000" />
+      <workItem from="1740731875865" duration="1931000" />
+      <workItem from="1740910170859" duration="3235000" />
+      <workItem from="1740916420140" duration="18753000" />
+      <workItem from="1741114323599" duration="15342000" />
+      <workItem from="1741182675909" duration="5789000" />
+      <workItem from="1741292125269" duration="177000" />
+      <workItem from="1741292513914" duration="3262000" />
+      <workItem from="1741305353275" duration="1533000" />
+      <workItem from="1741306904531" duration="988000" />
+      <workItem from="1741307917233" duration="43000" />
+      <workItem from="1741307977472" duration="1369000" />
+      <workItem from="1741310149214" duration="402000" />
+      <workItem from="1741310572819" duration="123000" />
+      <workItem from="1741310712594" duration="11000" />
+      <workItem from="1741311375374" duration="5618000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>

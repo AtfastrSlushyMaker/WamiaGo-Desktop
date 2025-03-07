@@ -64,7 +64,7 @@ public class BicycleService implements IService<Bicycle> {
         while (rs.next()) {
             Bicycle bicycle = new Bicycle();
             bicycle.setId(rs.getInt("id_bike"));
-            bicycle.getStation().setId(rs.getInt("id_station"));
+            bicycle.setStation(new StationService().getById(rs.getInt("id_station")));
             bicycle.setStatus(Bicycle.STATUS.valueOf(rs.getString("status")));
             bicycle.setBattery_level(rs.getFloat("battery_level"));
             bicycle.setRange_km(rs.getFloat("range_km"));
@@ -189,7 +189,21 @@ public class BicycleService implements IService<Bicycle> {
         }
         return bicycles;
     }
+    public void batchUpdate(List<Bicycle> bicycles) throws Exception {
+        for (Bicycle bicycle : bicycles) {
+            update(bicycle);
+        }
+    }
 
+    public void batchDelete(List<Integer> bicycleIds) {
+        for (int id : bicycleIds) {
+            try {
+                delete(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }

@@ -3,10 +3,12 @@ package services;
 import entities.Bicycle;
 import entities.Location;
 import entities.Station;
+import entities.User;
 import utils.DataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class StationService implements IService<Station> {
@@ -32,6 +34,7 @@ public class StationService implements IService<Station> {
         System.out.println("✅ Station created successfully.");
         return false;
     }
+
 
     @Override
     public void update(Station station) throws SQLException {
@@ -228,11 +231,19 @@ public class StationService implements IService<Station> {
         return stations;
     }
 
-    public List<Station> search(String By, String value) throws SQLException {
+    public List<Station> search(String by, String value) throws SQLException {
         List<Station> stations = new ArrayList<>();
-        String sql = "SELECT * FROM bicycle_station WHERE " + By + "= ?";
+
+        // Whitelist of allowed column names to prevent SQL injection
+        List<String> allowedColumns = List.of("name", "status"); // Add valid column names
+        if (!allowedColumns.contains(by)) {
+            throw new IllegalArgumentException("Invalid search column: " + by);
+        }
+
+        String sql = "SELECT * FROM bicycle_station WHERE " + by + " LIKE ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, value);
+        preparedStatement.setString(1, "%" + value + "%");  // Correct LIKE usage
+
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
             Station station = new Station();
@@ -246,113 +257,13 @@ public class StationService implements IService<Station> {
             station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
             stations.add(station);
         }
+
+        rs.close();
+        preparedStatement.close();
+
         return stations;
     }
 
-    public List<Station> searchByName(String name) throws SQLException {
-        List<Station> stations = new ArrayList<>();
-        String sql = "SELECT * FROM bicycle_station WHERE name LIKE ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, "%" + name + "%");
-        ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()) {
-            Station station = new Station();
-            station.setId(rs.getInt("id_station"));
-            station.setName(rs.getString("name"));
-            station.setLocation(new LocationService().getById(rs.getInt("id_location")));
-            station.setTotal_docks(rs.getInt("total_docks"));
-            station.setAvailable_docks(rs.getInt("available_docks"));
-            station.setAvailable_bikes(rs.getInt("available_bikes"));
-            station.setCharging_bikes(rs.getInt("charging_bikes"));
-            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
-            stations.add(station);
-        }
-        return stations;
-    }
-
-    public List<Station> searchByStatus(Station.STATUS status) throws SQLException {
-        List<Station> stations = new ArrayList<>();
-        String sql = "SELECT * FROM bicycle_station WHERE status = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, status.toString());
-        ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()) {
-            Station station = new Station();
-            station.setId(rs.getInt("id_station"));
-            station.setName(rs.getString("name"));
-            station.setLocation(new LocationService().getById(rs.getInt("id_location")));
-            station.setTotal_docks(rs.getInt("total_docks"));
-            station.setAvailable_docks(rs.getInt("available_docks"));
-            station.setAvailable_bikes(rs.getInt("available_bikes"));
-            station.setCharging_bikes(rs.getInt("charging_bikes"));
-            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
-            stations.add(station);
-        }
-        return stations;
-    }
-
-    public List<Station> searchByLocation(Location location) throws SQLException {
-        List<Station> stations = new ArrayList<>();
-        String sql = "SELECT * FROM bicycle_station WHERE id_location = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, location.getId());
-        ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()) {
-            Station station = new Station();
-            station.setId(rs.getInt("id_station"));
-            station.setName(rs.getString("name"));
-            station.setLocation(new LocationService().getById(rs.getInt("id_location")));
-            station.setTotal_docks(rs.getInt("total_docks"));
-            station.setAvailable_docks(rs.getInt("available_docks"));
-            station.setAvailable_bikes(rs.getInt("available_bikes"));
-            station.setCharging_bikes(rs.getInt("charging_bikes"));
-            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
-            stations.add(station);
-        }
-        return stations;
-    }
-
-    public List<Station> searchByAvailableBikes(int available_bikes) throws SQLException {
-        List<Station> stations = new ArrayList<>();
-        String sql = "SELECT * FROM bicycle_station WHERE available_bikes = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, available_bikes);
-        ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()) {
-            Station station = new Station();
-            station.setId(rs.getInt("id_station"));
-            station.setName(rs.getString("name"));
-            station.setLocation(new LocationService().getById(rs.getInt("id_location")));
-            station.setTotal_docks(rs.getInt("total_docks"));
-            station.setAvailable_docks(rs.getInt("available_docks"));
-            station.setAvailable_bikes(rs.getInt("available_bikes"));
-            station.setCharging_bikes(rs.getInt("charging_bikes"));
-            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
-            stations.add(station);
-        }
-        return stations;
-    }
-
-    public List<Station> searchByAvailableDocks(int available_docks) throws SQLException {
-        List<Station> stations = new ArrayList<>();
-        String sql = "SELECT * FROM bicycle_station WHERE available_docks = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, available_docks);
-        ResultSet rs = preparedStatement.executeQuery();
-        while (rs.next()) {
-            Station station = new Station();
-            station.setId(rs.getInt("id_station"));
-            station.setName(rs.getString("name"));
-            station.setLocation(new LocationService().getById(rs.getInt("id_location")));
-            station.setTotal_docks(rs.getInt("total_docks"));
-            station.setAvailable_docks(rs.getInt("available_docks"));
-            station.setAvailable_bikes(rs.getInt("available_bikes"));
-            station.setCharging_bikes(rs.getInt("charging_bikes"));
-            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
-            stations.add(station);
-        }
-        return stations;
-    }
 
     public List<Bicycle> getAvailableBikes(Station station) {
         List<Bicycle> bicycles = new ArrayList<>();
@@ -379,10 +290,13 @@ public class StationService implements IService<Station> {
         return bicycles;
     }
 
-    public void fixDataBaseBicycles(Station station) {
-        List<Bicycle> bicycles = getAvailableBikes(station);
+    public void fixDataBaseBicycles() {
         try {
+        List <Station> stations = read();
+        for(Station station: stations){
+            List<Bicycle> bicycles = getAvailableBikes(station);
             updateAvailableBikes(station, bicycles.size());
+        }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -390,12 +304,75 @@ public class StationService implements IService<Station> {
 
     public List<String> getAllStationNames() throws SQLException {
         List<String> stationNames = new ArrayList<>();
-        String sql = "SELECT name FROM station";
+        String sql = "SELECT name FROM bicycle_station";
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()) {
             stationNames.add(rs.getString("name"));
         }
         return stationNames;
+    }
+
+    public List<Station> getSortedStationsByUserDistance(User user) throws SQLException {
+        List<Station> stations = read();
+        stations.sort(Comparator.<Station>comparingDouble(s ->Location.calculateDistance(user.getLocation(),s.getLocation())).reversed());
+        return stations;
+    }
+    public Station findClosestStation(Location location, List<Station> stations) {
+        Station closestStation = null;
+        double minDistance = Double.MAX_VALUE;
+        for (Station station : stations) {
+            double distance = Location.calculateDistance(location, station.getLocation());
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestStation = station;
+            }
+        }
+        return closestStation;
+    }
+
+    public List<Station> searchByCoordinates(Location location) throws SQLException {
+        List<Station> stations = new ArrayList<>();
+        try {
+            // Loop through all stations in your database or station list
+            for (Station station : read()) {
+                Location stationLocation = station.getLocation();  // Assuming getLocation() returns a Location object
+
+                // Calculate the distance between the input location and the station location
+                double distance = Location.calculateDistance(location, stationLocation);
+
+                // Assuming a maximum distance
+                if (distance <= 20) {
+                    stations.add(station);
+                }
+            }
+        } catch (SQLException e) {
+            // Log and handle the error properly
+            System.err.println("SQL error while searching for stations: " + e.getMessage());
+            throw new RuntimeException("Error fetching stations", e);
+        }
+        return stations;
+    }
+
+
+    public List<Station> searchByAvailableBikes(String minBikes) throws SQLException {
+        List<Station> stations = new ArrayList<>();
+        String sql = "SELECT * FROM bicycle_station WHERE available_bikes >= ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, minBikes);
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            Station station = new Station();
+            station.setId(rs.getInt("id_station"));
+            station.setName(rs.getString("name"));
+            station.setLocation(new LocationService().getById(rs.getInt("id_location")));
+            station.setTotal_docks(rs.getInt("total_docks"));
+            station.setAvailable_docks(rs.getInt("available_docks"));
+            station.setAvailable_bikes(rs.getInt("available_bikes"));
+            station.setCharging_bikes(rs.getInt("charging_bikes"));
+            station.setStatus(Station.STATUS.valueOf(rs.getString("status")));
+            stations.add(station);
+        }
+        return stations;
     }
 }

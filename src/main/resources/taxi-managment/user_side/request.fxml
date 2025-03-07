@@ -2,7 +2,10 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -31,6 +34,8 @@
                                 <Font name="Century Gothic Bold" size="13.0" />
 
                             </font>
+
+
 
                         </Button>
 
@@ -112,20 +117,45 @@
                     </font>
                 </Label>
 
+                <!-- Search Bar for Address -->
+                <TextField fx:id="searchTextField" layoutX="337.0" layoutY="110.0" prefHeight="50.0" prefWidth="250.0" promptText="Search by Address" styleClass="search-bar" />
+                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="595.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/icons/search.png" />
+                    </image>
+                </ImageView>
+
+                <!-- Search Bar for Date -->
+                <DatePicker fx:id="searchDatePicker" layoutX="635.0" layoutY="107.0" prefHeight="54.0" prefWidth="200.0" styleClass="search-date-picker" />
+                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="850.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/icons/calendar.png" />
+                    </image>
+                </ImageView>
+
+
+
+
                 <!-- FlowPane to display stations -->
                 <FlowPane fx:id="requestFlowPane" hgap="20" layoutX="4.0" layoutY="185.0" prefHeight="638.0" prefWidth="1087.0" vgap="20">
-                    <!-- Dynamically populated station cards will go here -->
-                </FlowPane>
-            <Button id="request_taxi_button" fx:id="request_taxi_button" alignment="BASELINE_LEFT" layoutX="46.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="146.0" stylesheets="@request.css" text="Raquest A Taxi" />
-            <Button id="See_you_Rides_buuton" fx:id="See_you_Rides_button" alignment="BASELINE_LEFT" layoutX="201.0" layoutY="109.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="146.0" stylesheets="@request.css" text="See Your Rides" />
-            <ImageView fitHeight="36.0" fitWidth="35.0" layoutX="148.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+               <effect>
+                  <DropShadow />
+               </effect></FlowPane>
+            <Button id="request_taxi_button" fx:id="request_taxi_button" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="109.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="146.0" stylesheets="@request.css" text="Raquest A Taxi" />
+            <Button id="See_you_Rides_buuton" fx:id="See_you_Rides_button" alignment="BASELINE_LEFT" layoutX="167.0" layoutY="108.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="146.0" stylesheets="@request.css" text="See Your Rides" />
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="121.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/icons/add1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="304.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="271.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/icons/see.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="158.0" fitWidth="160.0" layoutX="911.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons/passenger.png" />
                </image>
             </ImageView>
 
