@@ -35,9 +35,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-
-
-
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.layout.AnchorPane;
 import java.util.List;
 import java.util.ArrayList;
@@ -67,7 +66,8 @@ public class ListReclamation {
     @FXML
     private Button btn_workbench11;
 
-
+    @FXML
+    private Button exportButton;
 
     @FXML
     private TextField searchField;
@@ -89,8 +89,10 @@ public class ListReclamation {
 
     @FXML
     private Label date;
+
     @FXML
     private Button faqButton;
+
     @FXML
     private Button statsButton;
 
@@ -102,8 +104,10 @@ public class ListReclamation {
 
     @FXML
     private Button sendButton;
+
     @FXML
     private Button chatbotButton;
+
     @FXML
     private AnchorPane chatbotPane;
 
@@ -119,81 +123,174 @@ public class ListReclamation {
     @FXML
     void initialize() {
         // Setup date display
-        // Setup date display
         if (date != null) {
             date.setText(new SimpleDateFormat("EEEE, dd MMMM yyyy").format(new Date()));
         } else {
             System.err.println("Warning: date Label is null in initialize method");
         }
+
         //setup faqButton
         if (faqButton != null) {
             faqButton.setOnAction(event -> showFAQDialog());
         }
+
         //setup statsButton
         if (statsButton != null) {
             statsButton.setOnAction(event -> showReclamationStatsChart());
         }
-        details.setOnAction(event -> showResponsesDialog());
 
+        if (details != null) {
+            details.setOnAction(event -> showResponsesDialog());
+        }
 
         // Setup status filter
-        statusFilter.setItems(FXCollections.observableArrayList("All", "Pending", "Resolved"));
-        statusFilter.getSelectionModel().selectFirst();
+        if (statusFilter != null) {
+            statusFilter.setItems(FXCollections.observableArrayList("All", "Pending", "Resolved"));
+            statusFilter.getSelectionModel().selectFirst();
+        }
 
         setupListView();
         loadReclamations();
         setupSearch();
         updateStatistics();
 
-        addButton.setOnAction(this::navigateToAddReclamation);
-        deleteButton.setOnAction(e -> handleDelete());
-        home_button.setOnAction(this::navigateToHome);
-        btn_workbench11.setOnAction(this::navigateToRide);
-        refreshButton.setOnAction(e -> loadReclamations());
+        // Initialize export button and context menu
+        initializeExportButton();
+
+        if (addButton != null) {
+            addButton.setOnAction(this::navigateToAddReclamation);
+        }
+
+        if (deleteButton != null) {
+            deleteButton.setOnAction(e -> handleDelete());
+        }
+
+        if (home_button != null) {
+            home_button.setOnAction(this::navigateToHome);
+        }
+
+        if (btn_workbench11 != null) {
+            btn_workbench11.setOnAction(this::navigateToRide);
+        }
+
+        if (refreshButton != null) {
+            refreshButton.setOnAction(e -> loadReclamations());
+        }
+
+        if (chatbotButton != null) {
+            chatbotButton.setOnAction(e -> openChatbot());
+        }
 
         // Add double-click handler for update
-        reclamationListView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
-                if (selectedReclamation != null) {
-                    navigateToUpdate(event, selectedReclamation);
+        if (reclamationListView != null) {
+            reclamationListView.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
+                    if (selectedReclamation != null) {
+                        navigateToUpdate(event, selectedReclamation);
+                    }
+                }
+            });
+
+            // Add delete key handler
+            reclamationListView.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.DELETE) {
+                    handleDelete();
+                }
+            });
+        }
+    }
+
+    private void initializeExportButton() {
+        if (exportButton != null) {
+            exportButton.setOnAction(event -> exportSelectedReclamation());
+        }
+
+        // Setup context menu for right-click actions
+        setupContextMenu();
+    }
+
+    private void setupContextMenu() {
+        if (reclamationListView == null) return;
+
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem viewDetailsItem = new MenuItem("View Details");
+        viewDetailsItem.setOnAction(event -> showResponsesDialog());
+
+        MenuItem exportToPdfItem = new MenuItem("Export to PDF");
+        exportToPdfItem.setOnAction(event -> exportSelectedReclamation());
+
+        MenuItem markAsResolvedItem = new MenuItem("Mark as Resolved");
+        markAsResolvedItem.setOnAction(event -> markAsResolved());
+
+        contextMenu.getItems().addAll(viewDetailsItem, exportToPdfItem, markAsResolvedItem);
+
+        reclamationListView.setContextMenu(contextMenu);
+    }
+
+    @FXML
+    private void exportSelectedReclamation() {
+        Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
+        if (selectedReclamation == null) {
+            showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to export.");
+            return;
+        }
+
+        boolean success = ReclamationPdfExporter.exportReclamationToPdf(selectedReclamation, this);
+
+        if (success) {
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Reclamation exported to PDF successfully.");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to export reclamation to PDF.");
+        }
+    }
+
+    @FXML
+    private void markAsResolved() {
+        Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
+        if (selectedReclamation == null) {
+            showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to mark as resolved.");
+            return;
+        }
+
+        if (selectedReclamation.getStatus() == 1) {
+            showAlert(Alert.AlertType.INFORMATION, "Information", "This reclamation is already resolved.");
+            return;
+        }
+
+        // Ask for confirmation
+        Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmDialog.setTitle("Confirm Action");
+        confirmDialog.setHeaderText(null);
+        confirmDialog.setContentText("Are you sure you want to mark this reclamation as resolved?");
+
+        confirmDialog.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    // Update status to resolved (1)
+                    selectedReclamation.setStatus(1);
+                    reclamationService.update(selectedReclamation);
+
+                    // Refresh the list
+                    loadReclamations();
+
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Reclamation marked as resolved.");
+                } catch (SQLException e) {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to update reclamation status: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
-
-        // Add delete key handler
-        reclamationListView.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.DELETE) {
-                handleDelete();
-            }
-        });
     }
-    /*@FXML
-    private void openChatbot() {
-        try {
-            URL resource = getClass().getResource("/Reclamation/Chatbot.fxml");
-            if (resource == null) {
-                throw new IOException("Chatbot FXML file not found!");
-            }
-
-            FXMLLoader loader = new FXMLLoader(resource);
-            Parent root = loader.load();
-
-            Stage chatbotStage = new Stage();
-            chatbotStage.setTitle("AI Chatbot");
-            chatbotStage.setScene(new Scene(root));
-            chatbotStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open chatbot: " + e.getMessage());
-        }
-    }*/
 
     @FXML
     private void openChatbot() {
-        chatbotPane.setVisible(!chatbotPane.isVisible());
-        if (chatbotPane.isVisible()) {
-            userInput.requestFocus(); // Donner le focus au champ de saisie
+        if (chatbotPane != null) {
+            chatbotPane.setVisible(!chatbotPane.isVisible());
+            if (chatbotPane.isVisible() && userInput != null) {
+                userInput.requestFocus(); // Donner le focus au champ de saisie
+            }
         }
     }
 
@@ -287,8 +384,9 @@ public class ListReclamation {
         return faqs;
     }
 
-
     private void setupSearch() {
+        if (allReclamations == null || searchField == null || statusFilter == null) return;
+
         // Setup initial filtered list
         filteredReclamations = new FilteredList<>(allReclamations);
         reclamationListView.setItems(filteredReclamations);
@@ -305,6 +403,8 @@ public class ListReclamation {
     }
 
     private void applyFilters() {
+        if (searchField == null || statusFilter == null) return;
+
         String searchText = searchField.getText().toLowerCase();
         String statusValue = statusFilter.getValue();
 
@@ -330,6 +430,9 @@ public class ListReclamation {
     }
 
     private void updateStatistics() {
+        if (allReclamations == null || totalReclamationsLabel == null ||
+                pendingReclamationsLabel == null || resolvedReclamationsLabel == null) return;
+
         int total = allReclamations.size();
         int pending = (int) allReclamations.stream().filter(r -> r.getStatus() == 0).count();
         int resolved = total - pending;
@@ -340,6 +443,8 @@ public class ListReclamation {
     }
 
     private void setupListView() {
+        if (reclamationListView == null) return;
+
         reclamationListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Reclamation reclamation, boolean empty) {
@@ -390,7 +495,9 @@ public class ListReclamation {
                 filteredReclamations = new FilteredList<>(allReclamations, filteredReclamations.getPredicate());
             }
 
-            reclamationListView.setItems(filteredReclamations);
+            if (reclamationListView != null) {
+                reclamationListView.setItems(filteredReclamations);
+            }
             updateStatistics();
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load reclamations: " + e.getMessage());
@@ -476,6 +583,8 @@ public class ListReclamation {
     }
 
     private void handleDelete() {
+        if (reclamationListView == null) return;
+
         Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
         if (selectedReclamation == null) {
             showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to delete");
@@ -503,6 +612,8 @@ public class ListReclamation {
 
     @FXML
     private void handleResponse(ActionEvent event) {
+        if (reclamationListView == null) return;
+
         Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
         if (selectedReclamation == null) {
             showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to respond to");
@@ -534,7 +645,10 @@ public class ListReclamation {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
     private void showReclamationStatsChart() {
+        if (allReclamations == null) return;
+
         // Create a new stage for the chart
         Stage chartStage = new Stage();
         chartStage.setTitle("Reclamation Statistics");
@@ -638,8 +752,11 @@ public class ListReclamation {
         // Add some padding to the max value
         return Math.max(pendingReclamations, resolvedReclamations) * 1.2;
     }
-@FXML
+
+    @FXML
     private void showResponses() {
+        if (reclamationListView == null) return;
+
         Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
         if (selectedReclamation == null) {
             showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to view responses.");
@@ -663,7 +780,10 @@ public class ListReclamation {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load responses: " + e.getMessage());
         }
     }
+
     private void showResponsesDialog() {
+        if (reclamationListView == null) return;
+
         Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
         if (selectedReclamation == null) {
             showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to view responses.");

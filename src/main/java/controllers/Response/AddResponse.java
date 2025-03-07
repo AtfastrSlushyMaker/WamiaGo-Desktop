@@ -109,6 +109,7 @@ public class AddResponse {
         }
     }
 
+
     private void navigateToHome(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/dashboard/dashboard.fxml"));
