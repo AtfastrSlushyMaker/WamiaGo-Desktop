@@ -2,6 +2,7 @@ package controllers.dashboard;
 
 import entities.User;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,7 @@ public class DashboardUserController implements Initializable {
     public Button maxBtn;
     public Button closeBtn;
     public Button logout;
+    public Button Settings;
     @FXML
     private AnchorPane navPanel;
     @FXML
@@ -50,6 +52,10 @@ public class DashboardUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        navPanel.prefHeightProperty().bind(contentPane.heightProperty());
+
+        navPanel.prefHeightProperty().bind(contentPane.heightProperty());
+
         User user = SessionManager.getInstance().getUser();
         Username.setText(user.getName());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -61,7 +67,11 @@ public class DashboardUserController implements Initializable {
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-        loadPanels();
+        try {
+            loadPanels();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         setupInitialVisibility();
         setupNavigationPanelAnimation();
 
@@ -87,43 +97,49 @@ public class DashboardUserController implements Initializable {
     }
 
     private void toggleNavigationPanel() {
-        double targetLeftAnchor = (Menu_Counter % 2 == 0) ? 0.0 : 186.0;
+        boolean isMenuOpen = (Menu_Counter % 2 == 0);
+        double targetLeftAnchor = isMenuOpen ? 186.0 : 0.0;
 
         TranslateTransition sidebarTransition = new TranslateTransition(Duration.millis(ANIMATION_DURATION), navPanel);
-        sidebarTransition.setToX((Menu_Counter % 2 == 0) ? NAV_PANEL_HIDDEN_TRANSLATE : 0);
+        sidebarTransition.setToX(isMenuOpen ? 0 : NAV_PANEL_HIDDEN_TRANSLATE);
 
-        Timeline contentTimeline = new Timeline();
-        KeyValue keyValue = new KeyValue(contentPane.layoutXProperty(), targetLeftAnchor);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(ANIMATION_DURATION), keyValue);
-        contentTimeline.getKeyFrames().add(keyFrame);
-
-        ParallelTransition parallelTransition = new ParallelTransition(sidebarTransition, contentTimeline);
+        ParallelTransition parallelTransition = new ParallelTransition(sidebarTransition);
         parallelTransition.setOnFinished(event -> {
             AnchorPane.setLeftAnchor(contentPane, targetLeftAnchor);
+            contentPane.prefWidthProperty().bind(contentPane.getScene().widthProperty().subtract(targetLeftAnchor));
         });
         parallelTransition.play();
 
         Menu_Counter++;
     }
 
-    private void loadPanels() {
-        panels.addAll(Arrays.asList(
+    private void loadPanels() throws IOException {
+        Platform.runLater(() -> {
+            try {
+                panels.addAll(Arrays.asList(
+                        FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dashboard/home.fxml"))),
+                        FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/rides/rides.fxml")))
+                ));
 
-        ));
+                for (AnchorPane panel : panels) {
+                    contentPane.getChildren().add(panel);
 
-        for (AnchorPane panel : panels) {
-            contentPane.getChildren().add(panel);
+                    // Bind panel size to contentPane
+                    panel.prefWidthProperty().bind(contentPane.widthProperty());
+                    panel.prefHeightProperty().bind(contentPane.heightProperty());
 
-            panel.prefWidthProperty().bind(contentPane.widthProperty());
-            panel.prefHeightProperty().bind(contentPane.heightProperty());
+                    // Ensure panels are aligned to contentPane
+                    AnchorPane.setTopAnchor(panel, 0.0);
+                    AnchorPane.setBottomAnchor(panel, 0.0);
+                    AnchorPane.setLeftAnchor(panel, 0.0);
+                    AnchorPane.setRightAnchor(panel, 0.0);
 
-            AnchorPane.setTopAnchor(panel, 0.0);
-            AnchorPane.setBottomAnchor(panel, 0.0);
-            AnchorPane.setLeftAnchor(panel, 0.0);
-            AnchorPane.setRightAnchor(panel, 0.0);
-
-            panel.setVisible(false);
-        }
+                    panel.setVisible(false); // Set initial visibility to false
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @FXML
@@ -193,5 +209,12 @@ public class DashboardUserController implements Initializable {
     private void updateDateLabel(SimpleDateFormat dateFormat) {
         date_label.setText(dateFormat.format(new Date()));
     }
+    public void homeBtn(ActionEvent actionEvent) {
+        showPanel(0);
+    }
+    public void ridesBtn(ActionEvent actionEvent) {
+        showPanel(1);
+    }
+
 
 }

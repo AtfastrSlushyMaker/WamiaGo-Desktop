@@ -65,34 +65,34 @@
                   </Button>
                   <ImageView fitHeight="36.0" fitWidth="44.0" layoutX="83.0" layoutY="721.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/icons/logout.png" />
+                        <Image url="@../images/icons/logout.png" />
                      </image></ImageView>
                   <Pane fx:id="pane_1121" layoutX="19.0" layoutY="47.0" prefHeight="140.0" prefWidth="248.0" styleClass="logo-pane" stylesheets="@style.css">
                      <children>
                         <ImageView id="logo" fitHeight="118.0" fitWidth="176.0" layoutX="40.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Images/logo/wamiaGO.png" />
+                              <Image url="@../images/logo/wamiaGO.png" />
                            </image>
                         </ImageView>
                      </children>
                   </Pane>
                   <ImageView id="home" fitHeight="40.0" fitWidth="40.0" layoutX="47.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" styleClass="home">
                      <image>
-                        <Image url="@../Images/icons/home.png" />
+                        <Image url="@../images/icons/home.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="48.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/icons/rides.png" />
+                        <Image url="@../images/icons/rides.png" />
                      </image></ImageView>
                   <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="48.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/icons/delivery-truck.png" />
+                        <Image url="@../images/icons/delivery-truck.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="45.0" layoutY="579.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/icons/history.png" />
+                        <Image url="@../images/icons/history.png" />
                      </image></ImageView>
 
                </children>
@@ -127,7 +127,7 @@
             </Label>
             <ImageView fitHeight="42.0" fitWidth="36.0" layoutX="143.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/icons/quick-response.png" />
+                  <Image url="@../images/icons/quick-response.png" />
                </image>
             </ImageView>
             <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0">
@@ -137,7 +137,7 @@
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Images/icons/user.png" />
+                              <Image url="@../images/icons/user.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -166,7 +166,7 @@
                   </Button>
                   <ImageView fitHeight="96.0" fitWidth="102.0" layoutX="59.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/icons/truck.png" />
+                        <Image url="@../images/icons/truck.png" />
                      </image>
                   </ImageView>
 
@@ -194,7 +194,7 @@
                   </Button>
                   <ImageView fitHeight="96.0" fitWidth="122.0" layoutX="49.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/icons/taxi.png" />
+                        <Image url="@../images/icons/taxi.png" />
                      </image>
                   </ImageView>
                </children>
@@ -220,7 +220,7 @@
                   </Button>
                   <ImageView fitHeight="107.0" fitWidth="124.0" layoutX="43.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/icons/carpool.png" />
+                        <Image url="@../images/icons/carpool.png" />
                      </image>
                   </ImageView>
                </children>
@@ -246,7 +246,7 @@
                   </Button>
                   <ImageView fitHeight="96.0" fitWidth="135.0" layoutX="53.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/icons/bicycle.png" />
+                        <Image url="@../images/icons/bicycle.png" />
                      </image>
                   </ImageView>
                </children>
@@ -289,7 +289,7 @@
             <Button id="feedback" fx:id="reclamation_button" layoutX="981.0" layoutY="739.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="45.0" stylesheets="@style.css" />
             <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="985.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/icons/review.png" />
+                  <Image url="@../images/icons/review.png" />
                </image>
             </ImageView>
 

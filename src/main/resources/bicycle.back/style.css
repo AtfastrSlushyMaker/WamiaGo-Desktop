@@ -1,0 +1,347 @@
+/* ===== Base Container ===== */
+.bicycle-grid {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+.root-container {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 20px;
+    -fx-spacing: 20px;
+}
+/* ===== Enhanced Bicycle Cards ===== */
+.bicycle-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-padding: 0; /* Remove default padding to handle it in the content */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 8, 0, 0, 2);
+    -fx-min-width: 330px;
+    -fx-pref-width: 330px;
+    -fx-max-width: 330px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease-out;
+}
+
+/* Card content container - allows for sidbar + inner padding */
+.card-content {
+    -fx-padding: 20px;
+    -fx-spacing: 16px;
+    -fx-pref-width: 290px;
+}
+
+/* Colored sidebar implementation */
+.card-with-sidebar {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+
+/* The actual sidebar */
+.card-sidebar {
+    -fx-min-width: 6px;
+    -fx-pref-width: 6px;
+    -fx-max-width: 6px;
+    -fx-background-radius: 12px 0 0 12px;
+    -fx-background-insets: 0;
+}
+
+/* Status-specific sidebar colors */
+.sidebar-available {
+    -fx-background-color: #38d9a9;
+}
+
+.sidebar-in-use {
+    -fx-background-color: #ffd43b;
+}
+
+.sidebar-maintenance {
+    -fx-background-color: #ff6b6b;
+}
+
+.sidebar-charging {
+    -fx-background-color: #4dabf7;
+}
+
+.sidebar-reserved {
+    -fx-background-color: #74c0fc;
+}
+
+.bicycle-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 12, 0, 0, 4);
+    -fx-translate-y: -3px;
+}
+
+/* ===== Card Header ===== */
+.card-header {
+    -fx-spacing: 12px;
+    -fx-alignment: center-left;
+}
+
+/* ===== Card Title ===== */
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212529;
+}
+
+/* ===== Status Chips ===== */
+.status-chip {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 20px;
+}
+
+.status-available {
+    -fx-background-color: #38d9a9;
+}
+
+.status-in-use {
+    -fx-background-color: #ffd43b;
+}
+
+.status-maintenance {
+    -fx-background-color: #ff6b6b;
+}
+
+.status-charging {
+    -fx-background-color: #adb5bd;
+}
+
+.status-reserved {
+    -fx-background-color: #74c0fc;
+}
+
+/* ===== Battery Indicator ===== */
+.battery-graphic {
+    -fx-background-color: #f1f3f5;
+    -fx-background-radius: 4px;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 4px;
+    -fx-border-width: 1px;
+    -fx-min-width: 24px;
+    -fx-min-height: 36px;
+    -fx-pref-width: 24px;
+    -fx-pref-height: 36px;
+}
+
+.battery-fill {
+    -fx-background-color: #38d9a9;
+    -fx-background-radius: 3px;
+}
+
+.battery-low {
+    -fx-background-color: #ffd43b;
+}
+
+.battery-critical {
+    -fx-background-color: #ff6b6b;
+}
+
+/* ===== Metrics Grid ===== */
+.metrics-grid {
+    -fx-hgap: 16px;
+    -fx-vgap: 12px;
+    -fx-padding: 12px 0;
+}
+
+.metric-item {
+    -fx-alignment: center;
+    -fx-spacing: 4px;
+}
+
+.metric-value {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212529;
+}
+
+.metric-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6c757d;
+}
+
+/* ===== Station Info ===== */
+.station-info {
+    -fx-padding: 10px 0;
+    -fx-spacing: 4px;
+}
+
+.section-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6c757d;
+}
+
+.station-name {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212529;
+    -fx-wrap-text: true;
+    -fx-max-width: 200px; /* Reduced from 250px */
+    -fx-pref-width: 200px; /* Add preferred width */
+    -fx-alignment: center-left;
+}
+
+/* ===== Selection Checkbox ===== */
+.selection-checkbox .box {
+    -fx-background-color: white;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 4px;
+}
+
+.selection-checkbox:selected .box {
+    -fx-background-color: #4dabf7;
+    -fx-border-color: #4dabf7;
+}
+
+.selection-checkbox:selected .mark {
+    -fx-background-color: white;
+}
+
+/* ===== Action Bar ===== */
+.action-bar {
+    -fx-padding: 10px 0 0 0;
+    -fx-spacing: 10px;
+    -fx-alignment: center-right;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 50%;
+    -fx-padding: 8px;
+    -fx-cursor: hand;
+}
+
+.icon-button:hover {
+    -fx-background-color: #f1f3f5;
+}
+
+/* ===== Scroll Pane Styling ===== */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #ced4da;
+    -fx-background-radius: 4px;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #f1f3f5;
+}
+
+/* ===== Bicycle Card Border Colors ===== */
+.bicycle-card.border-available {
+    -fx-border-color: #38d9a9;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+.bicycle-card.border-in-use {
+    -fx-border-color: #ffd43b;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+.bicycle-card.border-maintenance {
+    -fx-border-color: #ff6b6b;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+.bicycle-card.border-charging {
+    -fx-border-color: #adb5bd;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+.bicycle-card.border-reserved {
+    -fx-border-color: #74c0fc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+/* Battery Percentage Colors */
+.battery-fill.battery-100 {
+    -fx-background-color: #38d9a9;
+}
+
+.battery-fill.battery-80 {
+    -fx-background-color: #38d9a9;
+}
+
+.battery-fill.battery-60 {
+    -fx-background-color: #ffd43b;
+}
+
+.battery-fill.battery-40 {
+    -fx-background-color: #ffd43b;
+}
+
+.battery-fill.battery-20 {
+    -fx-background-color: #ff6b6b;
+}
+
+.battery-fill.battery-critical {
+    -fx-background-color: #ff6b6b;
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-border-color: #c0392b;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+.delete-button:pressed {
+    -fx-background-color: #a93226;
+}
+
+.primary-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-border-color: #2980b9;
+}
+
+.primary-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.primary-button:pressed {
+    -fx-background-color: #2471a3;
+}
+
+.refresh-button {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 6px 10px;
+}
+
+.batch-update-button {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 6px 10px;
+}
+
+.batch-update-button:hover {
+    -fx-background-color: #e9ecef;
+}
+
+.batch-update-button:pressed {
+    -fx-background-color: #dee2e6;
+}
+.csv-button{
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 6px 10px;
+}
+

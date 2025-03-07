@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Bike Stations Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="" />
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+        .station-icon {
+            background-color: #3388ff;
+            border-radius: 50%;
+            border: 2px solid white;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        .active-station {
+            background-color: #00b300;
+        }
+        .inactive-station {
+            background-color: #ff3333;
+        }
+        .maintenance-station {
+            background-color: #ff9900;
+        }
+        .disabled-station {
+            background-color: #808080;
+        }
+        .custom-popup .leaflet-popup-content-wrapper {
+            background: #fff;
+            color: #333;
+            border-radius: 5px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+        }
+        .custom-popup .leaflet-popup-tip {
+            background: #fff;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+
+<script>
+    // Initialize the map
+    const map = L.map('map').setView([36.8065, 10.1815], 13); // Default to Tunisia's coordinates
+
+    // Add the OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Create a markers layer group
+    const markersLayer = L.layerGroup().addTo(map);
+
+    // Handle map click event
+    map.on('click', function(e) {
+        // Send the coordinates to the JavaFX application
+        if (window.stationApp) {
+            window.stationApp.handleMapClick(e.latlng.lat, e.latlng.lng);
+        }
+
+        // Update coordinates display
+        if (window.stationApp) {
+            window.stationApp.updateCoordinates(e.latlng.lat, e.latlng.lng);
+        }
+    });
+
+    // Mouse move to update coordinates
+    map.on('mousemove', function(e) {
+        if (window.stationApp) {
+            window.stationApp.updateCoordinates(e.latlng.lat, e.latlng.lng);
+        }
+    });
+
+    // Function to add station markers to the map
+    function addStations(stationsJson) {
+        // Clear existing markers
+        markersLayer.clearLayers();
+
+        try {
+            const stations = JSON.parse(stationsJson);
+
+            stations.forEach(station => {
+                if (station.location && station.location.latitude && station.location.longitude) {
+                    // Create custom icon based on station status
+                    const iconClass = getStationStatusClass(station.status);
+                    const icon = L.divIcon({
+                        className: `station-icon ${iconClass}`,
+                        html: '<div style="width: 100%; height: 100%;">' +
+                            (station.available_bikes + station.charging_bikes) +
+                            '</div>',
+                        iconSize: [30, 30]
+                    });
+
+                    // Create marker
+                    const marker = L.marker([station.location.latitude, station.location.longitude], {
+                        icon: icon,
+                        title: station.name
+                    }).addTo(markersLayer);
+
+                    // Add popup with station details
+                    let popupContent = `
+                            <div class="station-info">
+                                <h3>${station.name}</h3>
+                                <p><strong>Status:</strong> ${station.status}</p>
+                                <p><strong>Available Bikes:</strong> ${station.available_bikes}</p>
+                                <p><strong>Available Docks:</strong> ${station.available_docks}</p>
+                                <p><strong>Charging Bikes:</strong> ${station.charging_bikes}</p>
+                            </div>
+                        `;
+
+                    marker.bindPopup(popupContent);
+                }
+            });
+        } catch (error) {
+            console.error("Error parsing stations JSON:", error);
+        }
+    }
+
+    // Helper function to get station status class
+    function getStationStatusClass(status) {
+        switch(status.toLowerCase()) {
+            case 'active': return 'active-station';
+            case 'inactive': return 'inactive-station';
+            case 'maintenance': return 'maintenance-station';
+            case 'disabled': return 'disabled-station';
+            default: return '';
+        }
+    }
+
+    // Function to add a temporary marker at a specific location
+    function addTemporaryMarker(lat, lng) {
+        // Clear any existing temporary markers
+        markersLayer.clearLayers();
+
+        // Create a marker at the clicked location
+        const marker = L.marker([lat, lng], {
+            draggable: true,
+            title: "New Station Location"
+        }).addTo(markersLayer);
+
+        // Add popup to the marker
+        marker.bindPopup("<b>New Station Location</b><br>Drag to adjust.").openPopup();
+
+        // Handle drag end to update coordinates
+        marker.on('dragend', function(e) {
+            if (window.stationApp) {
+                window.stationApp.updateCoordinates(marker.getLatLng().lat, marker.getLatLng().lng);
+            }
+        });
+
+        return marker;
+    }
+
+    // Function to center the map on specific coordinates
+    function centerMap(lat, lng, zoom) {
+        map.setView([lat, lng], zoom || 15);
+    }
+
+    // Expose functions for JavaFX to call
+    window.mapFunctions = {
+        addStations: addStations,
+        addTemporaryMarker: addTemporaryMarker,
+        centerMap: centerMap
+    };
+</script>
+</body>
+</html>

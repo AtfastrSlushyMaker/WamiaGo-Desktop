@@ -19,10 +19,27 @@ public class LocationService implements IService<Location> {
         String sql = "INSERT INTO location (address,latitude,longitude) VALUES (?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, location.getAddress());
-        preparedStatement.setFloat(2, location.getLatitude());
-        preparedStatement.setFloat(3, location.getLongitude());
+        preparedStatement.setDouble(2, location.getLatitude());
+        preparedStatement.setDouble(3, location.getLongitude());
         preparedStatement.executeUpdate();
         return false;
+    }
+//St7a9itha fil StationController
+    public Location createLocation(Location location)throws SQLException
+    {
+        String sql = "INSERT INTO location (address,latitude,longitude) VALUES (?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setString(1, location.getAddress());
+        preparedStatement.setDouble(2, location.getLatitude());
+        preparedStatement.setDouble(3, location.getLongitude());
+        preparedStatement.executeUpdate();
+        ResultSet rs = preparedStatement.getGeneratedKeys();
+        if (rs.next()) {
+            location.setId(rs.getInt(1));
+            return location;
+        }
+        return null;
+
     }
 
     @Override
@@ -30,8 +47,8 @@ public class LocationService implements IService<Location> {
         String sql = "UPDATE location SET address=?,latitude=?,longitude=? WHERE id_location=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, location.getAddress());
-        preparedStatement.setFloat(2, location.getLatitude());
-        preparedStatement.setFloat(3, location.getLongitude());
+        preparedStatement.setDouble(2, location.getLatitude());
+        preparedStatement.setDouble(3, location.getLongitude());
         preparedStatement.setInt(4, location.getId());
         preparedStatement.executeUpdate();
     }

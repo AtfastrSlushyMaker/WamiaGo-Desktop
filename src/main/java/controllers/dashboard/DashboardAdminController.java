@@ -2,6 +2,7 @@ package controllers.dashboard;
 
 import entities.User;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -96,11 +97,12 @@ public class DashboardAdminController implements Initializable {
         Menu_Counter++;
     }
     private void loadPanels() {
+        Platform.runLater(() -> {
         try {
             panels.addAll(Arrays.asList(
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/user.back/users.fxml"))),
-                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bicycle.back/bicycle.fxml"))),
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/station/back/stations.fxml"))),
+                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bicycle.back/bicycle.fxml"))),
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/rentals.back/rentals.fxml"))),
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml"))),
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")))
@@ -123,7 +125,7 @@ public class DashboardAdminController implements Initializable {
             e.printStackTrace();
             throw new RuntimeException("Failed to load FXML files", e);
         }
-    }
+    });}
 
     @FXML
     private void showPanel(int panelIndex) {
@@ -173,19 +175,18 @@ public class DashboardAdminController implements Initializable {
     @FXML
     private void usersBtn() { showPanel(0); }
     @FXML
-    public void bicyclesBtn() { showPanel(1); }
+    public void stationsBtn() { showPanel(1); }
     @FXML
-    public void stationsBtn() { showPanel(2); }
+    public void bicyclesBtn() { showPanel(2); }
     @FXML
     public void rentalsBtn() { showPanel(3); }
     @FXML
     public void taxiRequests() { showPanel(4); }
     @FXML
     public void taxiRides() { showPanel(5); }
+
     @FXML
-    private void AccountSettingsBtn() { showPanel(1); }
-    @FXML
-    private void DashboardBtn() { showPanel(1); }
+    private void DashboardBtn() { showPanel(-1); }
     @FXML
     private void QueriesBtn() { showPanel(6); }
 

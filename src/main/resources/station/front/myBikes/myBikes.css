@@ -1,65 +1,128 @@
-#rent_button {
-    -fx-background-color: #E57373;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-background-radius: 5px;
-    -fx-border-width: 2px;
-    -fx-font-family: Inter;
-    -fx-font-size: 14px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
+/* General Styles */
+#root {
+    -fx-background-color: #f5f5f5; /* Light gray background for the entire interface */
 }
-#rent_button:hover {
-    -fx-background-color: #D32F2F;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 10, 0, 0, 2);
-}
-/* ListView general styling */
-/* styles.css */
 
-/* Style for the ListView */
-.list-view {
-    -fx-background-color: #f4f4f4; /* Light gray background */
-    -fx-border-color: #ccc; /* Light gray border */
+/* Rent Button */
+#rent_button {
+    -fx-background-color: #6BBF59; /* Green background */
+    -fx-text-fill: white; /* White text */
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px; /* Padding */
+    -fx-background-radius: 5px; /* Rounded corners */
+    -fx-border-width: 2px;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1); /* Subtle shadow */
+}
+
+#rent_button:hover {
+    -fx-background-color: #4E9D3A; /* Darker green on hover */
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 7, 0, 0, 2); /* Stronger shadow */
+}
+
+/* ListView Styling */
+#bikes_list {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-border-color: #cccccc; /* Light gray border */
     -fx-border-width: 1px;
     -fx-border-radius: 5px; /* Rounded corners */
     -fx-padding: 10px;
-    -fx-margin: 10px 0; /* Margin around the ListView */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2); /* Subtle shadow */
 }
 
-/* Style for each item in the ListView */
+/* ListView Items */
 .list-cell {
-    -fx-background-color: #fff; /* White background for each item */
-    -fx-border-color: #ddd; /* Light gray border for each item */
+    -fx-background-color: #ffffff; /* White background for each item */
+    -fx-border-color: #eeeeee; /* Light gray border for each item */
     -fx-border-width: 1px;
     -fx-border-radius: 5px; /* Rounded corners for each item */
     -fx-padding: 10px;
     -fx-margin: 5px 0; /* Margin between items */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 0, 1); /* Subtle shadow */
 }
+
 .list-cell:empty {
     -fx-background-color: transparent; /* Transparent background for empty items */
 }
 
-/* Style for the selected item in the ListView */
+/* Hover Effect for ListView Items */
+.list-cell:filled:hover {
+    -fx-background-color: #f0f0f0; /* Light gray background on hover */
+    -fx-cursor: hand;
+}
+
+/* Selected Item in ListView */
 .list-cell:filled:selected {
-    -fx-background-color: #0078d7; /* Blue background for selected item */
+    -fx-background-color: #6BBF59; /* Green background for selected item */
     -fx-text-fill: white; /* White text for selected item */
 }
 
-/* Style for the hovered item in the ListView */
-.list-cell:filled:hover {
-    -fx-background-color: #e0e0e0; /* Light gray background for hovered item */
-}
-
-/* Style for the buttons inside the ListView items */
+/* Button Inside ListView Items */
 .list-cell .button {
-    -fx-background-color: #0078d7; /* Blue background for buttons */
-    -fx-text-fill: white; /* White text for buttons */
-    -fx-border-radius: 3px; /* Rounded corners for buttons */
-    -fx-padding: 5px 10px; /* Padding for buttons */
+    -fx-background-color: #6BBF59; /* Green background */
+    -fx-text-fill: white; /* White text */
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-padding: 8px 16px; /* Padding */
+    -fx-font-family: 'Inter';
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1); /* Subtle shadow */
 }
 
-/* Style for the buttons when hovered */
+/* Hover Effect for Buttons Inside ListView Items */
 .list-cell .button:hover {
-    -fx-background-color: #005bb5; /* Darker blue background for hovered buttons */
+    -fx-background-color: #4E9D3A; /* Darker green on hover */
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 7, 0, 0, 2); /* Stronger shadow */
+}
+
+/* Flexible Space (for alignment) */
+.region {
+    -fx-background-color: transparent; /* Transparent background */
+}
+
+/* Icon Styling */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 3, 0, 0, 1); /* Subtle shadow */
+}
+
+/* Label Styling */
+.label {
+    -fx-font-family: 'Inter';
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333; /* Dark gray text */
+}
+
+/* Header Label */
+#available_stations_label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50; /* Dark blue text */
+    -fx-font-family: 'Inter';
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
+/* ScrollPane Styling */
+#scrollPane {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-border-color: transparent; /* No border */
+    -fx-padding: 0;
+}
+
+/* ScrollBar Styling */
+.scroll-bar:vertical {
+    -fx-background-color: transparent; /* Transparent background */
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #6BBF59; /* Green thumb */
+    -fx-background-radius: 5px; /* Rounded corners */
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent; /* Transparent buttons */
+    -fx-padding: 0;
 }
