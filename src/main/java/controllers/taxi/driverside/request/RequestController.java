@@ -7,6 +7,7 @@ import entities.Request;
 import entities.User;
 import entities.Ride;
 import javafx.concurrent.Worker;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -166,6 +167,7 @@ public class RequestController {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
         See_you_Rides_button.setOnAction(event -> loadScene("/ride.fxml"));
+        bookings_button.setOnAction(actionEvent ->loadScene("/Annoucement/Front/announcements_client.fxml") );
     }
 
     private void loadScene(String fxmlPath) {

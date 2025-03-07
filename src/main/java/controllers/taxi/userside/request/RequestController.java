@@ -80,6 +80,7 @@ public class RequestController {
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
+        bookings_button.setOnAction(actionEvent ->loadScene("/Annoucement/Front/announcements_client.fxml") );
         // Other navigation buttons commented out.
     }
 
