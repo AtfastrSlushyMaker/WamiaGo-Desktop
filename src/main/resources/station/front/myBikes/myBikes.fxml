@@ -107,12 +107,12 @@
         <Pane prefHeight="827.0" prefWidth="1143.0">
             <children>
                 <ButtonBar id="upper_nav" layoutY="-7.0" prefHeight="96.0" prefWidth="1093.0" />
-                <Label id="available_stations_label" fx:id="available_stations_label" layoutX="435.0" layoutY="116.0" prefHeight="50.0" prefWidth="232.0" stylesheets="@station.css" text="My Bikes" textFill="#323131">
+                <Label id="available_stations_label" fx:id="available_stations_label" layoutX="435.0" layoutY="116.0" prefHeight="50.0" prefWidth="232.0" stylesheets="@style.css" text="My Bikes" textFill="#323131">
                     <font>
                         <Font name="Century Gothic Bold" size="20.0" />
                     </font>
                 </Label>
-                <ScrollPane id="scrollPane" fx:id="scrollPane" layoutX="55.0" layoutY="193.0" prefHeight="583.0" prefWidth="992.0" stylesheets="@station.css">
+                <ScrollPane id="scrollPane" fx:id="scrollPane" layoutX="55.0" layoutY="193.0" prefHeight="583.0" prefWidth="992.0" stylesheets="@style.css">
                <content>
                   <ListView id="bikes_list" fx:id="bikes_list" prefHeight="581.0" prefWidth="990.0" stylesheets="@myBikes.css" />
                </content>

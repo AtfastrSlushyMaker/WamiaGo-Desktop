@@ -93,6 +93,7 @@ public class StationController {
     // Map and Web Engine
     private WebEngine webEngine;
     private Timeline reservationTimeline;
+    private Timeline backgroundTimeline;
 
     private Object radiusCircle = null;
 
@@ -545,7 +546,7 @@ public class StationController {
 
             stationService.updateAvailableBikes(station, station.getAvailable_bikes() - 1);
 
-            System.out.println("Bike at " + rental.getStart_station().getName() + "reserved successfully.");
+            System.out.println("Bike at " + rental.getStart_station().getName() + " reserved successfully.");
 
             startReservationTimer(bicycle, station, rental);
 
@@ -702,50 +703,56 @@ public class StationController {
         startTimerAndProgressBar(timerLabel, progressBar, modalStage, bicycle, rental);
     }
 
-    private void startTimerAndProgressBar(Label timerLabel, ProgressBar progressBar, Stage modalStage, Bicycle bicycle, BicycleRental rental) {
-        if (reservationTimeline != null) {
-            reservationTimeline.stop();
-            reservationTimeline = null;
-        }
-
-        int[] reservationDurationSeconds = {60}; // Total duration in seconds
-        double[] progress = {1.0}; // Initial progress (100%)
-
-        reservationTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(1), event -> {
-                    reservationDurationSeconds[0]--;
-                    progress[0] = (double) reservationDurationSeconds[0] / 60; // Update progress
-
-                    if (reservationDurationSeconds[0] <= 0) {
-                        modalStage.close();
-                        cancelReservation(bicycle, rental.getStart_station(), rental);
-                    } else {
-                        // Update the timer label
-                        int minutes = reservationDurationSeconds[0] / 60;
-                        int seconds = reservationDurationSeconds[0] % 60;
-                        timerLabel.setText(String.format("Time remaining: %02d:%02d", minutes, seconds));
-
-                        // Update the progress bar
-                        progressBar.setProgress(progress[0]);
-                    }
-                })
-        );
-
-        reservationTimeline.setCycleCount(Timeline.INDEFINITE);
-        reservationTimeline.play();
-
-        modalStage.setOnCloseRequest(event -> {
+        private void startTimerAndProgressBar(Label timerLabel, ProgressBar progressBar, Stage modalStage, Bicycle bicycle, BicycleRental rental) {
             if (reservationTimeline != null) {
                 reservationTimeline.stop();
                 reservationTimeline = null;
             }
-        });
-    }
+
+            int[] reservationDurationSeconds = {60}; // Total duration in seconds
+            double[] progress = {1.0}; // Initial progress (100%)
+
+            reservationTimeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1), event -> {
+                        reservationDurationSeconds[0]--;
+                        progress[0] = (double) reservationDurationSeconds[0] / 60; // Update progress
+
+                        if (reservationDurationSeconds[0] <= 0) {
+                            modalStage.close();
+                            cancelReservation(bicycle, rental.getStart_station(), rental);
+                        } else {
+                            // Update the timer label
+                            int minutes = reservationDurationSeconds[0] / 60;
+                            int seconds = reservationDurationSeconds[0] % 60;
+                            timerLabel.setText(String.format("Time remaining: %02d:%02d", minutes, seconds));
+
+                            // Update the progress bar
+                            progressBar.setProgress(progress[0]);
+                        }
+                    })
+            );
+
+            reservationTimeline.setCycleCount(Timeline.INDEFINITE);
+            reservationTimeline.play();
+
+            modalStage.setOnCloseRequest(event -> {
+                if (reservationTimeline != null) {
+                    reservationTimeline.stop();
+                    reservationTimeline = null;
+                }
+            });
+        }
 
     private void startReservationTimer(Bicycle bicycle, Station station, BicycleRental rental) {
         int[] reservationDurationSeconds = {60};
 
-        Timeline timeline = new Timeline(
+        // Stop any existing timeline first
+        if (backgroundTimeline != null) {
+            backgroundTimeline.stop();
+            backgroundTimeline = null;
+        }
+
+        backgroundTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
                     reservationDurationSeconds[0]--;
 
@@ -757,11 +764,22 @@ public class StationController {
                 })
         );
 
-        timeline.setCycleCount(reservationDurationSeconds[0]);
-        timeline.play();
+        backgroundTimeline.setCycleCount(reservationDurationSeconds[0]);
+        backgroundTimeline.play();
     }
 
     private void cancelReservation(Bicycle bicycle, Station station, BicycleRental rental) {
+        // First, make sure all timers are stopped to prevent multiple cancellations
+        if (reservationTimeline != null) {
+            reservationTimeline.stop();
+            reservationTimeline = null;
+        }
+
+        if (backgroundTimeline != null) {
+            backgroundTimeline.stop();
+            backgroundTimeline = null;
+        }
+
         try {
             // Update bike status to "available"
             bicycle.setStatus(Bicycle.STATUS.available);
@@ -780,7 +798,6 @@ public class StationController {
             System.out.println("Deleting rental record with ID: " + rental.getId());
             bicycleRentalService.delete(rental.getId());
 
-
             System.out.println("Reservation for Bike at " + rental.getStart_station().getName() + " has been canceled.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -789,10 +806,18 @@ public class StationController {
     }
 
     private void stopTimerAndPickUpBike(Bicycle bicycle, BicycleRental rental, Stage modalStage) {
+        // Stop the UI timer
         if (reservationTimeline != null) {
             reservationTimeline.stop();
             reservationTimeline = null;
-            System.out.println("Timer stopped.");
+            System.out.println("UI Timer stopped.");
+        }
+
+        // Stop the background timer too
+        if (backgroundTimeline != null) {
+            backgroundTimeline.stop();
+            backgroundTimeline = null;
+            System.out.println("Background Timer stopped.");
         }
 
         modalStage.close();
