@@ -40,7 +40,19 @@
     -fx-scale-y: 1.03;
     -fx-transition: all 0.3s ease-in-out;
 }
+#Titre {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5A6BE5;
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(90, 107, 229, 0.2), 10, 0, 2, 2);
+}
 
+#Titre:hover {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-transition: all 0.3s ease-in-out;
+}
 
 
 

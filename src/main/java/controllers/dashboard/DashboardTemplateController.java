@@ -48,14 +48,19 @@
                 AnchorPane requestsPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml")));
                 //5
                 AnchorPane ridesPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")));
+                //6
+                AnchorPane reclamationPanel = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Reclamation/ListReclamationBack.fxml")));
+
+
                 panels.addAll(Arrays.asList(
                         usersPanel,
                         bikesPanel,
                         stationsPanel,
                         rentalsPanel,
                         requestsPanel,
-                        ridesPanel
-                ));
+                        ridesPanel,
+                        reclamationPanel
+                        ));
 
                 for(AnchorPane panel : panels) {
                     contentPane.getChildren().add(panel);

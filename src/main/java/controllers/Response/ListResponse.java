@@ -1,6 +1,7 @@
 //ListResponse
 package controllers.Response;
 
+import entities.Reclamation;
 import entities.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,13 +30,18 @@ public class ListResponse {
     @FXML
     private Button deleteButton;
 
+
     private final ResponseService responseService;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private Reclamation reclamation;
 
     public ListResponse() {
         responseService = new ResponseService();
     }
-
+    public void initData(Reclamation reclamation) {
+        this.reclamation = reclamation;
+        loadResponses();
+    }
     @FXML
     void initialize() {
         setupListView();
@@ -117,6 +123,7 @@ public class ListResponse {
 
     private void handleDelete() {
         Response selectedResponse = responseListView.getSelectionModel().getSelectedItem();
+        System.out.println("Response ID:"+selectedResponse.getId_response());
         if (selectedResponse == null) {
             showAlert(Alert.AlertType.WARNING, "Warning", "Please select a response to delete");
             return;

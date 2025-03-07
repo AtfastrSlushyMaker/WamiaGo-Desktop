@@ -1,57 +1,47 @@
 package controllers.Reclamation;
 
 import controllers.Response.AddResponse;
-import controllers.Response.ListResponse;
 import entities.Reclamation;
-import entities.Response;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import services.ReclamationService;
-import javafx.scene.input.KeyCode;
-import services.ResponseService;
-import utils.SessionManager;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.VBox;
-import javafx.geometry.Pos;
-import javafx.geometry.Insets;
-import javafx.stage.Modality;
-import javafx.application.Platform;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-
-
-
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import java.util.List;
-import java.util.ArrayList;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import services.ReclamationService;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Predicate;
 
-public class ListReclamation {
-    @FXML
-    private Button details;
+public class ListReclamationBack {
     @FXML
     private ListView<Reclamation> reclamationListView;
 
@@ -67,7 +57,8 @@ public class ListReclamation {
     @FXML
     private Button btn_workbench11;
 
-
+    @FXML
+    private Button responseButton;
 
     @FXML
     private TextField searchField;
@@ -112,7 +103,7 @@ public class ListReclamation {
     private ObservableList<Reclamation> allReclamations;
     private FilteredList<Reclamation> filteredReclamations;
 
-    public ListReclamation() {
+    public ListReclamationBack() {
         reclamationService = new ReclamationService();
     }
 
@@ -133,7 +124,6 @@ public class ListReclamation {
         if (statsButton != null) {
             statsButton.setOnAction(event -> showReclamationStatsChart());
         }
-        details.setOnAction(event -> showResponsesDialog());
 
 
         // Setup status filter
@@ -145,28 +135,14 @@ public class ListReclamation {
         setupSearch();
         updateStatistics();
 
-        addButton.setOnAction(this::navigateToAddReclamation);
-        deleteButton.setOnAction(e -> handleDelete());
-        home_button.setOnAction(this::navigateToHome);
-        btn_workbench11.setOnAction(this::navigateToRide);
+
+        //home_button.setOnAction(this::navigateToHome);
+        //btn_workbench11.setOnAction(this::navigateToRide);
+        responseButton.setOnAction(this::handleResponse);
         refreshButton.setOnAction(e -> loadReclamations());
 
-        // Add double-click handler for update
-        reclamationListView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
-                if (selectedReclamation != null) {
-                    navigateToUpdate(event, selectedReclamation);
-                }
-            }
-        });
 
-        // Add delete key handler
-        reclamationListView.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.DELETE) {
-                handleDelete();
-            }
-        });
+
     }
     /*@FXML
     private void openChatbot() {
@@ -398,36 +374,14 @@ public class ListReclamation {
         }
     }
 
-    // Navigation methods remain the same...
-    private void navigateToAddReclamation(ActionEvent event) {
-        try {
-            URL resource = getClass().getResource("/Reclamation/AddReclamation.fxml");
-            System.out.println("AddReclamation FXML Path: " + resource);
-
-            if (resource == null) {
-                throw new IOException("AddReclamation.fxml file not found!");
-            }
-
-            FXMLLoader loader = new FXMLLoader(resource);
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Add Reclamation");
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to navigate to Add Reclamation: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
 
     private void navigateToHome(ActionEvent event) {
         try {
-            URL resource = getClass().getResource("/dashboard/dashboard.fxml");
-            System.out.println("Dashboard FXML Path: " + resource);
+            URL resource = getClass().getResource("/dashboard/dashboardTemplate.fxml");
+            System.out.println("dashboardTemplate FXML Path: " + resource);
 
             if (resource == null) {
-                throw new IOException("dashboard.fxml file not found!");
+                throw new IOException("dashboardTemplate.fxml file not found!");
             }
 
             FXMLLoader loader = new FXMLLoader(resource);
@@ -456,50 +410,7 @@ public class ListReclamation {
         }
     }
 
-    private void navigateToUpdate(MouseEvent event, Reclamation reclamation) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/UpdateReclamation.fxml"));
-            Parent root = loader.load();
 
-            // Get the controller and pass the reclamation data
-            UpdateReclamation updateController = loader.getController();
-            updateController.initData(reclamation);
-
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Navigation failed");
-            e.printStackTrace();
-        }
-    }
-
-    private void handleDelete() {
-        Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
-        if (selectedReclamation == null) {
-            showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to delete");
-            return;
-        }
-
-        Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmDialog.setTitle("Confirm Delete");
-        confirmDialog.setHeaderText(null);
-        confirmDialog.setContentText("Are you sure you want to delete this reclamation?");
-
-        confirmDialog.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                try {
-                    reclamationService.delete(selectedReclamation.getIdReclamation());
-                    loadReclamations(); // Refresh the list
-                    showAlert(Alert.AlertType.INFORMATION, "Success", "Reclamation deleted successfully");
-                } catch (SQLException e) {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete reclamation: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     @FXML
     private void handleResponse(ActionEvent event) {
@@ -514,7 +425,8 @@ public class ListReclamation {
             Parent root = loader.load();
 
             // Get the controller and pass the reclamation data
-            controllers.Response.AddResponse responseController = loader.getController();
+            AddResponse responseController = loader.getController();
+            System.out.println("ID Reclamtion :"+selectedReclamation.getIdReclamation());
             responseController.initData(selectedReclamation);
 
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -637,109 +549,5 @@ public class ListReclamation {
 
         // Add some padding to the max value
         return Math.max(pendingReclamations, resolvedReclamations) * 1.2;
-    }
-@FXML
-    private void showResponses() {
-        Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
-        if (selectedReclamation == null) {
-            showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to view responses.");
-            return;
-        }
-
-        try {
-            // Load the responses interface
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Response/ListResponse.fxml"));
-            Parent root = loader.load();
-
-            // Get the controller and pass the selected reclamation
-            ListResponse controller = loader.getController();
-            controller.initData(selectedReclamation);
-
-            // Show the new scene
-            Stage stage = (Stage) reclamationListView.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load responses: " + e.getMessage());
-        }
-    }
-    private void showResponsesDialog() {
-        Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
-        if (selectedReclamation == null) {
-            showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to view responses.");
-            return;
-        }
-
-        try {
-            // Create a dialog
-            Dialog<ButtonType> dialog = new Dialog<>();
-            dialog.setTitle("Responses for Reclamation");
-            dialog.setHeaderText("Responses for: " + selectedReclamation.getTitle());
-
-            // Add buttons
-            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
-
-            // Create a ListView for responses
-            ListView<Response> responsesListView = new ListView<>();
-
-            // Get responses for the selected reclamation from your service
-            List<Response> responses = new ResponseService().getResponsesByReclamationId(selectedReclamation.getIdReclamation());
-
-            if (responses.isEmpty()) {
-                // Show a message if there are no responses
-                Label noResponsesLabel = new Label("No responses found for this reclamation.");
-                dialog.getDialogPane().setContent(noResponsesLabel);
-            } else {
-                // Set up the ListView with responses
-                responsesListView.setItems(FXCollections.observableArrayList(responses));
-
-                // Set up cell factory to customize how responses are displayed
-                responsesListView.setCellFactory(param -> new ListCell<Response>() {
-                    @Override
-                    protected void updateItem(Response response, boolean empty) {
-                        super.updateItem(response, empty);
-
-                        if (empty || response == null) {
-                            setText(null);
-                            setGraphic(null);
-                        } else {
-                            // Create a formatted display for each response
-                            VBox content = new VBox(5);
-
-                            Label contentLabel = new Label(response.getContent());
-                            contentLabel.setWrapText(true);
-
-                            Label dateLabel = new Label("Date: " + dateFormat.format(response.getDate()));
-                            Label userLabel = null;
-                            try {
-                                userLabel = new Label("Responded by: " + new ResponseService().getUserFromResponse(response).getName());
-                            } catch (SQLException e) {
-                                throw new RuntimeException(e);
-                            }
-
-                            content.getChildren().addAll(contentLabel, dateLabel, userLabel);
-                            setGraphic(content);
-                            setText(null);
-                        }
-                    }
-                });
-
-                // Make the ListView scrollable and set a reasonable height
-                ScrollPane scrollPane = new ScrollPane(responsesListView);
-                scrollPane.setFitToWidth(true);
-                scrollPane.setPrefHeight(400);
-
-                dialog.getDialogPane().setContent(scrollPane);
-            }
-
-            // Adjust dialog size
-            dialog.getDialogPane().setPrefWidth(500);
-
-            // Show the dialog
-            dialog.showAndWait();
-
-        } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load responses: " + e.getMessage());
-        }
     }
 }

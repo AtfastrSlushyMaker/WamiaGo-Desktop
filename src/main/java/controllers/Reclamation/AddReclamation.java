@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import utils.SessionManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -44,8 +45,7 @@ public class AddReclamation {
     public AddReclamation() {
         reclamationService = new ReclamationService();
         // Temporary user for testing - replace with actual logged-in user
-        currentUser = new User();
-        currentUser.setId(1); // Set to an existing user ID in your database
+        currentUser = SessionManager.getInstance().getUser(); // Set to an existing user ID in your database
     }
 
     @FXML

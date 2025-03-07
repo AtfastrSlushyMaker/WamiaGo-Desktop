@@ -106,3 +106,54 @@
     -fx-border-radius: 12px;
     -fx-background-radius: 12px;
     -fx-cursor: hand;}
+.faq-button {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 4, 4);
+    -fx-cursor: hand;
+}
+
+.faq-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* FAQ Dialog Styling */
+.accordion .titled-pane > .title {
+    -fx-background-color: #F5F7FA;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.accordion .titled-pane > .content {
+    -fx-background-color: white;
+    -fx-padding: 10px;
+}
+
+.accordion .titled-pane:expanded > .title {
+    -fx-background-color: #E0E0E0;
+}
+.chart-button {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 12px;
+}
+
+.chart-button:hover {
+    -fx-background-color: #1976D2;
+}
+.chatbot-button {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 4, 4);
+    -fx-cursor: hand;
+}
+
+.chatbot-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+}

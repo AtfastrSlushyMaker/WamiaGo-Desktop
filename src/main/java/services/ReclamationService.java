@@ -117,4 +117,26 @@ public class ReclamationService implements IService<Reclamation> {
 
         return reclamations;
     }
+    public Reclamation getById(int id) throws SQLException {
+        Reclamation reclamation = null;
+        String sql = "SELECT * FROM reclamation WHERE id_reclamation = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    reclamation = new Reclamation();
+                    reclamation.setIdReclamation(rs.getInt("id_reclamation"));
+                    reclamation.setTitle(rs.getString("title"));
+                    reclamation.setContent(rs.getString("content"));
+                    reclamation.setDate(rs.getTimestamp("date"));
+                    reclamation.setStatus(rs.getInt("status"));
+
+                }
+                return reclamation;
+            }
+        }
+    }
+
+
+
 }

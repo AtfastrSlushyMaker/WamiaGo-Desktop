@@ -28,6 +28,9 @@ public class Response {
         this.date = date;
     }
 
+    public Response(int id, String content, Timestamp timestamp) {
+    }
+
     public int getId_response() {
         return id_response;
     }

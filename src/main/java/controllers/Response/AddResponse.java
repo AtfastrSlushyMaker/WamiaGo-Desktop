@@ -13,12 +13,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import services.ReclamationService;
 import services.ResponseService;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class AddResponse {
     @FXML
@@ -77,10 +79,15 @@ public class AddResponse {
             );
 
             if (responseService.create(response)) {
+                ReclamationService reclamationService = new ReclamationService();
+                System.out.println(reclamation.getIdReclamation());
+                reclamation.setStatus(1);
+                reclamationService.update(reclamation);
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Response added successfully");
                 navigateToList(event);
             } else {
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Response added successfully");
+                System.out.println(reclamation.getIdReclamation());
+                showAlert(Alert.AlertType.INFORMATION, "Failed", "Response Failed");
                 navigateToList(event);            }
 
         } catch (SQLException e) {
