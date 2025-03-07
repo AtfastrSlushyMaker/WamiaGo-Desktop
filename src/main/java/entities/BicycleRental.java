@@ -3,7 +3,8 @@ package entities;
 import utils.Weather.WeatherService;
 
 import java.sql.Timestamp;
-import java.util.Objects;
+import java.util.Objects;  import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BicycleRental {
     private int id;
@@ -16,6 +17,7 @@ public class BicycleRental {
     private float distance_km;
     private float battery_used;
     private float cost;
+
 
     public BicycleRental(int id, User user, Bicycle bicycle, Station start_station, Station end_station
             , Timestamp start_time, Timestamp end_time, float distance_km, float battery_used, float cost) {
@@ -151,11 +153,13 @@ public class BicycleRental {
                 ", cost=" + cost +
                 '}';
     }
+
+
     public double calculateCost(BicycleRental rental) {
         double baseRatePerKm = 0.50; // Base rate per km
         double baseRatePerHour = 2.00; // Base rate per hour
 
-        double distance = Location.calculateDistance(rental.getStart_station().getLocation(), rental.end_station.getLocation());
+        double distance = Location.calculateDistance(rental.getStart_station().getLocation(), rental.getEnd_station().getLocation());
         double distanceCost = baseRatePerKm * distance;
 
         long durationMillis = System.currentTimeMillis() - rental.getStart_time().getTime();
@@ -168,7 +172,7 @@ public class BicycleRental {
         WeatherInfo weatherInfo = WeatherService.getWeatherInfo(rental.getStart_station().getLocation());
 
         String description = weatherInfo.getDescription().toLowerCase();
-        double temp = Double.parseDouble(weatherInfo.getDescription().split("°C")[0]); // Extract temp from "25°C, clear sky"
+        double temp = extractTemperature(weatherInfo.getDescription()); // Nouvelle méthode pour extraire la température
 
         // 🌧️ Rainy, Snowy, or Stormy → 15% Discount
         if (description.contains("rain") || description.contains("snow") || description.contains("storm")) {
@@ -202,7 +206,7 @@ public class BicycleRental {
 
         WeatherInfo weatherInfo = WeatherService.getWeatherInfo(rental.getStart_station().getLocation());
         String description = weatherInfo.getDescription().toLowerCase();
-        double temp = Double.parseDouble(weatherInfo.getDescription().split("°C")[0]); // Extract temp from "25°C, clear sky"
+        double temp = extractTemperature(weatherInfo.getDescription()); // Nouvelle méthode pour extraire la température
 
         // 🌧️ Rainy, Snowy, or Stormy → 15% Discount
         if (description.contains("rain") || description.contains("snow") || description.contains("storm")) {
@@ -221,6 +225,26 @@ public class BicycleRental {
 
         return (float) Math.max(cost, 0.50); // Minimum price safeguard
     }
+
+    /**
+     * Méthode pour extraire proprement la température d'une chaîne de description météo.
+     */
+    private double extractTemperature(String weatherDescription) {
+        try {
+            // Utilisation d'une regex pour capturer la température sous la forme "25°C"
+            Pattern pattern = Pattern.compile("(-?\\d+[,.]?\\d*)°C");
+            Matcher matcher = pattern.matcher(weatherDescription);
+
+            if (matcher.find()) {
+                // Remplacer une éventuelle virgule par un point avant de parser
+                return Double.parseDouble(matcher.group(1).replace(",", "."));
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Erreur lors de l'extraction de la température : " + e.getMessage());
+        }
+        return 20.0; // Valeur par défaut si extraction échoue
+    }
+
 
     public int  getDuration_minutes(){
         if (getEnd_station()==null){
