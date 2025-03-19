@@ -2,7 +2,7 @@
 <!-- PROJECT LOGO -->
 <div align="center">
   <a href="https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop">
-    <img src="[https://imgur.com/a/KVxozVX](https://i.imgur.com/759dC4H.png)" alt="Logo" width="500">
+    <img src="https://i.imgur.com/759dC4H.png" alt="Logo" width="500">
   </a>
   <h3 align="center">WamiaGo Desktop</h3>
   <p align="center">
