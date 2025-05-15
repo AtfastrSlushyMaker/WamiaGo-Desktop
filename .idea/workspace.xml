@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/main/resources/psw4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/psw4j.properties" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,7 +247,7 @@
       <workItem from="1741331801412" duration="604000" />
       <workItem from="1747223704407" duration="4512000" />
       <workItem from="1747321439131" duration="1020000" />
-      <workItem from="1747334551253" duration="1739000" />
+      <workItem from="1747334551253" duration="2603000" />
     </task>
     <servers />
   </component>
