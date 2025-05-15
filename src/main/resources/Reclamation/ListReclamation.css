@@ -157,3 +157,206 @@
 .chatbot-button:hover {
     -fx-background-color: rgba(0, 0, 0, 0.1);
 }
+
+.list-cell {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+}
+
+.list-cell:empty {
+    -fx-padding: 0px;
+    -fx-background-color: transparent;
+}
+
+.reclamation-card {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-padding: 15px;
+}
+
+.reclamation-header {
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+.reclamation-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.reclamation-status {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.reclamation-status.pending {
+    -fx-text-fill: #ff6b6b;
+}
+
+.reclamation-status.resolved {
+    -fx-text-fill: #51cf66;
+}
+
+.reclamation-content {
+    -fx-font-size: 12px;
+    -fx-wrap-text: true;
+}
+
+.reclamation-date {
+    -fx-font-size: 11px;
+    -fx-text-fill: #666;
+}
+
+.response-section {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
+    -fx-spacing: 5px;
+}
+
+.response-label {
+    -fx-font-weight: bold;
+}
+
+.response-content {
+    -fx-wrap-text: true;
+}
+
+.response-date {
+    -fx-font-size: 11px;
+    -fx-text-fill: #666;
+}
+
+.action-buttons {
+    -fx-spacing: 10px;
+    -fx-alignment: center-right;
+}
+
+.respond-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 3px;
+}
+
+.respond-button:hover {
+    -fx-background-color: #45a049;
+}
+
+.delete-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 3px;
+}
+
+.delete-button:hover {
+    -fx-background-color: #da190b;
+}
+
+/* Search and filter styles */
+.search-box {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+.search-field {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+
+.status-filter {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Statistics section */
+.stats-container {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 15px;
+    -fx-spacing: 10px;
+}
+
+.stats-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.stats-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.stats-value.pending {
+    -fx-text-fill: #ff6b6b;
+}
+
+.stats-value.resolved {
+    -fx-text-fill: #51cf66;
+}
+
+/* Chart styles */
+.chart {
+    -fx-background-color: white;
+    -fx-padding: 15px;
+    -fx-background-radius: 5px;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.axis-label {
+    -fx-font-size: 12px;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+.chart-legend-item {
+    -fx-padding: 5px;
+}
+
+/* Dialog styles */
+.dialog-pane {
+    -fx-background-color: white;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f8f9fa;
+}
+
+.dialog-pane .content {
+    -fx-padding: 20px;
+}
+
+.dialog-pane .button-bar {
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 3px;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #45a049;
+}
+
+.dialog-pane .button.cancel {
+    -fx-background-color: #f44336;
+}
+
+.dialog-pane .button.cancel:hover {
+    -fx-background-color: #da190b;
+}

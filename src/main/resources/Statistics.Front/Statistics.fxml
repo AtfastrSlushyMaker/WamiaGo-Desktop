@@ -19,7 +19,7 @@
                     <children>
                         <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@/images/statistics/users.png" />
+                                <Image url="@/Images/statistics/users.png" />
                             </image>
                         </ImageView>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Users" textAlignment="CENTER">
@@ -43,7 +43,7 @@
                     <children>
                         <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@/images/statistics/announcement.png" />
+                                <Image url="@/Images/statistics/announcement.png" />
                             </image>
                         </ImageView>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Announcements" textAlignment="CENTER">
@@ -67,7 +67,7 @@
                     <children>
                         <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@/images/statistics/relocations.png" />
+                                <Image url="@/Images/statistics/relocations.png" />
                             </image>
                         </ImageView>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Relocations" textAlignment="CENTER">
@@ -91,7 +91,7 @@
                     <children>
                         <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@/images/statistics/reservations.png" />
+                                <Image url="@/Images/statistics/reservations.png" />
                             </image>
                         </ImageView>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservations" textAlignment="CENTER">

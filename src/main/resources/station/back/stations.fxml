@@ -28,7 +28,7 @@
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0">
                      <image>
-                        <Image url="@/images/station/icons/bike_station.png" />
+                        <Image url="@/Images/station/icons/bike_station.png" />
                      </image>
                   </ImageView>
                   <Label styleClass="title-label" text="Bike Station Management" />
@@ -46,7 +46,7 @@
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0">
                                  <image>
-                                    <Image url="@/images/station/icons/pdf_export.png" />
+                                    <Image url="@/Images/station/icons/pdf_export.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -55,7 +55,7 @@
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0">
                                  <image>
-                                    <Image url="@/images/station/icons/refresh_icon.png" />
+                                    <Image url="@/Images/station/icons/refresh_icon.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -64,7 +64,7 @@
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0">
                                  <image>
-                                    <Image url="@/images/station/icons/add.png" />
+                                    <Image url="@/Images/station/icons/add.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -73,7 +73,7 @@
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0">
                                  <image>
-                                    <Image url="@/images/station/icons/delete.png" />
+                                    <Image url="@/Images/station/icons/delete.png" />
                                  </image>
                               </ImageView>
                            </graphic>

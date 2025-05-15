@@ -1,7 +1,9 @@
 package controllers.Reclamation;
 
 import controllers.Response.AddResponse;
+import controllers.Response.UpdateResponse;
 import entities.Reclamation;
+import entities.Response;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -26,11 +28,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import services.ReclamationService;
+import services.ResponseService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ListReclamationBack {
     @FXML
@@ -102,6 +107,7 @@ public class ListReclamationBack {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     private ObservableList<Reclamation> allReclamations;
     private FilteredList<Reclamation> filteredReclamations;
+    private MultipleSelectionModel<Reclamation> selectionModel;
 
     public ListReclamationBack() {
         reclamationService = new ReclamationService();
@@ -110,60 +116,45 @@ public class ListReclamationBack {
     @FXML
     void initialize() {
         // Setup date display
-        // Setup date display
         if (date != null) {
             date.setText(new SimpleDateFormat("EEEE, dd MMMM yyyy").format(new Date()));
-        } else {
-            System.err.println("Warning: date Label is null in initialize method");
         }
-        //setup faqButton
+
+        // Setup buttons with hover effects
+        setupButtonStyles(faqButton, "#17a2b8");
+        setupButtonStyles(statsButton, "#28a745");
+        setupButtonStyles(responseButton, "#28a745");
+        setupButtonStyles(refreshButton, "#6c757d");
+
+        // Add button actions
         if (faqButton != null) {
             faqButton.setOnAction(event -> showFAQDialog());
         }
-        //setup statsButton
         if (statsButton != null) {
             statsButton.setOnAction(event -> showReclamationStatsChart());
         }
+        responseButton.setOnAction(this::handleBulkResponse);
+        refreshButton.setOnAction(e -> loadReclamations());
 
-
-        // Setup status filter
+        // Setup status filter with modern styling
         statusFilter.setItems(FXCollections.observableArrayList("All", "Pending", "Resolved"));
         statusFilter.getSelectionModel().selectFirst();
+        statusFilter.setStyle("-fx-background-color: white; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-padding: 5; -fx-min-width: 120;");
+
+        // Setup search field with modern styling
+        searchField.setStyle("-fx-background-color: white; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-padding: 8; -fx-min-width: 200;");
+
+        // Setup list view with better width and selection mode
+        reclamationListView.setStyle("-fx-background-color: transparent; -fx-padding: 10;");
+        reclamationListView.setPrefWidth(800);
+        reclamationListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        selectionModel = reclamationListView.getSelectionModel();
 
         setupListView();
         loadReclamations();
         setupSearch();
         updateStatistics();
-
-
-        //home_button.setOnAction(this::navigateToHome);
-        //btn_workbench11.setOnAction(this::navigateToRide);
-        responseButton.setOnAction(this::handleResponse);
-        refreshButton.setOnAction(e -> loadReclamations());
-
-
-
     }
-    /*@FXML
-    private void openChatbot() {
-        try {
-            URL resource = getClass().getResource("/Reclamation/Chatbot.fxml");
-            if (resource == null) {
-                throw new IOException("Chatbot FXML file not found!");
-            }
-
-            FXMLLoader loader = new FXMLLoader(resource);
-            Parent root = loader.load();
-
-            Stage chatbotStage = new Stage();
-            chatbotStage.setTitle("AI Chatbot");
-            chatbotStage.setScene(new Scene(root));
-            chatbotStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open chatbot: " + e.getMessage());
-        }
-    }*/
 
     @FXML
     private void openChatbot() {
@@ -174,45 +165,39 @@ public class ListReclamationBack {
     }
 
     private void showFAQDialog() {
-        // Create a new Stage (dialog window)
         Stage faqStage = new Stage();
         faqStage.setTitle("Frequently Asked Questions");
+        faqStage.initModality(Modality.APPLICATION_MODAL);
 
-        // Create the main container
         VBox faqContainer = new VBox(10);
-        faqContainer.setStyle("-fx-padding: 20px;");
+        faqContainer.setStyle("-fx-padding: 20px; -fx-background-color: white;");
+        faqContainer.setPrefWidth(600);
 
-        // Create an Accordion for expandable FAQ sections
+        Label titleLabel = new Label("Frequently Asked Questions");
+        titleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-padding: 0 0 10 0;");
+        faqContainer.getChildren().add(titleLabel);
+
         Accordion faqAccordion = new Accordion();
+        faqAccordion.setStyle("-fx-background-color: transparent;");
 
-        // Predefined FAQs
         List<FAQ> faqs = createFAQs();
-
-        // Create TitledPanes for each FAQ
         for (FAQ faq : faqs) {
             TitledPane pane = new TitledPane();
             pane.setText(faq.getQuestion());
+            pane.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
 
-            // Create a label for the answer
             Label answerLabel = new Label(faq.getAnswer());
             answerLabel.setWrapText(true);
-            answerLabel.setStyle("-fx-padding: 10px;");
-
-            // Set the content of the TitledPane
+            answerLabel.setStyle("-fx-padding: 10px; -fx-text-fill: #495057;");
             pane.setContent(answerLabel);
 
-            // Add to the accordion
             faqAccordion.getPanes().add(pane);
         }
 
-        // Add accordion to container
         faqContainer.getChildren().add(faqAccordion);
 
-        // Create scene and set it to the stage
-        Scene scene = new Scene(faqContainer, 500, 600);
+        Scene scene = new Scene(faqContainer);
         faqStage.setScene(scene);
-
-        // Show the dialog
         faqStage.show();
     }
 
@@ -262,7 +247,6 @@ public class ListReclamationBack {
 
         return faqs;
     }
-
 
     private void setupSearch() {
         // Setup initial filtered list
@@ -316,41 +300,131 @@ public class ListReclamationBack {
     }
 
     private void setupListView() {
-        reclamationListView.setCellFactory(param -> new ListCell<>() {
+        reclamationListView.setCellFactory(lv -> new ListCell<Reclamation>() {
             @Override
             protected void updateItem(Reclamation reclamation, boolean empty) {
                 super.updateItem(reclamation, empty);
-
                 if (empty || reclamation == null) {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    String status = reclamation.getStatus() == 0 ? "Pending" : "Resolved";
+                    VBox mainContainer = new VBox(10);
+                    mainContainer.setPadding(new Insets(15));
+                    mainContainer.setStyle("-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
+                    mainContainer.setPrefWidth(750);
 
-                    // Create a better formatted cell
-                    VBox content = new VBox(5);
-
+                    // Header with title and status
+                    HBox headerBox = new HBox(10);
+                    headerBox.setAlignment(Pos.CENTER_LEFT);
+                    
                     Label titleLabel = new Label(reclamation.getTitle());
-                    titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+                    titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;");
+                    titleLabel.setWrapText(true);
+                    HBox.setHgrow(titleLabel, Priority.ALWAYS);
+                    
+                    Label statusLabel = new Label(reclamation.getStatus() == 0 ? "Pending" : "Resolved");
+                    statusLabel.setStyle("-fx-font-weight: bold; -fx-padding: 5 10; -fx-background-radius: 15; " +
+                            (reclamation.getStatus() == 0 ? 
+                            "-fx-background-color: #fff3cd; -fx-text-fill: #856404;" : 
+                            "-fx-background-color: #d4edda; -fx-text-fill: #155724;"));
+                    
+                    headerBox.getChildren().addAll(titleLabel, statusLabel);
 
+                    // Content section
+                    VBox contentBox = new VBox(5);
+                    contentBox.setStyle("-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 5;");
+                    
                     Label contentLabel = new Label(reclamation.getContent());
                     contentLabel.setWrapText(true);
+                    contentLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #495057;");
+                    
+                    Label dateLabel = new Label("Submitted on: " + dateFormat.format(reclamation.getDate()));
+                    dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #6c757d;");
+                    
+                    contentBox.getChildren().addAll(contentLabel, dateLabel);
 
-                    HBox metaData = new HBox(10);
-                    Label dateLabel = new Label("Date: " + dateFormat.format(reclamation.getDate()));
-                    Label statusLabel = new Label("Status: " + status);
-                    statusLabel.setStyle(reclamation.getStatus() == 0 ?
-                            "-fx-text-fill: #D32F2F; -fx-font-weight: bold;" :
-                            "-fx-text-fill: #388E3C; -fx-font-weight: bold;");
-                    Label userLabel = new Label("User: " + reclamation.getUser().getName());
+                    // Response section (if resolved)
+                    if (reclamation.getStatus() == 1) {
+                        try {
+                            List<Response> responses = new ResponseService().getResponsesByReclamationId(reclamation.getIdReclamation());
+                            if (!responses.isEmpty()) {
+                                VBox responsesBox = new VBox(10);
+                                responsesBox.setStyle("-fx-background-color: #e9ecef; -fx-padding: 15; -fx-background-radius: 5;");
+                                
+                                Label responsesHeader = new Label("Responses");
+                                responsesHeader.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2c3e50;");
+                                responsesBox.getChildren().add(responsesHeader);
 
-                    metaData.getChildren().addAll(dateLabel, statusLabel, userLabel);
-                    content.getChildren().addAll(titleLabel, contentLabel, metaData);
+                                responses.sort((r1, r2) -> r2.getDate().compareTo(r1.getDate()));
 
-                    setGraphic(content);
-                    setText(null);
+                                for (Response response : responses) {
+                                    VBox responseBox = new VBox(5);
+                                    responseBox.setStyle("-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 0);");
+                                    
+                                    Label responseContent = new Label(response.getContent());
+                                    responseContent.setWrapText(true);
+                                    responseContent.setStyle("-fx-font-size: 13px; -fx-text-fill: #495057;");
+                                    
+                                    Label responseDate = new Label("Responded on: " + dateFormat.format(response.getDate()));
+                                    responseDate.setStyle("-fx-font-size: 11px; -fx-text-fill: #6c757d;");
+                                    
+                                    Button editButton = new Button("Edit");
+                                    editButton.setStyle("-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-padding: 5 10; -fx-background-radius: 3; -fx-cursor: hand;");
+                                    editButton.setOnAction(e -> handleEditResponse(response));
+                                    
+                                    HBox responseActions = new HBox(10);
+                                    responseActions.setAlignment(Pos.CENTER_RIGHT);
+                                    responseActions.getChildren().add(editButton);
+                                    
+                                    responseBox.getChildren().addAll(responseContent, responseDate, responseActions);
+                                    responsesBox.getChildren().add(responseBox);
+                                }
+                                
+                                mainContainer.getChildren().add(responsesBox);
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            Label errorLabel = new Label("Error loading responses");
+                            errorLabel.setStyle("-fx-text-fill: #dc3545; -fx-font-style: italic;");
+                            mainContainer.getChildren().add(errorLabel);
+                        }
+                    }
+
+                    // Action buttons
+                    HBox actionBox = new HBox(10);
+                    actionBox.setAlignment(Pos.CENTER_RIGHT);
+
+                    if (reclamation.getStatus() == 0) {
+                        Button respondButton = new Button("Respond");
+                        respondButton.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;");
+                        respondButton.setOnAction(e -> {
+                            Platform.runLater(() -> openResponseDialog(reclamation));
+                        });
+                        actionBox.getChildren().add(respondButton);
+                    }
+
+                    Button deleteButton = new Button("Delete");
+                    deleteButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;");
+                    deleteButton.setOnAction(e -> {
+                        try {
+                            reclamationService.delete(reclamation.getIdReclamation());
+                            loadReclamations();
+                        } catch (SQLException ex) {
+                            showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete reclamation: " + ex.getMessage());
+                        }
+                    });
+
+                    actionBox.getChildren().add(deleteButton);
+
+                    mainContainer.getChildren().addAll(headerBox, contentBox, actionBox);
+                    setGraphic(mainContainer);
                 }
             }
+        });
+
+        // Add hover effect to list items
+        reclamationListView.setOnMouseEntered(e -> {
+            reclamationListView.setStyle("-fx-background-color: transparent;");
         });
     }
 
@@ -373,7 +447,6 @@ public class ListReclamationBack {
             e.printStackTrace();
         }
     }
-
 
     private void navigateToHome(ActionEvent event) {
         try {
@@ -410,31 +483,84 @@ public class ListReclamationBack {
         }
     }
 
-
-
-    @FXML
-    private void handleResponse(ActionEvent event) {
+    private void handleBulkResponse(ActionEvent event) {
+        // Get the selected item directly from the ListView
         Reclamation selectedReclamation = reclamationListView.getSelectionModel().getSelectedItem();
+        
         if (selectedReclamation == null) {
-            showAlert(Alert.AlertType.WARNING, "Warning", "Please select a reclamation to respond to");
+            showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a reclamation to respond to.");
             return;
         }
 
+        // Check if the selected reclamation is pending
+        if (selectedReclamation.getStatus() != 0) {
+            showAlert(Alert.AlertType.WARNING, "Invalid Selection", "You can only respond to pending reclamations.");
+            return;
+        }
+
+        // Open the response dialog for the selected reclamation
+        openResponseDialog(selectedReclamation);
+    }
+
+    private void openResponseDialog(Reclamation reclamation) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Response/AddResponse.fxml"));
             Parent root = loader.load();
 
-            // Get the controller and pass the reclamation data
-            AddResponse responseController = loader.getController();
-            System.out.println("ID Reclamtion :"+selectedReclamation.getIdReclamation());
-            responseController.initData(selectedReclamation);
+            AddResponse controller = loader.getController();
+            controller.initData(reclamation);
 
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add Response - " + reclamation.getTitle());
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            
+            // Center the dialog on the screen
+            dialogStage.centerOnScreen();
+            
+            // Set minimum size for better usability
+            dialogStage.setMinWidth(500);
+            dialogStage.setMinHeight(400);
+            
+            dialogStage.initOwner(reclamationListView.getScene().getWindow());
+            
+            // Show dialog and wait for it to close
+            dialogStage.showAndWait();
+            
+            // Refresh the list after response
+            Platform.runLater(this::loadReclamations);
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Navigation failed");
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open response dialog: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void handleEditResponse(Response response) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Response/UpdateResponse.fxml"));
+            Parent root = loader.load();
+
+            UpdateResponse controller = loader.getController();
+            controller.initData(response);
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Response");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            
+            // Set the owner window to center the dialog
+            dialogStage.initOwner(reclamationListView.getScene().getWindow());
+            
+            // Show the dialog and wait for it to be closed
+            dialogStage.showAndWait();
+
+            // Close the dialog and return to the reclamation list
+            dialogStage.close();
+            
+            // Refresh the reclamation list after response is updated
+            loadReclamations();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open edit dialog: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -446,6 +572,7 @@ public class ListReclamationBack {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
     private void showReclamationStatsChart() {
         // Create a new stage for the chart
         Stage chartStage = new Stage();
@@ -549,5 +676,13 @@ public class ListReclamationBack {
 
         // Add some padding to the max value
         return Math.max(pendingReclamations, resolvedReclamations) * 1.2;
+    }
+
+    private void setupButtonStyles(Button button, String color) {
+        if (button != null) {
+            button.setStyle("-fx-background-color: " + color + "; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;");
+            button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: derive(" + color + ", -10%); -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;"));
+            button.setOnMouseExited(e -> button.setStyle("-fx-background-color: " + color + "; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;"));
+        }
     }
 }

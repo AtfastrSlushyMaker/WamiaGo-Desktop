@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import services.ReclamationService;
 import services.ResponseService;
 import javafx.event.ActionEvent;
+import javafx.scene.input.KeyCode;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,9 +39,6 @@ public class AddResponse {
     @FXML
     private Button cancelButton;
 
-    @FXML
-    private Button home_button;
-
     private final ResponseService responseService;
     private Reclamation reclamation;
 
@@ -50,16 +48,42 @@ public class AddResponse {
 
     @FXML
     void initialize() {
-        submitButton.setOnAction(this::handleSubmit);
-        cancelButton.setOnAction(this::navigateToList);
-        home_button.setOnAction(this::navigateToHome);
-    }
+        // Set up text area with better styling
+        responseContentArea.setStyle("-fx-font-size: 14px; -fx-padding: 10; -fx-background-color: white; -fx-border-color: #ced4da; -fx-border-radius: 5;");
+        responseContentArea.setWrapText(true);
+        responseContentArea.setPromptText("Enter your response here...");
 
-    public void initData(Reclamation reclamation) {
-        this.reclamation = reclamation;
-        // Display reclamation details
-        reclamationTitleLabel.setText(reclamation.getTitle());
-        reclamationContentLabel.setText(reclamation.getContent());
+        // Set up labels with better styling
+        reclamationTitleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+        reclamationContentLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #495057; -fx-wrap-text: true;");
+
+        // Set up buttons with better styling
+        submitButton.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;");
+        cancelButton.setStyle("-fx-background-color: #6c757d; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;");
+
+        // Add hover effects to buttons
+        submitButton.setOnMouseEntered(e -> submitButton.setStyle("-fx-background-color: #218838; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;"));
+        submitButton.setOnMouseExited(e -> submitButton.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;"));
+        
+        cancelButton.setOnMouseEntered(e -> cancelButton.setStyle("-fx-background-color: #5a6268; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;"));
+        cancelButton.setOnMouseExited(e -> cancelButton.setStyle("-fx-background-color: #6c757d; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;"));
+
+        // Set up button actions
+        submitButton.setOnAction(this::handleSubmit);
+        cancelButton.setOnAction(e -> {
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+        });
+
+        // Add keyboard shortcuts
+        responseContentArea.setOnKeyPressed(e -> {
+            if (e.isControlDown() && e.getCode() == KeyCode.ENTER) {
+                handleSubmit(new ActionEvent());
+            } else if (e.getCode() == KeyCode.ESCAPE) {
+                Stage stage = (Stage) cancelButton.getScene().getWindow();
+                stage.close();
+            }
+        });
     }
 
     @FXML
@@ -68,6 +92,7 @@ public class AddResponse {
 
         if (content.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error", "Please enter a response");
+            responseContentArea.requestFocus();
             return;
         }
 
@@ -80,47 +105,27 @@ public class AddResponse {
 
             if (responseService.create(response)) {
                 ReclamationService reclamationService = new ReclamationService();
-                System.out.println(reclamation.getIdReclamation());
                 reclamation.setStatus(1);
                 reclamationService.update(reclamation);
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Response added successfully");
-                navigateToList(event);
+                
+                // Close the dialog after successful submission
+                Stage stage = (Stage) submitButton.getScene().getWindow();
+                stage.close();
             } else {
-                System.out.println(reclamation.getIdReclamation());
-                showAlert(Alert.AlertType.INFORMATION, "Failed", "Response Failed");
-                navigateToList(event);            }
-
+                showAlert(Alert.AlertType.ERROR, "Failed", "Failed to add response");
+            }
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to add response: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private void navigateToList(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Response/ListResponse.fxml"));
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Navigation failed");
-            e.printStackTrace();
-        }
-    }
-
-
-    private void navigateToHome(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/dashboard/dashboard.fxml"));
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Navigation failed");
-            e.printStackTrace();
-        }
+    public void initData(Reclamation reclamation) {
+        this.reclamation = reclamation;
+        reclamationTitleLabel.setText(reclamation.getTitle());
+        reclamationContentLabel.setText(reclamation.getContent());
+        responseContentArea.requestFocus(); // Set focus to the response area
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {

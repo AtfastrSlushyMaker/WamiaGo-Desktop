@@ -35,9 +35,6 @@ public class UpdateResponse {
     @FXML
     private Button cancelButton;
 
-    @FXML
-    private Button home_button;
-
     private final ResponseService responseService;
     private Response response;
 
@@ -48,13 +45,14 @@ public class UpdateResponse {
     @FXML
     void initialize() {
         updateButton.setOnAction(this::handleUpdate);
-        cancelButton.setOnAction(this::navigateToList);
-        home_button.setOnAction(this::navigateToHome);
+        cancelButton.setOnAction(e -> {
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+        });
     }
 
     public void initData(Response response) {
         this.response = response;
-        // Display reclamation and response details
         reclamationTitleLabel.setText(response.getReclamation().getTitle());
         reclamationContentLabel.setText(response.getReclamation().getContent());
         responseContentArea.setText(response.getContent());
@@ -70,44 +68,17 @@ public class UpdateResponse {
         }
 
         try {
-            // Update the response content and timestamp
             response.setContent(content);
             response.setDate(new Timestamp(System.currentTimeMillis()));
 
-            // Update in database
             responseService.update(response);
-
             showAlert(Alert.AlertType.INFORMATION, "Success", "Response updated successfully");
-            navigateToList(event);
-
+            
+            // Close the modal after successful update
+            Stage stage = (Stage) updateButton.getScene().getWindow();
+            stage.close();
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to update response: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void navigateToList(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Response/ListResponse.fxml"));
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Navigation failed");
-            e.printStackTrace();
-        }
-    }
-
-    private void navigateToHome(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/dashboard/dashboard.fxml"));
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Navigation failed");
             e.printStackTrace();
         }
     }

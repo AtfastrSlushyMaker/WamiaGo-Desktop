@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="827.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.dashboard.DashboardAdminController">
+<AnchorPane prefHeight="827.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.dashboard.DashboardAdminController">
     <stylesheets>
         <URL value="@dashboard.css" />
     </stylesheets>
@@ -21,7 +26,7 @@
                 <graphic>
                     <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/images/icons/close.png" />
+                            <Image url="/Images/icons/close.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -30,7 +35,7 @@
                 <graphic>
                     <ImageView fitHeight="16.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/images/icons/maximize.png" />
+                            <Image url="@/Images/icons/maximize.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -39,7 +44,7 @@
                 <graphic>
                     <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/images/icons/minus.png" />
+                            <Image url="@/Images/icons/minus.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -48,7 +53,7 @@
                 <graphic>
                     <ImageView fitHeight="21.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/images/icons/hamburger.png" />
+                            <Image url="@/Images/icons/hamburger.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -80,7 +85,7 @@
             <VBox alignment="TOP_LEFT" layoutX="60.0" layoutY="140.0" prefHeight="522.0" prefWidth="174.0" spacing="10" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="120.0">
                 <children>
                   <Rectangle arcHeight="5.0" arcWidth="1.0" fill="#ecf1f5" height="1.0" stroke="WHITE" strokeType="INSIDE" width="150.0" />
-                    <Button fx:id="dashboard" graphicTextGap="5.0" mnemonicParsing="false" onAction="#DashboardBtn" prefHeight="25.0" prefWidth="160.0" text="Dashboard" textAlignment="CENTER" textFill="WHITE">
+                    <Button fx:id="dashboard" graphicTextGap="5.0" mnemonicParsing="false" onAction="#handleDashboardBtn" prefHeight="25.0" prefWidth="160.0" text="Dashboard" textAlignment="CENTER" textFill="WHITE">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -89,7 +94,7 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
-                    <Button fx:id="usersBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#usersBtn" prefHeight="25.0" prefWidth="160.0" text="Users">
+                    <Button fx:id="statisticsBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleStatisticsBtn" prefHeight="24.0" prefWidth="160.0" text="Statistics">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -98,7 +103,7 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
-                    <Button fx:id="taxiRequests" graphicTextGap="0.0" mnemonicParsing="false" onAction="#taxiRequests" prefHeight="25.0" prefWidth="160.0" text="Taxi requests">
+                    <Button fx:id="usersBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleUsersBtn" prefHeight="25.0" prefWidth="160.0" text="Users">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -107,7 +112,7 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
-                    <Button fx:id="rentals" graphicTextGap="0.0" mnemonicParsing="false" onAction="#rentalsBtn" prefHeight="25.0" prefWidth="160.0" text="Bicycles Rentals">
+                    <Button fx:id="taxiRequests" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleTaxiRequests" prefHeight="25.0" prefWidth="160.0" text="Taxi requests">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -116,7 +121,7 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
-                    <Button fx:id="stations" graphicTextGap="0.0" mnemonicParsing="false" onAction="#stationsBtn" prefHeight="25.0" prefWidth="160.0" text="Stations">
+                    <Button fx:id="rentals" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleRentalsBtn" prefHeight="25.0" prefWidth="160.0" text="Bicycles Rentals">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -125,7 +130,7 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
-                    <Button fx:id="bicycles" graphicTextGap="0.0" mnemonicParsing="false" onAction="#bicyclesBtn" prefHeight="25.0" prefWidth="160.0" text="Bicycles">
+                    <Button fx:id="stations" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleStationsBtn" prefHeight="25.0" prefWidth="160.0" text="Stations">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -134,7 +139,7 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
-                    <Button fx:id="taxiRides" graphicTextGap="0.0" mnemonicParsing="false" onAction="#taxiRides" prefHeight="25.0" prefWidth="160.0" text="Taxi rides">
+                    <Button fx:id="bicycles" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleBicyclesBtn" prefHeight="25.0" prefWidth="160.0" text="Bicycles">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -143,7 +148,7 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
-                    <Button fx:id="enquiries" graphicTextGap="0.0" mnemonicParsing="false" onAction="#QueriesBtn" prefHeight="25.0" prefWidth="160.0" text="Feedbacks">
+                    <Button fx:id="taxiRides" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleTaxiRides" prefHeight="25.0" prefWidth="160.0" text="Taxi rides">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -152,7 +157,7 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
-                    <Button fx:id="announcementsBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#announcementsBtn" prefHeight="24.0" prefWidth="160.0" text="Announcements">
+                    <Button fx:id="enquiries" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleQueriesBtn" prefHeight="25.0" prefWidth="160.0" text="Feedbacks">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -161,7 +166,7 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
-                    <Button fx:id="statisticsBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#statisticsBtn" prefHeight="24.0" prefWidth="160.0" text="Statistics">
+                    <Button fx:id="announcementsBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleAnnouncementsBtn" prefHeight="24.0" prefWidth="160.0" text="Announcements">
                         <font>
                             <Font size="10.0" />
                         </font>
@@ -174,7 +179,7 @@
                 </children>
             </VBox>
          <Label id="date" fx:id="date_label" layoutX="44.0" layoutY="79.0" maxWidth="208.0" prefHeight="45.0" prefWidth="208.0" text="Date" />
-         <Button fx:id="logout" graphicTextGap="0.0" layoutX="38.0" layoutY="652.0" mnemonicParsing="false" onAction="#logoutBtn" prefHeight="58.0" prefWidth="160.0" text="Logout" textAlignment="CENTER" textFill="WHITE">
+         <Button fx:id="logout" graphicTextGap="0.0" layoutX="31.0" layoutY="700.0" mnemonicParsing="false" onAction="#logoutBtn" prefHeight="58.0" prefWidth="160.0" text="Logout" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font size="10.0" />
             </font>
@@ -183,9 +188,9 @@
                <String fx:value="text" />
             </styleClass>
          </Button>
-         <ImageView fitHeight="36.0" fitWidth="44.0" layoutX="46.0" layoutY="664.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fitHeight="36.0" fitWidth="44.0" layoutX="41.0" layoutY="711.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../images/icons/logout.png" />
+               <Image url="@../Images/icons/logout.png" />
             </image>
          </ImageView>
         </children>

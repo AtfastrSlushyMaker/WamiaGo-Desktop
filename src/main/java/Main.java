@@ -1,4 +1,3 @@
-
 import entities.*;
 import services.*;
 import java.sql.SQLException;
@@ -9,12 +8,21 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 import javax.swing.*;
 import java.io.File;
-public class Main {
+import javafx.application.Application;
+import javafx.stage.Stage;
+import java.io.IOException;
+
+public class Main extends Application {
     private static UserService userService = new UserService();
     private static IService<Driver> driverService = new DriverService();
     private static RatingService ratingService = new RatingService();
 
-    public static void main(String[] args) {
+    @Override
+    public void start(Stage stage) throws IOException {
+        // Force JavaFX to use software rendering instead of D3D
+        System.setProperty("prism.order", "sw");
+        System.setProperty("prism.verbose", "true");
+        
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 displayMainMenu();
