@@ -5,21 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardAdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Reservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/AnnouncementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/AnnouncementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/LocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RelocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RelocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/icons/add.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/icons/add.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/icons/edit.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/icons/edit.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/icons/see.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/icons/see.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardAdmin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Reclamation/ListReclamation.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +48,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git&quot;,
-    &quot;accountId&quot;: &quot;827ce6ba-4645-4d94-8043-833eb4e1af9f&quot;
+    &quot;accountId&quot;: &quot;1f6687d3-54c2-4756-9e4a-372c3b9f3f90&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -97,7 +91,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;C:/Users/Rzouga.RZOUGALAPTOP/Desktop/School/3A/Sem 2/Pidev/WamiaGo-Desktop/src/main/resources/user.back&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop - vf&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Pidev/src/main/resources/images/icons&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -112,11 +106,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Pidev\src\main\resources\images\icons" />
       <recent name="D:\WamiaGo-Desktop\src\main\resources" />
       <recent name="D:\WamiaGo-Desktop\src\main\resources\dashboard" />
       <recent name="D:\WamiaGo-Desktop\src\main\java\controllers" />
       <recent name="D:\WamiaGo-Desktop\src\main\resources\images" />
-      <recent name="D:\WamiaGo-Desktop\src\main\resources\images\station" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\WamiaGo-Desktop\src\main\resources\images" />
@@ -135,7 +129,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="WamiaGo" />
+      <module name="Pidev3a10" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <extension name="coverage">
         <pattern>
@@ -198,8 +192,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -254,6 +248,8 @@
       <workItem from="1741310712594" duration="11000" />
       <workItem from="1741311375374" duration="5618000" />
       <workItem from="1741331801412" duration="604000" />
+      <workItem from="1747223704407" duration="4512000" />
+      <workItem from="1747321439131" duration="1020000" />
     </task>
     <servers />
   </component>
