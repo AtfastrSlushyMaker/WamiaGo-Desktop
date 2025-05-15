@@ -95,7 +95,7 @@ public class ChatMessageCellFactory implements Callback<ListView<Message>, ListC
     }
 
     private void deleteMessage(Long messageId) throws IOException {
-        String url = "http://localhost:8081/api/messages/delete/" + messageId;
+        String url = "http://localhost:8082/api/messages/delete/" + messageId;
         CloseableHttpClient client = HttpClients.createDefault();
         HttpDelete httpDelete = new HttpDelete(url);
         HttpResponse response = client.execute(httpDelete);
