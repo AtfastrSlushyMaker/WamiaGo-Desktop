@@ -183,7 +183,6 @@
                               <Label layoutX="217.0" layoutY="155.0" text="Departure Date:" />
                               <Label layoutX="217.0" layoutY="200.0" text="Available Seats:" />
                               <Label layoutX="217.0" layoutY="236.0" text="Price Per Passenger:" />
-                              <Label fx:id="labelprice" layoutX="508.0" layoutY="189.0" prefHeight="35.0" prefWidth="166.0" text="Label" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -192,18 +191,13 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <FlowPane fx:id="viewbooking" prefHeight="405.0" prefWidth="828.0">
-                                 <children>
-                                    <Button fx:id="button_pdf" mnemonicParsing="false" text="pdf" />
-                                 </children></FlowPane>
+                              <FlowPane fx:id="viewbooking" prefHeight="405.0" prefWidth="828.0" />
                            </children>
                         </AnchorPane>
                     </content>
                   </Tab>
               </tabs>
             </TabPane>
-            <Label fx:id="label" layoutX="1.0" layoutY="30.0" prefHeight="56.0" prefWidth="166.0" text="Label" />
-         </children>
-      </AnchorPane>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

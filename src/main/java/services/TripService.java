@@ -28,9 +28,9 @@ public class TripService implements IService<Trip> {
             stmt.setDouble(5, trip.getPricePerPassenger());
             stmt.setInt(6, trip.getDriver().getIdDriver());
             stmt.setInt(7, trip.getVehicle().getIdVehicle());
-            stmt.executeUpdate();
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
         }
-        return false;
     }
 
     @Override
@@ -85,5 +85,36 @@ public class TripService implements IService<Trip> {
             }
         }
         return trips;
+    }
+
+    @Override
+    public Trip getById(int id) throws SQLException {
+        String query = "SELECT * FROM trip WHERE id_trip = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Trip trip = new Trip();
+                    trip.setIdTrip(rs.getInt("id_trip"));
+                    trip.setDepartureCity(rs.getString("departure_city"));
+                    trip.setArrivalCity(rs.getString("arrival_city"));
+                    trip.setDepartureDate(rs.getDate("departure_date"));
+                    trip.setAvailableSeats(rs.getInt("available_seats"));
+                    trip.setPricePerPassenger(rs.getDouble("price_per_passenger"));
+
+                    Driver driver = new Driver();
+                    driver.setIdDriver(rs.getInt("id_driver"));
+                    trip.setDriver(driver);
+
+                    Vehicle vehicle = new Vehicle();
+                    vehicle.setIdVehicle(rs.getInt("id_vehicle"));
+                    trip.setVehicle(vehicle);
+
+                    return trip;
+                } else {
+                    throw new SQLException("Trip with ID " + id + " not found.");
+                }
+            }
+        }
     }
 }

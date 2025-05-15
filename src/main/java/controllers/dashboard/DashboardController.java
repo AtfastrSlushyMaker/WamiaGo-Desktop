@@ -275,7 +275,7 @@ public class DashboardController {
         });
         carpool_join_button.setOnAction(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/trips/trip.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/trips/trip.fxml")); // Corrected path
                 Parent tripRoot = loader.load();
                 Scene tripScene = new Scene(tripRoot);
                 Stage stage = (Stage) carpool_join_button.getScene().getWindow();

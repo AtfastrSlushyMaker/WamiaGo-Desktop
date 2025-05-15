@@ -1,14 +1,14 @@
 package controllers.trip;
 
-import entities.*;
+import entities.Booking;
+import entities.Driver;
+import entities.Trip;
+import entities.User;
+import entities.Vehicle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,19 +17,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.json.JSONObject;
-import services.*;
+import services.BookingService;
+import services.TripService;
+import services.UserService;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BackTripController {
-
     @FXML
     private Text Username;
 
@@ -38,9 +36,6 @@ public class BackTripController {
 
     @FXML
     private Button car;
-
-    @FXML
-    private Button button_static;
     @FXML
     private DatePicker date;
     @FXML
@@ -50,15 +45,6 @@ public class BackTripController {
     private TextField seats;
     @FXML
     private Button carpooling;
-
-    @FXML
-    private Button button_pdf;
-
-    @FXML
-    private Label label;
-
-    @FXML
-    private Label labelprice;
 
     @FXML
     private Button closeBtn;
@@ -78,7 +64,6 @@ public class BackTripController {
     private TripService tripService;
     private BookingService bookingService;
     private UserService userService;
-    private TrafficTimeEstimator estimator;
 
     private static final String[] CITIES = {
         "Ariana", "Béja", "Ben Arous", "Bizerte", "Gabès", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "Kebili",
@@ -88,8 +73,6 @@ public class BackTripController {
 
     @FXML
     public void initialize() {
-        button_pdf.setOnAction(e -> exportBookingsToPDF());
-        estimator = new TrafficTimeEstimator("DW9egp1lljrp_9klXkmSp8y-SuoywTOGIspZgdGCGlg"); // Initialize with your API key
         departure.setItems(FXCollections.observableArrayList(CITIES));
         arrival.setItems(FXCollections.observableArrayList(CITIES));
         tripService = new TripService();
@@ -97,56 +80,7 @@ public class BackTripController {
         userService = new UserService();
         loadTripsIntoFlowPane();
         loadBookingsIntoFlowPane();
-        updateCarEmissionLabel();
         car.setOnAction(e -> handleCreateTrip());
-
-        // Add listeners to the combo boxes
-        departure.setOnAction(e -> updatePriceLabel());
-        arrival.setOnAction(e -> updatePriceLabel());
-    }
-        private void exportBookingsToPDF() {
-        try {
-            List<Booking> bookings = bookingService.read();
-            String pdfPath = "bookings.pdf";
-            createPDF(bookings, pdfPath);
-            showAlert("Success", "Bookings exported to PDF successfully.");
-
-            // Open the PDF file automatically
-            java.awt.Desktop.getDesktop().open(new java.io.File(pdfPath));
-        } catch (Exception e) {
-            showAlert("Error", "Failed to export bookings to PDF: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    private void createPDF(List<Booking> bookings, String pdfPath) throws Exception {
-        com.itextpdf.kernel.pdf.PdfWriter writer = new com.itextpdf.kernel.pdf.PdfWriter(pdfPath);
-        com.itextpdf.kernel.pdf.PdfDocument pdf = new com.itextpdf.kernel.pdf.PdfDocument(writer);
-        com.itextpdf.layout.Document document = new com.itextpdf.layout.Document(pdf);
-
-        document.add(new com.itextpdf.layout.element.Paragraph("Bookings List").setBold().setFontSize(20));
-
-        for (Booking booking : bookings) {
-            User passenger = userService.getById(booking.getPassenger().getId());
-            document.add(new com.itextpdf.layout.element.Paragraph("Passenger: " + passenger.getName()));
-            document.add(new com.itextpdf.layout.element.Paragraph("Reserved Seats: " + booking.getReservedSeats()));
-            document.add(new com.itextpdf.layout.element.Paragraph("Status: " + booking.getStatus()));
-            document.add(new com.itextpdf.layout.element.Paragraph(" "));
-        }
-
-        document.close();
-    }
-
-    public void updateCarEmissionLabel() {
-        String apiKey2 = "R3V5TWVV3S7CZ9F3XZWEMKQF8M";
-        ClimatiqService service = new ClimatiqService(apiKey2);
-
-        try {
-            JSONObject carResult = service.calculateCarEmissions(50, 2, "electric");
-            double co2eTotalCar = carResult.getJSONObject("constituent_gases").getDouble("co2e_total");
-            label.setText("Car Emission CO2e Total: " + co2eTotalCar + " kg");
-        } catch (Exception e) {
-            label.setText("Error calculating emissions: " + e.getMessage());
-        }
     }
 
     private void loadTripsIntoFlowPane() {
@@ -202,31 +136,6 @@ public class BackTripController {
 
         tripCard.getChildren().addAll(routeLabel, dateLabel, seatsLabel, priceLabel, buttonBox);
         return tripCard;
-    }
-    private void updatePriceLabel() {
-        String departureCity = departure.getValue();
-        String arrivalCity = arrival.getValue();
-
-        if (departureCity != null && arrivalCity != null) {
-            try {
-                String travelTime = estimator.calculateTravelTime(departureCity, arrivalCity);
-                double pricePerPassenger = calculatePricePerPassenger(travelTime);
-                labelprice.setText("Price per Passenger: " + pricePerPassenger);
-            } catch (Exception e) {
-                labelprice.setText("Error calculating price: " + e.getMessage());
-            }
-        }
-    }
-
-    private double calculatePricePerPassenger(String travelTime) {
-        double initialPrice = 3.0;
-        String[] timeParts = travelTime.split(":");
-        int hours = Integer.parseInt(timeParts[0]);
-        int minutes = Integer.parseInt(timeParts[1]);
-
-        // Calculate the extra fund based on travel time
-        int extraFund = (hours * 2) + (minutes / 30);
-        return initialPrice + extraFund;
     }
 
     private VBox createBookingCard(Booking booking) {
@@ -294,6 +203,7 @@ public class BackTripController {
 
     private void showUpdateTripWindow(Trip trip, VBox tripCard) {
         Stage modalStage = new Stage();
+        modalStage.setTitle("Update Trip");
 
         VBox updateBox = new VBox(10);
         updateBox.setPadding(new Insets(20));

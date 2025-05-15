@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/trip/BackTripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/trip/BackTripController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/trip/TripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/trip/TripController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +246,7 @@
       <workItem from="1741331801412" duration="604000" />
       <workItem from="1747223704407" duration="4512000" />
       <workItem from="1747321439131" duration="1020000" />
-      <workItem from="1747334551253" duration="467000" />
+      <workItem from="1747334551253" duration="1739000" />
     </task>
     <servers />
   </component>
