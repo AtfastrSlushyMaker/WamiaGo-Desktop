@@ -346,6 +346,23 @@ public class DashboardController {
             userMenu.show(profile_button, screenX, screenY);
         });
     }
+    @FXML
+    private void handleReclamationButton() {
+        System.out.println("📝 Reclamation button clicked!");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ListReclamation.fxml"));
+            Parent feedbackRoot = loader.load();
+            Scene feedbackScene = new Scene(feedbackRoot);
+
+            Stage stage = (Stage) reclamation_button.getScene().getWindow();
+            stage.setScene(feedbackScene);
+            stage.setTitle("Feedback / Reclamation");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     private void manageDashboardByRole(User user) throws SQLException {

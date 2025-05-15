@@ -133,7 +133,7 @@
                         <graphic>
                             <ImageView fitHeight="22.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../images/icons/faq.png" />
+                                    <Image url="@../images/icons/faq2.png" />
                                 </image>
                             </ImageView>
                         </graphic>
@@ -155,7 +155,7 @@
                   <Text id="Titre" layoutX="164.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamations List" wrappingWidth="241.71282958984375" />
                   <ImageView fitHeight="45.0" fitWidth="61.0" layoutX="123.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
                       <image>
-                          <Image url="@../images/icons/newfeedback.png" />
+                          <Image url="@../images/icons/newfeedback2.png" />
                       </image>
                   </ImageView>
                   <Button fx:id="addButton" layoutX="121.0" layoutY="753.0" mnemonicParsing="false" styleClass="carpooling-action-button" text="Add New Reclamation" />
@@ -163,15 +163,7 @@
                 <!-- Add after the deleteButton in the FXML file -->
                 <Button fx:id="exportButton" layoutX="451.0" layoutY="752.0" mnemonicParsing="false"
                         styleClass="carpooling-action-button" text="Export to PDF" />
-            <Button fx:id="chatbotButton" layoutX="1006.0" layoutY="215.0" mnemonicParsing="false" onAction="#openChatbot" styleClass="faq-button">
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/icons/chatbot.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+
             <Button fx:id="details" layoutX="285.0" layoutY="752.0" mnemonicParsing="false" onAction="#showResponses" styleClass="relocation-action-button" text="Details" />
             </children>
         </Pane>
