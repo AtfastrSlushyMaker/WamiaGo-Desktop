@@ -5,20 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Reservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/AnnouncementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/AnnouncementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/LocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RelocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RelocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/icons/add.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/icons/add.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/icons/edit.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/icons/edit.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/icons/see.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/icons/see.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Chat_Relocation/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Chat_Relocation/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Chat_Relocation/ChatMessageCellFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Chat_Relocation/ChatMessageCellFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardAdmin.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,6 +47,9 @@
     &quot;accountId&quot;: &quot;827ce6ba-4645-4d94-8043-833eb4e1af9f&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/com/sun/mail/javax.mail/1.6.2/javax.mail-1.6.2.jar!/javax/mail/internet/MimeBodyPart.class" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -80,36 +73,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Home.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainRequest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainRide.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.wamiaGo [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main-il-kbir&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/Rzouga.RZOUGALAPTOP/Desktop/School/3A/Sem 2/Pidev/WamiaGo-Desktop/src/main/resources/user.back&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/WamiaGo-Desktop - vf&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Home.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MainRequest.executor": "Run",
+    "Application.MainRide.executor": "Run",
+    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
+    "Maven.Pidev3a11 [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor": "Run",
+    "Maven.Pidev3a11 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.WamiaGo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.wamiaGo [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main-il-kbir",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/Rzouga.RZOUGALAPTOP/Desktop/School/3A/Sem 2/Pidev/WamiaGo-Desktop/src/main/resources/user.back",
+    "last_opened_file_path": "C:/Users/BAZINFO/Desktop/3A/S2/PIDEV/chatback/chatback",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\WamiaGo-Desktop\src\main\resources" />
@@ -254,6 +247,61 @@
       <workItem from="1741310712594" duration="11000" />
       <workItem from="1741311375374" duration="5618000" />
       <workItem from="1741331801412" duration="604000" />
+      <workItem from="1741398235560" duration="91000" />
+      <workItem from="1742057075522" duration="609000" />
+      <workItem from="1742697941549" duration="78000" />
+      <workItem from="1742788209185" duration="43000" />
+      <workItem from="1743686799236" duration="4764000" />
+      <workItem from="1743723116754" duration="2505000" />
+      <workItem from="1743789037259" duration="7648000" />
+      <workItem from="1743877124931" duration="5464000" />
+      <workItem from="1743938944858" duration="588000" />
+      <workItem from="1743954884622" duration="7504000" />
+      <workItem from="1744061181364" duration="4303000" />
+      <workItem from="1744109347685" duration="586000" />
+      <workItem from="1744123961783" duration="584000" />
+      <workItem from="1744199858187" duration="586000" />
+      <workItem from="1744221793230" duration="4112000" />
+      <workItem from="1744320215621" duration="5827000" />
+      <workItem from="1744451810463" duration="3375000" />
+      <workItem from="1744483273302" duration="1339000" />
+      <workItem from="1744501558558" duration="1317000" />
+      <workItem from="1744559630320" duration="6937000" />
+      <workItem from="1744670770273" duration="2385000" />
+      <workItem from="1744717140107" duration="1784000" />
+      <workItem from="1744741412780" duration="6744000" />
+      <workItem from="1744797825985" duration="581000" />
+      <workItem from="1744819235890" duration="6928000" />
+      <workItem from="1744895773284" duration="7944000" />
+      <workItem from="1745108113028" duration="374000" />
+      <workItem from="1745144569060" duration="586000" />
+      <workItem from="1745238373240" duration="3593000" />
+      <workItem from="1745333104913" duration="585000" />
+      <workItem from="1745449217668" duration="583000" />
+      <workItem from="1745536584750" duration="2090000" />
+      <workItem from="1745601184934" duration="2257000" />
+      <workItem from="1745612493807" duration="730000" />
+      <workItem from="1745613304307" duration="1269000" />
+      <workItem from="1745621125050" duration="1261000" />
+      <workItem from="1745664436491" duration="3701000" />
+      <workItem from="1745690487805" duration="683000" />
+      <workItem from="1745691931539" duration="2044000" />
+      <workItem from="1745701617966" duration="5193000" />
+      <workItem from="1745750890804" duration="6616000" />
+      <workItem from="1745788402599" duration="1470000" />
+      <workItem from="1745871457346" duration="2998000" />
+      <workItem from="1745937218253" duration="9128000" />
+      <workItem from="1746059554009" duration="1197000" />
+      <workItem from="1746104575216" duration="600000" />
+      <workItem from="1746180069329" duration="600000" />
+      <workItem from="1746296210412" duration="598000" />
+      <workItem from="1746472191099" duration="600000" />
+      <workItem from="1746830994925" duration="601000" />
+      <workItem from="1746879505455" duration="599000" />
+      <workItem from="1747145287585" duration="600000" />
+      <workItem from="1747167794790" duration="2289000" />
+      <workItem from="1747217091853" duration="2197000" />
+      <workItem from="1747320939996" duration="2984000" />
     </task>
     <servers />
   </component>

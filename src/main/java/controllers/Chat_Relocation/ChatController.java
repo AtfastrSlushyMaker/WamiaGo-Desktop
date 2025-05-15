@@ -53,7 +53,7 @@ public class ChatController {
         this.toEmail = toEmail;
     }
 
-    private static final String BASE_URL = "http://localhost:8081/api/messages";
+    private static final String BASE_URL = "http://localhost:8082/api/messages";
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @FXML
