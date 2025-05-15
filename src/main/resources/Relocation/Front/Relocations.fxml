@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="root" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@style.css,@relocation.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Relocation.RelocationController">
+
+    <children>
+
+        <VBox prefHeight="781.0" prefWidth="280.0" />
+
+        <Pane prefHeight="827.0" prefWidth="1400.0" stylesheets="@relocation.css">
+            <children>
+                <Label id="available_stations_label" fx:id="available_stations_label" layoutX="564.0" layoutY="14.0" prefHeight="50.0" prefWidth="291.0" stylesheets="@relocation.css" text=" Relocations Dashboard" textFill="#323131">
+                    <font>
+                        <Font name="Century Gothic Bold" size="20.0" />
+                    </font>
+                </Label>
+
+                <!-- FlowPane to display stations -->
+                <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" layoutX="14.0" layoutY="83.0" prefHeight="730.0" prefWidth="1372.0" stylesheets="@relocation.css">
+                    <FlowPane fx:id="stationFlowPane" hgap="20" layoutX="4.0" layoutY="102.0" prefHeight="730.0" prefWidth="1296.0" vgap="20" />
+                </ScrollPane>
+
+            </children>
+        </Pane>
+
+    </children>
+
+</AnchorPane>

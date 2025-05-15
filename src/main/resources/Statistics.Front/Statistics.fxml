@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="statisticsBtn" prefHeight="610.0" prefWidth="980.0" style="-fx-background-color: #f4f4f4;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StaticDash.StatisticsController">
+    <children>
+        <!-- Top Stats Cards -->
+        <HBox alignment="CENTER" prefHeight="180.0" prefWidth="940.0" spacing="40.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <padding>
+                <Insets bottom="20" /> <!-- Add 20px padding at the bottom -->
+            </padding>
+            <children>
+                <!-- Users Card -->
+                <VBox alignment="CENTER" prefHeight="160.0" prefWidth="220.0" style="-fx-background-color: #1abc9c; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);">
+                    <children>
+                        <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/images/statistics/users.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Users" textAlignment="CENTER">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="adText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER">
+                            <font>
+                                <Font size="29.0" />
+                            </font>
+                        </Text>
+                    </children>
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </VBox>
+
+                <!-- Announcements Card -->
+                <VBox alignment="CENTER" prefHeight="160.0" prefWidth="220.0" style="-fx-background-color: #3498db; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);">
+                    <children>
+                        <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/images/statistics/announcement.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Announcements" textAlignment="CENTER">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="donsText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER">
+                            <font>
+                                <Font size="29.0" />
+                            </font>
+                        </Text>
+                    </children>
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </VBox>
+
+                <!-- Relocations Card -->
+                <VBox alignment="CENTER" prefHeight="160.0" prefWidth="220.0" style="-fx-background-color: #9b59b6; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);">
+                    <children>
+                        <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/images/statistics/relocations.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Relocations" textAlignment="CENTER">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="necessiteuxText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER">
+                            <font>
+                                <Font size="29.0" />
+                            </font>
+                        </Text>
+                    </children>
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </VBox>
+
+                <!-- Reservations Card -->
+                <VBox alignment="CENTER" prefHeight="160.0" prefWidth="220.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);">
+                    <children>
+                        <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/images/statistics/reservations.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservations" textAlignment="CENTER">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="famillesText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER">
+                            <font>
+                                <Font size="29.0" />
+                            </font>
+                        </Text>
+                    </children>
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </VBox>
+            </children>
+        </HBox>
+
+        <!-- Charts Section -->
+        <HBox alignment="TOP_CENTER" layoutX="20.0" layoutY="200.0" prefHeight="380.0" prefWidth="940.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="200.0">
+            <children>
+                <!-- Pie Chart -->
+                <VBox alignment="CENTER" prefHeight="380.0" prefWidth="460.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);">
+                    <children>
+                        <PieChart fx:id="pie" labelLineLength="10.0" prefHeight="360.0" prefWidth="440.0" title="Reservations Status" titleSide="TOP" />
+                    </children>
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </VBox>
+
+                <!-- Bar Chart -->
+                <VBox alignment="CENTER" prefHeight="380.0" prefWidth="460.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);">
+                    <children>
+                        <BarChart fx:id="myBarChart" barGap="5.0" categoryGap="10.0" prefHeight="360.0" prefWidth="440.0" title="Reservations Status Overview">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM" fx:id="xAxe" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="yAxe" label="Total" side="LEFT" />
+                            </yAxis>
+                        </BarChart>
+                    </children>
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1400.0" styleClass="root" stylesheets="@AddReclamation.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Reclamation.ListReclamationBack">
+
+    <children>
+        <VBox prefHeight="781.0" prefWidth="280.0" />
+
+        <Pane prefHeight="827.0" prefWidth="1690.0">
+            <children>
+                <Pane fx:id="pane_131" layoutX="48.0" layoutY="687.0" prefHeight="18.0" prefWidth="9.0" styleClass="pane_11" stylesheets="@AddReclamation.css">
+                    <children>
+                        <ImageView fitHeight="56.0" fitWidth="50.0" layoutX="12.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                        </ImageView>
+                    </children>
+                </Pane>
+
+                <Label layoutX="143.0" layoutY="314.0" textFill="#323131">
+                    <font>
+                        <Font name="Century Gothic Bold" size="20.0" />
+                    </font>
+                </Label>
+
+                <!-- User Profile Button -->
+                <Button id="user" layoutX="993.0" layoutY="142.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="43.0" />
+                <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="997.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/icons/user.png" />
+                    </image>
+                </ImageView>
+
+                <!-- Feedback Button -->
+                <Button id="feedback" layoutX="981.0" layoutY="739.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="45.0" stylesheets="@AddReclamation.css" />
+                <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="985.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/icons/review.png" />
+                    </image>
+                </ImageView>
+
+                <!-- Date Label -->
+                <Label id="date" fx:id="date" layoutX="751.0" layoutY="64.0" prefHeight="45.0" prefWidth="150.0" text="Date" />
+
+                <!-- Title with Badge -->
+                <HBox alignment="CENTER_LEFT" layoutX="128.0" layoutY="178.0" spacing="10" />
+
+                <!-- Search and Filter Controls -->
+                <HBox alignment="CENTER_LEFT" layoutX="128.0" layoutY="210.0" spacing="15.0" styleClass="search-container" />
+
+                <!-- ListView for Reclamations with FAQ Button -->
+                <HBox layoutX="128.0" layoutY="250.0" spacing="10">
+                    <ListView fx:id="reclamationListView" prefHeight="500.0" prefWidth="900.0" styleClass="modern-list-view" />
+   
+                    <!-- FAQ Button -->
+                    <Button fx:id="faqButton" mnemonicParsing="false" styleClass="faq-button">
+                        <graphic>
+                            <ImageView fitHeight="22.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/icons/faq.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                </HBox>
+
+                <!-- Action Buttons -->
+                <HBox alignment="CENTER_LEFT" layoutX="128.0" layoutY="770.0" spacing="20.0" />
+
+                <!-- Statistics Badge -->
+                <HBox alignment="CENTER" layoutX="800.0" layoutY="770.0" spacing="10" styleClass="stats-container">
+                    <children>
+                        <Label fx:id="totalReclamationsLabel" styleClass="stats-label" text="Total: 0" />
+                        <Label fx:id="pendingReclamationsLabel" styleClass="stats-label-pending" text="Pending: 0" />
+                        <Label fx:id="resolvedReclamationsLabel" styleClass="stats-label-resolved" text="Resolved: 0" />
+                    </children>
+                </HBox>
+                  <Text id="Titre" layoutX="168.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamations List" wrappingWidth="241.71282958984375" />
+                  <ImageView fitHeight="45.0" fitWidth="61.0" layoutX="121.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@../images/icons/newfeedback.png" />
+                      </image>
+                  </ImageView>
+                  <Button fx:id="responseButton" layoutX="133.0" layoutY="225.0" mnemonicParsing="false" styleClass="ebike-action-button" text="Respond" />
+            <Button fx:id="chatbotButton" layoutX="1054.0" layoutY="215.0" mnemonicParsing="false" onAction="#openChatbot" styleClass="faq-button" />
+                  <TextField fx:id="searchField" layoutX="121.0" layoutY="151.0" prefHeight="30.0" prefWidth="300.0" promptText="Search reclamations..." styleClass="search-field" />
+                  <ComboBox fx:id="statusFilter" layoutX="497.0" layoutY="151.0" prefHeight="30.0" prefWidth="150.0" promptText="Filter by status" styleClass="status-filter" />
+                  <Button fx:id="refreshButton" layoutX="684.0" layoutY="156.0" mnemonicParsing="false" styleClass="refresh-button" text="Refresh" />
+                  <Button fx:id="statsButton" layoutX="763.0" layoutY="155.0" mnemonicParsing="false" styleClass="chart-button" text="View Stats Chart" />
+            <ImageView fitHeight="22.0" fitWidth="48.0" layoutX="1051.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/chatbot.png" />
+               </image>
+            </ImageView>
+            </children>
+        </Pane>
+    </children>
+
+</AnchorPane>

@@ -248,6 +248,18 @@ public class DashboardController {
                 e.printStackTrace();
             }
         });
+        booking_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements_client.fxml"));
+                Parent ridesRoot = loader.load();
+                Scene ridesScene = new Scene(ridesRoot);
+                Stage stage = (Stage) rides_button.getScene().getWindow();
+                stage.setScene(ridesScene);
+                pageNavigation();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         bicycle_rent_button.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/station/front/myBikes/myBikes.fxml"));
@@ -280,8 +292,9 @@ public class DashboardController {
         ContextMenu userMenu = new ContextMenu();
         MenuItem profileItem = new MenuItem("Profile");
         MenuItem driverSpaceItem = new MenuItem("Driver Space"); // Ajout du bouton
+        MenuItem announcementsItem = new MenuItem("My announcements");
 
-        userMenu.getItems().addAll(profileItem, driverSpaceItem);
+        userMenu.getItems().addAll(profileItem, driverSpaceItem,announcementsItem);
 
         // Action pour le profil
         profileItem.setOnAction(event -> {
@@ -295,6 +308,18 @@ public class DashboardController {
 
                 Stage stage = (Stage) profile_button.getScene().getWindow();
                 stage.setScene(profileScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        announcementsItem.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements.fxml"));
+                Parent ridesRoot = loader.load();
+                Scene ridesScene = new Scene(ridesRoot);
+
+                Stage stage = (Stage) profile_button.getScene().getWindow();
+                stage.setScene(ridesScene);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -321,6 +346,23 @@ public class DashboardController {
             userMenu.show(profile_button, screenX, screenY);
         });
     }
+    @FXML
+    private void handleReclamationButton() {
+        System.out.println("📝 Reclamation button clicked!");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ListReclamation.fxml"));
+            Parent feedbackRoot = loader.load();
+            Scene feedbackScene = new Scene(feedbackRoot);
+
+            Stage stage = (Stage) reclamation_button.getScene().getWindow();
+            stage.setScene(feedbackScene);
+            stage.setTitle("Feedback / Reclamation");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     private void manageDashboardByRole(User user) throws SQLException {

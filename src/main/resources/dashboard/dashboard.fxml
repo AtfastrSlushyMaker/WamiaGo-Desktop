@@ -286,7 +286,7 @@
                      </font>
 
                   </Label>
-            <Button id="feedback" fx:id="reclamation_button" layoutX="981.0" layoutY="739.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="45.0" stylesheets="@style.css" />
+            <Button id="feedback" fx:id="reclamation_button" onAction="#handleReclamationButton" layoutX="981.0" layoutY="739.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="45.0" stylesheets="@style.css" />
             <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="985.0" layoutY="747.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/icons/review.png" />
