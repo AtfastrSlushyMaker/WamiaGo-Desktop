@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/trip/BackTripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/trip/BackTripController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/trip/TripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/trip/TripController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/psw4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/psw4j.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,12 +37,12 @@
     &quot;assignee&quot;: &quot;walaaghrairi&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git",
-    "accountId": "d6cf9076-ac81-47f2-b284-5793fe0ee2cc"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git&quot;,
+    &quot;accountId&quot;: &quot;d6cf9076-ac81-47f2-b284-5793fe0ee2cc&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -125,7 +121,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="wamiaGo" />
+      <module name="Pidev3a11" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <extension name="coverage">
         <pattern>
