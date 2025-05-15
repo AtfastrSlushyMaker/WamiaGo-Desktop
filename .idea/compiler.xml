@@ -9,6 +9,7 @@
         <module name="Pidev3a11" />
         <module name="WamiaGo" />
         <module name="wamiaGo" />
+        <module name="Pidev3a10" />
       </profile>
     </annotationProcessing>
   </component>

@@ -248,6 +248,7 @@ public class DashboardController {
                 e.printStackTrace();
             }
         });
+
         booking_button.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Annoucement/Front/announcements_client.fxml"));
@@ -267,6 +268,18 @@ public class DashboardController {
                 Scene ridesScene = new Scene(ridesRoot);
                 Stage stage = (Stage) rides_button.getScene().getWindow();
                 stage.setScene(ridesScene);
+                pageNavigation();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        carpool_join_button.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/trips/trip.fxml")); // Corrected path
+                Parent tripRoot = loader.load();
+                Scene tripScene = new Scene(tripRoot);
+                Stage stage = (Stage) carpool_join_button.getScene().getWindow();
+                stage.setScene(tripScene);
                 pageNavigation();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -346,6 +359,23 @@ public class DashboardController {
             userMenu.show(profile_button, screenX, screenY);
         });
     }
+    @FXML
+    private void handleReclamationButton() {
+        System.out.println("📝 Reclamation button clicked!");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ListReclamation.fxml"));
+            Parent feedbackRoot = loader.load();
+            Scene feedbackScene = new Scene(feedbackRoot);
+
+            Stage stage = (Stage) reclamation_button.getScene().getWindow();
+            stage.setScene(feedbackScene);
+            stage.setTitle("Feedback / Reclamation");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     private void manageDashboardByRole(User user) throws SQLException {
