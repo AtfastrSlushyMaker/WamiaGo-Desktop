@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +27,9 @@ public class DashboardAdminController implements Initializable {
     public AnchorPane contentPane;
     public Text Username;
     public Label date_label;
+    public Button announcementsBtn;
+    public Button StatisticsBtn;
+    public Button reservationsBtn;
     @FXML
     private AnchorPane navPanel;
     @FXML
@@ -105,7 +109,11 @@ public class DashboardAdminController implements Initializable {
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bicycle.back/bicycle.fxml"))),
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/rentals.back/rentals.fxml"))),
                     FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/request.fxml"))),
-                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml")))
+                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/ride.fxml"))),
+                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/taxi-managment/admin_side/StatisticsRequestRide.fxml"))),
+                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Annoucement/Front/announcementAdmin.fxml"))),
+                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Statistics.Front/Statistics.fxml"))),
+                    FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Reservation/Front/Reservations.fxml")))
             ));
 
             for (AnchorPane panel : panels) {
@@ -139,7 +147,7 @@ public class DashboardAdminController implements Initializable {
 
     private void setupInitialVisibility() {
         if (!panels.isEmpty()) {
-            panels.get(0).setVisible(true);
+            panels.get(6).setVisible(true);
         }
     }
 
@@ -186,9 +194,16 @@ public class DashboardAdminController implements Initializable {
     public void taxiRides() { showPanel(5); }
 
     @FXML
-    private void DashboardBtn() { showPanel(-1); }
+    private void DashboardBtn() { showPanel(6); }
+
+    public void announcementsBtn() { showPanel(7);
+    }
+
+    public void statisticsBtn() { showPanel(8);
+    }
+
     @FXML
-    private void QueriesBtn() { showPanel(6); }
+    private void QueriesBtn() { showPanel(-1); }
 
     @FXML
     private void handleTopBarDoubleClick(MouseEvent event) {

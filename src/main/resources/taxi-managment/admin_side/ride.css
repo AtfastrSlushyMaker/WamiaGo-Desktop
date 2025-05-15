@@ -122,6 +122,7 @@
 /* Active/Pressed State */
 .modal-close-button:pressed {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 4); /* Subtle shadow on click */
+    -fx-transform: scale(0.98); /* Slight shrink effect when pressed */
 }
 
 /* Style for the request taxi button */
@@ -184,18 +185,16 @@
 .station-bike-close-button:hover {
     -fx-background-color: #ff4444;
 }
-
-.total-ride-label{
-    -fx-background-color: #5593db;
+.ride-button-update {
+    -fx-background-color: #85A9FF; /* Light blue color */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 10px;
     -fx-border-radius: 5px;
-    -fx-border-color: black;
+    -fx-border-color: white;
     -fx-border-width: 2px;
-
 }
-.total-ride-label:hover{
-    -fx-background-color: rgb(27, 46, 68) ;
 
+.ride-button-update:hover {
+    -fx-background-color: #5A6BE5; /* Darker blue on hover */
 }

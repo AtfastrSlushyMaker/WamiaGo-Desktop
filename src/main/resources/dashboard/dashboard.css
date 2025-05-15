@@ -71,7 +71,7 @@
 }
 
 /* Sidebar Buttons */
-#dashboard, #usersBtn, #enquiries, #stations, #bicycles, #rentals, #taxiRides, #taxiRequests {
+#dashboard, #usersBtn, #enquiries, #stations, #bicycles, #rentals, #taxiRides, #taxiRequests,#announcementsBtn,#statisticsBtn {
     -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-font-size: 10px;

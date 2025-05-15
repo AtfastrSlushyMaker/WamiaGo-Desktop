@@ -94,6 +94,20 @@ public class LocationService implements IService<Location> {
         return null;
     }
 
+    public Location getByAddress(String address) throws SQLException {
+        String sql = "SELECT * FROM location WHERE address = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, address);
+        ResultSet rs = preparedStatement.executeQuery();
+
+        if (rs.next()) {
+            Location location = new Location();
+            location.setId(rs.getInt("id_location"));
+            location.setAddress(rs.getString("address"));
+            return location;
+        }
+        return null;
+    }
 
 
 

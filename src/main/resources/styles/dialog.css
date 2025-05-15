@@ -1,0 +1,31 @@
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-border-radius: 10px;
+    -fx-padding: 20px;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #d9534f; /* Red delete button */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px 16px;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #c9302c; /* Darker red on hover */
+}
+
+.dialog-pane .button:cancel {
+    -fx-background-color: #6c757d; /* Grey cancel button */
+}
+
+.dialog-pane .button:cancel:hover {
+    -fx-background-color: #5a6268; /* Darker grey on hover */
+}
+
+.dialog-pane .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}

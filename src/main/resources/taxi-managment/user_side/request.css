@@ -76,7 +76,7 @@
     -fx-border-width: 2px;
 }
 .request-button-delete{
-    -fx-background-color: #E57373;
+    -fx-background-color: #FFC107;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 10px;
@@ -85,12 +85,12 @@
     -fx-border-width: 2px;
 }
 .request-button-delete:hover {
-    -fx-background-color: #D32F2F;
+    -fx-background-color: #FFA000;
 
     /* Lighter green on hover */
 }
 .request-button-update{
-    -fx-background-color: #85A9FF;
+    -fx-background-color: #FFC107;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 10px;
@@ -100,7 +100,7 @@
 
 }
 .request-button-update:hover{
-    -fx-background-color: #5A6BE5;
+    -fx-background-color:#FFA000;
 
 }
 
@@ -166,18 +166,21 @@
 
 /* Style for the request taxi button */
 #request_taxi_button {
-    -fx-background-color: #4E9D3A; /* Primary color */
-    -fx-text-fill: white;
+    -fx-background-color: #6FBF66; /* Green background */
+    -fx-text-fill: white; /* Text in black */
     -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
+    -fx-padding: 10px 15px;
 
+    -fx-border-color: #6FBF66; /* Optional: Same color as background */
     -fx-border-width: 2px;
+
+    -fx-background-radius: 20px; /* Rounded button */
+    -fx-border-radius: 20px;
 }
 
 /* Hover effect */
 #request_taxi_button:hover {
-    -fx-background-color: #6FBF66; /* Lighter green on hover */
+    -fx-background-color: #5E9F5A;
 }
 
 
@@ -192,18 +195,21 @@
 
 /* Style for the See You Rides button */
 #See_you_Rides_buuton {
-    -fx-background-color: #85A9FF; /* Light blue color */
-    -fx-text-fill: white;
+    -fx-background-color: #85A9FF; /* Fond bleu */
+    -fx-text-fill: white; /* Texte en noir */
     -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
+    -fx-padding: 10px 15px;
+
 
     -fx-border-width: 2px;
+
+    -fx-background-radius: 20px; /* Bouton rond */
+    -fx-border-radius: 20px;
 }
 
 /* Hover effect for the See You Rides button */
 #See_you_Rides_buuton:hover {
-    -fx-background-color: #5A6BE5; /* Darker blue on hover */
+    -fx-background-color: #7499E5;
 }
 
 
@@ -307,3 +313,90 @@
     -fx-background-color: #45a049;
 }
 
+/* Style pour la barre de recherche d'adresse */
+.search-bar {
+    -fx-background-color: #ffffff; /* Fond blanc */
+    -fx-border-color: #4CAF50; /* Bordure verte */
+    -fx-border-radius: 5px; /* Coins arrondis */
+    -fx-padding: 10px; /* Espacement interne */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-font-family: "Inter", sans-serif; /* Police moderne */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 2, 2); /* Ombre subtile */
+    -fx-transition: all 0.3s ease-in-out; /* Transition douce */
+}
+
+/* Effet de survol pour la barre de recherche */
+.search-bar:hover {
+    -fx-background-color: #f1f1f1; /* Fond légèrement gris */
+    -fx-border-color: #388E3C; /* Bordure verte plus foncée */
+}
+
+/* Effet quand la barre de recherche est sélectionnée (focus) */
+.search-bar:focused {
+    -fx-background-color: #ffffff; /* Fond blanc */
+    -fx-border-color: #2E7D32; /* Bordure encore plus foncée */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 5, 5); /* Ombre plus marquée */
+}
+
+
+.search-date-picker {
+    -fx-background-color: #ffffff; /* Fond blanc */
+    -fx-border-color: #4CAF50; /* Bordure verte */
+    -fx-border-radius: 5px; /* Coins arrondis */
+    -fx-padding: 10px; /* Espacement interne */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-font-family: "Inter", sans-serif; /* Police moderne */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 2, 2); /* Ombre subtile */
+    -fx-transition: all 0.3s ease-in-out; /* Transition douce */
+}
+
+/* Effet de survol pour le DatePicker */
+.search-date-picker:hover {
+    -fx-background-color: #f1f1f1; /* Fond légèrement gris */
+    -fx-border-color: #388E3C; /* Bordure verte plus foncée */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 3, 3); /* Ombre plus marquée au survol */
+}
+
+/* Effet quand le DatePicker est sélectionné (focus) */
+.search-date-picker:focused {
+    -fx-background-color: #ffffff; /* Fond blanc */
+    -fx-border-color: #2E7D32; /* Bordure encore plus foncée */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 5, 5); /* Ombre plus marquée */
+}
+
+/* Style pour les icônes de recherche */
+.ImageView {
+    -fx-cursor: pointer; /* Pointeur pour indiquer la possibilité de cliquer */
+    -fx-transition: transform 0.3s ease-in-out; /* Transition douce */
+}
+
+/* Effet de survol pour les icônes de recherche */
+.ImageView:hover {
+    -fx-scale-x: 1.1; /* Augmenter la taille horizontalement */
+    -fx-scale-y: 1.1; /* Augmenter la taille verticalement */
+}
+
+/* Style pour le bouton de recherche */
+.search-button {
+    -fx-background-color: #4CAF50; /* Fond vert */
+    -fx-text-fill: white; /* Texte blanc */
+    -fx-font-weight: bold; /* Texte en gras */
+    -fx-padding: 10px 20px; /* Espacement interne */
+    -fx-border-radius: 5px; /* Coins arrondis */
+    -fx-border-color: #388E3C; /* Bordure verte plus foncée */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-cursor: pointer; /* Pointeur pour cliquer */
+    -fx-transition: background-color 0.3s ease, transform 0.2s ease; /* Transition douce */
+}
+
+/* Effet de survol pour le bouton de recherche */
+.search-button:hover {
+    -fx-background-color: #388E3C; /* Vert plus foncé */
+    -fx-transform: scale(1.05); /* Agrandir légèrement */
+}
+
+/* Effet de pression pour le bouton de recherche */
+.search-button:pressed {
+    -fx-background-color: #2E7D32; /* Vert encore plus foncé */
+    -fx-transform: scale(0.98); /* Réduire légèrement */
+}

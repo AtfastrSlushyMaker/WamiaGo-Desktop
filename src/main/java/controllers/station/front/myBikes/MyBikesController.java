@@ -34,8 +34,6 @@ public class MyBikesController {
     @FXML
     private Button bookings_button;
     @FXML
-    private Button history_button;
-    @FXML
     private Button home_button;
     @FXML
     private Button logout_button;
@@ -52,15 +50,22 @@ public class MyBikesController {
     @FXML
     private AnchorPane side_ankerpane;
 
+
+
+    // Navigation Functions
     private void setupNavigation() {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
         rent_button.setOnAction(event -> loadScene("/station/front/station.fxml"));
-        history_button.setOnAction(event -> loadScene("/history/history.fxml"));
-        bookings_button.setOnAction(event -> loadScene("/bookings/bookings.fxml"));
-        logout_button.setOnAction(event -> loadScene("/user/login.fxml"));
+        //bookings_button.setOnAction(event -> loadScene("/Annoucement/Front/announcements_client.fxml"));
+        logout_button.setOnAction(event -> logout());
+
     }
 
+    public void logout() {
+        SessionManager.getInstance().logout();
+        loadScene("/user.front/LoginSignup.fxml");
+    }
 
     private void loadScene(String fxmlPath) {
         try {

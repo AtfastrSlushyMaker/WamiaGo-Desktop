@@ -53,8 +53,6 @@ public class StationController {
     @FXML
     private Button bookings_button;
     @FXML
-    private Button history_button;
-    @FXML
     private Button home_button;
     @FXML
     private Button logout_button;
@@ -106,7 +104,6 @@ public class StationController {
         loadStationsIntoFlowPane();
         setupSearch();
         setupButtons();
-
 
     }
 
@@ -842,6 +839,14 @@ public class StationController {
         home_button.setOnAction(event -> loadScene("/dashboard/dashboard.fxml"));
         rides_button.setOnAction(event -> loadScene("/rides/rides.fxml"));
         my_bikes_button.setOnAction(event -> loadScene("/station/front/myBikes/myBikes.fxml"));
+        //bookings_button.setOnAction(event -> loadScene("/Annoucement/Front/announcements_client.fxml"));
+        logout_button.setOnAction(event -> logout());
+
+    }
+
+    public void logout() {
+        SessionManager.getInstance().logout();
+        loadScene("/user.front/LoginSignup.fxml");
     }
 
     private void loadScene(String fxmlPath) {

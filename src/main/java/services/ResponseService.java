@@ -1,6 +1,7 @@
     package services;
     import entities.Reclamation;
     import entities.Response;
+    import entities.User;
     import utils.DataBase;
 
     import java.util.List;
@@ -29,6 +30,7 @@
                 pstmt.executeUpdate();
                 System.out.println("Response created successfully.");
 
+
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int generatedId = generatedKeys.getInt(1);
@@ -37,8 +39,12 @@
                         System.out.println("Failed to retrieve generated ID.");
                     }
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
             }
-            return false;
+            return true;
+
         }
 
         @Override
@@ -75,11 +81,9 @@
 
                 while (rs.next()) {
                     Response response = new Response();
-
-                    Reclamation reclamation = new Reclamation();
-                    reclamation.setIdReclamation(rs.getInt("id_reclamation"));
+                    response.setId_response(rs.getInt("id_response"));
+                    Reclamation reclamation = new ReclamationService().getById(rs.getInt("id_reclamation"));
                     response.setReclamation(reclamation);
-
                     response.setContent(rs.getString("content"));
                     response.setDate(rs.getTimestamp("date"));
 
@@ -88,5 +92,62 @@
             }
             return responses;
         }
+
+        public List<Response> getResponsesByReclamationId(int reclamationId) throws SQLException {
+            List<Response> responses = new ArrayList<>();
+            String query = "SELECT * FROM RESPONSE WHERE id_reclamation=?";
+
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, reclamationId);
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    Response response = new Response();
+                    response.setId_response(resultSet.getInt("id_response"));
+                    response.setContent(resultSet.getString("content"));
+                    response.setDate(resultSet.getTimestamp("date"));
+                    // Set reclamation reference
+                    ReclamationService reclamationService = new ReclamationService();
+                    response.setReclamation(reclamationService.getById(reclamationId));
+
+                    responses.add(response);
+                }
+            }
+
+            return responses;
+        }
+
+        public List<Response> getResponseByUser(User user) throws SQLException {
+            String sql = "SELECT * FROM response as R , Reclamation as rec where rec.id_user = ? and r.id_reclamation=rec.id_reclamation";
+            List<Response> responses = new ArrayList<>();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, user.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Response response = new Response();
+                response.setId_response(resultSet.getInt("id_response"));
+                response.setReclamation(new ReclamationService().getById(resultSet.getInt("id_reclamation")));
+                response.setContent(resultSet.getString("content"));
+                response.setDate(new java.sql.Timestamp(resultSet.getTimestamp("timestamp").getTime()));
+                responses.add(response);
+
+            }
+            return responses;
+        }
+
+        public User getUserFromResponse(Response response) throws SQLException {
+            String sql = "SELECT id_user from reclamation as rec ,response as res where rec.id_reclamation=res.id_reclamation AND ?=res.id_response ";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, response.getReclamation().getIdReclamation());
+            User user=new User();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                user = new UserService().getById(resultSet.getInt("id_user"));
+
+            }
+        return user;
+        }
+
+
     }
 

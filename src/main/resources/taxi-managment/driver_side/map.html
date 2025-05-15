@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Leaflet Map with Search</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <!-- Leaflet Control Geocoder CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .leaflet-control-geocoder {
+            margin-top: 10px;
+        }
+
+        /* Animation des marqueurs (rebond à l'apparition) */
+        .leaflet-marker-icon {
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Animation de la route (clignotement subtil) */
+        .leaflet-interactive {
+            stroke-dasharray: 10, 5;
+            animation: dash 2s linear infinite, glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes dash {
+            from {
+                stroke-dashoffset: 20;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes glow {
+            from {
+                stroke-opacity: 0.6;
+            }
+            to {
+                stroke-opacity: 1;
+            }
+        }
+
+        /* Nouveau style pour les marqueurs */
+        .simple-marker {
+            background-color: #3388ff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<!-- Leaflet Control Geocoder JS -->
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+<!-- Leaflet Routing Machine JS -->
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var map = L.map('map').setView([0, 0], 2);
+        var departureMarker = null;
+        var arrivalMarker = null;
+        var routeControl = null;
+
+        // Ajouter les tuiles OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Simple, realistic marker icons
+        var simpleIcon = L.divIcon({
+            className: 'simple-marker', // Using the defined CSS class
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            popupAnchor: [0, -15]
+        });
+
+        // Function to update markers and route
+        function updateMarkers(departureLat, departureLng, arrivalLat, arrivalLng) {
+            console.log("Updating markers and route...");
+
+            // Remove old markers
+            if (departureMarker !== null) map.removeLayer(departureMarker);
+            if (arrivalMarker !== null) map.removeLayer(arrivalMarker);
+
+            // Add departure marker
+            departureMarker = L.marker([departureLat, departureLng], { icon: simpleIcon }).addTo(map)
+                .bindPopup("<b>📍 Client's Position</b><br>Departure", { autoClose: false, closeOnClick: false })
+                .openPopup();
+
+            // Add arrival marker
+            arrivalMarker = L.marker([arrivalLat, arrivalLng], { icon: simpleIcon }).addTo(map)
+                .bindPopup("<b>🏁 Arrival</b>", { autoClose: false, closeOnClick: false })
+                .openPopup();
+
+            // Remove old route if it exists
+            if (routeControl !== null) {
+                map.removeControl(routeControl);
+            }
+
+            // Add route line with subtle blinking animation
+            routeControl = L.Routing.control({
+                waypoints: [
+                    L.latLng(departureLat, departureLng),
+                    L.latLng(arrivalLat, arrivalLng)
+                ],
+                routeWhileDragging: true,
+                lineOptions: {
+                    styles: [{ color: 'blue', weight: 5, opacity: 0.8 }]
+                },
+                createMarker: function() { return null; }, // Disable default markers
+                show: false // Disable directions panel
+            }).addTo(map);
+
+            // Smooth zoom to both points
+            var bounds = L.latLngBounds(
+                [departureLat, departureLng],
+                [arrivalLat, arrivalLng]
+            );
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+
+        // Function exposed to Java to update map
+        function setCoordinates(departureLat, departureLng, arrivalLat, arrivalLng) {
+            updateMarkers(departureLat, departureLng, arrivalLat, arrivalLng);
+        }
+
+        // Expose the function to Java
+        window.javaConnector = {
+            setCoordinates: setCoordinates
+        };
+
+        // Add geocoder search functionality
+        var geocoderControl = L.Control.geocoder({
+            defaultMarkGeocode: false
+        })
+            .on('markgeocode', function(e) {
+                var center = e.geocode.center;
+                console.log("Position search => lat: " + center.lat + ", lng: " + center.lng);
+                map.setView(center, 15);
+
+                // Update marker with animation
+                if (departureMarker === null) {
+                    departureMarker = L.marker(center, { icon: simpleIcon }).addTo(map)
+                        .bindPopup("<b>📍 Client's Position</b><br>Departure", { autoClose: false, closeOnClick: false })
+                        .openPopup();
+                } else if (arrivalMarker === null) {
+                    arrivalMarker = L.marker(center, { icon: simpleIcon }).addTo(map)
+                        .bindPopup("<b>🏁 Arrival</b>", { autoClose: false, closeOnClick: false })
+                        .openPopup();
+
+                    // Once both points are set, draw the route
+                    updateMarkers(departureMarker.getLatLng().lat, departureMarker.getLatLng().lng,
+                        arrivalMarker.getLatLng().lat, arrivalMarker.getLatLng().lng);
+                }
+            })
+            .addTo(map);
+
+        // Adjust map size on resize
+        window.addEventListener('resize', function() {
+            map.invalidateSize();
+        });
+    });
+</script>
+</body>
+</html>
