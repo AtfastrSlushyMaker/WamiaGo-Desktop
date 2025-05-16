@@ -29,6 +29,10 @@
                                  <padding>
                                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                  </padding>
+                                 <children>
+                                    <Button fx:id="button_pdf" mnemonicParsing="false" text="Pdf" />
+                                    <Label fx:id="label" />
+                                 </children>
                               </FlowPane>
                            </content>
                         </ScrollPane>
@@ -98,6 +102,7 @@
                                        </HBox.margin>
                                     </Label>
                                     <TextField fx:id="price" prefHeight="30.0" prefWidth="220.0" style="-fx-background-radius: 5;" />
+                                    <Label fx:id="labelprice" prefHeight="18.0" prefWidth="280.0" />
                                  </children>
                               </HBox>
                               <Button fx:id="car" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Create Trip">

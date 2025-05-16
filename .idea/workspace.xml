@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/user.front/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/user.front/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/trip/BackTripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/trip/BackTripController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/trip/TripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/trip/TripController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user.ini" beforeDir="false" afterPath="$PROJECT_DIR$/user.ini" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +127,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="controllers.Home" />
-      <module name="Pidev3a11" />
+      <module name="WamiaGo" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <extension name="coverage">
         <pattern>
@@ -184,8 +189,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
-        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
       </set>
     </attachedChunks>
   </component>
@@ -241,6 +246,8 @@
       <workItem from="1741311375374" duration="5618000" />
       <workItem from="1741331801412" duration="604000" />
       <workItem from="1747350278081" duration="3893000" />
+      <workItem from="1747390848182" duration="4194000" />
+      <workItem from="1747398413280" duration="1796000" />
     </task>
     <servers />
   </component>

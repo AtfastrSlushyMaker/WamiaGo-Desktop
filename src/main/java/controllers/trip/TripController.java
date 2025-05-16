@@ -18,7 +18,10 @@ import javafx.stage.Stage;
 import services.BookingService;
 import services.TripService;
 import utils.SessionManager;
+import javafx.scene.control.Alert;
 
+import services.CityFinder;
+import services.TrafficTimeEstimator;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -37,13 +40,44 @@ public class TripController {
 
     private TripService tripService;
     private BookingService bookingService;
+    private TrafficTimeEstimator estimator;
+
+
 
     @FXML
     public void initialize() {
         tripService = new TripService();
         bookingService = new BookingService();
+        estimator = new TrafficTimeEstimator("DW9egp1lljrp_9klXkmSp8y-SuoywTOGIspZgdGCGlg"); // Initialize with your API key
+
+
         loadTripsIntoFlowPane();
         setupNavigation();
+        checkCurrentCityTrips();
+    }
+
+        private void checkCurrentCityTrips () {
+            try {
+                String currentCity = CityFinder.getCurrentCity();
+                boolean tripFound = tripService.read().stream()
+                        .anyMatch(trip -> trip.getDepartureCity().equalsIgnoreCase(currentCity));
+
+                if (!tripFound) {
+                    showAlert("No Carpooling Available", "Sorry, no current carpooling for your local location: " + currentCity);
+                } else {
+                    showAlert("Carpooling Available", "There are carpooling trips available from your current location : " + currentCity);
+                }
+            } catch (Exception e) {
+                showAlert("Error", "Failed to get current city: " + e.getMessage());
+            }
+        }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void setupNavigation() {
@@ -67,19 +101,41 @@ public class TripController {
     private void loadTripsIntoFlowPane() {
         try {
             List<Trip> trips = tripService.read();
+
+            // Group trips by route: "DepartureCity to ArrivalCity"
             Map<String, List<Trip>> groupedTrips = trips.stream()
                     .collect(Collectors.groupingBy(trip -> trip.getDepartureCity() + " to " + trip.getArrivalCity()));
 
             for (Map.Entry<String, List<Trip>> entry : groupedTrips.entrySet()) {
-                VBox tripCard = createTripCard(entry.getKey(), entry.getValue());
-                TripFlowPane.getChildren().add(tripCard);
+                String route = entry.getKey();
+                List<Trip> tripList = entry.getValue();
+                String[] cities = route.split(" to ");
+
+                if (cities.length == 2) {
+                    try {
+                        String travelTime = estimator.calculateTravelTime(cities[0], cities[1]);
+                        VBox tripCard = createTripCard(route, tripList, travelTime);
+                        TripFlowPane.getChildren().add(tripCard);
+                        System.out.println("Travel Time from " + cities[0] + " to " + cities[1] + ": " + travelTime);
+                    } catch (Exception e) {
+                        System.err.println("Error calculating travel time for route: " + route);
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("Invalid route format: " + route);
+                }
             }
         } catch (SQLException e) {
+            System.err.println("Error loading trips from database");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Unexpected error during trip loading");
             e.printStackTrace();
         }
     }
 
-    private VBox createTripCard(String route, List<Trip> trips) {
+
+    private VBox createTripCard(String route, List<Trip> trips, String travelTime) {
         VBox tripCard = new VBox(20); // Increased spacing between elements
         tripCard.setPadding(new Insets(20)); // Increased padding
         tripCard.setStyle("-fx-background-color: #1E90FF; -fx-border-color: #4682B4; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0, 0, 5);");
@@ -90,13 +146,17 @@ public class TripController {
         Label routeLabel = new Label(route);
         routeLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
 
+        Label travelTimeLabel = new Label("Travel Time: " + travelTime);
+        travelTimeLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+
         Button selectButton = new Button("Select");
         selectButton.setStyle("-fx-background-color: #4682B4; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10px 20px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-border-color: white; -fx-border-width: 2px;");
         selectButton.setOnAction(e -> openTripOptions(trips));
         selectButton.setOnMouseEntered(e -> selectButton.setStyle("-fx-background-color: #5A9BD4; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10px 20px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-border-color: white; -fx-border-width: 2px;"));
         selectButton.setOnMouseExited(e -> selectButton.setStyle("-fx-background-color: #4682B4; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10px 20px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-border-color: white; -fx-border-width: 2px;"));
 
-        tripCard.getChildren().addAll(routeLabel, selectButton);
+        tripCard.getChildren().addAll(routeLabel, travelTimeLabel, selectButton);
+
         return tripCard;
     }
 
