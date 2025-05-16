@@ -73,7 +73,7 @@
 }
 
 .sliding-panel {
-    -fx-background-color: #FFC73C;
+    -fx-background-color: #FFFFFF;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 2);
 }
 

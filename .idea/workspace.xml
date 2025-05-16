@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/dashboard/DashboardAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dashboard/dashboardAdmin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/trips/back_trip.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user.ini" beforeDir="false" afterPath="$PROJECT_DIR$/user.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/user.front/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/user.front/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,12 +37,12 @@
     &quot;assignee&quot;: &quot;walaaghrairi&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git",
-    "accountId": "c7700c4a-cb60-426d-bf24-1bfa91d9bb97"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AtfastrSlushyMaker/WamiaGo-Desktop.git&quot;,
+    &quot;accountId&quot;: &quot;c7700c4a-cb60-426d-bf24-1bfa91d9bb97&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
