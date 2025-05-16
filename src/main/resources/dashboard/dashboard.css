@@ -54,7 +54,23 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0, 4, 4);
     -fx-border-color: #FFC107;
 }
+/* Force EXACT match with other buttons */
+#carpooling {
+    -fx-background-color: transparent !important;
+    -fx-text-fill: white !important;
+    -fx-padding: 0 0 0 5px !important; /* Left indent */
+}
 
+#carpooling:hover {
+    -fx-background-color: rgba(187, 184, 184, 0.31) !important;
+}
+
+#carpooling .text {
+    -fx-font-size: 10px !important;
+    -fx-font-family: "System" !important;
+    -fx-fill: white !important;
+    -fx-translate-x: 0 !important; /* Remove any text offset */
+}
 /* Account Settings and Logout Buttons */
 #logout {
     -fx-background-color: #E57373; /* Red */

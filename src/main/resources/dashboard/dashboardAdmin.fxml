@@ -26,7 +26,7 @@
                 <graphic>
                     <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="/Images/icons/close.png" />
+                            <Image url="@../Images/icons/close.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -35,7 +35,7 @@
                 <graphic>
                     <ImageView fitHeight="16.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/Images/icons/maximize.png" />
+                            <Image url="@../Images/icons/maximize.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -44,7 +44,7 @@
                 <graphic>
                     <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/Images/icons/minus.png" />
+                            <Image url="@../Images/icons/minus.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -53,7 +53,7 @@
                 <graphic>
                     <ImageView fitHeight="21.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@/Images/icons/hamburger.png" />
+                            <Image url="@../Images/icons/hamburger.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -70,7 +70,7 @@
     </AnchorPane>
 
     <!-- Sidebar -->
-    <AnchorPane fx:id="navPanel" layoutY="48.8" prefHeight="682.0" prefWidth="200.0" style="-fx-background-color: #2D2F33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="49.0">
+    <AnchorPane fx:id="navPanel" layoutY="49.8" prefHeight="682.0" prefWidth="200.0" style="-fx-background-color: #2D2F33;" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="49.8">
         <children>
             <!-- User Profile Section -->
             <Circle fill="#c0c0c0" layoutX="31.0" layoutY="38.0" radius="23.0" stroke="TRANSPARENT" strokeType="INSIDE" />
@@ -82,7 +82,7 @@
             </Text>
 
             <!-- Navigation Buttons -->
-            <VBox alignment="TOP_LEFT" layoutX="60.0" layoutY="140.0" prefHeight="522.0" prefWidth="174.0" spacing="10" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="120.0">
+            <VBox alignment="TOP_LEFT" layoutX="80.0" layoutY="160.0" prefHeight="598.0" prefWidth="191.0" spacing="10" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="120.0">
                 <children>
                   <Rectangle arcHeight="5.0" arcWidth="1.0" fill="#ecf1f5" height="1.0" stroke="WHITE" strokeType="INSIDE" width="150.0" />
                     <Button fx:id="dashboard" graphicTextGap="5.0" mnemonicParsing="false" onAction="#handleDashboardBtn" prefHeight="25.0" prefWidth="160.0" text="Dashboard" textAlignment="CENTER" textFill="WHITE">
@@ -157,6 +157,18 @@
                             <String fx:value="text" />
                         </styleClass>
                     </Button>
+                    <Button fx:id="carpooling" graphicTextGap="0.0" maxHeight="40.8" minHeight="40.8" mnemonicParsing="false" onAction="#handleCarpoolingBtn" prefHeight="40.8" prefWidth="156.0" text="Carpooling">
+                        <font>
+                            <Font size="10.0" />
+                        </font>
+                        <padding>
+                            <Insets bottom="0" left="5.0" right="0" top="0" />
+                        </padding>
+                        <styleClass>
+                            <String fx:value="navButtons" />
+                            <String fx:value="text" />
+                        </styleClass>
+                    </Button>
                     <Button fx:id="enquiries" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleQueriesBtn" prefHeight="25.0" prefWidth="160.0" text="Feedbacks">
                         <font>
                             <Font size="10.0" />
@@ -178,8 +190,8 @@
 
                 </children>
             </VBox>
-         <Label id="date" fx:id="date_label" layoutX="44.0" layoutY="79.0" maxWidth="208.0" prefHeight="45.0" prefWidth="208.0" text="Date" />
-         <Button fx:id="logout" graphicTextGap="0.0" layoutX="31.0" layoutY="700.0" mnemonicParsing="false" onAction="#logoutBtn" prefHeight="58.0" prefWidth="160.0" text="Logout" textAlignment="CENTER" textFill="WHITE">
+         <Label id="date" fx:id="date_label" layoutX="52.0" layoutY="79.0" maxWidth="208.0" prefHeight="45.0" prefWidth="208.0" text="Date" />
+         <Button fx:id="logout" graphicTextGap="0.0" layoutX="31.0" layoutY="725.0" mnemonicParsing="false" onAction="#logoutBtn" prefHeight="58.0" prefWidth="160.0" text="Logout" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font size="10.0" />
             </font>
@@ -188,7 +200,7 @@
                <String fx:value="text" />
             </styleClass>
          </Button>
-         <ImageView fitHeight="36.0" fitWidth="44.0" layoutX="41.0" layoutY="711.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fitHeight="36.0" fitWidth="44.0" layoutX="41.0" layoutY="735.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../Images/icons/logout.png" />
             </image>
@@ -198,6 +210,5 @@
 
           <!-- Content Area -->
     <AnchorPane fx:id="contentPane" layoutX="266.4" layoutY="59.2" prefHeight="768.0" prefWidth="1134.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="266.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
-        <!-- Add your content here -->
     </AnchorPane>
 </AnchorPane>

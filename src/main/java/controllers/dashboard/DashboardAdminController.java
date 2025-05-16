@@ -77,8 +77,9 @@ public class DashboardAdminController implements Initializable {
                 "/station/back/stations.fxml",                 // Panel 5 - Stations
                 "/bicycle.back/bicycle.fxml",                  // Panel 6 - Bicycles
                 "/taxi-managment/admin_side/ride.fxml",        // Panel 7 - Taxi Rides
-                "/Reclamation/ListReclamationBack.fxml",       // Panel 8 - Feedbacks
-                "/Annoucement/Front/announcementAdmin.fxml"    // Panel 9 - Announcements
+                "/trips/back_trip.fxml",                       // Panel 8 - Carpooling
+                "/Reclamation/ListReclamationBack.fxml",       // Panel 9 - Feedbacks
+                "/Annoucement/Front/announcementAdmin.fxml"    // Panel 10 - Announcements
         );
 
         for (String path : fxmlPaths) {
@@ -201,6 +202,7 @@ public class DashboardAdminController implements Initializable {
     @FXML public void handleStationsBtn() { showPanel(5); }         // Stations
     @FXML public void handleBicyclesBtn() { showPanel(6); }         // Bicycles
     @FXML public void handleTaxiRides() { showPanel(7); }           // Taxi Rides
-    @FXML public void handleQueriesBtn() { showPanel(8); }          // Feedbacks
-    @FXML public void handleAnnouncementsBtn() { showPanel(9); }    // Announcements
+    @FXML public void handleCarpoolingBtn() { showPanel(8); }       // Carpooling
+    @FXML public void handleQueriesBtn() { showPanel(9); }          // Feedbacks
+    @FXML public void handleAnnouncementsBtn() { showPanel(10); }   // Announcements
 }
