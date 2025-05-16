@@ -37,6 +37,9 @@ public class AddReclamation {
     @FXML
     private Button btn_workbench11;
 
+    @FXML private Button CANCEL_BUTTON;
+
+
     private final ReclamationService reclamationService;
 
     // TODO: This should be set from your authentication system
@@ -56,6 +59,8 @@ public class AddReclamation {
 
         btn_workbench11.setOnAction(event ->navigateToRide(event));
         btn_workbench1.setOnAction(event -> navigateToHome(event));
+
+        CANCEL_BUTTON.setOnAction(event -> navigateToList(event));
     }
 
     @FXML
@@ -121,12 +126,10 @@ public class AddReclamation {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/Reclamation/ListReclamation.fxml"));
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Navigation failed");
-            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Échec de la navigation : " + e.getMessage());
         }
     }
 

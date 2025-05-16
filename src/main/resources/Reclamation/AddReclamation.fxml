@@ -166,10 +166,19 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-                <Button id="CANCEL_BUTTON" layoutX="497.0" layoutY="727.0" mnemonicParsing="false" styleClass="relocation-action-button" stylesheets="@AddReclamation.css" text="CANCEL">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Button>
+                <Button
+                        fx:id="CANCEL_BUTTON"
+                        layoutX="497.0"
+                        layoutY="727.0"
+                        mnemonicParsing="false"
+                        styleClass="relocation-action-button"
+                        stylesheets="@AddReclamation.css"
+                        text="CANCEL">
+
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
 
             </children>
 
