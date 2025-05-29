@@ -1399,7 +1399,8 @@ SOFTWARE.
 - **[Mohamed Islem Ghazouani](https://github.com/islem201)** - Carpooling Related Management
 - **[Walaa Eddine Ghrairi](https://github.com/walaaghrairi)** - Feedback Related Management
 
-*All team members are students from ESPRIT (École Supérieure Privée d'Ingénierie et de Technologies), Tunisia
+> **🎓 Academic Project Note**  
+> This project is developed as part of an academic program at **[ESPRIT](https://esprit.tn/)** (École Supérieure Privée d'Ingénierie et de Technologies), Tunisia. All core contributors are currently students pursuing their engineering degrees in software development and information systems.
 
 ### 📧 Get in Touch
 
