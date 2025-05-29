@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/rentals/back/rentalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/rentals/back/rentalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/station/back/StationsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/station/back/StationsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/BicycleRentalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/BicycleRentalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/GeoCoding/GeocodingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/GeoCoding/GeocodingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/rentals.back/rentals.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/rentals.back/rentals.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/rentals.back/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/rentals.back/style.css" afterDir="false" />
-    </list>
+    <list default="true" id="69343059-532d-432e-81a9-2825bfc3592f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -257,7 +249,7 @@
       <workItem from="1741214105825" duration="3860000" />
       <workItem from="1741219936868" duration="760000" />
       <workItem from="1741263010244" duration="8782000" />
-      <workItem from="1741272638010" duration="1316000" />
+      <workItem from="1741272638010" duration="1439000" />
     </task>
     <servers />
   </component>
