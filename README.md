@@ -1459,7 +1459,16 @@ SOFTWARE.
 
 ### 👥 WamiaGo Team
 
-**Project Maintainer**: [AtfastrSlushyMaker](https://github.com/AtfastrSlushyMaker)
+#### 👨‍💻 Core Contributors
+
+- **[Malek Bsaissa](https://github.com/AtfastrSlushyMaker)** - Bicycle & Station Management
+- **[Ezer Abrougui](https://github.com/ezer2002)** - Transport Related Management  
+- **[Farah Derbell](https://github.com/farahderbell)** - Taxi Related Management
+- **[Abd Razek Nakhli](https://github.com/Rzouga01)** - User Related Management
+- **[Mohamed Islem Ghazouani](https://github.com/islem201)** - Carpooling Related Management
+- **[Walaa Eddine Ghrairi](https://github.com/walaaghrairi)** - Feedback Related Management
+
+*All team members are students/graduates from ESPRIT (École Supérieure Privée d'Ingénierie et de Technologies), Tunisia 🇹🇳*
 
 ### 📧 Get in Touch
 
