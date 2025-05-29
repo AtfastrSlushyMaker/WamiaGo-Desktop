@@ -1399,7 +1399,7 @@ SOFTWARE.
 - **[Mohamed Islem Ghazouani](https://github.com/islem201)** - Carpooling Related Management
 - **[Walaa Eddine Ghrairi](https://github.com/walaaghrairi)** - Feedback Related Management
 
-*All team members are students/graduates from ESPRIT (École Supérieure Privée d'Ingénierie et de Technologies), Tunisia 🇹🇳*
+*All team members are students from ESPRIT (École Supérieure Privée d'Ingénierie et de Technologies), Tunisia
 
 ### 📧 Get in Touch
 
