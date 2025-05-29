@@ -1308,38 +1308,6 @@ We welcome contributions from the community! WamiaGo Desktop is built with moder
 - [x] **Icon Integration**: FontAwesome with Ikonli framework
 - [x] **Responsive Design**: Adaptive layouts and components
 
-### 🚧 In Development
-
-#### 🔄 Current Sprint (Q1 2024)
-- [ ] **Multi-language Support**: Arabic and French localization
-- [ ] **Advanced Analytics**: Enhanced business intelligence dashboard
-- [ ] **Offline Mode**: Local data synchronization capabilities
-- [ ] **Push Notifications**: Real-time alerts and updates
-- [ ] **Performance Optimization**: Memory usage and response time improvements
-
-#### 📋 Next Release (v2.1.0 - Q2 2024)
-- [ ] **Mobile App Integration**: Companion mobile application sync
-- [ ] **Advanced Security**: Two-factor authentication and encryption
-- [ ] **Bulk Operations**: Mass data import/export functionality
-- [ ] **Custom Themes**: User-configurable UI themes
-- [ ] **API Rate Limiting**: Smart throttling and queue management
-
-### 🎯 Upcoming Features
-
-#### 🚀 Short Term (Q2-Q3 2024)
-- [ ] **Fleet Management**: Vehicle tracking and maintenance scheduling
-- [ ] **Route Optimization**: Advanced pathfinding algorithms
-- [ ] **Social Features**: User profiles and social interactions
-- [ ] **Loyalty Program**: Points and rewards system
-- [ ] **Advanced Reporting**: Custom report builder and scheduling
-
-#### 🌟 Long Term (Q4 2024 - Q1 2025)
-- [ ] **Machine Learning**: Predictive analytics for demand forecasting
-- [ ] **IoT Integration**: Smart city sensors and traffic data
-- [ ] **Blockchain Integration**: Decentralized payment and verification
-- [ ] **AR/VR Features**: Augmented reality for navigation
-- [ ] **International Expansion**: Multi-country and currency support
-
 ### 📊 Development Metrics
 
 #### 🏗️ Codebase Statistics
