@@ -626,23 +626,10 @@ For technical support, feature requests, bug reports, or partnership opportuniti
 - ✅ QR code integration
 - ✅ Multi-role user management
 
-### 🔄 In Progress
-- 🔄 Mobile application companion
-- 🔄 Advanced ML-based route optimization
-- 🔄 Blockchain integration for secure transactions
-- 🔄 IoT integration for smart city connectivity
-- 🔄 Multi-language support expansion
-- 🔄 Advanced analytics and predictive modeling
-
-### 🔮 Future Roadmap
-- 📱 Cross-platform mobile apps (iOS/Android)
-- 🌐 Web-based admin dashboard
-- 🚁 Drone delivery integration
-- 🤖 Advanced AI chatbot with local language support
-- 🏙️ Smart city infrastructure integration
-- 🌍 International expansion framework
-
 ---
 
-*Built with ❤️ in Tunisia for the future of smart transportation*
+<div align="center">
+  <strong>Made with ❤️ by the WamiaGo Team</strong><br>
+  <sub>Building the future of smart transportation</sub>
+</div>
 
